@@ -1,0 +1,31 @@
+{
+  "parent": "minecraft:adventure/root",
+  "criteria": {
+    "eat_salted_food": {
+      "conditions": {
+        "item": {
+          "items": "#smptg:salted_foods"
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.salted.adventure.eat_salted_food.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "smptg:pinch_of_salt"
+    },
+    "title": {
+      "translate": "advancements.salted.adventure.eat_salted_food.title"
+    }
+  },
+  "requirements": [
+    [
+      "eat_salted_food"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

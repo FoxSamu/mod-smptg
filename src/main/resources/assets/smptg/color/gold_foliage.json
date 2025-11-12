@@ -1,0 +1,13 @@
+{
+    "type": "blur",
+    "base": {
+        "type": "dispatch",
+        "default": {
+            "type": "colormap",
+            "name": "smptg:gold_foliage"
+        },
+        "dispatch": {
+            "pale_garden": "#9C8E7C"
+        }
+    }
+}

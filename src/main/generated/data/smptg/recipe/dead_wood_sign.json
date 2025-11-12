@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "#": "smptg:dead_wood_planks",
+    "/": "minecraft:stick"
+  },
+  "pattern": [
+    "###",
+    "###",
+    " / "
+  ],
+  "result": {
+    "count": 3,
+    "id": "smptg:dead_wood_sign"
+  }
+}

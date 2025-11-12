@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+
+
+  "id": "smptg",
+  "environment": "*",
+  "version": "${version}",
+  "icon": "assets/smptg/icon.png",
+
+  "name": "So Many Places To Go",
+  "description": "Adds many new biomes to explore.",
+  "authors": [ "Samū Ketuvo" ],
+  "license": "ARR",
+
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+
+
+  "entrypoints": {
+    "server": [ "net.foxboi.salted.common.SmptgServer" ],
+    "client": [ "net.foxboi.salted.client.SmptgClient" ],
+    "fabric-datagen": [ "net.foxboi.salted.data.SmptgData" ]
+  },
+
+  "mixins": [
+    "smptg.mixins.json",
+    "smptg.mixins.datagen.json",
+    "smptg.mixins.sodium.json"
+  ],
+  "accessWidener": "smptg.accesswidener",
+
+  "depends": {
+    "fabricloader": ">=0.17.2",
+    "minecraft": "~1.21.9",
+    "java": ">=21",
+    "fabric-api": "*"
+  },
+
+  "suggests": {
+    "another-mod": "*"
+  }
+}

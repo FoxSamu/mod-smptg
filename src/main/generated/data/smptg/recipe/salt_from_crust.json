@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "smptg:salt_crust"
+  ],
+  "result": {
+    "count": 12,
+    "id": "smptg:salt"
+  }
+}

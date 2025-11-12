@@ -1,0 +1,199 @@
+package net.foxboi.salted.common.levelgen;
+
+import net.foxboi.salted.common.levelgen.placement.DefinedPlacement;
+import net.foxboi.salted.common.util.DataRegistry;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
+import net.minecraft.world.level.levelgen.placement.*;
+import net.minecraft.world.level.material.Fluids;
+
+public record ModVegetationPlacements() {
+    private static final DataRegistry<PlacedFeature> REGISTRY = DataRegistry.of(Registries.PLACED_FEATURE);
+
+    private static final DefinedPlacement.Modifier TREE_THRESHOLD = it -> it.atMaxDepth(0);
+
+    // Bonemeal
+    // ===============================================================
+
+    public static final ResourceKey<PlacedFeature> MOSS_CARPET_BONEMEAL = REGISTRY.register(
+            "moss_carpet_bonemeal",
+            DefinedPlacement.place(ModVegetationFeatures.MOSS_CARPET_BONEMEAL)
+    );
+
+
+    // Trees
+    // ===============================================================
+
+    public static final ResourceKey<PlacedFeature> TREES_ASPEN_FOREST = REGISTRY.register(
+            "trees_aspen_forest",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.TREE_ASPEN_FOREST)
+                    .modified(treePlacement(it -> it.countExtra(10, 0.1f, 1)))
+    );
+
+    public static final ResourceKey<PlacedFeature> TREES_MAPLE_FOREST = REGISTRY.register(
+            "trees_maple_forest",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.TREE_MAPLE_FOREST)
+                    .modified(treePlacement(it -> it.countExtra(10, 0.1f, 1)))
+    );
+
+    public static final ResourceKey<PlacedFeature> TREES_WOODED_PLAINS = REGISTRY.register(
+            "trees_wooded_plains",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.TREE_WOODED_PLAINS)
+                    .modified(treePlacement(it -> it.countExtra(2, 0.05f, 1)))
+    );
+
+
+    // Grass sprouts
+    // ===============================================================
+
+    public static final ResourceKey<PlacedFeature> PATCH_GRASS_SPROUTS = REGISTRY.register(
+            "patch_grass_sprouts",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.PATCH_GRASS_SPROUTS)
+                    .count(UniformInt.of(2, 4))
+                    .modified(patchPlacement())
+    );
+
+    public static final ResourceKey<PlacedFeature> PATCH_GRASS_SPROUTS_EXTRA_COMMON = REGISTRY.register(
+            "patch_grass_sprouts_extra_common",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.PATCH_GRASS_SPROUTS)
+                    .count(UniformInt.of(4, 8))
+                    .modified(patchPlacement())
+    );
+
+
+    // Barley
+    // ===============================================================
+
+    public static final ResourceKey<PlacedFeature> PATCH_BARLEY_RARE = REGISTRY.register(
+            "patch_barley_rare",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.PATCH_BARLEY)
+                    .onAverageOnceEvery(14)
+                    .modified(patchPlacement())
+    );
+
+
+    // Cattail
+    // ===============================================================
+
+    public static final ResourceKey<PlacedFeature> PATCH_CATTAIL_NEAR_WATER = REGISTRY.register(
+            "patch_cattail_near_water",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.PATCH_CATTAIL)
+                    .count(UniformInt.of(1, 2))
+                    .modified(patchPlacement(BlockPredicate.matchesFluids(Direction.DOWN.getUnitVec3i(), Fluids.WATER)))
+    );
+
+    public static final ResourceKey<PlacedFeature> PATCH_CATTAIL_IN_WATER = REGISTRY.register(
+            "patch_cattail_in_water",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.PATCH_CATTAIL_IN_WATER)
+                    .count(UniformInt.of(1, 2))
+                    .modified(patchPlacement())
+    );
+
+    public static final ResourceKey<PlacedFeature> PATCH_CATTAIL_SWAMP = REGISTRY.register(
+            "patch_cattail_swamp",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.PATCH_CATTAIL)
+                    .count(UniformInt.of(4, 7))
+                    .modified(patchPlacement())
+    );
+
+    public static final ResourceKey<PlacedFeature> PATCH_CATTAIL_IN_WATER_SWAMP = REGISTRY.register(
+            "patch_cattail_in_water_swamp",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.PATCH_CATTAIL_IN_WATER)
+                    .count(UniformInt.of(4, 7))
+                    .modified(patchPlacement())
+    );
+
+
+    // Clovers
+    // ===============================================================
+
+    public static final ResourceKey<PlacedFeature> PATCH_CLOVERS_RARE = REGISTRY.register(
+            "patch_clovers_rare",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.PATCH_CLOVERS)
+                    .onAverageOnceEvery(2)
+                    .modified(patchPlacement())
+    );
+
+    public static final ResourceKey<PlacedFeature> PATCH_CLOVERS = REGISTRY.register(
+            "patch_clovers",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.PATCH_CLOVERS)
+                    .count(2)
+                    .modified(patchPlacement())
+    );
+
+    public static final ResourceKey<PlacedFeature> PATCH_CLOVERS_DENSE = REGISTRY.register(
+            "patch_clovers",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.PATCH_CLOVERS_DENSE)
+                    .count(UniformInt.of(2, 6))
+                    .modified(patchPlacement())
+    );
+
+
+    // Moss
+    // ===============================================================
+
+    public static final ResourceKey<PlacedFeature> PATCH_MOSS_CARPET_AROUND_MOSS = REGISTRY.register(
+            "patch_moss_carpet_around_moss",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.PATCH_MOSS_CARPET)
+                    .count(ConstantInt.of(4))
+                    .modified(patchPlacement(BlockPredicate.matchesBlocks(Direction.DOWN.getUnitVec3i(), FeatureConditions.MOSS_GROW_BLOCKS)))
+    );
+
+
+    // Utility functions
+    // ===============================================================
+
+    public static void init() {
+        // N/A, just initialises the class
+    }
+
+    private static DefinedPlacement.Modifier patchPlacement(BlockPredicate predicate) {
+        return it -> it
+                .spread()
+                .onOceanFloorWg()
+                .onlyIf(predicate)
+                .inBiome();
+    }
+
+    private static DefinedPlacement.Modifier patchPlacement() {
+        return it -> it
+                .spread()
+                .onOceanFloorWg()
+                .inBiome();
+    }
+
+    private static DefinedPlacement.Modifier treePlacement(DefinedPlacement.Modifier amount) {
+        return it -> it
+                .modified(amount)
+                .spread()
+                .modified(TREE_THRESHOLD)
+                .onOceanFloor()
+                .inBiome();
+    }
+
+    private static DefinedPlacement.Modifier treePlacement(DefinedPlacement.Modifier amount, Block sapling) {
+        return it -> it
+                .modified(treePlacement(amount))
+                .onlyIf(BlockPredicate.wouldSurvive(sapling.defaultBlockState(), BlockPos.ZERO));
+    }
+}

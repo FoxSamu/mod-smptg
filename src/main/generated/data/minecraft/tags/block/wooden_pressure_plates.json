@@ -1,0 +1,9 @@
+{
+  "values": [
+    "smptg:aspen_pressure_plate",
+    "smptg:beech_pressure_plate",
+    "smptg:maple_pressure_plate",
+    "smptg:redwood_pressure_plate",
+    "smptg:dead_wood_pressure_plate"
+  ]
+}

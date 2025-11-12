@@ -1,0 +1,21 @@
+{
+  "values": [
+    "smptg:packed_ash",
+    "smptg:ash_bricks",
+    "smptg:ash_brick_slab",
+    "smptg:ash_brick_stairs",
+    "smptg:salt_crust",
+    "smptg:rocksalt",
+    "smptg:rocksalt_slab",
+    "smptg:rocksalt_stairs",
+    "smptg:rocksalt_wall",
+    "smptg:rocksalt_bricks",
+    "smptg:rocksalt_brick_slab",
+    "smptg:rocksalt_brick_stairs",
+    "smptg:rocksalt_brick_wall",
+    "smptg:salt_crystal",
+    "smptg:salt_ore",
+    "smptg:deepslate_salt_ore",
+    "smptg:nether_salt_ore"
+  ]
+}

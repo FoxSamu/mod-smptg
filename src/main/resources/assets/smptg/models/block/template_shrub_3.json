@@ -1,0 +1,69 @@
+{
+    "parent": "block/block",
+    "ambientocclusion": false,
+    "textures": {
+        "particle": "#shrub"
+    },
+    "elements": [
+        {
+            "name": "right",
+            "from": [8, 0, 12],
+            "to": [16, 16, 12],
+            "rotation": { "angle": -45, "axis": "x", "origin": [12, 0, 12] },
+            "faces": {
+                "north": { "uv": [16, 0, 8, 16], "texture": "#shrub", "tintindex": 0 },
+                "south": { "uv": [8, 0, 16, 16], "texture": "#shrub", "tintindex": 0 }
+            }
+        },
+        {
+            "name": "right",
+            "from": [8, 0, 12],
+            "to": [16, 16, 12],
+            "rotation": { "angle": 0, "axis": "x", "origin": [12, 0, 12] },
+            "faces": {
+                "north": { "uv": [16, 0, 8, 16], "texture": "#shrub", "tintindex": 0 },
+                "south": { "uv": [8, 0, 16, 16], "texture": "#shrub", "tintindex": 0 }
+            }
+        },
+        {
+            "name": "right",
+            "from": [8, 0, 12],
+            "to": [16, 16, 12],
+            "rotation": { "angle": 45, "axis": "x", "origin": [12, 0, 12] },
+            "faces": {
+                "north": { "uv": [16, 0, 8, 16], "texture": "#shrub", "tintindex": 0 },
+                "south": { "uv": [8, 0, 16, 16], "texture": "#shrub", "tintindex": 0 }
+            }
+        },
+        {
+            "name": "right",
+            "from": [12, 0, 8],
+            "to": [12, 16, 16],
+            "rotation": { "angle": -45, "axis": "z", "origin": [12, 0, 12] },
+            "faces": {
+                "east": { "uv": [16, 0, 8, 16], "texture": "#shrub", "tintindex": 0 },
+                "west": { "uv": [8, 0, 16, 16], "texture": "#shrub", "tintindex": 0 }
+            }
+        },
+        {
+            "name": "right",
+            "from": [12, 0, 8],
+            "to": [12, 16, 16],
+            "rotation": { "angle": 0, "axis": "y", "origin": [12, 0, 12] },
+            "faces": {
+                "east": { "uv": [16, 0, 8, 16], "texture": "#shrub", "tintindex": 0 },
+                "west": { "uv": [8, 0, 16, 16], "texture": "#shrub", "tintindex": 0 }
+            }
+        },
+        {
+            "name": "right",
+            "from": [12, 0, 8],
+            "to": [12, 16, 16],
+            "rotation": { "angle": 45, "axis": "z", "origin": [12, 0, 12] },
+            "faces": {
+                "east": { "uv": [16, 0, 8, 16], "texture": "#shrub", "tintindex": 0 },
+                "west": { "uv": [8, 0, 16, 16], "texture": "#shrub", "tintindex": 0 }
+            }
+        }
+    ]
+}

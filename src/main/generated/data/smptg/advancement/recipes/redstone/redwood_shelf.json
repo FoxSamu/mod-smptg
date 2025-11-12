@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_stripped_redwood_log": {
+      "conditions": {
+        "items": [
+          {
+            "items": "smptg:stripped_redwood_log"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "smptg:redwood_shelf"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_stripped_redwood_log"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "smptg:redwood_shelf"
+    ]
+  }
+}

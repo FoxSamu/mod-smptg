@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "package": "net.foxboi.salted.mixin.sodium",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "net.foxboi.salted.mixin.SodiumCompatMixinPlugin",
+
+  "mixins": [ ],
+  "client": [ "LevelSliceMixin" ],
+
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

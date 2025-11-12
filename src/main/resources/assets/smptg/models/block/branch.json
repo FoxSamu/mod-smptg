@@ -1,0 +1,27 @@
+{
+    "parent": "block/block",
+    "ambientocclusion": false,
+    "textures": {
+        "particle": "#branch"
+    },
+    "elements": [
+        {
+            "from": [8, 0, -0.5],
+            "to": [8, 16, 15.5],
+            "rotation": { "angle": -22.5, "axis": "y", "origin": [8, 0, 3.5] },
+            "faces": {
+                "east": { "uv": [16, 0, 0, 16], "texture": "#branch" },
+                "west": { "uv": [0, 0, 16, 16], "texture": "#branch" }
+            }
+        },
+        {
+            "from": [8, 0, -0.5],
+            "to": [8, 16, 15.5],
+            "rotation": { "angle": 22.5, "axis": "y", "origin": [8, 0, 3.5] },
+            "faces": {
+                "east": { "uv": [16, 0, 0, 16], "texture": "#branch" },
+                "west": { "uv": [0, 0, 16, 16], "texture": "#branch" }
+            }
+        }
+    ]
+}

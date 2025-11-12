@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "#": "smptg:stripped_dead_log",
+    "|": "minecraft:iron_chain"
+  },
+  "pattern": [
+    "| |",
+    "###",
+    "###"
+  ],
+  "result": {
+    "count": 6,
+    "id": "smptg:dead_wood_hanging_sign"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "redstone",
+  "ingredients": [
+    "smptg:dead_wood_planks"
+  ],
+  "result": {
+    "count": 1,
+    "id": "smptg:dead_wood_button"
+  }
+}

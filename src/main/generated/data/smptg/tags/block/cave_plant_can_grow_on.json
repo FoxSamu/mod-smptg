@@ -1,0 +1,9 @@
+{
+  "values": [
+    "#minecraft:dirt",
+    "#minecraft:sand",
+    "#smptg:stone",
+    "minecraft:gravel",
+    "minecraft:farmland"
+  ]
+}

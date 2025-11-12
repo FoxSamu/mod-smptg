@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "package": "net.foxboi.salted.mixin.datagen",
+  "compatibilityLevel": "JAVA_21",
+  "plugin": "net.foxboi.salted.mixin.DatagenMixinPlugin",
+
+  "mixins": [ "MinecraftServerMixin", "ServerMainMixin", "WorldLoaderMixin" ],
+  "client": [ "MinecraftMixin" ],
+
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

@@ -1,0 +1,45 @@
+accessWidener v2 named
+
+accessible class net/minecraft/advancements/critereon/StatePropertiesPredicate$PropertyMatcher
+accessible class net/minecraft/advancements/critereon/StatePropertiesPredicate$ExactMatcher
+accessible class net/minecraft/advancements/critereon/StatePropertiesPredicate$RangedMatcher
+accessible class net/minecraft/advancements/critereon/StatePropertiesPredicate$ValueMatcher
+
+# https://github.com/FabricMC/access-widener/issues/26: Record constructors have to be manually updated due to this bug
+# Fixed in Loom 1.12
+# accessible method net/minecraft/advancements/critereon/StatePropertiesPredicate$PropertyMatcher <init> (Ljava/lang/String;Lnet/minecraft/advancements/critereon/StatePropertiesPredicate$ValueMatcher;)V
+# accessible method net/minecraft/advancements/critereon/StatePropertiesPredicate$ExactMatcher <init> (Ljava/lang/String;)V
+# accessible method net/minecraft/advancements/critereon/StatePropertiesPredicate$RangedMatcher <init> (Ljava/util/Optional;Ljava/util/Optional;)V
+
+accessible class net/minecraft/world/level/biome/Biome$ClimateSettings
+
+# All methods in this class are public ...except this one...
+accessible method net/minecraft/client/data/models/BlockModelGenerators$BlockFamilyProvider door (Lnet/minecraft/world/level/block/Block;)Lnet/minecraft/client/data/models/BlockModelGenerators$BlockFamilyProvider;
+
+accessible class net/minecraft/world/level/levelgen/SurfaceRules$SurfaceRule
+accessible class net/minecraft/world/level/levelgen/SurfaceRules$Context
+accessible field net/minecraft/world/level/levelgen/SurfaceRules$Context lastUpdateY J
+accessible field net/minecraft/world/level/levelgen/SurfaceRules$Context lastUpdateXZ J
+accessible field net/minecraft/world/level/levelgen/SurfaceRules$Context biome Ljava/util/function/Supplier;
+
+accessible field net/minecraft/world/level/levelgen/NoiseSettings END_NOISE_SETTINGS Lnet/minecraft/world/level/levelgen/NoiseSettings;
+accessible field net/minecraft/world/level/levelgen/NoiseSettings NETHER_NOISE_SETTINGS Lnet/minecraft/world/level/levelgen/NoiseSettings;
+accessible field net/minecraft/world/level/levelgen/NoiseSettings OVERWORLD_NOISE_SETTINGS Lnet/minecraft/world/level/levelgen/NoiseSettings;
+accessible field net/minecraft/world/level/levelgen/NoiseSettings CAVES_NOISE_SETTINGS Lnet/minecraft/world/level/levelgen/NoiseSettings;
+accessible field net/minecraft/world/level/levelgen/NoiseSettings FLOATING_ISLANDS_NOISE_SETTINGS Lnet/minecraft/world/level/levelgen/NoiseSettings;
+
+accessible method net/minecraft/world/level/levelgen/NoiseRouterData end (Lnet/minecraft/core/HolderGetter;)Lnet/minecraft/world/level/levelgen/NoiseRouter;
+accessible method net/minecraft/world/level/levelgen/NoiseRouterData nether (Lnet/minecraft/core/HolderGetter;Lnet/minecraft/core/HolderGetter;)Lnet/minecraft/world/level/levelgen/NoiseRouter;
+accessible method net/minecraft/world/level/levelgen/NoiseRouterData overworld (Lnet/minecraft/core/HolderGetter;Lnet/minecraft/core/HolderGetter;ZZ)Lnet/minecraft/world/level/levelgen/NoiseRouter;
+accessible method net/minecraft/world/level/levelgen/NoiseRouterData caves (Lnet/minecraft/core/HolderGetter;Lnet/minecraft/core/HolderGetter;)Lnet/minecraft/world/level/levelgen/NoiseRouter;
+accessible method net/minecraft/world/level/levelgen/NoiseRouterData floatingIslands (Lnet/minecraft/core/HolderGetter;Lnet/minecraft/core/HolderGetter;)Lnet/minecraft/world/level/levelgen/NoiseRouter;
+
+# MultifaceBlock requires the WATERLOGGED property due to this private method - we want a subclass that does not have
+# it so we must be able to override this method
+extendable method net/minecraft/world/level/block/MultifaceBlock makeShapes ()Ljava/util/function/Function;
+
+# Used for datagen
+accessible field net/minecraft/data/registries/VanillaRegistries BUILDER Lnet/minecraft/core/RegistrySetBuilder;
+accessible class net/minecraft/core/RegistrySetBuilder$RegistryStub
+accessible field net/minecraft/core/RegistrySetBuilder entries Ljava/util/List;
+accessible method net/minecraft/data/registries/VanillaRegistries validateThatAllBiomeFeaturesHaveBiomeFilter (Lnet/minecraft/core/HolderLookup$Provider;)V

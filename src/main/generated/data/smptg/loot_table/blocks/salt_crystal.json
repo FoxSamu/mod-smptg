@@ -1,0 +1,202 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "smptg:salt_crystal",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "age": "1"
+                  }
+                }
+              ],
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.4,
+                "min": 1.2
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "smptg:salt_crystal",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "age": "2"
+                  }
+                }
+              ],
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.8,
+                "min": 1.4
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "smptg:salt_crystal",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "age": "3"
+                  }
+                }
+              ],
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.2,
+                "min": 1.6
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "smptg:salt_crystal",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "age": "4"
+                  }
+                }
+              ],
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.6,
+                "min": 1.8
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "smptg:salt_crystal",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "age": "5"
+                  }
+                }
+              ],
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 2.0
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "smptg:salt_crystal",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "age": "6"
+                  }
+                }
+              ],
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3.4,
+                "min": 2.2
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "smptg:salt_crystal",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "age": "7"
+                  }
+                }
+              ],
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3.8,
+                "min": 2.4
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "add": false,
+              "conditions": [
+                {
+                  "block": "smptg:salt_crystal",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "age": "8"
+                  }
+                }
+              ],
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 4.2,
+                "min": 2.6
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "conditions": [
+                {
+                  "block": "smptg:salt_crystal",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "age": {
+                      "max": "6"
+                    }
+                  }
+                }
+              ],
+              "enchantment": "minecraft:fortune",
+              "formula": "minecraft:uniform_bonus_count",
+              "function": "minecraft:apply_bonus",
+              "parameters": {
+                "bonusMultiplier": 1
+              }
+            },
+            {
+              "conditions": [
+                {
+                  "block": "smptg:salt_crystal",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "age": {
+                      "min": "7"
+                    }
+                  }
+                }
+              ],
+              "enchantment": "minecraft:fortune",
+              "formula": "minecraft:uniform_bonus_count",
+              "function": "minecraft:apply_bonus",
+              "parameters": {
+                "bonusMultiplier": 2
+              }
+            },
+            {
+              "function": "minecraft:explosion_decay"
+            }
+          ],
+          "name": "smptg:rocksalt_chunk"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

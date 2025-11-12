@@ -1,0 +1,9 @@
+{
+  "values": [
+    "smptg:aspen_log",
+    "smptg:beech_log",
+    "smptg:maple_log",
+    "smptg:redwood_log",
+    "smptg:dead_log"
+  ]
+}

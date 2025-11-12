@@ -1,0 +1,12 @@
+{
+  "values": [
+    "smptg:salted_beef",
+    "smptg:salted_porkchop",
+    "smptg:salted_mutton",
+    "smptg:salted_chicken",
+    "smptg:cooked_salted_beef",
+    "smptg:cooked_salted_porkchop",
+    "smptg:cooked_salted_mutton",
+    "smptg:cooked_salted_chicken"
+  ]
+}

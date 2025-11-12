@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "package": "net.foxboi.salted.mixin.main",
+  "compatibilityLevel": "JAVA_21",
+
+  "mixins": [
+    "BiomeMixin", "BlockMixin", "BucketItemMixin", "GrassBlockMixin", "IceBlockMixin", "LevelMixin",
+    "MultifaceBlockMixin", "ResourceLocationMixin", "ServerLevelMixin",
+    "ShearsItemMixin", "SlimeMixin", "SnowLayerBlockMixin"
+  ],
+  "client": [ "ClientLevelMixin", "RenderSectionRegionMixin" ],
+
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}
