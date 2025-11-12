@@ -2,6 +2,7 @@ package net.foxboi.salted.common.levelgen;
 
 import java.util.List;
 
+import net.foxboi.salted.common.block.ModBlocks;
 import net.foxboi.salted.common.levelgen.feature.DefinedFeature;
 import net.foxboi.salted.common.util.DataRegistry;
 import net.minecraft.core.registries.Registries;
@@ -9,6 +10,9 @@ import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.TreePlacements;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.random.WeightedList;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -17,6 +21,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.RandomFeatureCo
 import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 
 import static net.foxboi.salted.common.levelgen.FeatureConditions.*;
 
@@ -115,6 +120,23 @@ public record ModVegetationFeatures() {
             5
     ));
 
+    public static final ResourceKey<ConfiguredFeature<?, ?>> PLANT_BARLEY_FIELD = REGISTRY.register("plant_barley_field", block(
+            new WeightedStateProvider(
+                    weightedList()
+                            .add(ModBlocks.BARLEY.defaultBlockState(), 1200)
+                            .add(ModBlocks.TALL_BARLEY.defaultBlockState(), 200)
+                            .add(Blocks.SHORT_GRASS.defaultBlockState(), 400)
+                            .add(Blocks.TALL_GRASS.defaultBlockState(), 120)
+                            .add(Blocks.SHORT_DRY_GRASS.defaultBlockState(), 100)
+                            .add(Blocks.TALL_DRY_GRASS.defaultBlockState(), 35)
+                            .build()
+            )
+    ));
+
+
+    private static WeightedList.Builder<BlockState> weightedList() {
+        return new WeightedList.Builder<>();
+    }
 
     private static DefinedFeature<?> patch(BlockStateProvider block, BlockPredicate predicate, int attempts) {
         return patch(block, predicate, attempts, 7);
@@ -134,6 +156,14 @@ public record ModVegetationFeatures() {
                                 predicate
                         )
                 )
+        );
+    }
+
+
+    private static DefinedFeature<?> block(BlockStateProvider block) {
+        return DefinedFeature.of(
+                Feature.SIMPLE_BLOCK,
+                new SimpleBlockConfiguration(block)
         );
     }
 

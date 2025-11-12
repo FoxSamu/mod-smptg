@@ -13,6 +13,8 @@ import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.placement.*;
 import net.minecraft.world.level.material.Fluids;
 
+import static net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate.*;
+
 public record ModVegetationPlacements() {
     private static final DataRegistry<PlacedFeature> REGISTRY = DataRegistry.of(Registries.PLACED_FEATURE);
 
@@ -92,7 +94,7 @@ public record ModVegetationPlacements() {
             DefinedPlacement
                     .place(ModVegetationFeatures.PATCH_CATTAIL)
                     .count(UniformInt.of(1, 2))
-                    .modified(patchPlacement(BlockPredicate.matchesFluids(Direction.DOWN.getUnitVec3i(), Fluids.WATER)))
+                    .modified(patchPlacement(matchesFluids(Direction.DOWN.getUnitVec3i(), Fluids.WATER)))
     );
 
     public static final ResourceKey<PlacedFeature> PATCH_CATTAIL_IN_WATER = REGISTRY.register(
@@ -156,7 +158,21 @@ public record ModVegetationPlacements() {
             DefinedPlacement
                     .place(ModVegetationFeatures.PATCH_MOSS_CARPET)
                     .count(ConstantInt.of(4))
-                    .modified(patchPlacement(BlockPredicate.matchesBlocks(Direction.DOWN.getUnitVec3i(), FeatureConditions.MOSS_GROW_BLOCKS)))
+                    .modified(patchPlacement(matchesBlocks(Direction.DOWN.getUnitVec3i(), FeatureConditions.MOSS_GROW_BLOCKS)))
+    );
+
+
+    // Vegetation mixes
+    // ===============================================================
+
+    public static final ResourceKey<PlacedFeature> VEGETATION_BARLEY_FIELD = REGISTRY.register(
+            "vegetation_barley_field",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.PLANT_BARLEY_FIELD)
+                    .fill(0.75f)
+                    .onOceanFloorWg()
+                    .onlyIf(allOf(ONLY_IN_AIR_PREDICATE, matchesBlocks(Direction.DOWN.getUnitVec3i(), FeatureConditions.SANDY_GROW_BLOCKS)))
+                    .inBiome()
     );
 
 
@@ -194,6 +210,6 @@ public record ModVegetationPlacements() {
     private static DefinedPlacement.Modifier treePlacement(DefinedPlacement.Modifier amount, Block sapling) {
         return it -> it
                 .modified(treePlacement(amount))
-                .onlyIf(BlockPredicate.wouldSurvive(sapling.defaultBlockState(), BlockPos.ZERO));
+                .onlyIf(wouldSurvive(sapling.defaultBlockState(), BlockPos.ZERO));
     }
 }

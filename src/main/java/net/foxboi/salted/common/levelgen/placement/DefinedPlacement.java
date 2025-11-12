@@ -78,6 +78,10 @@ public class DefinedPlacement implements Definition<PlacedFeature> {
         return modified(InSquarePlacement.spread());
     }
 
+    public DefinedPlacement fill(float probability) {
+        return modified(RepeatInSquarePlacement.fill(probability));
+    }
+
     public DefinedPlacement atHeight(HeightProvider height) {
         return modified(HeightRangePlacement.of(height));
     }

@@ -5,8 +5,8 @@
 
   "mixins": [
     "BiomeMixin", "BlockMixin", "BucketItemMixin", "GrassBlockMixin", "IceBlockMixin", "LevelMixin",
-    "MultifaceBlockMixin", "ResourceLocationMixin", "ServerLevelMixin",
-    "ShearsItemMixin", "SlimeMixin", "SnowLayerBlockMixin"
+    "MultifaceBlockMixin", "ResourceLocationMixin", "ServerLevelMixin", "ShearsItemMixin", "SimpleBlockFeatureMixin",
+    "SlimeMixin", "SnowLayerBlockMixin"
   ],
   "client": [ "ClientLevelMixin", "RenderSectionRegionMixin" ],
 

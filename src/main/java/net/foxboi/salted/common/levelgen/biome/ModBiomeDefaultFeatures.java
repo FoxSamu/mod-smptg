@@ -68,6 +68,11 @@ public record ModBiomeDefaultFeatures() {
         builder.addFeature(VEGETAL_DECORATION, ModVegetationPlacements.PATCH_GRASS_SPROUTS_EXTRA_COMMON);
     }
 
+    public static void addBarleyFieldVegetation(BiomeGenerationSettings.Builder builder) {
+        builder.addFeature(VEGETAL_DECORATION, VegetationPlacements.TREES_PLAINS);
+        builder.addFeature(VEGETAL_DECORATION, ModVegetationPlacements.VEGETATION_BARLEY_FIELD);
+    }
+
     public static void addCattail(BiomeGenerationSettings.Builder builder) {
         builder.addFeature(VEGETAL_DECORATION, ModVegetationPlacements.PATCH_CATTAIL_NEAR_WATER);
         builder.addFeature(VEGETAL_DECORATION, ModVegetationPlacements.PATCH_CATTAIL_IN_WATER);

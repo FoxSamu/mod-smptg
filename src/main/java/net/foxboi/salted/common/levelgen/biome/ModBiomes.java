@@ -14,6 +14,7 @@ public record ModBiomes() {
     public static final ResourceKey<Biome> ASPEN_FOREST = REGISTRY.register("aspen_forest", new AspenForest());
     public static final ResourceKey<Biome> MAPLE_FOREST = REGISTRY.register("maple_forest", new MapleForest());
     public static final ResourceKey<Biome> WOODED_PLAINS = REGISTRY.register("wooded_plains", new WoodedPlains());
+    public static final ResourceKey<Biome> BARLEY_FIELD = REGISTRY.register("barley_field", new BarleyField());
 
     public static void init() {
         // N/A, just initialises the class
@@ -23,5 +24,6 @@ public record ModBiomes() {
         translator.name(ASPEN_FOREST, "Aspen Forest");
         translator.name(MAPLE_FOREST, "Maple Forest");
         translator.name(WOODED_PLAINS, "Wooded Plains");
+        translator.name(BARLEY_FIELD, "Barley Field");
     }
 }

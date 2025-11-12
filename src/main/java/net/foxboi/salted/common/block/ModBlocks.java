@@ -13,6 +13,7 @@ import net.foxboi.salted.data.lang.Translator;
 import net.foxboi.salted.data.loot.BlockDrops;
 import net.foxboi.salted.data.model.BlockModels;
 import net.foxboi.salted.data.model.BlockModelsImpl;
+import net.foxboi.salted.data.shadercompat.ShaderCompat;
 import net.foxboi.salted.data.tags.ToolTags;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderSet;
@@ -911,6 +912,35 @@ public record ModBlocks() {
         colors.grass(TALL_CATTAIL);
         colors.grass(LAVENDER);
         colors.grass(TALL_LAVENDER);
+    }
+
+
+    // SHADER COMPAT
+    // =============================================
+
+    public static void shadercompat(ShaderCompat compat) {
+        compat.leaves(ASPEN_LEAVES);
+        compat.leaves(RED_MAPLE_LEAVES);
+        compat.leaves(ORANGE_MAPLE_LEAVES);
+        compat.leaves(YELLOW_MAPLE_LEAVES);
+        compat.leaves(REDWOOD_LEAVES);
+        compat.leaves(BEECH_LEAVES);
+        compat.leaves(DEAD_LEAVES);
+
+        compat.plant(CLOVERS);
+        compat.plant(GRASS_SPROUTS);
+        compat.plant(CATTAIL);
+        compat.plant(LAVENDER);
+        compat.plant(BARLEY);
+        compat.plant(CAVE_GRASS);
+        compat.plant(ASHCREEP);
+
+        compat.tallPlant(TALL_CATTAIL);
+        compat.tallPlant(TALL_LAVENDER);
+        compat.tallPlant(TALL_BARLEY);
+
+        compat.hangingPlant(ASHVINE);
+        compat.hangingPlant(DRIPMOSS);
     }
 
 

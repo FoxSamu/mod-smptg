@@ -74,6 +74,8 @@ loom {
                 property("smptg.datagen", "run_on_reload")
                 property("smptg.datagen.output", "$generatedResourcesDir")
                 property("smptg.datagen.copy_to", "${tasks.processResources.get().destinationDir}")
+
+                property("smptg.shadercompat.input", "$projectDir/shadercompat")
             }
         }
 
@@ -106,6 +108,8 @@ loom {
             property("smptg.datagen", "run_and_stop")
             property("smptg.datagen.output", "$generatedResourcesDir")
             property("smptg.datagen.copy_to", "${tasks.processResources.get().destinationDir}")
+
+            property("smptg.shadercompat.input", "$projectDir/shadercompat")
         }
 
 

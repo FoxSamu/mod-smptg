@@ -12,6 +12,7 @@ import net.foxboi.salted.data.loot.BlockLootTableProvider;
 import net.foxboi.salted.data.model.ModelProvider;
 import net.foxboi.salted.data.recipes.RecipesProvider;
 import net.foxboi.salted.data.registry.RegistryProvider;
+import net.foxboi.salted.data.shadercompat.ShaderCompatGenerator;
 import net.foxboi.salted.data.tags.BiomeTagProvider;
 import net.foxboi.salted.data.tags.BlockTagProvider;
 import net.foxboi.salted.data.tags.EntityTypeTagProvider;
@@ -41,6 +42,9 @@ public class SmptgData implements DataGeneratorEntrypoint {
 
         pack.addProvider(EntityTypeTagProvider::new);
         pack.addProvider(BiomeTagProvider::new);
+
+        // Shadercompat
+        pack.addProvider(ShaderCompatGenerator::new);
     }
 
     @Override

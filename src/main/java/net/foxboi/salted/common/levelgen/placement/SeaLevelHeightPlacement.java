@@ -11,6 +11,9 @@ import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
+/**
+ * Placement modifier that moves a feature to a specific offset from sea level.
+ */
 public class SeaLevelHeightPlacement extends PlacementModifier {
     public static final MapCodec<SeaLevelHeightPlacement> CODEC = Codec.intRange(-4096, 4096)
             .xmap(SeaLevelHeightPlacement::new, it -> it.offset)
