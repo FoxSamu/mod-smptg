@@ -1,615 +1,296 @@
 package net.foxboi.salted.data.model;
 
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-
-import net.foxboi.salted.client.color.BiomeColorTint;
-import net.foxboi.salted.common.Smptg;
-import net.foxboi.salted.common.block.AbstractColumnPlantBlock;
-import net.foxboi.salted.common.block.DiagonallyAttachableBlock;
-import net.foxboi.salted.common.block.MultilayerBlock;
-import net.foxboi.salted.common.block.SaltCrystalBlock;
-import net.foxboi.salted.common.util.DiagonalDirection;
-import net.minecraft.client.color.item.ItemTintSource;
-import net.minecraft.client.data.models.BlockModelGenerators;
-import net.minecraft.client.data.models.MultiVariant;
-import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
-import net.minecraft.client.data.models.blockstates.PropertyDispatch;
-import net.minecraft.client.data.models.model.*;
-import net.minecraft.client.renderer.block.model.VariantMutator;
-import net.minecraft.core.Direction;
+import net.foxboi.salted.common.util.ItemTint;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SegmentableBlock;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
-import static net.minecraft.client.data.models.BlockModelGenerators.*;
+/**
+ * A server-safe interface to which {@link net.foxboi.salted.common.block.ModBlocks} supplies block model data to the
+ * data generator.
+ */
+public interface BlockModels {
+    /**
+     * Creates a model provider for block families.
+     */
+    FamilyModels family(Block base);
 
-public final class BlockModels {
-    private static final PropertyDispatch<VariantMutator> ROTATIONS_COLUMN_WITH_FACING = PropertyDispatch.modify(BlockStateProperties.FACING)
-            .select(Direction.DOWN, X_ROT_180)
-            .select(Direction.UP, NOP)
-            .select(Direction.NORTH, X_ROT_90)
-            .select(Direction.SOUTH, X_ROT_90.then(Y_ROT_180))
-            .select(Direction.WEST, X_ROT_90.then(Y_ROT_270))
-            .select(Direction.EAST, X_ROT_90.then(Y_ROT_90));
-
-    private static final List<ModelTemplate> MULTILAYER_MODELS = List.of(
-            ModModelTemplates.LAYER_HEIGHT2,
-            ModModelTemplates.LAYER_HEIGHT4,
-            ModModelTemplates.LAYER_HEIGHT6,
-            ModModelTemplates.LAYER_HEIGHT8,
-            ModModelTemplates.LAYER_HEIGHT10,
-            ModModelTemplates.LAYER_HEIGHT12,
-            ModModelTemplates.LAYER_HEIGHT14,
-            ModModelTemplates.LAYER_HEIGHT16
-    );
-
-    private static final DiagonalDirection[] ALIGNED_DIRECTIONS = {
-            DiagonalDirection.NORTH,
-            DiagonalDirection.EAST,
-            DiagonalDirection.SOUTH,
-            DiagonalDirection.WEST
-    };
-
-    private static final DiagonalDirection[] DIAGONAL_DIRECTIONS = {
-            DiagonalDirection.NORTH_WEST,
-            DiagonalDirection.NORTH_EAST,
-            DiagonalDirection.SOUTH_EAST,
-            DiagonalDirection.SOUTH_WEST
-    };
-
-    private static final VariantMutator[] SHELF_FUNGUS_ROTATIONS = {
-            Y_ROT_180,
-            Y_ROT_270,
-            NOP,
-            Y_ROT_90
-    };
-
-    private static final Map<Block, ResourceLocation> SNOWY_SIDE_TEXTURES = Map.of(
-            Blocks.DIRT, ResourceLocation.withDefaultNamespace("block/grass_block_snow")
-    );
-
-    private final BlockModelGenerators gen;
-
-    public BlockModels(BlockModelGenerators gen) {
-        this.gen = gen;
-    }
+    /**
+     * Creates a model provider for log sets.
+     */
+    WoodModels wood(Block base);
 
     /**
      * Creates a simple cube block with the same texture on all sides.
      */
-    public void cube(Block block) {
-        gen.createTrivialCube(block);
-    }
+    void cube(Block block);
 
     /**
      * Creates a simple cube block with the same texture on all sides, that is randomly rotated (like dirt).
      */
-    public void randomlyRotatedCube(Block block) {
-        gen.createRotatedVariantBlock(block);
-    }
+    void randomlyRotatedCube(Block block);
 
     /**
      * Creates a simple cube block with the same texture on all sides, that is randomly mirrored (like stone).
      */
-    public void randomlyMirroredCube(Block block) {
-        gen.createRotatedMirroredVariantBlock(block);
-    }
-
-
-    private void crossPlant(Block block, PlantType type, ItemTintSource... tints) {
-        createCrossBlock(block, type);
-        gen.itemModelOutput.accept(block.asItem(), ItemModelUtils.tintedModel(type.createItemModel(gen, block), tints));
-    }
+    void randomlyMirroredCube(Block block);
 
     /**
      * Creates an untinted cross plant.
      */
-    public void crossPlant(Block block) {
-        crossPlant(block, PlantType.NOT_TINTED);
+    void crossPlant(Block block);
+
+    /**
+     * Creates a tinted cross plant.
+     */
+    void tintedCrossPlant(Block block, ItemTint tint);
+
+    /**
+     * Creates a tinted cross plant.
+     */
+    default void tintedCrossPlant(Block block, int tint) {
+        tintedCrossPlant(block, ItemTint.constant(tint));
     }
 
     /**
      * Creates a tinted cross plant.
      */
-    public void tintedCrossPlant(Block block, ItemTintSource tint) {
-        crossPlant(block, PlantType.TINTED, tint);
-    }
-
-    /**
-     * Creates a tinted cross plant.
-     */
-    public void tintedCrossPlant(Block block, int tint) {
-        crossPlant(block, PlantType.TINTED, ItemModelUtils.constantTint(tint));
-    }
-
-    /**
-     * Creates a tinted cross plant.
-     */
-    public void tintedCrossPlant(Block block, ResourceLocation tint) {
-        crossPlant(block, PlantType.TINTED, new BiomeColorTint(tint));
+    default void tintedCrossPlant(Block block, ResourceLocation tint) {
+        tintedCrossPlant(block, ItemTint.biomeColor(tint));
     }
 
     /**
      * Creates a tinted cross plant with an untinted overlay.
      */
-    public void layeredCrossPlant(Block block, ItemTintSource tint) {
-        crossPlant(block, PlantType.LAYERED, tint);
+    void layeredCrossPlant(Block block, ItemTint tint);
+
+    /**
+     * Creates a tinted cross plant with an untinted overlay.
+     */
+    default void layeredCrossPlant(Block block, int tint) {
+        layeredCrossPlant(block, ItemTint.constant(tint));
     }
 
     /**
      * Creates a tinted cross plant with an untinted overlay.
      */
-    public void layeredCrossPlant(Block block, int tint) {
-        crossPlant(block, PlantType.LAYERED, ItemModelUtils.constantTint(tint));
-    }
-
-    /**
-     * Creates a tinted cross plant with an untinted overlay.
-     */
-    public void layeredCrossPlant(Block block, ResourceLocation tint) {
-        crossPlant(block, PlantType.LAYERED, new BiomeColorTint(tint));
+    default void layeredCrossPlant(Block block, ResourceLocation tint) {
+        layeredCrossPlant(block, ItemTint.biomeColor(tint));
     }
 
     /**
      * Creates an untinted cross plant with an emissive overlay.
      */
-    public void emissiveCrossPlant(Block block) {
-        crossPlant(block, PlantType.EMISSIVE_NOT_TINTED);
-    }
-
-    private void tallCrossPlant(Block block, PlantType type, ItemTintSource... tints) {
-        createDoublePlant(block, type);
-        gen.itemModelOutput.accept(block.asItem(), ItemModelUtils.tintedModel(type.createItemModel(gen, block, "_top"), tints));
-    }
+    void emissiveCrossPlant(Block block);
 
     /**
      * Creates an untinted double-block cross plant.
      */
-    public void tallCrossPlant(Block block) {
-        tallCrossPlant(block, PlantType.NOT_TINTED);
+    void tallCrossPlant(Block block);
+
+    /**
+     * Creates a tinted double-block cross plant.
+     */
+    void tallTintedCrossPlant(Block block, ItemTint tint);
+
+    /**
+     * Creates a tinted double-block cross plant.
+     */
+    default void tallTintedCrossPlant(Block block, int tint) {
+        tallTintedCrossPlant(block, ItemTint.constant(tint));
     }
 
     /**
      * Creates a tinted double-block cross plant.
      */
-    public void tallTintedCrossPlant(Block block, ItemTintSource tint) {
-        tallCrossPlant(block, PlantType.TINTED, tint);
-    }
-
-    /**
-     * Creates a tinted double-block cross plant.
-     */
-    public void tallTintedCrossPlant(Block block, int tint) {
-        tallCrossPlant(block, PlantType.TINTED, ItemModelUtils.constantTint(tint));
-    }
-
-    /**
-     * Creates a tinted double-block cross plant.
-     */
-    public void tallTintedCrossPlant(Block block, ResourceLocation tint) {
-        tallCrossPlant(block, PlantType.TINTED, new BiomeColorTint(tint));
+    default void tallTintedCrossPlant(Block block, ResourceLocation tint) {
+        tallTintedCrossPlant(block, ItemTint.biomeColor(tint));
     }
 
     /**
      * Creates a tinted double-block cross plant with untinted overlay.
      */
-    public void tallLayeredCrossPlant(Block block, ItemTintSource tint) {
-        tallCrossPlant(block, PlantType.LAYERED, tint);
+    void tallLayeredCrossPlant(Block block, ItemTint tint);
+
+    /**
+     * Creates a tinted double-block cross plant with untinted overlay.
+     */
+    default void tallLayeredCrossPlant(Block block, int tint) {
+        tallLayeredCrossPlant(block, ItemTint.constant(tint));
     }
 
     /**
      * Creates a tinted double-block cross plant with untinted overlay.
      */
-    public void tallLayeredCrossPlant(Block block, int tint) {
-        tallCrossPlant(block, PlantType.LAYERED, ItemModelUtils.constantTint(tint));
-    }
-
-    /**
-     * Creates a tinted double-block cross plant with untinted overlay.
-     */
-    public void tallLayeredCrossPlant(Block block, ResourceLocation tint) {
-        tallCrossPlant(block, PlantType.LAYERED, new BiomeColorTint(tint));
+    default void tallLayeredCrossPlant(Block block, ResourceLocation tint) {
+        tallLayeredCrossPlant(block, ItemTint.biomeColor(tint));
     }
 
     /**
      * Creates an untinted double-block cross plant with emissive overlay.
      */
-    public void tallEmissiveCrossPlant(Block block) {
-        tallCrossPlant(block, PlantType.EMISSIVE_NOT_TINTED);
-    }
+    void tallEmissiveCrossPlant(Block block);
 
+    /**
+     * Creates an untinted column cross plant.
+     */
+    void columnCrossPlant(Block block);
 
-    private void columnCrossPlant(Block block, PlantType type, ItemTintSource... tints) {
-        createColumnPlant(block, type);
-        gen.itemModelOutput.accept(block.asItem(), ItemModelUtils.tintedModel(type.createItemModel(gen, block, "_end"), tints));
+    /**
+     * Creates a tinted column cross plant.
+     */
+    void columnTintedCrossPlant(Block block, ItemTint tint);
+
+    /**
+     * Creates a tinted column cross plant.
+     */
+    default void columnTintedCrossPlant(Block block, int tint) {
+        columnTintedCrossPlant(block, ItemTint.constant(tint));
     }
 
     /**
-     * Creates an untinted double-block cross plant.
+     * Creates a tinted column cross plant.
      */
-    public void columnCrossPlant(Block block) {
-        columnCrossPlant(block, PlantType.NOT_TINTED);
+    default void columnTintedCrossPlant(Block block, ResourceLocation tint) {
+        columnTintedCrossPlant(block, ItemTint.biomeColor(tint));
     }
 
     /**
-     * Creates a tinted double-block cross plant.
+     * Creates a tinted column cross plant with untinted overlay.
      */
-    public void columnTintedCrossPlant(Block block, ItemTintSource tint) {
-        columnCrossPlant(block, PlantType.TINTED, tint);
+    void columnLayeredCrossPlant(Block block, ItemTint tint);
+
+    /**
+     * Creates a tinted column cross plant with untinted overlay.
+     */
+    default void columnLayeredCrossPlant(Block block, int tint) {
+        columnLayeredCrossPlant(block, ItemTint.constant(tint));
     }
 
     /**
-     * Creates a tinted double-block cross plant.
+     * Creates a tinted column cross plant with untinted overlay.
      */
-    public void columnTintedCrossPlant(Block block, int tint) {
-        columnCrossPlant(block, PlantType.TINTED, ItemModelUtils.constantTint(tint));
+    default void columnLayeredCrossPlant(Block block, ResourceLocation tint) {
+        columnLayeredCrossPlant(block, ItemTint.biomeColor(tint));
     }
 
     /**
-     * Creates a tinted double-block cross plant.
+     * Creates an untinted column cross plant with emissive overlay.
      */
-    public void columnTintedCrossPlant(Block block, ResourceLocation tint) {
-        columnCrossPlant(block, PlantType.TINTED, new BiomeColorTint(tint));
-    }
-
-    /**
-     * Creates a tinted double-block cross plant with untinted overlay.
-     */
-    public void columnLayeredCrossPlant(Block block, ItemTintSource tint) {
-        columnCrossPlant(block, PlantType.LAYERED, tint);
-    }
-
-    /**
-     * Creates a tinted double-block cross plant with untinted overlay.
-     */
-    public void columnLayeredCrossPlant(Block block, int tint) {
-        columnCrossPlant(block, PlantType.LAYERED, ItemModelUtils.constantTint(tint));
-    }
-
-    /**
-     * Creates a tinted double-block cross plant with untinted overlay.
-     */
-    public void columnLayeredCrossPlant(Block block, ResourceLocation tint) {
-        columnCrossPlant(block, PlantType.LAYERED, new BiomeColorTint(tint));
-    }
-
-    /**
-     * Creates an untinted double-block cross plant with emissive overlay.
-     */
-    public void columnEmissiveCrossPlant(Block block) {
-        columnCrossPlant(block, PlantType.EMISSIVE_NOT_TINTED);
-    }
-
+    void columnEmissiveCrossPlant(Block block);
 
     /**
      * Creates an untinted flower bed.
      */
-    public void flowerBed(Block block) {
-        var segment1 = plainVariant(TexturedModel.FLOWERBED_1.create(block, gen.modelOutput));
-        var segment2 = plainVariant(TexturedModel.FLOWERBED_2.create(block, gen.modelOutput));
-        var segment3 = plainVariant(TexturedModel.FLOWERBED_3.create(block, gen.modelOutput));
-        var segment4 = plainVariant(TexturedModel.FLOWERBED_4.create(block, gen.modelOutput));
+    void flowerBed(Block block);
 
-        var property = block instanceof SegmentableBlock sb
-                ? sb.getSegmentAmountProperty()
-                : BlockStateProperties.FLOWER_AMOUNT;
+    /**
+     * Creates a tinted flower bed.
+     */
+    void tintedFlowerBed(Block block, ItemTint tint);
 
-        gen.createSegmentedBlock(
-                block,
-                segment1, it -> it,
-                segment2, it -> it.term(property, 2, 3, 4),
-                segment3, it -> it.term(property, 3, 4),
-                segment4, it -> it.term(property, 4)
-        );
-
-        gen.itemModelOutput.accept(block.asItem(), ItemModelUtils.plainModel(gen.createFlatItemModel(block.asItem())));
+    /**
+     * Creates a tinted flower bed.
+     */
+    default void tintedFlowerBed(Block block, int tint) {
+        tintedFlowerBed(block, ItemTint.constant(tint));
     }
 
     /**
      * Creates a tinted flower bed.
      */
-    public void tintedFlowerBed(Block block, ItemTintSource tint) {
-        var segment1 = plainVariant(ModTexturedModels.TINTED_FLOWERBED_1.create(block, gen.modelOutput));
-        var segment2 = plainVariant(ModTexturedModels.TINTED_FLOWERBED_2.create(block, gen.modelOutput));
-        var segment3 = plainVariant(ModTexturedModels.TINTED_FLOWERBED_3.create(block, gen.modelOutput));
-        var segment4 = plainVariant(ModTexturedModels.TINTED_FLOWERBED_4.create(block, gen.modelOutput));
-
-        var property = block instanceof SegmentableBlock sb
-                ? sb.getSegmentAmountProperty()
-                : BlockStateProperties.FLOWER_AMOUNT;
-
-        gen.createSegmentedBlock(
-                block,
-                segment1, it -> it,
-                segment2, it -> it.term(property, 2, 3, 4),
-                segment3, it -> it.term(property, 3, 4),
-                segment4, it -> it.term(property, 4)
-        );
-
-        gen.itemModelOutput.accept(block.asItem(), ItemModelUtils.tintedModel(gen.createFlatItemModel(block.asItem()), tint));
-    }
-
-    /**
-     * Creates a tinted flower bed.
-     */
-    public void tintedFlowerBed(Block block, int tint) {
-        tintedFlowerBed(block, ItemModelUtils.constantTint(tint));
-    }
-
-    /**
-     * Creates a tinted flower bed.
-     */
-    public void tintedFlowerBed(Block block, ResourceLocation tint) {
-        tintedFlowerBed(block, new BiomeColorTint(tint));
+    default void tintedFlowerBed(Block block, ResourceLocation tint) {
+        tintedFlowerBed(block, ItemTint.biomeColor(tint));
     }
 
     /**
      * Creates an untinted multiface block.
      */
-    public void multiface(Block block) {
-        // createMultiface does not generate a block model, doing this generates one using our flat model template
-        ModModelTemplates.FLAT.create(block, TextureMapping.defaultTexture(block), gen.modelOutput);
+    void multiface(Block block);
 
-        gen.createMultiface(block);
+    /**
+     * Creates a tinted multiface block.
+     */
+    void tintedMultiface(Block block, ItemTint tint);
+
+    /**
+     * Creates a tinted multiface block.
+     */
+    default void tintedMultiface(Block block, int tint) {
+        tintedMultiface(block, ItemTint.constant(tint));
     }
 
     /**
      * Creates a tinted multiface block.
      */
-    public void tintedMultiface(Block block, ItemTintSource tint) {
-        // createMultiface does not generate a block model, doing this generates one using our flat model template
-        ModModelTemplates.FLAT_TINTED.create(block, TextureMapping.defaultTexture(block), gen.modelOutput);
-
-        gen.createMultifaceBlockStates(block);
-        gen.registerSimpleTintedItemModel(block, gen.createFlatItemModelWithBlockTexture(block.asItem(), block), tint);
-    }
-
-    /**
-     * Creates a tinted multiface block.
-     */
-    public void tintedMultiface(Block block, int tint) {
-        tintedMultiface(block, ItemModelUtils.constantTint(tint));
-    }
-
-    /**
-     * Creates a tinted multiface block.
-     */
-    public void tintedMultiface(Block block, ResourceLocation tint) {
-        tintedMultiface(block, new BiomeColorTint(tint));
-    }
-
-    /**
-     * Creates a shelf fungus.
-     */
-    public void shelfFungus(Block block) {
-        var disp = PropertyDispatch.initial(DiagonallyAttachableBlock.FACING);
-
-        var aligned1 = plainModel(createAlignedShelfFungus(block, "_1"));
-        var aligned2 = plainModel(createAlignedShelfFungus(block, "_2"));
-        var aligned3 = plainModel(createAlignedShelfFungus(block, "_3"));
-        var aligned = variants(aligned1, aligned2, aligned3);
-
-        var diagonal1 = plainModel(createDiagonalShelfFungus(block, "_1"));
-        var diagonal2 = plainModel(createDiagonalShelfFungus(block, "_2"));
-        var diagonal3 = plainModel(createDiagonalShelfFungus(block, "_3"));
-        var diagonal = variants(diagonal1, diagonal2, diagonal3);
-
-        for (int i = 0; i < 4; i++) {
-            disp.select(ALIGNED_DIRECTIONS[i], aligned.with(SHELF_FUNGUS_ROTATIONS[i]));
-            disp.select(DIAGONAL_DIRECTIONS[i], diagonal.with(SHELF_FUNGUS_ROTATIONS[i]));
-        }
-
-        gen.blockStateOutput.accept(
-                MultiVariantGenerator.dispatch(block)
-                        .with(disp)
-        );
-
-        gen.registerSimpleItemModel(block, gen.createFlatItemModel(block.asItem()));
-    }
-
-    /**
-     * Creates a leaves model using the maple leaves texture.
-     */
-    public void mapleLeaves(Block block, ResourceLocation colorName) {
-        createMapleLeaves(block, TexturedModel.LEAVES, new BiomeColorTint(colorName));
+    default void tintedMultiface(Block block, ResourceLocation tint) {
+        tintedMultiface(block, ItemTint.biomeColor(tint));
     }
 
     /**
      * Creates an untinted leaves model.
      */
-    public void leaves(Block block) {
-        gen.createTrivialBlock(block, TexturedModel.LEAVES);
+    void leaves(Block block);
+
+    /**
+     * Creates a tinted leaves model.
+     */
+    void tintedLeaves(Block block, ItemTint tint);
+
+    /**
+     * Creates a tinted leaves model.
+     */
+    default void tintedLeaves(Block block, int tint) {
+        tintedLeaves(block, ItemTint.constant(tint));
     }
 
     /**
      * Creates a tinted leaves model.
      */
-    public void tintedLeaves(Block block, ItemTintSource tint) {
-        createTintedLeaves(block, TexturedModel.LEAVES, tint);
+    default void tintedLeaves(Block block, ResourceLocation tint) {
+        tintedLeaves(block, ItemTint.biomeColor(tint));
     }
 
     /**
-     * Creates a tinted leaves model.
+     * Creates a tinted leaves model using the maple leaves texture.
      */
-    public void tintedLeaves(Block block, int tint) {
-        createTintedLeaves(block, TexturedModel.LEAVES, ItemModelUtils.constantTint(0xFF000000 | tint));
+    void mapleLeaves(Block block, ItemTint tint);
+
+    /**
+     * Creates a tinted leaves model using the maple leaves texture.
+     */
+    default void mapleLeaves(Block block, int tint) {
+        mapleLeaves(block, ItemTint.constant(tint));
     }
 
     /**
-     * Creates a tinted leaves model.
+     * Creates a tinted leaves model using the maple leaves texture.
      */
-    public void tintedLeaves(Block block, ResourceLocation tint) {
-        createTintedLeaves(block, TexturedModel.LEAVES, new BiomeColorTint(tint));
+    default void mapleLeaves(Block block, ResourceLocation tint) {
+        mapleLeaves(block, ItemTint.biomeColor(tint));
     }
 
     /**
      * Creates an untinted covered block model (like grass blocks and podzol).
      */
-    public void coveredBlock(Block block, Block base) {
-        createCoveredBlock(block, base, false);
-    }
+    void coveredBlock(Block block, Block base);
 
     /**
-     * Creates an untinted covered block model (like grass blocks and podzol).
+     * Creates an untinted covered block model with random rotations.
      */
-    public void randomlyRotatedCoveredBlock(Block block, Block base) {
-        createCoveredBlock(block, base, true);
-    }
+    void randomlyRotatedCoveredBlock(Block block, Block base);
 
     /**
-     * Creates a model provider for block families.
+     * Creates a multilayer model.
      */
-    public FamilyModels family(Block block) {
-        var model = FamilyModels.CUSTOM_MODELS.getOrDefault(block, TexturedModel.CUBE.get(block));
-        return new FamilyModels(gen, model.getMapping()).fullBlock(block, model.getTemplate());
-    }
+    void multilayer(Block block, Block fullVariant);
 
-    public BlockModelGenerators.WoodProvider wood(Block block) {
-        return gen.woodProvider(block);
-    }
+    /**
+     * Creates a shelf fungus.
+     */
+    void shelfFungus(Block block);
 
     /**
      * Creates a salt crystal model.
      */
-    public void saltCrystal(Block block) {
-        var disp = PropertyDispatch.initial(SaltCrystalBlock.AGE);
-
-        for (int i = 0; i < 8; i++) {
-            var stage = i + 1;
-            var name = TextureMapping.getBlockTexture(block, "_stage_" + stage);
-            var variant = plainVariant(ModelTemplates.CROSS.create(name, TextureMapping.cross(name), gen.modelOutput));
-            disp.select(stage, variant);
-        }
-
-        gen.blockStateOutput.accept(
-                MultiVariantGenerator.dispatch(block)
-                        .with(disp)
-                        .with(ROTATIONS_COLUMN_WITH_FACING)
-        );
-    }
-
-    /**
-     * Creates an multilayer model.
-     */
-    public void multilayer(Block block, Block fullBlock) {
-        var disp = PropertyDispatch.initial(MultilayerBlock.LAYERS);
-        var mapping = TextureMapping.defaultTexture(fullBlock);
-
-        var models = MULTILAYER_MODELS.stream()
-                .map(it -> it.create(block, mapping, gen.modelOutput))
-                .toList();
-
-        for (int i = 0; i < MultilayerBlock.MAX_HEIGHT; i++) {
-            var height = i + 1;
-            disp.select(height, plainVariant(models.get(i)));
-        }
-
-        gen.blockStateOutput.accept(MultiVariantGenerator.dispatch(block).with(disp));
-        gen.itemModelOutput.accept(block.asItem(), ItemModelUtils.plainModel(models.getFirst()));
-    }
-
-
-    // HELPERS
-    // ==========================================
-
-    private void createTintedLeaves(Block block, TexturedModel.Provider provider, ItemTintSource tint) {
-        var model = provider.create(block, gen.modelOutput);
-        gen.blockStateOutput.accept(createSimpleBlock(block, plainVariant(model)));
-        gen.registerSimpleTintedItemModel(block, model, tint);
-    }
-
-    private void createCoveredBlock(Block block, Block base, boolean randomlyRotate) {
-        var topTexture = TextureMapping.getBlockTexture(block, "_top");
-        var sideTexture = TextureMapping.getBlockTexture(block, "_side");
-        var bottomTexture = TextureMapping.getBlockTexture(base);
-
-        var baseMapping = new TextureMapping()
-                .put(TextureSlot.BOTTOM, bottomTexture)
-                .put(TextureSlot.SIDE, sideTexture)
-                .put(TextureSlot.TOP, topTexture);
-
-        var baseModel = plainModel(ModelTemplates.CUBE_BOTTOM_TOP.create(block, baseMapping, gen.modelOutput));
-        var baseVariant = randomlyRotate ? createRotatedVariants(baseModel) : variant(baseModel);
-
-        if (block.getStateDefinition().getProperties().contains(BlockStateProperties.SNOWY) && SNOWY_SIDE_TEXTURES.containsKey(base)) {
-            var snowySideTexture = SNOWY_SIDE_TEXTURES.get(base);
-
-            var snowyMapping = new TextureMapping()
-                    .put(TextureSlot.BOTTOM, bottomTexture)
-                    .put(TextureSlot.SIDE, snowySideTexture)
-                    .put(TextureSlot.TOP, topTexture);
-
-            var snowyModel = plainModel(ModelTemplates.CUBE_BOTTOM_TOP.createWithSuffix(block, "_snowy", snowyMapping, gen.modelOutput));
-            var snowyVariant = randomlyRotate ? createRotatedVariants(snowyModel) : variant(snowyModel);
-
-            var dispatch = PropertyDispatch.initial(BlockStateProperties.SNOWY)
-                    .select(false, baseVariant)
-                    .select(true, snowyVariant);
-
-            gen.blockStateOutput.accept(MultiVariantGenerator.dispatch(block).with(dispatch));
-        } else {
-            gen.blockStateOutput.accept(createSimpleBlock(block, baseVariant));
-        }
-    }
-
-
-    private void createMapleLeaves(Block block, TexturedModel.Provider provider, ItemTintSource tint) {
-        var model = provider
-                .updateTexture(it -> it.put(TextureSlot.ALL, Smptg.id("block/maple_leaves")))
-                .create(block, gen.modelOutput);
-
-        gen.blockStateOutput.accept(createSimpleBlock(block, plainVariant(model)));
-        gen.registerSimpleTintedItemModel(block, model, tint);
-    }
-
-    private void createCrossBlock(Block block, PlantType type) {
-        var plant = plainVariant(createVariant(block, type.getCross(), type::getTextureMapping));
-        gen.blockStateOutput.accept(createSimpleBlock(block, plant));
-    }
-
-    private void createDoublePlant(Block block, PlantType type) {
-        var top = plainVariant(createVariant(block, "_top", type.getCross(), type::getTextureMapping));
-        var bottom = plainVariant(createVariant(block, "_bottom", type.getCross(), type::getTextureMapping));
-        gen.createDoubleBlock(block, top, bottom);
-    }
-
-    private void createColumnPlant(Block block, PlantType type) {
-        var end = plainVariant(createVariant(block, "_end", type.getCross(), type::getTextureMapping));
-        var base = plainVariant(createVariant(block, type.getCross(), type::getTextureMapping));
-        createColumnBlock(block, end, base);
-    }
-
-    private void createColumnBlock(Block block, MultiVariant end, MultiVariant base) {
-        gen.blockStateOutput.accept(
-                MultiVariantGenerator.dispatch(block).with(
-                        PropertyDispatch.initial(AbstractColumnPlantBlock.END)
-                                .select(true, end)
-                                .select(false, base)
-                )
-        );
-    }
-
-    private ResourceLocation createVariant(Block block, ModelTemplate template, Function<ResourceLocation, TextureMapping> textureMapper) {
-        return template.create(block, textureMapper.apply(TextureMapping.getBlockTexture(block)), gen.modelOutput);
-    }
-
-    private ResourceLocation createVariant(Block block, String suffix, ModelTemplate template, Function<ResourceLocation, TextureMapping> textureMapper) {
-        return template.createWithSuffix(block, suffix, textureMapper.apply(TextureMapping.getBlockTexture(block, suffix)), gen.modelOutput);
-    }
-
-    private TextureMapping createShelfFungusMapping(ResourceLocation texture) {
-        return new TextureMapping().put(TextureSlot.END, texture);
-    }
-
-    private ResourceLocation createAlignedShelfFungus(Block block, String suffix) {
-        return ModModelTemplates.SHELF_FUNGUS.createWithSuffix(block, suffix, createShelfFungusMapping(TextureMapping.getBlockTexture(block, suffix)), gen.modelOutput);
-    }
-
-    private ResourceLocation createDiagonalShelfFungus(Block block, String suffix) {
-        return ModModelTemplates.SHELF_FUNGUS_DIAGONAL.createWithSuffix(block, "_diagonal" + suffix, createShelfFungusMapping(TextureMapping.getBlockTexture(block, "_diagonal" + suffix)), gen.modelOutput);
-    }
+    void saltCrystal(Block block);
 }

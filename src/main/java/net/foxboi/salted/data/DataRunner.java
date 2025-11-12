@@ -74,6 +74,7 @@ public final class DataRunner {
             runDatagen(outPath, STRICT);
 
             if (COPY_TO_DIRECTORY != null) {
+                LOGGER.info("Copying generated resources");
                 copyFiles(outPath, Paths.get(COPY_TO_DIRECTORY));
             }
         } catch (Throwable e) {
@@ -88,6 +89,10 @@ public final class DataRunner {
 
     private static void copyFiles(Path from, Path to) {
         try {
+            if (from.getFileName().toString().equals(".cache")) {
+                return; // Don't copy cache directory
+            }
+
             if (Files.isDirectory(from)) {
                 Files.createDirectories(to);
 

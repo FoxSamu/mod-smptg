@@ -1,46 +1,40 @@
 package net.foxboi.salted.data.model;
 
-import net.foxboi.salted.client.color.BiomeColorTint;
-import net.foxboi.salted.common.Smptg;
-import net.minecraft.client.data.models.ItemModelGenerators;
-import net.minecraft.client.data.models.model.*;
+import net.foxboi.salted.common.util.ItemTint;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 
-public final class ItemModels {
-    private final ItemModelGenerators gen;
+/**
+ * A server-safe interface to which {@link net.foxboi.salted.common.item.ModItems} supplies item model data to the
+ * data generator.
+ */
+public interface ItemModels {
+    /**
+     * Creates a basic flat item.
+     */
+    void generated(Item item);
 
-    public ItemModels(ItemModelGenerators gen) {
-        this.gen = gen;
+    /**
+     * Creates a basic flat item with a tint.
+     */
+    void generated(Item item, ItemTint tint);
+
+    /**
+     * Creates a basic flat item with a tint.
+     */
+    default void generated(Item item, int tint) {
+        generated(item, ItemTint.constant(tint));
     }
 
-    public void generated(Item item) {
-        gen.generateFlatItem(item, ModelTemplates.FLAT_ITEM);
+    /**
+     * Creates a basic flat item with a tint.
+     */
+    default void generated(Item item, ResourceLocation tint) {
+        generated(item, ItemTint.biomeColor(tint));
     }
 
-    public void generated(Item item, int tint) {
-        gen.itemModelOutput.accept(item, ItemModelUtils.tintedModel(
-                gen.createFlatItemModel(item, ModelTemplates.FLAT_ITEM),
-                ItemModelUtils.constantTint(0xFF000000 | tint)
-        ));
-    }
-
-    public void generated(Item item, ResourceLocation colorProvider) {
-        gen.itemModelOutput.accept(item, ItemModelUtils.tintedModel(
-                gen.createFlatItemModel(item, ModelTemplates.FLAT_ITEM),
-                new BiomeColorTint(colorProvider)
-        ));
-    }
-
-    public void saltedItem(Item item, Item base) {
-        var model = ModelTemplates.TWO_LAYERED_ITEM.create(
-                ModelLocationUtils.getModelLocation(item),
-                TextureMapping.layered(
-                        TextureMapping.getItemTexture(base),
-                        Smptg.id("item/salted_overlay")
-                ),
-                gen.modelOutput
-        );
-        gen.itemModelOutput.accept(item, ItemModelUtils.plainModel(model));
-    }
+    /**
+     * Creates a flat item with a salt pinch overlay, using the base item as base texture.
+     */
+    void saltedItem(Item item, Item base);
 }

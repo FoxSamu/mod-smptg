@@ -7,12 +7,13 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.foxboi.salted.common.Smptg;
 import net.foxboi.salted.common.util.ColorRegistry;
+import net.foxboi.salted.common.util.ItemTint;
 import net.foxboi.salted.common.util.LayerRegistry;
 import net.foxboi.salted.data.lang.Translator;
 import net.foxboi.salted.data.loot.BlockDrops;
 import net.foxboi.salted.data.model.BlockModels;
+import net.foxboi.salted.data.model.BlockModelsImpl;
 import net.foxboi.salted.data.tags.ToolTags;
-import net.minecraft.client.color.item.GrassColorSource;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
@@ -425,7 +426,6 @@ public record ModBlocks() {
     // MODELS
     // =============================================
 
-    @Environment(EnvType.CLIENT)
     public static void models(BlockModels models) {
         models.randomlyRotatedCube(SALT_BLOCK);
         models.cube(SALT_CRUST);
@@ -439,14 +439,14 @@ public record ModBlocks() {
 
         models.randomlyRotatedCoveredBlock(MOSSY_DIRT, Blocks.DIRT);
 
-        models.tintedFlowerBed(CLOVERS, new GrassColorSource());
-        models.tintedCrossPlant(GRASS_SPROUTS, new GrassColorSource());
+        models.tintedFlowerBed(CLOVERS, ItemTint.grass());
+        models.tintedCrossPlant(GRASS_SPROUTS, ItemTint.grass());
         models.crossPlant(BARLEY);
         models.tallCrossPlant(TALL_BARLEY);
-        models.layeredCrossPlant(CATTAIL, new GrassColorSource());
-        models.tallLayeredCrossPlant(TALL_CATTAIL, new GrassColorSource());
-        models.layeredCrossPlant(LAVENDER, new GrassColorSource());
-        models.tallLayeredCrossPlant(TALL_LAVENDER, new GrassColorSource());
+        models.layeredCrossPlant(CATTAIL, ItemTint.grass());
+        models.tallLayeredCrossPlant(TALL_CATTAIL, ItemTint.grass());
+        models.layeredCrossPlant(LAVENDER, ItemTint.grass());
+        models.tallLayeredCrossPlant(TALL_LAVENDER, ItemTint.grass());
         models.crossPlant(CAVE_GRASS);
         models.columnCrossPlant(DRIPMOSS);
         models.crossPlant(ASHCREEP);

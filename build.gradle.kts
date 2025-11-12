@@ -19,7 +19,11 @@ val modmenu_version: String by project
 val sodium_version: String by project
 val iris_version: String by project
 
-val generatedResourcesDir = "$projectDir/src/main/generated"
+val generatedResourcesDir = layout.buildDirectory.get().file("/generated/resources").asFile
+
+
+// Configuration
+// ==================================================================================
 
 version = mod_version
 group = mod_group
@@ -57,32 +61,33 @@ sourceSets {
 
 loom {
     accessWidenerPath = file("$projectDir/src/main/resources/smptg.accesswidener")
+}
 
+
+// Run configurations
+// ==================================================================================
+
+loom {
     runs {
-        create("data") {
-            client()
-            name("Data Generation")
-
-            property("smptg.datagen", "run_and_stop")
-            property("smptg.datagen.output", generatedResourcesDir)
-        }
-
         fun RunConfigSettings.configIngameDatagen() {
             afterEvaluate {
                 property("smptg.datagen", "run_on_reload")
-                property("smptg.datagen.output", generatedResourcesDir)
+                property("smptg.datagen.output", "$generatedResourcesDir")
                 property("smptg.datagen.copy_to", "${tasks.processResources.get().destinationDir}")
             }
         }
 
+        // Default client run
         getByName("client") {
             configIngameDatagen()
         }
 
+        // Default server run
         getByName("server") {
             configIngameDatagen()
         }
 
+        // Run with MC_DEBUG_DONT_SAVE_WORLD, for testing world generation
         create("testWorldgen") {
             client()
             configIngameDatagen()
@@ -90,11 +95,31 @@ loom {
             property("MC_DEBUG_ENABLED")
             property("MC_DEBUG_DONT_SAVE_WORLD")
             runDir("run/test_worldgen")
+        }
 
-            makeRunDir()
+        // Data generator run
+        create("data") {
+            client()
+            name("Data Generation")
+
+            runDir("run/datagen")
+            property("smptg.datagen", "run_and_stop")
+            property("smptg.datagen.output", "$generatedResourcesDir")
+            property("smptg.datagen.copy_to", "${tasks.processResources.get().destinationDir}")
+        }
+
+
+        // Create working directories
+        configureEach {
+            println("$projectDir/$runDir")
+            file("$projectDir/$runDir").mkdirs()
         }
     }
 }
+
+
+// Dependencies
+// ==================================================================================
 
 repositories {
     maven {
@@ -125,6 +150,10 @@ dependencies {
     runtimeOnly("org.anarres:jcpp:1.4.14")
 }
 
+
+// Publishing
+// ==================================================================================
+
 publishing {
     publications {
         create<MavenPublication>("mavenJava") {
@@ -136,6 +165,10 @@ publishing {
     repositories {
     }
 }
+
+
+// Task configurations
+// ==================================================================================
 
 tasks.withType<JavaCompile> {
     options.release = 21
@@ -157,6 +190,8 @@ tasks.processResources {
 
 tasks.jar {
     inputs.property("archivesName", project.base.archivesName)
+
+    dependsOn("runData")
 
     from("LICENSE") {
         rename { "${it}_${inputs.properties["archivesName"]}" }

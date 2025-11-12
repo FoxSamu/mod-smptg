@@ -1,8 +1,5 @@
 package net.foxboi.salted.common.item;
 
-import java.util.List;
-
-import com.terraformersmc.modmenu.util.mod.Mod;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
@@ -12,6 +9,7 @@ import net.foxboi.salted.common.block.ModBlocks;
 import net.foxboi.salted.common.entity.ModEntityTypes;
 import net.foxboi.salted.data.lang.Translator;
 import net.foxboi.salted.data.model.ItemModels;
+import net.foxboi.salted.data.model.ItemModelsImpl;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -21,9 +19,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.vehicle.AbstractBoat;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
-import net.minecraft.world.level.FoliageColor;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 
 /**
  * Salted's collection of {@link Item}s. Each {@link Item} instance is provided here in a static field.
@@ -522,7 +518,6 @@ public record ModItems() {
     // MODELS
     // =============================================
 
-    @Environment(EnvType.CLIENT)
     public static void models(ItemModels models) {
         models.generated(ASPEN_BOAT);
         models.generated(BEECH_BOAT);

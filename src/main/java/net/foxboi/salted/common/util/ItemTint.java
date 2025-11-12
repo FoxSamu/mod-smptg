@@ -4,7 +4,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public sealed interface ItemTint {
     static ItemTint grass() {
-        return Defaults.GRASS;
+        return new Grass(0.5f, 1f);
     }
 
     static ItemTint constant(int color) {
@@ -15,8 +15,7 @@ public sealed interface ItemTint {
         return new BiomeColor(name);
     }
 
-    enum Defaults implements ItemTint {
-        GRASS
+    record Grass(float temperature, float downfall) implements ItemTint {
     }
 
     record Constant(int color) implements ItemTint {
