@@ -163,6 +163,7 @@ public record ModItems() {
     public static final Item CAVE_GRASS = registerBlock(ModBlocks.CAVE_GRASS);
     public static final Item DRIPMOSS = registerBlock(ModBlocks.DRIPMOSS);
     public static final Item PATCHMOSS = registerBlock(ModBlocks.PATCHMOSS);
+    public static final Item GLOBE_THISTLE = registerBlock(ModBlocks.GLOBE_THISTLE);
     public static final Item SHELF_FUNGUS = register(ModBlocks.SHELF_FUNGUS, diagonallyAttachableBlockItem(ModBlocks.SHELF_FUNGUS));
 
     // Salt
@@ -379,7 +380,8 @@ public record ModItems() {
                 Items.TALL_GRASS,
                 TALL_BARLEY,
                 TALL_CATTAIL,
-                TALL_LAVENDER
+                TALL_LAVENDER,
+                GLOBE_THISTLE
         );
 
         entries.addAfter(

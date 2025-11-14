@@ -1,14 +1,12 @@
 package net.foxboi.salted.common.levelgen.biome;
 
+import net.foxboi.salted.common.misc.biome.BiomeEditor;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.level.biome.BiomeGenerationSettings;
-import net.minecraft.world.level.biome.BiomeSpecialEffects;
-import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 
-import static net.foxboi.salted.common.levelgen.biome.ModBiomeDefaultFeatures.*;
-import static net.minecraft.data.worldgen.BiomeDefaultFeatures.*;
+import static net.foxboi.salted.common.levelgen.biome.ModBiomeFeatures.*;
+import static net.foxboi.salted.common.levelgen.biome.VanillaBiomeFeatures.*;
 
 public class MapleForest extends OverworldBiome {
     @Override
@@ -22,19 +20,20 @@ public class MapleForest extends OverworldBiome {
     }
 
     @Override
-    protected void effects(BiomeSpecialEffects.Builder builder) {
+    protected void effects(BiomeEditor builder) {
         super.effects(builder);
 
         forestMusic(builder);
 
-        builder.grassColorOverride(0xFF83A329);
+        builder.grassColor(0xFF83A329);
         builder.waterColor(0x0E4ECF);
-        builder.waterFogColor(0x050533);
     }
 
     @Override
-    protected void generation(BiomeGenerationSettings.Builder builder) {
+    protected void generation(BiomeEditor builder) {
         super.generation(builder);
+        addDefaultOres(builder);
+        addDefaultSoftDisks(builder);
 
         addForestFlowers(builder);
         addMapleTrees(builder);
@@ -43,18 +42,18 @@ public class MapleForest extends OverworldBiome {
         addBushes(builder);
         addDefaultFlowers(builder);
         addForestGrass(builder);
-        addExtraForestGrass(builder);
-        addCattail(builder);
         addForestClovers(builder);
 
         addDefaultMushrooms(builder);
         addDefaultExtraVegetation(builder, true);
 
+        addExtraForestGrass(builder);
+        addCattail(builder);
         // TODO different tree canopy
     }
 
     @Override
-    protected void spawning(MobSpawnSettings.Builder builder) {
+    protected void spawning(BiomeEditor builder) {
         super.spawning(builder);
 
         farmAnimals(builder);

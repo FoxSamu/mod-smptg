@@ -1,7 +1,7 @@
 package net.foxboi.salted.common.block;
 
 import com.mojang.serialization.MapCodec;
-import net.foxboi.salted.common.util.BonemealGrassGrower;
+import net.foxboi.salted.common.misc.BonemealSpreadingLogic;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -36,7 +36,7 @@ public class MossyDirtBlock extends SpreadingSnowyDirtBlock implements Bonemeala
 
 	@Override
 	public void performBonemeal(ServerLevel level, RandomSource rng, BlockPos pos, BlockState state) {
-        BonemealGrassGrower.grassAndMoss(level, rng, pos);
+        BonemealSpreadingLogic.grassAndMoss(level, rng, pos);
 	}
 
 	@Override

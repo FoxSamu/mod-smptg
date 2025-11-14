@@ -5,8 +5,7 @@ import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
 import net.foxboi.salted.common.levelgen.surface.ModifiedNoiseGeneratorSettings;
-import net.foxboi.salted.common.levelgen.surface.ModifiedSurfaceRuleData;
-import net.foxboi.salted.common.util.DataRegistry;
+import net.foxboi.salted.common.misc.data.DataRegistry;
 import net.minecraft.core.HolderLookup;
 
 public class RegistryProvider extends FabricDynamicRegistryProvider {

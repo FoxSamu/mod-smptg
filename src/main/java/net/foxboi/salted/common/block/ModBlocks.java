@@ -1,18 +1,16 @@
 package net.foxboi.salted.common.block;
 
 import java.util.List;
+import java.util.function.Supplier;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.foxboi.salted.common.Smptg;
-import net.foxboi.salted.common.util.ColorRegistry;
-import net.foxboi.salted.common.util.ItemTint;
-import net.foxboi.salted.common.util.LayerRegistry;
+import net.foxboi.salted.common.misc.ColorRegistry;
+import net.foxboi.salted.common.misc.ItemTint;
+import net.foxboi.salted.common.misc.LayerRegistry;
 import net.foxboi.salted.data.lang.Translator;
 import net.foxboi.salted.data.loot.BlockDrops;
 import net.foxboi.salted.data.model.BlockModels;
-import net.foxboi.salted.data.model.BlockModelsImpl;
 import net.foxboi.salted.data.shadercompat.ShaderCompat;
 import net.foxboi.salted.data.tags.ToolTags;
 import net.minecraft.core.Direction;
@@ -32,6 +30,7 @@ import net.minecraft.world.level.FoliageColor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.block.state.properties.WoodType;
@@ -177,15 +176,16 @@ public record ModBlocks() {
 
     public static final Block CLOVERS = register("clovers", clovers(), props(Blocks.PINK_PETALS).replaceable());
     public static final Block GRASS_SPROUTS = register("grass_sprouts", grassSprouts(), props(Blocks.SHORT_GRASS).sound(SoundType.MOSS_CARPET));
-    public static final Block BARLEY = register("barley", grassyPlant(), props(Blocks.POPPY));
+    public static final Block BARLEY = register("barley", grassyPlant(ModBlocks::tallBarley), props(Blocks.POPPY));
     public static final Block TALL_BARLEY = register("tall_barley", tallGrassyPlant(), props(Blocks.ROSE_BUSH));
-    public static final Block CATTAIL = register("cattail", grassyPlant(), props(Blocks.POPPY));
+    public static final Block CATTAIL = register("cattail", grassyPlant(ModBlocks::tallCattail), props(Blocks.POPPY));
     public static final Block TALL_CATTAIL = register("tall_cattail", partiallyWaterloggableTallGrassyPlant(), props(Blocks.ROSE_BUSH));
-    public static final Block LAVENDER = register("lavender", grassyPlant(), props(Blocks.POPPY));
+    public static final Block LAVENDER = register("lavender", grassyPlant(ModBlocks::tallLavender), props(Blocks.POPPY));
     public static final Block TALL_LAVENDER = register("tall_lavender", tallGrassyPlant(), props(Blocks.ROSE_BUSH));
     public static final Block CAVE_GRASS = register("cave_grass", caveGrass(), props(Blocks.SHORT_GRASS).sound(SoundType.MOSS_CARPET).mapColor(MapColor.SAND));
     public static final Block DRIPMOSS = register("dripmoss", dripmoss(), props(Blocks.POPPY).sound(SoundType.MOSS_CARPET).mapColor(MapColor.SAND));
     public static final Block PATCHMOSS = register("patchmoss", multifacePlant(), patchmossProps());
+    public static final Block GLOBE_THISTLE = register("globe_thistle", tallGrassyPlant(), props(Blocks.ROSE_BUSH));
 
     public static final Block SHELF_FUNGUS = register("shelf_fungus", shelfFungus(), props(Blocks.POPPY).mapColor(MapColor.SAND).offsetType(BlockBehaviour.OffsetType.XYZ));
 
@@ -399,6 +399,7 @@ public record ModBlocks() {
         translator.name(CAVE_GRASS, "Cave Grass");
         translator.name(DRIPMOSS, "Dripmoss");
         translator.name(PATCHMOSS, "Patchmoss");
+        translator.name(GLOBE_THISTLE, "Globe Thistle");
 
         translator.name(SHELF_FUNGUS, "Shelf Fungus");
 
@@ -444,6 +445,7 @@ public record ModBlocks() {
         models.tintedCrossPlant(GRASS_SPROUTS, ItemTint.grass());
         models.crossPlant(BARLEY);
         models.tallCrossPlant(TALL_BARLEY);
+        models.tallCrossPlant(GLOBE_THISTLE);
         models.layeredCrossPlant(CATTAIL, ItemTint.grass());
         models.tallLayeredCrossPlant(TALL_CATTAIL, ItemTint.grass());
         models.layeredCrossPlant(LAVENDER, ItemTint.grass());
@@ -836,6 +838,7 @@ public record ModBlocks() {
         drops.self(DRIPMOSS);
         drops.multiface(PATCHMOSS);
         drops.self(SHELF_FUNGUS);
+        drops.selfIfLower(GLOBE_THISTLE);
 
 
         drops.self(SALT_BLOCK);
@@ -891,6 +894,7 @@ public record ModBlocks() {
         layers.cutout(ASHCREEP);
         layers.cutout(PATCHMOSS);
         layers.cutout(SHELF_FUNGUS);
+        layers.cutout(GLOBE_THISTLE);
     }
 
 
@@ -938,9 +942,26 @@ public record ModBlocks() {
         compat.tallPlant(TALL_CATTAIL);
         compat.tallPlant(TALL_LAVENDER);
         compat.tallPlant(TALL_BARLEY);
+        compat.tallPlant(GLOBE_THISTLE);
 
         compat.hangingPlant(ASHVINE);
         compat.hangingPlant(DRIPMOSS);
+    }
+
+
+    // GETTERS
+    // =============================================
+
+    private static BlockState tallCattail() {
+        return TALL_CATTAIL.defaultBlockState();
+    }
+
+    private static BlockState tallBarley() {
+        return TALL_BARLEY.defaultBlockState();
+    }
+
+    private static BlockState tallLavender() {
+        return TALL_LAVENDER.defaultBlockState();
     }
 
 
@@ -963,6 +984,16 @@ public record ModBlocks() {
         return props -> new ShortPlantBlock(
                 PlantConfig.of()
                         .canGrowOn(PlantConfig.GROW_ON_DIRT_SAND)
+                        .size(14, 14),
+                props
+        );
+    }
+
+    private static BlockFactory grassyPlant(Supplier<BlockState> tallVersion) {
+        return props -> new ShortPlantBlock(
+                PlantConfig.of()
+                        .canGrowOn(PlantConfig.GROW_ON_DIRT_SAND)
+                        .bonemealBehavior(BonemealBehaviors.growIntoTallPlant(tallVersion))
                         .size(14, 14),
                 props
         );

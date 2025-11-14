@@ -42,6 +42,17 @@ public class SurfaceTypes {
         );
     }
 
+    public static RuleSource redwoodSurface() {
+        return defaultDirt(
+                aboveWaterOnly(sequence(
+                        ifTrue(noiseCondition(ModNoises.PATHWAYS, 0.2), MOSSY_DIRT),
+                        ifTrue(noiseCondition(ModNoises.LARGE_PATHWAYS, 0.17), PODZOL),
+                        ifTrue(noiseCondition(ModNoises.LARGE_PATHWAYS, -0.17), GRASS_BLOCK),
+                        PODZOL
+                ))
+        );
+    }
+
     public static RuleSource sometimesPodzolSometimesMossSurface() {
         return defaultDirt(
                 aboveWaterOnly(sequence(

@@ -1,6 +1,6 @@
 package net.foxboi.salted.common.levelgen.biome;
 
-import net.foxboi.salted.common.util.DataRegistry;
+import net.foxboi.salted.common.misc.data.DataRegistry;
 import net.foxboi.salted.data.lang.Translator;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -15,6 +15,9 @@ public record ModBiomes() {
     public static final ResourceKey<Biome> MAPLE_FOREST = REGISTRY.register("maple_forest", new MapleForest());
     public static final ResourceKey<Biome> WOODED_PLAINS = REGISTRY.register("wooded_plains", new WoodedPlains());
     public static final ResourceKey<Biome> BARLEY_FIELD = REGISTRY.register("barley_field", new BarleyField());
+    public static final ResourceKey<Biome> REDWOOD_TAIGA = REGISTRY.register("redwood_taiga", new RedwoodTaiga(false));
+    public static final ResourceKey<Biome> SPARSE_REDWOOD_TAIGA = REGISTRY.register("sparse_redwood_taiga", new RedwoodTaiga(true));
+    public static final ResourceKey<Biome> FIREFLY_MEADOW = REGISTRY.register("firefly_meadow", new FireflyMeadow());
 
     public static void init() {
         // N/A, just initialises the class
@@ -25,5 +28,8 @@ public record ModBiomes() {
         translator.name(MAPLE_FOREST, "Maple Forest");
         translator.name(WOODED_PLAINS, "Wooded Plains");
         translator.name(BARLEY_FIELD, "Barley Field");
+        translator.name(REDWOOD_TAIGA, "Redwood Taiga");
+        translator.name(SPARSE_REDWOOD_TAIGA, "Sparse Redwood Taiga");
+        translator.name(FIREFLY_MEADOW, "Firefly Meadow");
     }
 }

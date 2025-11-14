@@ -3,8 +3,8 @@ package net.foxboi.salted.common.levelgen.feature;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import net.foxboi.salted.common.util.Definition;
-import net.foxboi.salted.common.util.DefinitionContext;
+import net.foxboi.salted.common.misc.data.Definition;
+import net.foxboi.salted.common.misc.data.DefinitionContext;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
@@ -24,10 +24,6 @@ public class DefinedFeature<FC extends FeatureConfiguration> implements Definiti
 
     public static <F extends Feature<NoneFeatureConfiguration>> DefinedFeature<NoneFeatureConfiguration> of(F feature) {
         return new DefinedFeature<>(feature, context -> FeatureConfiguration.NONE);
-    }
-
-    public static <FC extends FeatureConfiguration> DefinedFeature<FC> of(Feature<FC> feature, FC config) {
-        return new DefinedFeature<>(feature, context -> config);
     }
 
     public static <FC extends FeatureConfiguration> DefinedFeature<FC> of(Feature<FC> feature, Supplier<FC> config) {

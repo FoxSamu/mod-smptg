@@ -1,14 +1,12 @@
 package net.foxboi.salted.common.levelgen.biome;
 
+import net.foxboi.salted.common.misc.biome.BiomeEditor;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.level.biome.BiomeGenerationSettings;
-import net.minecraft.world.level.biome.BiomeSpecialEffects;
-import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 
-import static net.foxboi.salted.common.levelgen.biome.ModBiomeDefaultFeatures.*;
-import static net.minecraft.data.worldgen.BiomeDefaultFeatures.*;
+import static net.foxboi.salted.common.levelgen.biome.ModBiomeFeatures.*;
+import static net.foxboi.salted.common.levelgen.biome.VanillaBiomeFeatures.*;
 
 public class AspenForest extends OverworldBiome {
     @Override
@@ -22,15 +20,17 @@ public class AspenForest extends OverworldBiome {
     }
 
     @Override
-    protected void effects(BiomeSpecialEffects.Builder builder) {
+    protected void effects(BiomeEditor builder) {
         super.effects(builder);
 
         forestMusic(builder);
     }
 
     @Override
-    protected void generation(BiomeGenerationSettings.Builder builder) {
+    protected void generation(BiomeEditor builder) {
         super.generation(builder);
+        addDefaultOres(builder);
+        addDefaultSoftDisks(builder);
 
         addForestFlowers(builder);
         addBirchForestFlowers(builder);
@@ -39,15 +39,16 @@ public class AspenForest extends OverworldBiome {
         addBushes(builder);
         addDefaultFlowers(builder);
         addForestGrass(builder);
-        addExtraForestGrass(builder);
-        addCattail(builder);
 
         addDefaultMushrooms(builder);
         addDefaultExtraVegetation(builder, true);
+
+        addExtraForestGrass(builder);
+        addCattail(builder);
     }
 
     @Override
-    protected void spawning(MobSpawnSettings.Builder builder) {
+    protected void spawning(BiomeEditor builder) {
         super.spawning(builder);
 
         farmAnimals(builder);

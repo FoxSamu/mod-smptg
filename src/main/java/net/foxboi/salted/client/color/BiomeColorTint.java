@@ -5,7 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.foxboi.salted.common.color.BiomeColors;
-import net.foxboi.salted.common.util.ModUtil;
+import net.foxboi.salted.common.misc.Misc;
 import net.minecraft.client.color.item.ItemTintSource;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.entity.LivingEntity;
@@ -26,7 +26,7 @@ public record BiomeColorTint(ResourceLocation name) implements BlockColor, ItemT
     @Override
     public int getColor(BlockState state, BlockAndTintGetter level, BlockPos pos, int index) {
         if (level != null && pos != null) {
-            return BiomeColors.sample(level, ModUtil.getDoubleBlockPos(pos, state), name);
+            return BiomeColors.sample(level, Misc.getDoubleBlockPos(pos, state), name);
         }
         return 0xFFFF00FF;
     }

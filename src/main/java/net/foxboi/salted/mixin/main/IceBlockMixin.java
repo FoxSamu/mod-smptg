@@ -1,6 +1,6 @@
 package net.foxboi.salted.mixin.main;
 
-import net.foxboi.salted.common.util.SaltMelting;
+import net.foxboi.salted.common.misc.Misc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -24,7 +24,7 @@ public abstract class IceBlockMixin {
             cancellable = true
     )
     private void onRandomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource rng, CallbackInfo ci) {
-        if (SaltMelting.isNextToSalt(level, pos)) {
+        if (Misc.isNextToSalt(level, pos)) {
             melt(state, level, pos);
             ci.cancel();
         }

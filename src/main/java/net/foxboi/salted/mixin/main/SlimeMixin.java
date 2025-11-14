@@ -1,6 +1,6 @@
 package net.foxboi.salted.mixin.main;
 
-import net.foxboi.salted.common.util.SaltDamageCheck;
+import net.foxboi.salted.common.misc.Misc;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -23,7 +23,7 @@ public class SlimeMixin {
     private void onTick(CallbackInfo ci) {
         var self = (Slime) (Object) (this);
 
-        var inSalt = SaltDamageCheck.isInDamagingSalt(self);
+        var inSalt = Misc.isInDamagingSalt(self);
         if (inSalt) {
             if (saltDamageCooldown <= 0) {
                 saltDamageCooldown = 10;

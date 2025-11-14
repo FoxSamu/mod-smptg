@@ -41,12 +41,13 @@ public class FeatureBlocks {
     public static final BlockStateProvider TALL_LAVENDER = BlockStateProvider.simple(ModBlocks.TALL_LAVENDER);
     public static final BlockStateProvider BARLEY = BlockStateProvider.simple(ModBlocks.BARLEY);
     public static final BlockStateProvider TALL_BARLEY = BlockStateProvider.simple(ModBlocks.TALL_BARLEY);
+    public static final BlockStateProvider GLOBE_THISTLE = BlockStateProvider.simple(ModBlocks.GLOBE_THISTLE);
     public static final BlockStateProvider SHELF_FUNGUS = BlockStateProvider.simple(ModBlocks.SHELF_FUNGUS);
     public static final BlockStateProvider CLOVERS_1_3 = segmented(ModBlocks.CLOVERS, 1, 3);
     public static final BlockStateProvider CLOVERS_1_4 = segmented(ModBlocks.CLOVERS, 1, 4);
-
     public static final BlockStateProvider PATCHMOSS = BlockStateProvider.simple(ModBlocks.PATCHMOSS);
     public static final BlockStateProvider MOSS_CARPET = BlockStateProvider.simple(Blocks.MOSS_CARPET);
+    public static final BlockStateProvider FIREFLY_BUSH = BlockStateProvider.simple(Blocks.FIREFLY_BUSH);
 
     public static BlockStateProvider either(BlockStateProvider a, BlockStateProvider b, double bChance) {
         return new EitherStateProvider(a, b, bChance);

@@ -1,13 +1,12 @@
 package net.foxboi.salted.common.levelgen.biome;
 
+import net.foxboi.salted.common.misc.biome.BiomeEditor;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.level.biome.BiomeGenerationSettings;
-import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 
-import static net.foxboi.salted.common.levelgen.biome.ModBiomeDefaultFeatures.*;
-import static net.minecraft.data.worldgen.BiomeDefaultFeatures.*;
+import static net.foxboi.salted.common.levelgen.biome.ModBiomeFeatures.*;
+import static net.foxboi.salted.common.levelgen.biome.VanillaBiomeFeatures.*;
 
 public class BarleyField extends OverworldBiome {
     @Override
@@ -21,23 +20,26 @@ public class BarleyField extends OverworldBiome {
     }
 
     @Override
-    protected void effects(BiomeSpecialEffects.Builder builder) {
+    protected void effects(BiomeEditor builder) {
         super.effects(builder);
     }
 
     @Override
-    protected void generation(BiomeGenerationSettings.Builder builder) {
+    protected void generation(BiomeEditor builder) {
         super.generation(builder);
+        addDefaultOres(builder);
+        addDefaultSoftDisks(builder);
 
-        addCattail(builder);
         addBarleyFieldVegetation(builder);
 
         addDefaultMushrooms(builder);
         addDefaultExtraVegetation(builder, true);
+
+        addCattail(builder);
     }
 
     @Override
-    protected void spawning(MobSpawnSettings.Builder builder) {
+    protected void spawning(BiomeEditor builder) {
         super.spawning(builder);
 
         farmAnimals(builder);

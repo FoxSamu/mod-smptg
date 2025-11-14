@@ -3,7 +3,7 @@ package net.foxboi.salted.common.block;
 import java.util.Map;
 
 import com.mojang.serialization.MapCodec;
-import net.foxboi.salted.common.util.DiagonalDirection;
+import net.foxboi.salted.common.misc.DiagonalDirection;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;

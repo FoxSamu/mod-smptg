@@ -1,6 +1,6 @@
 package net.foxboi.salted.data.model;
 
-import net.foxboi.salted.common.util.ItemTint;
+import net.foxboi.salted.common.misc.ItemTint;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 

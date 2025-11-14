@@ -5,7 +5,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.longs.Long2DoubleOpenHashMap;
 import net.foxboi.salted.common.block.AbstractMultifaceBlock;
-import net.foxboi.salted.common.util.ModUtil;
+import net.foxboi.salted.common.misc.Misc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.tags.BlockTags;
@@ -14,7 +14,6 @@ import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.MultifaceBlock;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType;
@@ -117,7 +116,7 @@ public class NoiseBasedMultifaceDecorator extends TreeDecorator {
         var minY = lowestLogY + yOffset.sample(rng);
         var maxY = minY + layers.sample(rng) - 1;
 
-        var dirs = ModUtil.HORIZONTAL_DIRECTIONS;
+        var dirs = Misc.HORIZONTAL_DIRECTIONS;
 
         var mpos = new BlockPos.MutableBlockPos();
 

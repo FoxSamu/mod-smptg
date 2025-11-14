@@ -1,9 +1,9 @@
 package net.foxboi.salted.common.levelgen.biome;
 
-import net.minecraft.world.level.biome.*;
+import net.foxboi.salted.common.misc.biome.BiomeEditor;
 
-import static net.foxboi.salted.common.levelgen.biome.ModBiomeDefaultFeatures.*;
-import static net.minecraft.data.worldgen.BiomeDefaultFeatures.*;
+import static net.foxboi.salted.common.levelgen.biome.ModBiomeFeatures.*;
+import static net.foxboi.salted.common.levelgen.biome.VanillaBiomeFeatures.*;
 
 public abstract class OverworldBiome extends AbstractBiome {
     @Override
@@ -12,19 +12,17 @@ public abstract class OverworldBiome extends AbstractBiome {
     }
 
     @Override
-    protected void spawning(MobSpawnSettings.Builder builder) {
+    protected void spawning(BiomeEditor builder) {
         commonSpawns(builder);
     }
 
     @Override
-    protected void generation(BiomeGenerationSettings.Builder builder) {
+    protected void generation(BiomeEditor builder) {
         addGlobalGeneration(builder);
-        addDefaultOres(builder);
-        addDefaultSoftDisks(builder);
     }
 
     @Override
-    protected void effects(BiomeSpecialEffects.Builder builder) {
+    protected void effects(BiomeEditor builder) {
         defaultEffects(builder, temperature());
     }
 }

@@ -1,6 +1,6 @@
 package net.foxboi.salted.mixin.main;
 
-import net.foxboi.salted.common.util.SaltMelting;
+import net.foxboi.salted.common.misc.Misc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -20,7 +20,7 @@ public class SnowLayerBlockMixin {
             cancellable = true
     )
     private void onRandomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource rng, CallbackInfo ci) {
-        if (SaltMelting.isNextToSalt(level, pos)) {
+        if (Misc.isNextToSalt(level, pos)) {
             Block.dropResources(state, level, pos);
             level.removeBlock(pos, false);
             ci.cancel();

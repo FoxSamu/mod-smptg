@@ -5,7 +5,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.foxboi.salted.client.color.BiomeColorTint;
 import net.foxboi.salted.common.block.ModBlocks;
 import net.foxboi.salted.common.item.ModItems;
-import net.foxboi.salted.common.util.ItemTint;
+import net.foxboi.salted.common.misc.ItemTint;
 import net.minecraft.client.color.item.GrassColorSource;
 import net.minecraft.client.color.item.ItemTintSource;
 import net.minecraft.client.data.models.BlockModelGenerators;

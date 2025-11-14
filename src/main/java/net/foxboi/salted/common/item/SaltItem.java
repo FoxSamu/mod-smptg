@@ -1,6 +1,6 @@
 package net.foxboi.salted.common.item;
 
-import net.foxboi.salted.common.util.SaltMelting;
+import net.foxboi.salted.common.misc.Misc;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
@@ -21,7 +21,7 @@ public class SaltItem extends Item {
 
         if (state.is(Blocks.SNOW) || state.is(Blocks.ICE)) {
             if (!level.isClientSide()) {
-                SaltMelting.meltFromSalt(level, pos, level.random);
+                Misc.meltFromSalt(level, pos, level.random);
 
                 // TODO Use custom sound event for proper subtitles
                 level.playSound(null, context.getClickedPos(), SoundEvents.BONE_MEAL_USE, SoundSource.BLOCKS, 1, 1);

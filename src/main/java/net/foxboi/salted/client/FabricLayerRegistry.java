@@ -1,7 +1,7 @@
 package net.foxboi.salted.client;
 
 import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
-import net.foxboi.salted.common.util.LayerRegistry;
+import net.foxboi.salted.common.misc.LayerRegistry;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.world.level.block.Block;
 

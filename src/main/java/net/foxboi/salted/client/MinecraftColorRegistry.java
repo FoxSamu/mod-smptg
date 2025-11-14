@@ -1,9 +1,8 @@
 package net.foxboi.salted.client;
 
-import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.foxboi.salted.client.color.BiomeColorTint;
-import net.foxboi.salted.common.util.ColorRegistry;
-import net.foxboi.salted.common.util.ModUtil;
+import net.foxboi.salted.common.misc.ColorRegistry;
+import net.foxboi.salted.common.misc.Misc;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.renderer.BiomeColors;
@@ -14,22 +13,22 @@ import net.minecraft.world.level.block.Block;
 public class MinecraftColorRegistry implements ColorRegistry {
     private static final BlockColor GRASS =
             (state, level, pos, tint) -> level != null && pos != null
-                    ? BiomeColors.getAverageGrassColor(level, ModUtil.getDoubleBlockPos(pos, state))
+                    ? BiomeColors.getAverageGrassColor(level, Misc.getDoubleBlockPos(pos, state))
                     : GrassColor.getDefaultColor();
 
     private static final BlockColor FOLIAGE =
             (state, level, pos, tint) -> level != null && pos != null
-                    ? BiomeColors.getAverageFoliageColor(level, ModUtil.getDoubleBlockPos(pos, state))
+                    ? BiomeColors.getAverageFoliageColor(level, Misc.getDoubleBlockPos(pos, state))
                     : 0xFF48B518;
 
     private static final BlockColor DRY_FOLIAGE =
             (state, level, pos, tint) -> level != null && pos != null
-                    ? BiomeColors.getAverageDryFoliageColor(level, ModUtil.getDoubleBlockPos(pos, state))
+                    ? BiomeColors.getAverageDryFoliageColor(level, Misc.getDoubleBlockPos(pos, state))
                     : 0xFF5C3C32;
 
     private static final BlockColor WATER =
             (state, level, pos, tint) -> level != null && pos != null
-                    ? BiomeColors.getAverageWaterColor(level, ModUtil.getDoubleBlockPos(pos, state))
+                    ? BiomeColors.getAverageWaterColor(level, Misc.getDoubleBlockPos(pos, state))
                     : 0xFFFFFFFF;
 
     private final BlockColors colors;

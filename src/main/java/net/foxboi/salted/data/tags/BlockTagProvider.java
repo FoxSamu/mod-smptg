@@ -146,11 +146,13 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
 
         valueLookupBuilder(BlockTags.FLOWERS)
                 .add(ModBlocks.LAVENDER)
-                .add(ModBlocks.TALL_LAVENDER);
+                .add(ModBlocks.TALL_LAVENDER)
+                .add(ModBlocks.GLOBE_THISTLE);
 
         valueLookupBuilder(BlockTags.BEE_ATTRACTIVE)
                 .add(ModBlocks.LAVENDER)
-                .add(ModBlocks.TALL_LAVENDER);
+                .add(ModBlocks.TALL_LAVENDER)
+                .add(ModBlocks.GLOBE_THISTLE);
 
         valueLookupBuilder(BlockTags.DIRT)
                 .add(ModBlocks.MOSSY_DIRT);
@@ -284,6 +286,7 @@ public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
                     .add(ModBlocks.TALL_BARLEY)
                     .add(ModBlocks.TALL_CATTAIL)
                     .add(ModBlocks.TALL_LAVENDER)
+                    .add(ModBlocks.GLOBE_THISTLE)
                     .add(ModBlocks.DRIPMOSS);
         }
     }

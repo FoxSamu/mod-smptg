@@ -1,7 +1,7 @@
 package net.foxboi.salted.common.item;
 
 import net.foxboi.salted.common.block.DiagonallyAttachableBlock;
-import net.foxboi.salted.common.util.DiagonalDirection;
+import net.foxboi.salted.common.misc.DiagonalDirection;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -11,7 +11,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 

@@ -28,7 +28,7 @@ public class MinecraftMixin {
 
     @Inject(
             method = "<init>",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;setOverlay(Lnet/minecraft/client/gui/screens/Overlay;)V")
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/server/packs/resources/ReloadableResourceManager;createReload(Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;Ljava/util/concurrent/CompletableFuture;Ljava/util/List;)Lnet/minecraft/server/packs/resources/ReloadInstance;")
     )
     private void onReloadPacksInit(GameConfig config, CallbackInfo ci) {
         if (DataRunner.shouldRunOnResourceReload()) {
@@ -38,7 +38,7 @@ public class MinecraftMixin {
 
     @Inject(
             method = "reloadResourcePacks(ZLnet/minecraft/client/Minecraft$GameLoadCookie;)Ljava/util/concurrent/CompletableFuture;",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;setOverlay(Lnet/minecraft/client/gui/screens/Overlay;)V")
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/server/packs/resources/ReloadableResourceManager;createReload(Ljava/util/concurrent/Executor;Ljava/util/concurrent/Executor;Ljava/util/concurrent/CompletableFuture;Ljava/util/List;)Lnet/minecraft/server/packs/resources/ReloadInstance;")
     )
     private void onReloadPacks(boolean bl, @Nullable @Coerce Object cookie, CallbackInfoReturnable<CompletableFuture<Void>> cir) {
         if (DataRunner.shouldRunOnResourceReload()) {

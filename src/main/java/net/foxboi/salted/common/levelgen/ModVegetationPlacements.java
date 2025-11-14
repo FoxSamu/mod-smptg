@@ -1,10 +1,11 @@
 package net.foxboi.salted.common.levelgen;
 
 import net.foxboi.salted.common.levelgen.placement.DefinedPlacement;
-import net.foxboi.salted.common.util.DataRegistry;
+import net.foxboi.salted.common.misc.data.DataRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.features.VegetationFeatures;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -26,6 +27,16 @@ public record ModVegetationPlacements() {
     public static final ResourceKey<PlacedFeature> MOSS_CARPET_BONEMEAL = REGISTRY.register(
             "moss_carpet_bonemeal",
             DefinedPlacement.place(ModVegetationFeatures.MOSS_CARPET_BONEMEAL)
+    );
+
+    public static final ResourceKey<PlacedFeature> BARLEY_BONEMEAL = REGISTRY.register(
+            "barley_bonemeal",
+            DefinedPlacement.place(ModVegetationFeatures.BARLEY_BONEMEAL)
+    );
+
+    public static final ResourceKey<PlacedFeature> CLOVERS_BONEMEAL = REGISTRY.register(
+            "clovers_bonemeal",
+            DefinedPlacement.place(ModVegetationFeatures.CLOVERS_BONEMEAL)
     );
 
 
@@ -50,6 +61,27 @@ public record ModVegetationPlacements() {
             "trees_wooded_plains",
             DefinedPlacement
                     .place(ModVegetationFeatures.TREE_WOODED_PLAINS)
+                    .modified(treePlacement(it -> it.countExtra(2, 0.05f, 1)))
+    );
+
+    public static final ResourceKey<PlacedFeature> TREES_REDWOOD_FOREST_GIANT = REGISTRY.register(
+            "trees_redwood_forest_giant",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.TREE_REDWOOD_FOREST_GIANT)
+                    .modified(treePlacement(it -> it.countExtra(1, 0.02f, 1)))
+    );
+
+    public static final ResourceKey<PlacedFeature> TREES_REDWOOD_FOREST_SMALL = REGISTRY.register(
+            "trees_redwood_forest_small",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.TREE_REDWOOD_FOREST_SMALL)
+                    .modified(treePlacement(it -> it.countExtra(4, 0.1f, 1)))
+    );
+
+    public static final ResourceKey<PlacedFeature> TREES_REDWOOD_FOREST_SPARSE = REGISTRY.register(
+            "trees_redwood_forest_sparse",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.TREE_REDWOOD_FOREST_SMALL)
                     .modified(treePlacement(it -> it.countExtra(2, 0.05f, 1)))
     );
 
@@ -84,6 +116,18 @@ public record ModVegetationPlacements() {
                     .onAverageOnceEvery(14)
                     .modified(patchPlacement())
     );
+
+    public static final ResourceKey<PlacedFeature> PATCH_BARLEY_COMMON = REGISTRY.register(
+            "patch_barley_common",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.PATCH_BARLEY)
+                    .onAverageOnceEvery(2)
+                    .modified(patchPlacement())
+    );
+
+
+    // Lavender
+    // ===============================================================
 
 
     // Cattail
@@ -150,8 +194,16 @@ public record ModVegetationPlacements() {
     );
 
 
-    // Moss
+    // Misc
     // ===============================================================
+
+    public static final ResourceKey<PlacedFeature> PATCH_FIREFLY_BUSH_COMMON = REGISTRY.register(
+            "patch_firefly_bushes_common",
+            DefinedPlacement
+                    .place(VegetationFeatures.PATCH_FIREFLY_BUSH)
+                    .count(ConstantInt.of(4))
+                    .modified(patchPlacement())
+    );
 
     public static final ResourceKey<PlacedFeature> PATCH_MOSS_CARPET_AROUND_MOSS = REGISTRY.register(
             "patch_moss_carpet_around_moss",

@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.function.Function;
 
 import com.mojang.serialization.MapCodec;
-import net.foxboi.salted.common.util.ModUtil;
+import net.foxboi.salted.common.misc.Misc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -20,7 +20,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public abstract class AbstractMultifaceBlock extends Block {
-    protected static final List<Direction> DIRECTIONS = ModUtil.DIRECTIONS;
+    protected static final List<Direction> DIRECTIONS = Misc.DIRECTIONS;
     protected static final Map<Direction, BooleanProperty> PROPERTY_BY_DIRECTION = PipeBlock.PROPERTY_BY_DIRECTION;
 
     private final Function<BlockState, VoxelShape> shapes;
@@ -36,9 +36,9 @@ public abstract class AbstractMultifaceBlock extends Block {
 
         shapes = makeShapes(radius, thickness);
 
-        canRotate = ModUtil.HORIZONTAL_DIRECTIONS.stream().allMatch(this::isFaceSupported);
-        canMirrorX = ModUtil.X_DIRECTIONS.stream().filter(this::isFaceSupported).count() % 2 == 0;
-        canMirrorZ = ModUtil.Z_DIRECTIONS.stream().filter(this::isFaceSupported).count() % 2 == 0;
+        canRotate = Misc.HORIZONTAL_DIRECTIONS.stream().allMatch(this::isFaceSupported);
+        canMirrorX = Misc.X_DIRECTIONS.stream().filter(this::isFaceSupported).count() % 2 == 0;
+        canMirrorZ = Misc.Z_DIRECTIONS.stream().filter(this::isFaceSupported).count() % 2 == 0;
 
         registerDefaultState(makeDefaultState());
     }

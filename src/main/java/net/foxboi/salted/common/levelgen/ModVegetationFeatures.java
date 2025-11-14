@@ -4,9 +4,8 @@ import java.util.List;
 
 import net.foxboi.salted.common.block.ModBlocks;
 import net.foxboi.salted.common.levelgen.feature.DefinedFeature;
-import net.foxboi.salted.common.util.DataRegistry;
+import net.foxboi.salted.common.misc.data.DataRegistry;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.TreePlacements;
 import net.minecraft.resources.ResourceKey;
@@ -28,10 +27,9 @@ import static net.foxboi.salted.common.levelgen.FeatureConditions.*;
 public record ModVegetationFeatures() {
     private static final DataRegistry<ConfiguredFeature<?, ?>> REGISTRY = DataRegistry.of(Registries.CONFIGURED_FEATURE);
 
-    public static final ResourceKey<ConfiguredFeature<?, ?>> MOSS_CARPET_BONEMEAL = REGISTRY.register("moss_carpet_bonemeal", DefinedFeature.of(
-            Feature.SIMPLE_BLOCK,
-            new SimpleBlockConfiguration(FeatureBlocks.MOSS_CARPET)
-    ));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MOSS_CARPET_BONEMEAL = REGISTRY.register("moss_carpet_bonemeal", block(FeatureBlocks.MOSS_CARPET));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> BARLEY_BONEMEAL = REGISTRY.register("barley_bonemeal", block(FeatureBlocks.BARLEY));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CLOVERS_BONEMEAL = REGISTRY.register("clovers_bonemeal", block(FeatureBlocks.CLOVERS_1_3));
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> TREE_ASPEN_FOREST = REGISTRY.register("tree_aspen_forest", DefinedFeature.of(
             Feature.RANDOM_SELECTOR,
@@ -77,6 +75,29 @@ public record ModVegetationFeatures() {
             )
     ));
 
+    public static final ResourceKey<ConfiguredFeature<?, ?>> TREE_REDWOOD_FOREST_GIANT = REGISTRY.register("tree_redwood_forest_giant", DefinedFeature.of(
+            Feature.RANDOM_SELECTOR,
+            Registries.PLACED_FEATURE,
+            features -> new RandomFeatureConfiguration(
+                    List.of(
+                            new WeightedPlacedFeature(features.getOrThrow(ModTreePlacements.REDWOOD_MASSIVE), 0.4f),
+                            new WeightedPlacedFeature(features.getOrThrow(ModTreePlacements.REDWOOD_THIN), 0.2f)
+                    ),
+                    features.getOrThrow(ModTreePlacements.REDWOOD_DECENT)
+            )
+    ));
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> TREE_REDWOOD_FOREST_SMALL = REGISTRY.register("tree_redwood_forest_small", DefinedFeature.of(
+            Feature.RANDOM_SELECTOR,
+            Registries.PLACED_FEATURE,
+            features -> new RandomFeatureConfiguration(
+                    List.of(
+                            new WeightedPlacedFeature(features.getOrThrow(ModTreePlacements.REDWOOD_TINY), 0.5f)
+                    ),
+                    features.getOrThrow(ModTreePlacements.REDWOOD_VERY_TINY)
+            )
+    ));
+
     public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_GRASS_SPROUTS = REGISTRY.register("patch_grass_sprouts", patch(
             FeatureBlocks.GRASS_SPROUTS,
             inAir(DEFAULT_GROW_BLOCKS),
@@ -85,6 +106,24 @@ public record ModVegetationFeatures() {
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_BARLEY = REGISTRY.register("patch_barley", patch(
             FeatureBlocks.either(FeatureBlocks.BARLEY, FeatureBlocks.TALL_BARLEY, 0.25),
+            inAir(SANDY_GROW_BLOCKS),
+            96
+    ));
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_LAVENDER = REGISTRY.register("patch_lavender", flower(
+            FeatureBlocks.either(FeatureBlocks.LAVENDER, FeatureBlocks.TALL_LAVENDER, 0.25),
+            inAir(SANDY_GROW_BLOCKS),
+            96
+    ));
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_LAVENDER_SMALL_ONLY = REGISTRY.register("patch_lavender_small_only", flower(
+            FeatureBlocks.LAVENDER,
+            inAir(SANDY_GROW_BLOCKS),
+            96
+    ));
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_GLOBE_THISTLE = REGISTRY.register("patch_globe_thistle", flower(
+            FeatureBlocks.GLOBE_THISTLE,
             inAir(SANDY_GROW_BLOCKS),
             96
     ));
@@ -117,7 +156,8 @@ public record ModVegetationFeatures() {
             FeatureBlocks.MOSS_CARPET,
             inAir(DEFAULT_GROW_BLOCKS),
             96,
-            5
+            5,
+            false
     ));
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> PLANT_BARLEY_FIELD = REGISTRY.register("plant_barley_field", block(
@@ -138,15 +178,19 @@ public record ModVegetationFeatures() {
         return new WeightedList.Builder<>();
     }
 
+    private static DefinedFeature<?> flower(BlockStateProvider block, BlockPredicate predicate, int attempts) {
+        return patch(block, predicate, attempts, 7, true);
+    }
+
     private static DefinedFeature<?> patch(BlockStateProvider block, BlockPredicate predicate, int attempts) {
-        return patch(block, predicate, attempts, 7);
+        return patch(block, predicate, attempts, 7, false);
     }
 
 
-    private static DefinedFeature<?> patch(BlockStateProvider block, BlockPredicate predicate, int attempts, int spread) {
+    private static DefinedFeature<?> patch(BlockStateProvider block, BlockPredicate predicate, int attempts, int spread, boolean flower) {
         return DefinedFeature.of(
-                Feature.RANDOM_PATCH,
-                new RandomPatchConfiguration(
+                flower ? Feature.FLOWER : Feature.RANDOM_PATCH,
+                () -> new RandomPatchConfiguration(
                         attempts,
                         spread,
                         3,
@@ -163,7 +207,7 @@ public record ModVegetationFeatures() {
     private static DefinedFeature<?> block(BlockStateProvider block) {
         return DefinedFeature.of(
                 Feature.SIMPLE_BLOCK,
-                new SimpleBlockConfiguration(block)
+                () -> new SimpleBlockConfiguration(block)
         );
     }
 

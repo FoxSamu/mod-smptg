@@ -4,7 +4,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 import com.mojang.serialization.MapCodec;
-import net.foxboi.salted.common.util.DiagonalDirection;
+import net.foxboi.salted.common.misc.DiagonalDirection;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;

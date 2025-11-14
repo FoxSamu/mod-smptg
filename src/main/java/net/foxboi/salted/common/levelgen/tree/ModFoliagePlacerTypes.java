@@ -10,6 +10,7 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerTy
 public record ModFoliagePlacerTypes() {
     public static final FoliagePlacerType<PointyFoliagePlacer> POINTY = register("pointy", PointyFoliagePlacer.TYPE);
     public static final FoliagePlacerType<BrushFoliagePlacer> BRUSH = register("brush", BrushFoliagePlacer.TYPE);
+    public static final FoliagePlacerType<RedwoodFoliagePlacer> REDWOOD = register("redwood", RedwoodFoliagePlacer.TYPE);
 
     private static <FP extends FoliagePlacer> FoliagePlacerType<FP> register(String id, FoliagePlacerType<FP> type) {
         return Registry.register(BuiltInRegistries.FOLIAGE_PLACER_TYPE, Smptg.id(id), type);

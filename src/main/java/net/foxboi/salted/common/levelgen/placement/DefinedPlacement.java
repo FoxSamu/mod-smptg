@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.foxboi.salted.common.util.DeferredHolder;
-import net.foxboi.salted.common.util.Definition;
-import net.foxboi.salted.common.util.DefinitionContext;
+import net.foxboi.salted.common.misc.data.DeferredHolder;
+import net.foxboi.salted.common.misc.data.Definition;
+import net.foxboi.salted.common.misc.data.DefinitionContext;
 import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;

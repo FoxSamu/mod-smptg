@@ -1,7 +1,7 @@
 package net.foxboi.salted.mixin.main;
 
 import net.foxboi.salted.common.color.BiomeInj;
-import net.foxboi.salted.common.util.SaltMelting;
+import net.foxboi.salted.common.misc.Misc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.biome.Biome;
@@ -24,7 +24,7 @@ public class BiomeMixin implements BiomeInj {
             cancellable = true
     )
     private void onShouldFreeze(LevelReader level, BlockPos pos, boolean freezeAnywhere, CallbackInfoReturnable<Boolean> cir) {
-        if (SaltMelting.isNextToSalt(level, pos)) {
+        if (Misc.isNextToSalt(level, pos)) {
             cir.setReturnValue(false);
         }
     }
@@ -34,7 +34,7 @@ public class BiomeMixin implements BiomeInj {
             cancellable = true
     )
     private void onShouldSnow(LevelReader level, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        if (SaltMelting.isNextToSalt(level, pos)) {
+        if (Misc.isNextToSalt(level, pos)) {
             cir.setReturnValue(false);
         }
     }

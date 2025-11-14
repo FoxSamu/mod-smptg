@@ -2,12 +2,10 @@ package net.foxboi.salted.data.model;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.foxboi.salted.client.color.BiomeColorTint;
 import net.foxboi.salted.common.Smptg;
-import net.foxboi.salted.common.util.ItemTint;
+import net.foxboi.salted.common.misc.ItemTint;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.model.*;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 
 @Environment(EnvType.CLIENT)

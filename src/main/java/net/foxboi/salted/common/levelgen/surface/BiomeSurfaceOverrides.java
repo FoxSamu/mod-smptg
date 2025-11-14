@@ -7,8 +7,8 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.foxboi.salted.common.ModRegistries;
 import net.foxboi.salted.common.levelgen.biome.ModBiomes;
-import net.foxboi.salted.common.util.DataRegistry;
-import net.foxboi.salted.common.util.DefinitionContext;
+import net.foxboi.salted.common.misc.data.DataRegistry;
+import net.foxboi.salted.common.misc.data.DefinitionContext;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
@@ -46,11 +46,6 @@ public record BiomeSurfaceOverrides(
     // Definitions
     // ================================================
 
-    private static final List<ResourceKey<Biome>> PODZOL_SURFACE_FORESTS = List.of(
-            ModBiomes.ASPEN_FOREST,
-            ModBiomes.MAPLE_FOREST
-    );
-
     public static BiomeSurfaceOverrides overworld(DefinitionContext context) {
         return new Builder(context.lookupOrThrow(Registries.BIOME))
                 .add(
@@ -64,6 +59,12 @@ public record BiomeSurfaceOverrides(
                                 ModBiomes.MAPLE_FOREST
                         ),
                         SurfaceTypes.sometimesPodzolSometimesMossSurface()
+                )
+                .add(
+                        List.of(
+                                ModBiomes.REDWOOD_TAIGA
+                        ),
+                        SurfaceTypes.redwoodSurface()
                 )
                 .build();
     }

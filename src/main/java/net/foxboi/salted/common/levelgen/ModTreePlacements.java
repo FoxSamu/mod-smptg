@@ -1,7 +1,7 @@
 package net.foxboi.salted.common.levelgen;
 
 import net.foxboi.salted.common.levelgen.placement.DefinedPlacement;
-import net.foxboi.salted.common.util.DataRegistry;
+import net.foxboi.salted.common.misc.data.DataRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
@@ -41,6 +41,12 @@ public record ModTreePlacements() {
     public static final ResourceKey<PlacedFeature> BEECH = place(ModTreeFeatures.BEECH, Blocks.OAK_SAPLING);
     public static final ResourceKey<PlacedFeature> BEECH_LEAF_LITTER = place(ModTreeFeatures.BEECH_LEAF_LITTER, Blocks.OAK_SAPLING);
     public static final ResourceKey<PlacedFeature> FALLEN_BEECH_TREE = place(ModTreeFeatures.FALLEN_BEECH_TREE, Blocks.OAK_SAPLING);
+
+    public static final ResourceKey<PlacedFeature> REDWOOD_MASSIVE = place(ModTreeFeatures.REDWOOD_MASSIVE, Blocks.OAK_SAPLING);
+    public static final ResourceKey<PlacedFeature> REDWOOD_DECENT = place(ModTreeFeatures.REDWOOD_DECENT, Blocks.OAK_SAPLING);
+    public static final ResourceKey<PlacedFeature> REDWOOD_THIN = place(ModTreeFeatures.REDWOOD_THIN, Blocks.OAK_SAPLING);
+    public static final ResourceKey<PlacedFeature> REDWOOD_TINY = place(ModTreeFeatures.REDWOOD_TINY, Blocks.OAK_SAPLING);
+    public static final ResourceKey<PlacedFeature> REDWOOD_VERY_TINY = place(ModTreeFeatures.REDWOOD_VERY_TINY, Blocks.OAK_SAPLING);
 
     private static ResourceKey<PlacedFeature> place(ResourceKey<ConfiguredFeature<?, ?>> key, Block sapling) {
         return REGISTRY.register(key.location(), DefinedPlacement.place(key).modified(PlacementUtils.filteredByBlockSurvival(sapling)));
