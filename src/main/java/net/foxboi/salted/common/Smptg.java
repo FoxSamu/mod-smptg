@@ -26,7 +26,6 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The SMPTG main mod class. This also acts as a delegate for client methods that are not available on the server.
