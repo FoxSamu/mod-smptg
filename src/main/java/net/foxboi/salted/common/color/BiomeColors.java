@@ -11,7 +11,7 @@ import net.foxboi.salted.common.Smptg;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.ColorResolver;
 import net.minecraft.world.level.Level;
@@ -21,10 +21,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BiomeColors {
-    public static final ResourceLocation GRASS = ResourceLocation.withDefaultNamespace("grass");
-    public static final ResourceLocation FOLIAGE = ResourceLocation.withDefaultNamespace("foliage");
-    public static final ResourceLocation DRY_FOLIAGE = ResourceLocation.withDefaultNamespace("dry_foliage");
-    public static final ResourceLocation WATER = ResourceLocation.withDefaultNamespace("water");
+    public static final Identifier GRASS = Identifier.withDefaultNamespace("grass");
+    public static final Identifier FOLIAGE = Identifier.withDefaultNamespace("foliage");
+    public static final Identifier DRY_FOLIAGE = Identifier.withDefaultNamespace("dry_foliage");
+    public static final Identifier WATER = Identifier.withDefaultNamespace("water");
 
     public static void init() {
         register("solid", SolidColor.TYPE);
@@ -42,11 +42,11 @@ public class BiomeColors {
     }
 
     private static final ResourceKey<Registry<BiomeColor.Type<?>>> REGISTRY_KEY = ResourceKey.createRegistryKey(
-        ResourceLocation.fromNamespaceAndPath(Smptg.ID, "biome_color")
+        Identifier.fromNamespaceAndPath(Smptg.ID, "biome_color")
     );
 
     private static final Registry<BiomeColor.Type<?>> REGISTRY = FabricRegistryBuilder.createDefaulted(
-        REGISTRY_KEY, ResourceLocation.withDefaultNamespace("solid")
+        REGISTRY_KEY, Identifier.withDefaultNamespace("solid")
     ).buildAndRegister();
 
     private static final Codec<BiomeColor> TYPE_CODEC =
@@ -58,12 +58,12 @@ public class BiomeColors {
             )
             .codec();
 
-    public static void register(ResourceLocation id, BiomeColor.Type<?> type) {
+    public static void register(Identifier id, BiomeColor.Type<?> type) {
         Registry.register(REGISTRY, id, type);
     }
 
     private static void register(String id, BiomeColor.Type<?> type) {
-        register(ResourceLocation.withDefaultNamespace(id), type);
+        register(Identifier.withDefaultNamespace(id), type);
     }
 
     private static final Codec<Integer> RAW_CODEC = Codec.intRange(0, 0xFFFFFF);
@@ -175,7 +175,7 @@ public class BiomeColors {
     }
 
 
-    public static final Map<ResourceLocation, Colormap> COLORMAPS = new HashMap<>();
+    public static final Map<Identifier, Colormap> COLORMAPS = new HashMap<>();
 
     public static double temperature(Biome biome) {
         return ((BiomeInj) (Object) biome).smptg$temperature();
@@ -185,7 +185,7 @@ public class BiomeColors {
         return ((BiomeInj) (Object) biome).smptg$downfall();
     }
 
-    public static int sample(BlockAndTintGetter level, BlockPos pos, ResourceLocation name) {
+    public static int sample(BlockAndTintGetter level, BlockPos pos, Identifier name) {
         if (level instanceof BiomeColorLevelInj inj) {
             return inj.smptg$getBlockTint(pos, name);
         } else {

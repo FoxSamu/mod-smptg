@@ -49,7 +49,7 @@ public record ModTreePlacements() {
     public static final ResourceKey<PlacedFeature> REDWOOD_VERY_TINY = place(ModTreeFeatures.REDWOOD_VERY_TINY, Blocks.OAK_SAPLING);
 
     private static ResourceKey<PlacedFeature> place(ResourceKey<ConfiguredFeature<?, ?>> key, Block sapling) {
-        return REGISTRY.register(key.location(), DefinedPlacement.place(key).modified(PlacementUtils.filteredByBlockSurvival(sapling)));
+        return REGISTRY.register(key.identifier(), DefinedPlacement.place(key).modified(PlacementUtils.filteredByBlockSurvival(sapling)));
     }
 
     public static void init() {

@@ -1,5 +1,7 @@
 package net.foxboi.salted.common.levelgen.biome;
 
+import java.util.Optional;
+
 import net.foxboi.salted.common.levelgen.ModVegetationPlacements;
 import net.foxboi.salted.common.misc.biome.BiomeEditor;
 import net.minecraft.data.worldgen.biome.OverworldBiomes;
@@ -7,7 +9,8 @@ import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.sounds.Music;
 import net.minecraft.sounds.Musics;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.level.biome.AmbientMoodSettings;
+import net.minecraft.world.attribute.BackgroundMusic;
+import net.minecraft.world.attribute.EnvironmentAttributes;
 
 import static net.foxboi.salted.common.levelgen.biome.VanillaBiomeFeatures.*;
 import static net.minecraft.world.level.levelgen.GenerationStep.Decoration.*;
@@ -19,110 +22,124 @@ public record ModBiomeFeatures() {
     public static final int DARK_DRY_FOLIAGE_COLOR = 0x7B5334;
     public static final Music NORMAL_MUSIC = null;
 
-    public static void defaultEffects(BiomeEditor builder, float temperature) {
-        builder
-                .waterColor(NORMAL_WATER_COLOR)
-                .waterFogColor(NORMAL_WATER_FOG_COLOR)
-                .fogColor(OVERWORLD_FOG_COLOR)
-                .skyColor(OverworldBiomes.calculateSkyColor(temperature))
-                .ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
-                .backgroundMusic(NORMAL_MUSIC);
+    public static void defaultAttributes(BiomeEditor editor, float temperature) {
+        editor.putAttribute(EnvironmentAttributes.SKY_COLOR, OverworldBiomes.calculateSkyColor(temperature));
+    }
+
+    public static void defaultEffects(BiomeEditor builder) {
+        builder.waterColor(NORMAL_WATER_COLOR);
+    }
+    
+    private static void overworldMusic(BiomeEditor builder, Music music) {
+        builder.putAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, new BackgroundMusic(
+                Optional.of(music),
+                Optional.of(Musics.CREATIVE),
+                Optional.empty()
+        ));
+    }
+
+    private static void netherMusic(BiomeEditor builder, Music music) {
+        builder.putAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, new BackgroundMusic(
+                Optional.of(music),
+                Optional.empty(),
+                Optional.empty()
+        ));
     }
 
     public static void forestMusic(BiomeEditor builder) {
-        builder.backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_FOREST));
+        overworldMusic(builder, Musics.createGameMusic(SoundEvents.MUSIC_BIOME_FOREST));
     }
 
     public static void oldGrowthTaigaMusic(BiomeEditor builder) {
-        builder.backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_OLD_GROWTH_TAIGA));
+        overworldMusic(builder, Musics.createGameMusic(SoundEvents.MUSIC_BIOME_OLD_GROWTH_TAIGA));
     }
 
     public static void cherryGroveMusic(BiomeEditor builder) {
-        builder.backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_CHERRY_GROVE));
+        overworldMusic(builder, Musics.createGameMusic(SoundEvents.MUSIC_BIOME_CHERRY_GROVE));
     }
 
     public static void flowerForestMusic(BiomeEditor builder) {
-        builder.backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_FLOWER_FOREST));
+        overworldMusic(builder, Musics.createGameMusic(SoundEvents.MUSIC_BIOME_FLOWER_FOREST));
     }
 
     public static void desertMusic(BiomeEditor builder) {
-        builder.backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_DESERT));
+        overworldMusic(builder, Musics.createGameMusic(SoundEvents.MUSIC_BIOME_DESERT));
     }
 
     public static void badlandsMusic(BiomeEditor builder) {
-        builder.backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_BADLANDS));
+        overworldMusic(builder, Musics.createGameMusic(SoundEvents.MUSIC_BIOME_BADLANDS));
     }
 
     public static void jungleMusic(BiomeEditor builder) {
-        builder.backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_JUNGLE));
+        overworldMusic(builder, Musics.createGameMusic(SoundEvents.MUSIC_BIOME_JUNGLE));
     }
 
     public static void sparseJungleMusic(BiomeEditor builder) {
-        builder.backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_SPARSE_JUNGLE));
+        overworldMusic(builder, Musics.createGameMusic(SoundEvents.MUSIC_BIOME_SPARSE_JUNGLE));
     }
 
     public static void bambooJungleMusic(BiomeEditor builder) {
-        builder.backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_BAMBOO_JUNGLE));
+        overworldMusic(builder, Musics.createGameMusic(SoundEvents.MUSIC_BIOME_BAMBOO_JUNGLE));
     }
 
     public static void groveMusic(BiomeEditor builder) {
-        builder.backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_GROVE));
+        overworldMusic(builder, Musics.createGameMusic(SoundEvents.MUSIC_BIOME_GROVE));
     }
 
     public static void frozenPeaksMusic(BiomeEditor builder) {
-        builder.backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_FROZEN_PEAKS));
+        overworldMusic(builder, Musics.createGameMusic(SoundEvents.MUSIC_BIOME_FROZEN_PEAKS));
     }
 
     public static void jaggedPeaksMusic(BiomeEditor builder) {
-        builder.backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_JAGGED_PEAKS));
+        overworldMusic(builder, Musics.createGameMusic(SoundEvents.MUSIC_BIOME_JAGGED_PEAKS));
     }
 
     public static void snowySlopesMusic(BiomeEditor builder) {
-        builder.backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_SNOWY_SLOPES));
+        overworldMusic(builder, Musics.createGameMusic(SoundEvents.MUSIC_BIOME_SNOWY_SLOPES));
     }
 
     public static void stonyPeaksMusic(BiomeEditor builder) {
-        builder.backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_STONY_PEAKS));
+        overworldMusic(builder, Musics.createGameMusic(SoundEvents.MUSIC_BIOME_STONY_PEAKS));
     }
 
     public static void meadowMusic(BiomeEditor builder) {
-        builder.backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_MEADOW));
+        overworldMusic(builder, Musics.createGameMusic(SoundEvents.MUSIC_BIOME_MEADOW));
     }
 
     public static void swampMusic(BiomeEditor builder) {
-        builder.backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_SWAMP));
+        overworldMusic(builder, Musics.createGameMusic(SoundEvents.MUSIC_BIOME_SWAMP));
     }
 
     public static void lushCavesMusic(BiomeEditor builder) {
-        builder.backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_LUSH_CAVES));
+        overworldMusic(builder, Musics.createGameMusic(SoundEvents.MUSIC_BIOME_LUSH_CAVES));
     }
 
     public static void dripstoneCavesMusic(BiomeEditor builder) {
-        builder.backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_DRIPSTONE_CAVES));
+        overworldMusic(builder, Musics.createGameMusic(SoundEvents.MUSIC_BIOME_DRIPSTONE_CAVES));
     }
 
     public static void deepDarkMusic(BiomeEditor builder) {
-        builder.backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_DEEP_DARK));
+        overworldMusic(builder, Musics.createGameMusic(SoundEvents.MUSIC_BIOME_DEEP_DARK));
     }
 
     public static void soulSandValleyMusic(BiomeEditor builder) {
-        builder.backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_SOUL_SAND_VALLEY));
+        netherMusic(builder, Musics.createGameMusic(SoundEvents.MUSIC_BIOME_SOUL_SAND_VALLEY));
     }
 
     public static void crimsonForestMusic(BiomeEditor builder) {
-        builder.backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_CRIMSON_FOREST));
+        netherMusic(builder, Musics.createGameMusic(SoundEvents.MUSIC_BIOME_CRIMSON_FOREST));
     }
 
     public static void warpedForestMusic(BiomeEditor builder) {
-        builder.backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_WARPED_FOREST));
+        netherMusic(builder, Musics.createGameMusic(SoundEvents.MUSIC_BIOME_WARPED_FOREST));
     }
 
     public static void basaltDeltasMusic(BiomeEditor builder) {
-        builder.backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_BASALT_DELTAS));
+        netherMusic(builder, Musics.createGameMusic(SoundEvents.MUSIC_BIOME_BASALT_DELTAS));
     }
 
     public static void netherWastesMusic(BiomeEditor builder) {
-        builder.backgroundMusic(Musics.createGameMusic(SoundEvents.MUSIC_BIOME_NETHER_WASTES));
+        netherMusic(builder, Musics.createGameMusic(SoundEvents.MUSIC_BIOME_NETHER_WASTES));
     }
 
     public static void meadowColors(BiomeEditor builder) {

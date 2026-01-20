@@ -10,6 +10,8 @@ import net.minecraft.sounds.Music;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.random.Weighted;
 import net.minecraft.util.random.WeightedList;
+import net.minecraft.world.attribute.*;
+import net.minecraft.world.attribute.modifier.AttributeModifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.*;
@@ -48,42 +50,17 @@ public class BiomeBuilder implements BiomeEditor {
         return this;
     }
 
-    private int fogColor;
     private int waterColor;
-    private int waterFogColor;
-    private int skyColor;
     private OptionalInt grassColor = OptionalInt.empty();
     private OptionalInt foliageColor = OptionalInt.empty();
     private OptionalInt dryFoliageColor = OptionalInt.empty();
     private BiomeSpecialEffects.GrassColorModifier grassColorModifier = BiomeSpecialEffects.GrassColorModifier.NONE;
-    private float backgroundMusicVolume = 1f;
-    private Optional<WeightedList<Music>> music = Optional.empty();
-    private Optional<Holder<SoundEvent>> loopSound = Optional.empty();
-    private Optional<AmbientAdditionsSettings> additionsSound = Optional.empty();
-    private Optional<AmbientMoodSettings> moodSound = Optional.empty();
-    private Optional<AmbientParticleSettings> particles = Optional.empty();
 
-    @Override
-    public BiomeEditor fogColor(int color) {
-        this.fogColor = color;
-        return this;
-    }
+    private final EnvironmentAttributeMap.Builder attributes = EnvironmentAttributeMap.builder();
 
     @Override
     public BiomeEditor waterColor(int color) {
         this.waterColor = color;
-        return this;
-    }
-
-    @Override
-    public BiomeEditor waterFogColor(int color) {
-        this.waterFogColor = color;
-        return this;
-    }
-
-    @Override
-    public BiomeEditor skyColor(int color) {
-        this.skyColor = color;
         return this;
     }
 
@@ -112,38 +89,20 @@ public class BiomeBuilder implements BiomeEditor {
     }
 
     @Override
-    public BiomeEditor musicVolume(float volume) {
-        this.backgroundMusicVolume = volume;
+    public <V> BiomeEditor putAttribute(EnvironmentAttribute<V> attribute, V value) {
+        attributes.set(attribute, value);
         return this;
     }
 
     @Override
-    public BiomeEditor backgroundMusic(Optional<WeightedList<Music>> music) {
-        this.music = music;
+    public <V, P> BiomeEditor modifyAttribute(EnvironmentAttribute<V> attribute, AttributeModifier<V, P> modifier, P parameter) {
+        attributes.modify(attribute, modifier, parameter);
         return this;
     }
 
     @Override
-    public BiomeEditor ambientLoopSound(Optional<Holder<SoundEvent>> sound) {
-        this.loopSound = sound;
-        return this;
-    }
-
-    @Override
-    public BiomeEditor ambientAdditionsSound(Optional<AmbientAdditionsSettings> sound) {
-        this.additionsSound = sound;
-        return this;
-    }
-
-    @Override
-    public BiomeEditor ambientMoodSound(Optional<AmbientMoodSettings> sound) {
-        this.moodSound = sound;
-        return this;
-    }
-
-    @Override
-    public BiomeEditor particles(Optional<AmbientParticleSettings> particles) {
-        this.particles = particles;
+    public BiomeEditor putAttributes(EnvironmentAttributeMap map) {
+        attributes.putAll(map);
         return this;
     }
 
@@ -214,21 +173,12 @@ public class BiomeBuilder implements BiomeEditor {
 
     private BiomeSpecialEffects effects() {
         var effects = new BiomeSpecialEffects.Builder()
-                .fogColor(fogColor)
-                .skyColor(skyColor)
                 .waterColor(waterColor)
-                .waterFogColor(waterFogColor)
-                .backgroundMusicVolume(backgroundMusicVolume)
                 .grassColorModifier(grassColorModifier);
 
         grassColor.ifPresent(effects::grassColorOverride);
         foliageColor.ifPresent(effects::foliageColorOverride);
         dryFoliageColor.ifPresent(effects::dryFoliageColorOverride);
-        music.ifPresent(effects::backgroundMusic);
-        loopSound.ifPresent(effects::ambientLoopSound);
-        additionsSound.ifPresent(effects::ambientAdditionsSound);
-        moodSound.ifPresent(effects::ambientMoodSound);
-        particles.ifPresent(effects::ambientParticle);
 
         return effects.build();
     }
@@ -267,6 +217,7 @@ public class BiomeBuilder implements BiomeEditor {
 
     public Biome build() {
         return new Biome.BiomeBuilder()
+                .putAttributes(attributes)
                 .temperature(temperature)
                 .downfall(downfall)
                 .hasPrecipitation(precipitation)

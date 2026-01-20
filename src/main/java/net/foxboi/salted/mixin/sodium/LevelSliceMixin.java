@@ -8,7 +8,7 @@ import net.foxboi.salted.common.color.BiomeColorLevelInj;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.ColorResolver;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -29,12 +29,12 @@ public class LevelSliceMixin implements BiomeColorLevelInj {
     }
 
     @Override
-    public int smptg$getBlockTint(BlockPos pos, ResourceLocation color) {
+    public int smptg$getBlockTint(BlockPos pos, Identifier color) {
         return ((BiomeColorLevelInj) level).smptg$getBlockTint(pos, color);
     }
 
     @Override
-    public void smptg$reloadColors(Map<ResourceLocation, BiomeColor> map) {
+    public void smptg$reloadColors(Map<Identifier, BiomeColor> map) {
         ((BiomeColorLevelInj) level).smptg$reloadColors(map);
     }
 

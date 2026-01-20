@@ -12,12 +12,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.client.color.block.BlockTintCache;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ColorResolver;
 import net.minecraft.world.level.Level;
@@ -35,12 +35,12 @@ public abstract class ClientLevelMixin implements BiomeColorLevelInj {
     public abstract int calculateBlockTint(BlockPos pos, ColorResolver resolver);
 
     @Unique
-    private final Map<ResourceLocation, BlockTintCache> biomeColourCache = Util.make(new HashMap<>(), it -> {
+    private final Map<Identifier, BlockTintCache> biomeColourCache = Util.make(new HashMap<>(), it -> {
         reloadColours(BiomeColorsClient.COLORS, it);
     });
 
     @Unique
-    private final Set<ResourceLocation> reportedMissing = new HashSet<>();
+    private final Set<Identifier> reportedMissing = new HashSet<>();
 
     @Override
     public int smptg$computeBlockTintUncached(BlockPos pos, ColorResolver resolver) {
@@ -48,7 +48,7 @@ public abstract class ClientLevelMixin implements BiomeColorLevelInj {
     }
 
     @Override
-    public int smptg$getBlockTint(BlockPos pos, ResourceLocation color) {
+    public int smptg$getBlockTint(BlockPos pos, Identifier color) {
         var cache = biomeColourCache.get(color);
         if (cache == null) {
             if (reportedMissing.add(color)) {
@@ -60,13 +60,13 @@ public abstract class ClientLevelMixin implements BiomeColorLevelInj {
     }
 
     @Override
-    public void smptg$reloadColors(Map<ResourceLocation, BiomeColor> map) {
+    public void smptg$reloadColors(Map<Identifier, BiomeColor> map) {
         reloadColours(map, biomeColourCache);
         reportedMissing.clear();
     }
 
     @Unique
-    private void reloadColours(Map<ResourceLocation, BiomeColor> map, Map<ResourceLocation, BlockTintCache> caches) {
+    private void reloadColours(Map<Identifier, BiomeColor> map, Map<Identifier, BlockTintCache> caches) {
         caches.clear();
         map.forEach((k, v) -> {
             caches.put(k, new BlockTintCache(pos -> v.sample((Level) (Object) this, pos)));

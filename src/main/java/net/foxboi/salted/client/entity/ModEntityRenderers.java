@@ -1,16 +1,11 @@
 package net.foxboi.salted.client.entity;
 
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.foxboi.salted.common.entity.ModEntityTypes;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.BoatRenderer;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.vehicle.AbstractBoat;
-import net.minecraft.world.entity.vehicle.Boat;
-import net.minecraft.world.entity.vehicle.ChestBoat;
+import net.minecraft.world.entity.vehicle.boat.AbstractBoat;
 
 public class ModEntityRenderers {
     public static void init() {

@@ -23,6 +23,11 @@ public abstract class OverworldBiome extends AbstractBiome {
 
     @Override
     protected void effects(BiomeEditor builder) {
-        defaultEffects(builder, temperature());
+        defaultEffects(builder);
+    }
+
+    @Override
+    protected void attributes(BiomeEditor builder) {
+        defaultAttributes(builder, temperature());
     }
 }

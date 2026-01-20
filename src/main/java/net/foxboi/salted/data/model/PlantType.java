@@ -5,7 +5,7 @@ import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 
 import static net.minecraft.client.data.models.model.TextureMapping.*;
@@ -32,11 +32,11 @@ public enum PlantType {
         return flowerPotCross;
     }
 
-    public ResourceLocation createItemModel(BlockModelGenerators gen, Block block) {
+    public Identifier createItemModel(BlockModelGenerators gen, Block block) {
         return createItemModel(gen, block, "");
     }
 
-    public ResourceLocation createItemModel(BlockModelGenerators gen, Block block, String baseSuffix) {
+    public Identifier createItemModel(BlockModelGenerators gen, Block block, String baseSuffix) {
         var item = block.asItem();
 
         return switch (this) {
@@ -68,7 +68,7 @@ public enum PlantType {
         };
     }
 
-    public TextureMapping getTextureMapping(ResourceLocation texture) {
+    public TextureMapping getTextureMapping(Identifier texture) {
         return switch (this) {
             case TINTED, NOT_TINTED -> cross(texture);
             case LAYERED -> ModTextureMappings.tintedWithOverlay(texture);

@@ -1,13 +1,13 @@
 package net.foxboi.salted.mixin.main;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
-@Mixin(ResourceLocation.class)
+@Mixin(Identifier.class)
 @Debug(export = true)
-public class ResourceLocationMixin {
+public class IdentifierMixin {
     @ModifyVariable(
             method = "<init>",
             at = @At("HEAD"),

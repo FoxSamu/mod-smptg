@@ -9,6 +9,10 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.Music;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.random.WeightedList;
+import net.minecraft.world.attribute.AmbientAdditionsSettings;
+import net.minecraft.world.attribute.EnvironmentAttribute;
+import net.minecraft.world.attribute.EnvironmentAttributeMap;
+import net.minecraft.world.attribute.modifier.AttributeModifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.*;
@@ -42,26 +46,8 @@ public class BiomeModifier implements BiomeEditor {
     }
 
     @Override
-    public BiomeEditor fogColor(int color) {
-        context.getEffects().setFogColor(color);
-        return this;
-    }
-
-    @Override
     public BiomeEditor waterColor(int color) {
         context.getEffects().setWaterColor(color);
-        return this;
-    }
-
-    @Override
-    public BiomeEditor waterFogColor(int color) {
-        context.getEffects().setWaterFogColor(color);
-        return this;
-    }
-
-    @Override
-    public BiomeEditor skyColor(int color) {
-        context.getEffects().setSkyColor(color);
         return this;
     }
 
@@ -95,38 +81,20 @@ public class BiomeModifier implements BiomeEditor {
     }
 
     @Override
-    public BiomeEditor musicVolume(float volume) {
-        context.getEffects().setMusicVolume(volume);
+    public <V> BiomeEditor putAttribute(EnvironmentAttribute<V> attribute, V value) {
+        context.getAttributes().set(attribute, value);
         return this;
     }
 
     @Override
-    public BiomeEditor backgroundMusic(Optional<WeightedList<Music>> music) {
-        context.getEffects().setMusic(music);
+    public <V, P> BiomeEditor modifyAttribute(EnvironmentAttribute<V> attribute, AttributeModifier<V, P> modifier, P parameter) {
+        context.getAttributes().setModifier(attribute, modifier, parameter);
         return this;
     }
 
     @Override
-    public BiomeEditor ambientLoopSound(Optional<Holder<SoundEvent>> sound) {
-        context.getEffects().setAmbientSound(sound);
-        return this;
-    }
-
-    @Override
-    public BiomeEditor ambientAdditionsSound(Optional<AmbientAdditionsSettings> sound) {
-        context.getEffects().setAdditionsSound(sound);
-        return this;
-    }
-
-    @Override
-    public BiomeEditor ambientMoodSound(Optional<AmbientMoodSettings> sound) {
-        context.getEffects().setMoodSound(sound);
-        return this;
-    }
-
-    @Override
-    public BiomeEditor particles(Optional<AmbientParticleSettings> particles) {
-        context.getEffects().setParticleConfig(particles);
+    public BiomeEditor putAttributes(EnvironmentAttributeMap map) {
+        context.getAttributes().addAll(map);
         return this;
     }
 

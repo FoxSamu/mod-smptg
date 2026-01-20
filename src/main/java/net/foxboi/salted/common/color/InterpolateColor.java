@@ -27,11 +27,11 @@ public record InterpolateColor(
 
     @Override
     public int sample(Level level, BlockPos pos) {
-        return ARGB.lerp(t, a.sample(level, pos), b.sample(level, pos));
+        return ARGB.srgbLerp(t, a.sample(level, pos), b.sample(level, pos));
     }
 
     @Override
     public int sampleItem() {
-        return ARGB.lerp(t, a.sampleItem(), b.sampleItem());
+        return ARGB.srgbLerp(t, a.sampleItem(), b.sampleItem());
     }
 }

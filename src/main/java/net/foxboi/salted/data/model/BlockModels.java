@@ -1,7 +1,7 @@
 package net.foxboi.salted.data.model;
 
 import net.foxboi.salted.common.misc.ItemTint;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 
 /**
@@ -54,7 +54,7 @@ public interface BlockModels {
     /**
      * Creates a tinted cross plant.
      */
-    default void tintedCrossPlant(Block block, ResourceLocation tint) {
+    default void tintedCrossPlant(Block block, Identifier tint) {
         tintedCrossPlant(block, ItemTint.biomeColor(tint));
     }
 
@@ -73,7 +73,7 @@ public interface BlockModels {
     /**
      * Creates a tinted cross plant with an untinted overlay.
      */
-    default void layeredCrossPlant(Block block, ResourceLocation tint) {
+    default void layeredCrossPlant(Block block, Identifier tint) {
         layeredCrossPlant(block, ItemTint.biomeColor(tint));
     }
 
@@ -102,7 +102,7 @@ public interface BlockModels {
     /**
      * Creates a tinted double-block cross plant.
      */
-    default void tallTintedCrossPlant(Block block, ResourceLocation tint) {
+    default void tallTintedCrossPlant(Block block, Identifier tint) {
         tallTintedCrossPlant(block, ItemTint.biomeColor(tint));
     }
 
@@ -121,7 +121,7 @@ public interface BlockModels {
     /**
      * Creates a tinted double-block cross plant with untinted overlay.
      */
-    default void tallLayeredCrossPlant(Block block, ResourceLocation tint) {
+    default void tallLayeredCrossPlant(Block block, Identifier tint) {
         tallLayeredCrossPlant(block, ItemTint.biomeColor(tint));
     }
 
@@ -150,7 +150,7 @@ public interface BlockModels {
     /**
      * Creates a tinted column cross plant.
      */
-    default void columnTintedCrossPlant(Block block, ResourceLocation tint) {
+    default void columnTintedCrossPlant(Block block, Identifier tint) {
         columnTintedCrossPlant(block, ItemTint.biomeColor(tint));
     }
 
@@ -169,7 +169,7 @@ public interface BlockModels {
     /**
      * Creates a tinted column cross plant with untinted overlay.
      */
-    default void columnLayeredCrossPlant(Block block, ResourceLocation tint) {
+    default void columnLayeredCrossPlant(Block block, Identifier tint) {
         columnLayeredCrossPlant(block, ItemTint.biomeColor(tint));
     }
 
@@ -198,7 +198,7 @@ public interface BlockModels {
     /**
      * Creates a tinted flower bed.
      */
-    default void tintedFlowerBed(Block block, ResourceLocation tint) {
+    default void tintedFlowerBed(Block block, Identifier tint) {
         tintedFlowerBed(block, ItemTint.biomeColor(tint));
     }
 
@@ -222,7 +222,7 @@ public interface BlockModels {
     /**
      * Creates a tinted multiface block.
      */
-    default void tintedMultiface(Block block, ResourceLocation tint) {
+    default void tintedMultiface(Block block, Identifier tint) {
         tintedMultiface(block, ItemTint.biomeColor(tint));
     }
 
@@ -246,7 +246,7 @@ public interface BlockModels {
     /**
      * Creates a tinted leaves model.
      */
-    default void tintedLeaves(Block block, ResourceLocation tint) {
+    default void tintedLeaves(Block block, Identifier tint) {
         tintedLeaves(block, ItemTint.biomeColor(tint));
     }
 
@@ -265,7 +265,7 @@ public interface BlockModels {
     /**
      * Creates a tinted leaves model using the maple leaves texture.
      */
-    default void mapleLeaves(Block block, ResourceLocation tint) {
+    default void mapleLeaves(Block block, Identifier tint) {
         mapleLeaves(block, ItemTint.biomeColor(tint));
     }
 

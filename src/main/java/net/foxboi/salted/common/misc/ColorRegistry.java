@@ -1,10 +1,10 @@
 package net.foxboi.salted.common.misc;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 
 public interface ColorRegistry {
-    void color(Block block, ResourceLocation colorId);
+    void color(Block block, Identifier colorId);
     void foliage(Block block);
     void dryFoliage(Block block);
     void water(Block block);

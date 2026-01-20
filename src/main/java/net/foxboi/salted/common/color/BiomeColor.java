@@ -5,7 +5,7 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 
@@ -16,7 +16,7 @@ public interface BiomeColor {
     Codec<BiomeColor> CODEC = BiomeColors.CODEC;
     Codec<Integer> HEX_CODEC = BiomeColors.HEX_CODEC;
 
-    static void register(ResourceLocation id, Type<?> type) {
+    static void register(Identifier id, Type<?> type) {
         BiomeColors.register(id, type);
     }
 
@@ -52,11 +52,11 @@ public interface BiomeColor {
         return WaterColor.INSTANCE;
     }
 
-    static BiomeColor colormap(ResourceLocation name) {
+    static BiomeColor colormap(Identifier name) {
         return new ColormapColor(name, .5f, 1f);
     }
 
-    static BiomeColor colormap(ResourceLocation name, float defaultTemperature, float defaultDownfall) {
+    static BiomeColor colormap(Identifier name, float defaultTemperature, float defaultDownfall) {
         return new ColormapColor(name, defaultTemperature, defaultDownfall);
     }
 

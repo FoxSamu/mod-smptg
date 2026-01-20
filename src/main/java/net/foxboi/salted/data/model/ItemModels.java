@@ -1,7 +1,7 @@
 package net.foxboi.salted.data.model;
 
 import net.foxboi.salted.common.misc.ItemTint;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 
 /**
@@ -29,7 +29,7 @@ public interface ItemModels {
     /**
      * Creates a basic flat item with a tint.
      */
-    default void generated(Item item, ResourceLocation tint) {
+    default void generated(Item item, Identifier tint) {
         generated(item, ItemTint.biomeColor(tint));
     }
 

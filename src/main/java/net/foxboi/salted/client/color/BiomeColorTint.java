@@ -13,14 +13,14 @@ import net.minecraft.world.item.ItemStack;
 
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
 
 @Environment(EnvType.CLIENT)
-public record BiomeColorTint(ResourceLocation name) implements BlockColor, ItemTintSource {
+public record BiomeColorTint(Identifier name) implements BlockColor, ItemTintSource {
     public static final MapCodec<BiomeColorTint> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-            ResourceLocation.CODEC.fieldOf("name").forGetter(it -> it.name)
+            Identifier.CODEC.fieldOf("name").forGetter(it -> it.name)
     ).apply(inst, BiomeColorTint::new));
 
     @Override

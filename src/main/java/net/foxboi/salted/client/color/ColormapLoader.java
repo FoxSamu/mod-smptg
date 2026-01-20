@@ -10,21 +10,21 @@ import org.apache.logging.log4j.Logger;
 
 import com.mojang.blaze3d.platform.NativeImage;
 import net.minecraft.resources.FileToIdConverter;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.Resource;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Environment(EnvType.CLIENT)
-public class ColormapLoader extends SimpleResourceReloader<Map<ResourceLocation, Colormap>> {
-    public static final ResourceLocation ID = Smptg.id("colormaps");
+public class ColormapLoader extends SimpleResourceReloader<Map<Identifier, Colormap>> {
+    public static final Identifier ID = Smptg.id("colormaps");
 
     public static final FileToIdConverter NAMER = new FileToIdConverter("textures/colormap", ".png");
 
     public static final Logger LOGGER = LogManager.getLogger(Smptg.ID);
 
-    private static Colormap load(ResourceLocation id, Resource res) {
+    private static Colormap load(Identifier id, Resource res) {
         try (var reader = res.open(); NativeImage img = NativeImage.read(reader)) {
             @SuppressWarnings("deprecation")
             var array = img.makePixelArray();
@@ -36,9 +36,9 @@ public class ColormapLoader extends SimpleResourceReloader<Map<ResourceLocation,
     }
 
     @Override
-    protected Map<ResourceLocation, Colormap> prepare(SharedState state) {
+    protected Map<Identifier, Colormap> prepare(SharedState state) {
         var map = NAMER.listMatchingResources(state.resourceManager());
-        var result = new HashMap<ResourceLocation, Colormap>();
+        var result = new HashMap<Identifier, Colormap>();
         map.forEach((path, r) -> {
             var name = NAMER.fileToId(path);
             result.put(name, load(name, r));
@@ -49,7 +49,7 @@ public class ColormapLoader extends SimpleResourceReloader<Map<ResourceLocation,
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, Colormap> prepared, SharedState state) {
+    protected void apply(Map<Identifier, Colormap> prepared, SharedState state) {
         BiomeColorsClient.reloadColormaps(prepared);
     }
 }

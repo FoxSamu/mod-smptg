@@ -1,9 +1,9 @@
 accessWidener v2 named
 
-accessible class net/minecraft/advancements/critereon/StatePropertiesPredicate$PropertyMatcher
-accessible class net/minecraft/advancements/critereon/StatePropertiesPredicate$ExactMatcher
-accessible class net/minecraft/advancements/critereon/StatePropertiesPredicate$RangedMatcher
-accessible class net/minecraft/advancements/critereon/StatePropertiesPredicate$ValueMatcher
+accessible class net/minecraft/advancements/criterion/StatePropertiesPredicate$PropertyMatcher
+accessible class net/minecraft/advancements/criterion/StatePropertiesPredicate$ExactMatcher
+accessible class net/minecraft/advancements/criterion/StatePropertiesPredicate$RangedMatcher
+accessible class net/minecraft/advancements/criterion/StatePropertiesPredicate$ValueMatcher
 
 # https://github.com/FabricMC/access-widener/issues/26: Record constructors have to be manually updated due to this bug
 # Fixed in Loom 1.12

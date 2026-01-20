@@ -17,7 +17,7 @@ public class BslShaderCompat extends AbstractShaderCompat {
     }
 
     private static String blockName(Block block) {
-        return block.builtInRegistryHolder().key().location().toString();
+        return block.builtInRegistryHolder().key().identifier().toString();
     }
 
     @Override

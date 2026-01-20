@@ -6,7 +6,7 @@ import net.foxboi.salted.common.misc.Misc;
 import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.renderer.BiomeColors;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.block.Block;
 
@@ -38,7 +38,7 @@ public class MinecraftColorRegistry implements ColorRegistry {
     }
 
     @Override
-    public void color(Block block, ResourceLocation colorId) {
+    public void color(Block block, Identifier colorId) {
         colors.register(
                 new BiomeColorTint(colorId),
                 block

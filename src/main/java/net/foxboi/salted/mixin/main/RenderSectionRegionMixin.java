@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.ColorResolver;
 import net.minecraft.world.level.Level;
 
@@ -40,7 +40,7 @@ public class RenderSectionRegionMixin implements BiomeColorLevelInj {
     }
 
     @Override
-    public int smptg$getBlockTint(BlockPos pos, ResourceLocation color) {
+    public int smptg$getBlockTint(BlockPos pos, Identifier color) {
         var inj = levelAsInj();
         if (inj != null)
             return inj.smptg$getBlockTint(pos, color);
@@ -48,7 +48,7 @@ public class RenderSectionRegionMixin implements BiomeColorLevelInj {
     }
 
     @Override
-    public void smptg$reloadColors(Map<ResourceLocation, BiomeColor> map) {
+    public void smptg$reloadColors(Map<Identifier, BiomeColor> map) {
         var inj = levelAsInj();
         if (inj != null)
             inj.smptg$reloadColors(map);

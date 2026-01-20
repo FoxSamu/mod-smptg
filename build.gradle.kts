@@ -1,7 +1,7 @@
 import net.fabricmc.loom.configuration.ide.RunConfigSettings
 
 plugins {
-    id("fabric-loom")
+    id("net.fabricmc.fabric-loom-remap")
     id("maven-publish")
 
     idea

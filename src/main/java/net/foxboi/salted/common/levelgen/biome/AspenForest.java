@@ -20,8 +20,8 @@ public class AspenForest extends OverworldBiome {
     }
 
     @Override
-    protected void effects(BiomeEditor builder) {
-        super.effects(builder);
+    protected void attributes(BiomeEditor builder) {
+        super.attributes(builder);
 
         forestMusic(builder);
     }

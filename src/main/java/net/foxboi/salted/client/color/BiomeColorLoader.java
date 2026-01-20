@@ -12,21 +12,21 @@ import org.apache.logging.log4j.Logger;
 
 import com.mojang.serialization.JsonOps;
 import net.minecraft.resources.FileToIdConverter;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.Resource;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Environment(EnvType.CLIENT)
-public class BiomeColorLoader extends SimpleResourceReloader<Map<ResourceLocation, BiomeColor>> {
-    public static final ResourceLocation ID = Smptg.id("colors");
+public class BiomeColorLoader extends SimpleResourceReloader<Map<Identifier, BiomeColor>> {
+    public static final Identifier ID = Smptg.id("colors");
 
     public static final FileToIdConverter NAMER = FileToIdConverter.json("color");
 
     public static final Logger LOGGER = LogManager.getLogger(Smptg.ID);
 
-    private static BiomeColor parse(ResourceLocation id, Resource res) {
+    private static BiomeColor parse(Identifier id, Resource res) {
         try (var reader = res.openAsReader()) {
             var json = JsonParser.parseReader(reader);
             var ops = JsonOps.INSTANCE;
@@ -39,9 +39,9 @@ public class BiomeColorLoader extends SimpleResourceReloader<Map<ResourceLocatio
     }
 
     @Override
-    protected Map<ResourceLocation, BiomeColor> prepare(SharedState state) {
+    protected Map<Identifier, BiomeColor> prepare(SharedState state) {
         var map = NAMER.listMatchingResources(state.resourceManager());
-        var result = new HashMap<ResourceLocation, BiomeColor>();
+        var result = new HashMap<Identifier, BiomeColor>();
         map.forEach((path, r) -> {
             var name = NAMER.fileToId(path);
             result.put(name, parse(name, r));
@@ -52,7 +52,7 @@ public class BiomeColorLoader extends SimpleResourceReloader<Map<ResourceLocatio
     }
 
     @Override
-    protected void apply(Map<ResourceLocation, BiomeColor> prepared, SharedState state) {
+    protected void apply(Map<Identifier, BiomeColor> prepared, SharedState state) {
         BiomeColorsClient.reloadColors(prepared);
     }
 }

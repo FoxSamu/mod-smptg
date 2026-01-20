@@ -8,7 +8,8 @@ import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.Music;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.random.WeightedList;
+import net.minecraft.world.attribute.*;
+import net.minecraft.world.attribute.modifier.AttributeModifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.*;
@@ -25,13 +26,7 @@ public interface BiomeEditor {
     BiomeEditor downfall(float downfall);
 
     // Effects
-    BiomeEditor fogColor(int color);
-
     BiomeEditor waterColor(int color);
-
-    BiomeEditor waterFogColor(int color);
-
-    BiomeEditor skyColor(int color);
 
     BiomeEditor grassColor(OptionalInt color);
 
@@ -53,40 +48,15 @@ public interface BiomeEditor {
 
     BiomeEditor grassColorModifier(BiomeSpecialEffects.GrassColorModifier modifier);
 
-    BiomeEditor musicVolume(float volume);
+    // Environment attributes
+    <V> BiomeEditor putAttribute(EnvironmentAttribute<V> attribute, V value);
 
-    BiomeEditor backgroundMusic(Optional<WeightedList<Music>> music);
+    <V, P> BiomeEditor modifyAttribute(EnvironmentAttribute<V> attribute, AttributeModifier<V, P> modifier, P parameter);
 
-    default BiomeEditor backgroundMusic(WeightedList<Music> music) {
-        return backgroundMusic(Optional.ofNullable(music));
-    }
+    BiomeEditor putAttributes(EnvironmentAttributeMap map);
 
-    default BiomeEditor backgroundMusic(Music music) {
-        return backgroundMusic(music == null ? null : WeightedList.of(music));
-    }
-
-    BiomeEditor ambientLoopSound(Optional<Holder<SoundEvent>> sound);
-
-    default BiomeEditor ambientLoopSound(Holder<SoundEvent> sound) {
-        return ambientLoopSound(Optional.ofNullable(sound));
-    }
-
-    BiomeEditor ambientAdditionsSound(Optional<AmbientAdditionsSettings> sound);
-
-    default BiomeEditor ambientAdditionsSound(AmbientAdditionsSettings sound) {
-        return ambientAdditionsSound(Optional.ofNullable(sound));
-    }
-
-    BiomeEditor ambientMoodSound(Optional<AmbientMoodSettings> sound);
-
-    default BiomeEditor ambientMoodSound(AmbientMoodSettings sound) {
-        return ambientMoodSound(Optional.ofNullable(sound));
-    }
-
-    BiomeEditor particles(Optional<AmbientParticleSettings> particles);
-
-    default BiomeEditor particles(AmbientParticleSettings particles) {
-        return particles(Optional.ofNullable(particles));
+    default BiomeEditor putAttributes(EnvironmentAttributeMap.Builder map) {
+        return putAttributes(map.build());
     }
 
     // Generation

@@ -16,9 +16,10 @@ public abstract class AbstractBiome implements Definition<Biome> {
 
         var biomeBuilder = new BiomeBuilder(features, carvers);
 
+        attributes(biomeBuilder);
         effects(biomeBuilder);
-        spawning(biomeBuilder);
         generation(biomeBuilder);
+        spawning(biomeBuilder);
 
         biomeBuilder
                 .hasPrecipitation(precipitation())
@@ -31,7 +32,8 @@ public abstract class AbstractBiome implements Definition<Biome> {
     protected abstract boolean precipitation();
     protected abstract float temperature();
     protected abstract float downfall();
-    protected abstract void spawning(BiomeEditor builder);
-    protected abstract void generation(BiomeEditor builder);
+    protected abstract void attributes(BiomeEditor builder);
     protected abstract void effects(BiomeEditor builder);
+    protected abstract void generation(BiomeEditor builder);
+    protected abstract void spawning(BiomeEditor builder);
 }

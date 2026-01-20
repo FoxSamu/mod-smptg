@@ -26,10 +26,16 @@ public class RedwoodTaiga extends OverworldBiome {
     }
 
     @Override
+    protected void attributes(BiomeEditor builder) {
+        super.attributes(builder);
+
+        oldGrowthTaigaMusic(builder);
+    }
+
+    @Override
     protected void effects(BiomeEditor builder) {
         super.effects(builder);
 
-        oldGrowthTaigaMusic(builder);
         taigaColors(builder);
     }
 

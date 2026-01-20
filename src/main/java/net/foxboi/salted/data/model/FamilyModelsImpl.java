@@ -12,13 +12,13 @@ import net.minecraft.client.data.models.blockstates.BlockModelDefinitionGenerato
 import net.minecraft.client.data.models.model.*;
 import net.minecraft.client.renderer.block.model.Variant;
 import net.minecraft.data.BlockFamily;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
 public class FamilyModelsImpl implements FamilyModels {
     interface StateFactory {
-        BlockModelDefinitionGenerator create(Block block, Variant variant, TextureMapping texture, BiConsumer<ResourceLocation, ModelInstance> biConsumer);
+        BlockModelDefinitionGenerator create(Block block, Variant variant, TextureMapping texture, BiConsumer<Identifier, ModelInstance> biConsumer);
     }
 
     static final Map<Block, StateFactory> FULL_BLOCK_CUSTOM = Map.of(
@@ -85,7 +85,7 @@ public class FamilyModelsImpl implements FamilyModels {
     private final BlockModelGenerators gen;
     private final TextureMapping mapping;
 
-    private final Map<ModelTemplate, ResourceLocation> models = new HashMap<>();
+    private final Map<ModelTemplate, Identifier> models = new HashMap<>();
     private final Set<Block> skipModels = new HashSet<>();
 
     private BlockFamily family;
@@ -365,7 +365,7 @@ public class FamilyModelsImpl implements FamilyModels {
         return this;
     }
 
-    private ResourceLocation getOrCreateModel(ModelTemplate template, Block block) {
+    private Identifier getOrCreateModel(ModelTemplate template, Block block) {
         return models.computeIfAbsent(template, it -> it.create(block, mapping, gen.modelOutput));
     }
 

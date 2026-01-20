@@ -4,10 +4,9 @@
   "compatibilityLevel": "JAVA_21",
 
   "mixins": [
-    "BiomeMixin", "BiomeModificationContextEffectsContextMixin", "BlockMixin", "BonemealItemMixin", "BucketItemMixin",
-    "CacheHolderMixin", "GrassBlockMixin", "IceBlockMixin", "LevelMixin", "MultifaceBlockMixin",
-    "OverworldBiomeBuilderMixin", "ResourceLocationMixin", "ServerLevelMixin", "ShearsItemMixin",
-    "SimpleBlockFeatureMixin", "SlimeMixin", "SnowLayerBlockMixin"
+    "BiomeMixin", "BiomeModificationContextEffectsContextMixin", "BlockMixin", "BonemealItemMixin", "BucketItemMixin", "CacheHolderMixin",
+    "GrassBlockMixin", "IceBlockMixin", "IdentifierMixin", "LevelMixin", "MultifaceBlockMixin", "OverworldBiomeBuilderMixin",
+    "ServerLevelMixin", "ShearsItemMixin", "SimpleBlockFeatureMixin", "SlimeMixin", "SnowLayerBlockMixin"
   ],
   "client": [ "ClientLevelMixin", "RenderSectionRegionMixin" ],
 

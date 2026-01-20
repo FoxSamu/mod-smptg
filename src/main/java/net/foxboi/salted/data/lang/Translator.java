@@ -27,7 +27,7 @@ public interface Translator<T> {
     }
 
     static <T> Translator<ResourceKey<T>> resource(String type, FabricLanguageProvider.TranslationBuilder builder) {
-        return (key, name) -> builder.add(key.location().toLanguageKey(type), name);
+        return (key, name) -> builder.add(key.identifier().toLanguageKey(type), name);
     }
 
     static <T> Translator<TagKey<T>> tag(FabricLanguageProvider.TranslationBuilder builder) {

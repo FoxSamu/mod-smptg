@@ -22,7 +22,7 @@ import net.foxboi.salted.common.levelgen.tree.ModTreeDecoratorTypes;
 import net.foxboi.salted.common.levelgen.tree.ModTrunkPlacerTypes;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -104,7 +104,7 @@ public class Smptg {
     }
 
     /**
-     * Creates the string form of a {@link ResourceLocation} with {@code smptg} as namespace.
+     * Creates the string form of a {@link Identifier} with {@code smptg} as namespace.
      *
      * @param path The path
      */
@@ -113,12 +113,12 @@ public class Smptg {
     }
 
     /**
-     * Creates a {@link ResourceLocation} with {@code smptg} as namespace.
+     * Creates a {@link Identifier} with {@code smptg} as namespace.
      *
      * @param path The path
      */
-    public static ResourceLocation id(String path) {
-        return ResourceLocation.fromNamespaceAndPath(ID, path);
+    public static Identifier id(String path) {
+        return Identifier.fromNamespaceAndPath(ID, path);
     }
 
     /**

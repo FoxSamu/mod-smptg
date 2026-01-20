@@ -21,7 +21,7 @@ import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.*;
 import net.minecraft.client.renderer.block.model.VariantMutator;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SegmentableBlock;
@@ -71,8 +71,8 @@ public final class BlockModelsImpl implements BlockModels {
             Y_ROT_90
     };
 
-    private static final Map<Block, ResourceLocation> SNOWY_SIDE_TEXTURES = Map.of(
-            Blocks.DIRT, ResourceLocation.withDefaultNamespace("block/grass_block_snow")
+    private static final Map<Block, Identifier> SNOWY_SIDE_TEXTURES = Map.of(
+            Blocks.DIRT, Identifier.withDefaultNamespace("block/grass_block_snow")
     );
 
     private final BlockModelGenerators gen;
@@ -470,23 +470,23 @@ public final class BlockModelsImpl implements BlockModels {
         );
     }
 
-    private ResourceLocation createVariant(Block block, ModelTemplate template, Function<ResourceLocation, TextureMapping> textureMapper) {
+    private Identifier createVariant(Block block, ModelTemplate template, Function<Identifier, TextureMapping> textureMapper) {
         return template.create(block, textureMapper.apply(TextureMapping.getBlockTexture(block)), gen.modelOutput);
     }
 
-    private ResourceLocation createVariant(Block block, String suffix, ModelTemplate template, Function<ResourceLocation, TextureMapping> textureMapper) {
+    private Identifier createVariant(Block block, String suffix, ModelTemplate template, Function<Identifier, TextureMapping> textureMapper) {
         return template.createWithSuffix(block, suffix, textureMapper.apply(TextureMapping.getBlockTexture(block, suffix)), gen.modelOutput);
     }
 
-    private TextureMapping createShelfFungusMapping(ResourceLocation texture) {
+    private TextureMapping createShelfFungusMapping(Identifier texture) {
         return new TextureMapping().put(TextureSlot.END, texture);
     }
 
-    private ResourceLocation createAlignedShelfFungus(Block block, String suffix) {
+    private Identifier createAlignedShelfFungus(Block block, String suffix) {
         return ModModelTemplates.SHELF_FUNGUS.createWithSuffix(block, suffix, createShelfFungusMapping(TextureMapping.getBlockTexture(block, suffix)), gen.modelOutput);
     }
 
-    private ResourceLocation createDiagonalShelfFungus(Block block, String suffix) {
+    private Identifier createDiagonalShelfFungus(Block block, String suffix) {
         return ModModelTemplates.SHELF_FUNGUS_DIAGONAL.createWithSuffix(block, "_diagonal" + suffix, createShelfFungusMapping(TextureMapping.getBlockTexture(block, "_diagonal" + suffix)), gen.modelOutput);
     }
 }

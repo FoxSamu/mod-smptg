@@ -9,12 +9,12 @@ import net.foxboi.salted.data.lang.Translator;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementType;
-import net.minecraft.advancements.critereon.ConsumeItemTrigger;
-import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.criterion.ConsumeItemTrigger;
+import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
@@ -38,7 +38,7 @@ public class AdvancementProvider extends FabricAdvancementProvider {
         var items = regs.lookupOrThrow(Registries.ITEM);
 
 
-        var adventureRoot = ResourceLocation.withDefaultNamespace("adventure/root");
+        var adventureRoot = Identifier.withDefaultNamespace("adventure/root");
 
         var eatSaltedFood = Advancement.Builder.advancement()
                 .parent(adventureRoot)

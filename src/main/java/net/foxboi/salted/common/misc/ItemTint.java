@@ -1,6 +1,6 @@
 package net.foxboi.salted.common.misc;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public sealed interface ItemTint {
     static ItemTint grass() {
@@ -11,7 +11,7 @@ public sealed interface ItemTint {
         return new Constant(color);
     }
 
-    static ItemTint biomeColor(ResourceLocation name) {
+    static ItemTint biomeColor(Identifier name) {
         return new BiomeColor(name);
     }
 
@@ -21,6 +21,6 @@ public sealed interface ItemTint {
     record Constant(int color) implements ItemTint {
     }
 
-    record BiomeColor(ResourceLocation color) implements ItemTint {
+    record BiomeColor(Identifier color) implements ItemTint {
     }
 }

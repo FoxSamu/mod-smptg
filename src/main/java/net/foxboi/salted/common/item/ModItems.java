@@ -16,7 +16,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.vehicle.AbstractBoat;
+import net.minecraft.world.entity.vehicle.boat.AbstractBoat;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
@@ -624,7 +624,7 @@ public record ModItems() {
     @SuppressWarnings("deprecation")
     private static Item register(Block copyName, ItemFactory factory, Item.Properties properties) {
         var blockKey = copyName.builtInRegistryHolder().key();
-        var itemKey = ResourceKey.create(Registries.ITEM, blockKey.location());
+        var itemKey = ResourceKey.create(Registries.ITEM, blockKey.identifier());
 
         return register(itemKey, factory, properties);
     }

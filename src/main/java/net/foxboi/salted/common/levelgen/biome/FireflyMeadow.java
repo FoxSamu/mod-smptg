@@ -20,10 +20,16 @@ public class FireflyMeadow extends OverworldBiome {
     }
 
     @Override
+    protected void attributes(BiomeEditor builder) {
+        super.attributes(builder);
+
+        meadowMusic(builder);
+    }
+
+    @Override
     protected void effects(BiomeEditor builder) {
         super.effects(builder);
 
-        meadowMusic(builder);
         meadowColors(builder);
     }
 

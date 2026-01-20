@@ -6,7 +6,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -33,7 +33,7 @@ public class DataRegistry<T> {
         return key;
     }
 
-    public ResourceKey<T> register(ResourceLocation id, Definition<T> definition) {
+    public ResourceKey<T> register(Identifier id, Definition<T> definition) {
         return register(ResourceKey.create(registryKey, id), definition);
     }
 

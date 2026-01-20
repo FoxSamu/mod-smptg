@@ -17,11 +17,6 @@ public class FabricLayerRegistry implements LayerRegistry {
     }
 
     @Override
-    public void cutoutMipped(Block block) {
-        BlockRenderLayerMap.putBlock(block, ChunkSectionLayer.CUTOUT_MIPPED);
-    }
-
-    @Override
     public void translucent(Block block) {
         BlockRenderLayerMap.putBlock(block, ChunkSectionLayer.TRANSLUCENT);
     }
