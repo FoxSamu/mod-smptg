@@ -4,12 +4,9 @@ import java.util.*;
 import java.util.function.BiPredicate;
 
 import net.fabricmc.fabric.api.biome.v1.BiomeModificationContext;
-import net.minecraft.core.Holder;
+import net.foxboi.salted.common.misc.biome.color.BiomeFoliageColorExtension;
+import net.foxboi.salted.common.misc.biome.color.BiomeSpecialEffectsInj;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.sounds.Music;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.random.WeightedList;
-import net.minecraft.world.attribute.AmbientAdditionsSettings;
 import net.minecraft.world.attribute.EnvironmentAttribute;
 import net.minecraft.world.attribute.EnvironmentAttributeMap;
 import net.minecraft.world.attribute.modifier.AttributeModifier;
@@ -65,12 +62,75 @@ public class BiomeModifier implements BiomeEditor {
 
     @Override
     public BiomeEditor dryFoliageColor(OptionalInt color) {
-        var inj = (BiomeModificationContextEffectsContextInj) context.getEffects();
-        if (color.isPresent()) {
-            inj.smptg$setDryFoliageColor(Optional.of(color.getAsInt()));
-        } else {
-            inj.smptg$setDryFoliageColor(Optional.empty());
-        }
+        context.getEffects().setDryFoliageColor(color);
+        return this;
+    }
+
+    @Override
+    public BiomeEditor darkRedFoliageColor(OptionalInt color) {
+        var inj = (BiomeSpecialEffectsInj) context.getEffects();
+        var ext = inj.smptg$getFoliageColorExtension();
+
+        var newExt = new BiomeFoliageColorExtension(
+                color.isPresent() ? Optional.of(color.getAsInt()) : Optional.empty(),
+                ext.redFoliageColorOverride(),
+                ext.goldenFoliageColorOverride(),
+                ext.yellowFoliageColorOverride()
+        );
+
+        inj.smptg$setFoliageColorExtension(newExt);
+
+        return this;
+    }
+
+    @Override
+    public BiomeEditor redFoliageColor(OptionalInt color) {
+        var inj = (BiomeSpecialEffectsInj) context.getEffects();
+        var ext = inj.smptg$getFoliageColorExtension();
+
+        var newExt = new BiomeFoliageColorExtension(
+                ext.darkRedFoliageColorOverride(),
+                color.isPresent() ? Optional.of(color.getAsInt()) : Optional.empty(),
+                ext.goldenFoliageColorOverride(),
+                ext.yellowFoliageColorOverride()
+        );
+
+        inj.smptg$setFoliageColorExtension(newExt);
+
+        return this;
+    }
+
+    @Override
+    public BiomeEditor goldenFoliageColor(OptionalInt color) {
+        var inj = (BiomeSpecialEffectsInj) context.getEffects();
+        var ext = inj.smptg$getFoliageColorExtension();
+
+        var newExt = new BiomeFoliageColorExtension(
+                ext.darkRedFoliageColorOverride(),
+                ext.redFoliageColorOverride(),
+                color.isPresent() ? Optional.of(color.getAsInt()) : Optional.empty(),
+                ext.yellowFoliageColorOverride()
+        );
+
+        inj.smptg$setFoliageColorExtension(newExt);
+
+        return this;
+    }
+
+    @Override
+    public BiomeEditor yellowFoliageColor(OptionalInt color) {
+        var inj = (BiomeSpecialEffectsInj) context.getEffects();
+        var ext = inj.smptg$getFoliageColorExtension();
+
+        var newExt = new BiomeFoliageColorExtension(
+                ext.darkRedFoliageColorOverride(),
+                ext.redFoliageColorOverride(),
+                ext.goldenFoliageColorOverride(),
+                color.isPresent() ? Optional.of(color.getAsInt()) : Optional.empty()
+        );
+
+        inj.smptg$setFoliageColorExtension(newExt);
+
         return this;
     }
 

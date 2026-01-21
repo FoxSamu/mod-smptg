@@ -1,7 +1,7 @@
 package net.foxboi.salted.common.levelgen.biome;
 
 import net.foxboi.salted.common.misc.data.DataRegistry;
-import net.foxboi.salted.data.lang.Translator;
+import net.foxboi.salted.common.misc.Translator;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;

@@ -42,6 +42,30 @@ public interface BiomeEditor {
 
     BiomeEditor dryFoliageColor(OptionalInt color);
 
+    default BiomeEditor darkRedFoliageColor(int color) {
+        return darkRedFoliageColor(OptionalInt.of(color));
+    }
+
+    BiomeEditor darkRedFoliageColor(OptionalInt color);
+
+    default BiomeEditor redFoliageColor(int color) {
+        return redFoliageColor(OptionalInt.of(color));
+    }
+
+    BiomeEditor redFoliageColor(OptionalInt color);
+
+    default BiomeEditor goldenFoliageColor(int color) {
+        return goldenFoliageColor(OptionalInt.of(color));
+    }
+
+    BiomeEditor goldenFoliageColor(OptionalInt color);
+
+    default BiomeEditor yellowFoliageColor(int color) {
+        return yellowFoliageColor(OptionalInt.of(color));
+    }
+
+    BiomeEditor yellowFoliageColor(OptionalInt color);
+
     default BiomeEditor dryFoliageColor(int color) {
         return dryFoliageColor(OptionalInt.of(color));
     }

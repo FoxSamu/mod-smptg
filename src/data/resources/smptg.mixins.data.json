@@ -1,0 +1,14 @@
+{
+  "required": false,
+  "package": "net.foxboi.salted.mixin.data",
+  "compatibilityLevel": "JAVA_21",
+
+  "mixins": [ "MinecraftMixin", "MinecraftServerMixin", "ServerMainMixin", "WorldLoaderMixin" ],
+
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

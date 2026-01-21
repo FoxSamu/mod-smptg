@@ -1,11 +1,10 @@
 package net.foxboi.salted.common.item;
 
 import net.foxboi.salted.common.Smptg;
-import net.foxboi.salted.data.lang.Translator;
+import net.foxboi.salted.common.misc.Translator;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
 
 public record ModItemTags() {
     // TAGS

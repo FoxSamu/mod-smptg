@@ -7,6 +7,8 @@ import net.fabricmc.fabric.api.biome.v1.BiomeModificationContext;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
 import net.foxboi.salted.common.Smptg;
+import net.foxboi.salted.common.misc.biome.BiomeEditor;
+import net.foxboi.salted.common.misc.biome.BiomeModifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
@@ -47,13 +49,21 @@ public class BiomeModificationHelper {
                 ),
                 new SwampModification()
         );
+
+        add(
+                "pale_garden",
+                Set.of(
+                        Biomes.PALE_GARDEN
+                ),
+                new PaleGardenModification()
+        );
     }
 
-    private static void add(String id, Set<ResourceKey<Biome>> biomes, Consumer<BiomeModificationContext> modification) {
+    private static void add(String id, Set<ResourceKey<Biome>> biomes, Consumer<BiomeEditor> modification) {
         BiomeModifications.create(Smptg.id(id)).add(
                 ModificationPhase.ADDITIONS,
                 ctx -> biomes.contains(ctx.getBiomeKey()),
-                modification
+                ctx -> modification.accept(new BiomeModifier(ctx))
         );
     }
 }

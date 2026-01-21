@@ -2,6 +2,9 @@ package net.foxboi.salted.common.misc;
 
 import java.util.*;
 
+import com.mojang.datafixers.util.Either;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 import net.foxboi.salted.common.block.ModBlockTags;
 import net.foxboi.salted.common.levelgen.ModVegetationPlacements;
 import net.foxboi.salted.common.levelgen.biome.ModBiomeTags;
@@ -175,5 +178,23 @@ public class Misc {
                 }
             }
         }
+    }
+
+    public static <A> Codec<Optional<A>> optionalCodec(Codec<A> baseCodec, String emptyName) {
+        var emptyCodec = Codec.STRING.flatXmap(
+                it -> it.equals(emptyName) ? DataResult.success(emptyName) : DataResult.error(() -> "Expected '" + emptyName + "'"),
+                it -> DataResult.success(emptyName)
+        );
+
+        var eitherCodec = Codec.either(baseCodec, emptyCodec);
+
+        return eitherCodec.xmap(
+                it -> it.left(),
+                it -> it.isPresent() ? Either.left(it.get()) : Either.right(emptyName)
+        );
+    }
+
+    public static <A> Codec<Optional<A>> optionalCodec(Codec<A> baseCodec) {
+        return optionalCodec(baseCodec, "none");
     }
 }

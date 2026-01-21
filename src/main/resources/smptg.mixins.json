@@ -1,14 +1,13 @@
 {
   "required": true,
-  "package": "net.foxboi.salted.mixin.main",
+  "package": "net.foxboi.salted.mixin.common",
   "compatibilityLevel": "JAVA_21",
 
   "mixins": [
-    "BiomeMixin", "BiomeModificationContextEffectsContextMixin", "BlockMixin", "BonemealItemMixin", "BucketItemMixin", "CacheHolderMixin",
-    "GrassBlockMixin", "IceBlockMixin", "IdentifierMixin", "LevelMixin", "MultifaceBlockMixin", "OverworldBiomeBuilderMixin",
-    "ServerLevelMixin", "ShearsItemMixin", "SimpleBlockFeatureMixin", "SlimeMixin", "SnowLayerBlockMixin"
+    "BiomeMixin", "BiomeModificationContextImplEffectsContextImplMixin", "BiomeSpecialEffectsMixin", "BlockMixin", "BonemealItemMixin",
+    "BucketItemMixin", "CacheHolderMixin", "GrassBlockMixin", "IceBlockMixin", "IdentifierMixin", "LevelMixin", "MultifaceBlockMixin",
+    "OverworldBiomeBuilderMixin", "ServerLevelMixin", "ShearsItemMixin", "SimpleBlockFeatureMixin", "SlimeMixin", "SnowLayerBlockMixin"
   ],
-  "client": [ "ClientLevelMixin", "RenderSectionRegionMixin" ],
 
   "injectors": {
     "defaultRequire": 1

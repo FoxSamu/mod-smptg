@@ -8,6 +8,12 @@ plugins {
     eclipse
 }
 
+// Some essential information about the buildscript:
+// - We use Loom's source splitting to split client and common sources.
+// - We use a separate source set for data generation, since this is a bit broken with split sources.
+// - The data generation code is not included in the built jar files since it's purely for development.
+// - When running the server or the client, data generation classes are on the classpath.
+
 val mod_version: String by project
 val mod_group: String by project
 val mod_id: String by project
@@ -51,18 +57,35 @@ java {
     targetCompatibility = JavaVersion.VERSION_21
 }
 
+loom {
+    accessWidenerPath = file("$projectDir/src/main/resources/smptg.accesswidener")
+
+    splitEnvironmentSourceSets()
+}
+
 sourceSets {
     main {
         resources {
             srcDir(generatedResourcesDir)
         }
     }
+
+    named("client") {
+        resources {
+            srcDir(generatedResourcesDir)
+        }
+    }
+
+    create("data")
 }
 
-loom {
-    accessWidenerPath = file("$projectDir/src/main/resources/smptg.accesswidener")
+configurations {
+    // Include main and client classpath in data generator classpath
+    named("dataCompileClasspath") {
+        extendsFrom(named("compileClasspath").get())
+        extendsFrom(named("clientCompileClasspath").get())
+    }
 }
-
 
 // Run configurations
 // ==================================================================================
@@ -73,7 +96,7 @@ loom {
             afterEvaluate {
                 property("smptg.datagen", "run_on_reload")
                 property("smptg.datagen.output", "$generatedResourcesDir")
-                property("smptg.datagen.copy_to", "${tasks.processResources.get().destinationDir}")
+                property("smptg.datagen.copy_to", "${sourceSets.main.get().output.resourcesDir}")
 
                 property("smptg.shadercompat.input", "$projectDir/shadercompat")
             }
@@ -115,7 +138,6 @@ loom {
 
         // Create working directories
         configureEach {
-            println("$projectDir/$runDir")
             file("$projectDir/$runDir").mkdirs()
         }
     }
@@ -141,10 +163,18 @@ dependencies {
     minecraft("com.mojang:minecraft:${minecraft_version}")
     mappings(loom.officialMojangMappings())
 
+    // Mod depencencies
+    // --------------------------------------------------------------
+
     modImplementation("net.fabricmc:fabric-loader:${loader_version}")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${fabric_version}")
-    modImplementation("com.terraformersmc:modmenu:${modmenu_version}")
-    modImplementation("maven.modrinth:sodium:${sodium_version}")
+
+    "modClientImplementation"("com.terraformersmc:modmenu:${modmenu_version}")
+    "modClientImplementation"("maven.modrinth:sodium:${sodium_version}")
+
+
+    // Iris
+    // --------------------------------------------------------------
 
     modRuntimeOnly("maven.modrinth:iris:${iris_version}")
 
@@ -152,6 +182,17 @@ dependencies {
     runtimeOnly("org.antlr:antlr4-runtime:4.13.1")
     runtimeOnly("io.github.douira:glsl-transformer:3.0.0-pre3")
     runtimeOnly("org.anarres:jcpp:1.4.14")
+
+
+    // Datagen source set
+    // --------------------------------------------------------------
+
+    // Include main and client sources when compiling data generator
+    "dataCompileOnly"(sourceSets.named("main").get().output)
+    "dataCompileOnly"(sourceSets.named("client").get().output)
+
+    // Include data generator classes when running (main dependencies forward to client dependencies)
+    runtimeOnly(sourceSets.named("data").get().output)
 }
 
 
@@ -178,7 +219,7 @@ tasks.withType<JavaCompile> {
     options.release = 21
 }
 
-tasks.processResources {
+tasks.withType<ProcessResources> {
     inputs.property("version", mod_version)
     inputs.property("id", mod_id)
 
@@ -192,7 +233,7 @@ tasks.processResources {
     exclude(".cache/**")
 }
 
-tasks.jar {
+tasks.withType<Jar> {
     inputs.property("archivesName", project.base.archivesName)
 
     dependsOn("runData")

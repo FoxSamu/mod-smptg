@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import net.foxboi.salted.common.Smptg;
 import net.foxboi.salted.common.item.ModItems;
-import net.foxboi.salted.data.lang.Translator;
+import net.foxboi.salted.common.misc.Translator;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;

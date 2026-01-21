@@ -3,13 +3,11 @@ package net.foxboi.salted.common.misc.biome;
 import java.util.*;
 import java.util.function.BiPredicate;
 
-import net.minecraft.core.Holder;
+import net.foxboi.salted.common.misc.biome.color.BiomeFoliageColorExtension;
+import net.foxboi.salted.common.misc.biome.color.BiomeSpecialEffectsInj;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.sounds.Music;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.random.Weighted;
-import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.attribute.*;
 import net.minecraft.world.attribute.modifier.AttributeModifier;
 import net.minecraft.world.entity.EntityType;
@@ -54,6 +52,10 @@ public class BiomeBuilder implements BiomeEditor {
     private OptionalInt grassColor = OptionalInt.empty();
     private OptionalInt foliageColor = OptionalInt.empty();
     private OptionalInt dryFoliageColor = OptionalInt.empty();
+    private OptionalInt darkRedFoliageColor = OptionalInt.empty();
+    private OptionalInt redFoliageColor = OptionalInt.empty();
+    private OptionalInt goldenFoliageColor = OptionalInt.empty();
+    private OptionalInt yellowFoliageColor = OptionalInt.empty();
     private BiomeSpecialEffects.GrassColorModifier grassColorModifier = BiomeSpecialEffects.GrassColorModifier.NONE;
 
     private final EnvironmentAttributeMap.Builder attributes = EnvironmentAttributeMap.builder();
@@ -79,6 +81,30 @@ public class BiomeBuilder implements BiomeEditor {
     @Override
     public BiomeEditor dryFoliageColor(OptionalInt color) {
         this.dryFoliageColor = color;
+        return this;
+    }
+
+    @Override
+    public BiomeEditor darkRedFoliageColor(OptionalInt color) {
+        this.darkRedFoliageColor = color;
+        return this;
+    }
+
+    @Override
+    public BiomeEditor redFoliageColor(OptionalInt color) {
+        this.redFoliageColor = color;
+        return this;
+    }
+
+    @Override
+    public BiomeEditor goldenFoliageColor(OptionalInt color) {
+        this.goldenFoliageColor = color;
+        return this;
+    }
+
+    @Override
+    public BiomeEditor yellowFoliageColor(OptionalInt color) {
+        this.yellowFoliageColor = color;
         return this;
     }
 
@@ -171,6 +197,10 @@ public class BiomeBuilder implements BiomeEditor {
         return this;
     }
 
+    private static Optional<Integer> box(OptionalInt opt) {
+        return opt.isPresent() ? Optional.of(opt.getAsInt()) : Optional.empty();
+    }
+
     private BiomeSpecialEffects effects() {
         var effects = new BiomeSpecialEffects.Builder()
                 .waterColor(waterColor)
@@ -180,7 +210,17 @@ public class BiomeBuilder implements BiomeEditor {
         foliageColor.ifPresent(effects::foliageColorOverride);
         dryFoliageColor.ifPresent(effects::dryFoliageColorOverride);
 
-        return effects.build();
+        var sfx = effects.build();
+        ((BiomeSpecialEffectsInj) (Object) sfx).smptg$setFoliageColorExtension(
+                new BiomeFoliageColorExtension(
+                        box(darkRedFoliageColor),
+                        box(redFoliageColor),
+                        box(goldenFoliageColor),
+                        box(yellowFoliageColor)
+                )
+        );
+
+        return sfx;
     }
 
     private MobSpawnSettings spawns() {

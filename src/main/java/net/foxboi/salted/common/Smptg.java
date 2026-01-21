@@ -1,12 +1,16 @@
 package net.foxboi.salted.common;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.JsonOps;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.foxboi.salted.common.attribute.ModAttributeTypes;
+import net.foxboi.salted.common.attribute.ModEnvironmentAttributes;
 import net.foxboi.salted.common.levelgen.biome.ModBiomeTags;
 import net.foxboi.salted.common.levelgen.biome.ModBiomes;
 import net.foxboi.salted.common.block.ModBlockSetTypes;
 import net.foxboi.salted.common.block.ModBlockTags;
 import net.foxboi.salted.common.block.ModBlocks;
 import net.foxboi.salted.common.block.ModWoodTypes;
-import net.foxboi.salted.common.color.BiomeColors;
 import net.foxboi.salted.common.item.ModItemTags;
 import net.foxboi.salted.common.item.ModItems;
 import net.foxboi.salted.common.levelgen.biome.modifications.BiomeModificationHelper;
@@ -20,10 +24,12 @@ import net.foxboi.salted.common.levelgen.tree.ModFoliagePlacerTypes;
 import net.foxboi.salted.common.levelgen.tree.ModRootPlacerTypes;
 import net.foxboi.salted.common.levelgen.tree.ModTreeDecoratorTypes;
 import net.foxboi.salted.common.levelgen.tree.ModTrunkPlacerTypes;
+import net.foxboi.salted.common.misc.CodecExtension;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.biome.Biome;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -79,7 +85,8 @@ public class Smptg {
         ModTreeDecoratorTypes.init();
         ModSurfaceRules.init();
 
-        BiomeColors.init();
+        ModAttributeTypes.init();
+        ModEnvironmentAttributes.init();
 
         // Init worldgen registry
         ModBiomes.init();

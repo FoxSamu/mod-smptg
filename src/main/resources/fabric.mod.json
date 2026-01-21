@@ -20,15 +20,21 @@
 
   "entrypoints": {
     "server": [ "net.foxboi.salted.common.SmptgServer" ],
-    "client": [ "net.foxboi.salted.client.SmptgClient" ],
-    "fabric-datagen": [ "net.foxboi.salted.data.SmptgData" ]
+    "client": [ "net.foxboi.salted.client.SmptgClient" ]
   },
 
   "mixins": [
-    "smptg.mixins.json",
-    "smptg.mixins.datagen.json",
-    "smptg.mixins.sodium.json"
+    {
+      "config": "smptg.mixins.json",
+      "environment": "*"
+    },
+
+    {
+      "config": "smptg.mixins.client.json",
+      "environment": "client"
+    }
   ],
+
   "accessWidener": "smptg.accesswidener",
 
   "depends": {
@@ -39,6 +45,7 @@
   },
 
   "suggests": {
-    "another-mod": "*"
+    "sodium": "*",
+    "iris": "*"
   }
 }

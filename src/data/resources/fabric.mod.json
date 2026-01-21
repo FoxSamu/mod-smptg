@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+
+
+  "id": "smptg-data",
+  "environment": "*",
+  "version": "42",
+
+  "name": "SMPTG - Data Generator",
+  "description": "Provides generated resources for SMPTG. Report this to the SMPTG devs if you see this outside of a development environment.",
+  "authors": [ "Samū Ketuvo" ],
+  "license": "ARR",
+
+  "entrypoints": {
+    "fabric-datagen": [ "net.foxboi.salted.data.SmptgData" ]
+  },
+
+  "mixins": [
+    {
+      "config": "smptg.mixins.data.json",
+      "environment": "*"
+    }
+  ],
+
+  "depends": {
+    "smptg": "*",
+    "fabricloader": ">=0.17.2",
+    "minecraft": "~1.21.9",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
