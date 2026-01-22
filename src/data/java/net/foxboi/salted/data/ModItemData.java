@@ -12,6 +12,9 @@ public record ModItemData() {
     // =============================================
 
     public static void models(ItemModels models) {
+        // Blocks declare what their items look like so for regular block
+        // items you don't typically need to declare an item model here.
+
         models.generated(ASPEN_BOAT);
         models.generated(BEECH_BOAT);
         models.generated(MAPLE_BOAT);

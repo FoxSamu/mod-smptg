@@ -35,6 +35,15 @@ import net.minecraft.world.level.material.PushReaction;
  */
 @SuppressWarnings("unused")
 public record ModBlocks() {
+    // IMPORTANT NOTES WHEN ADDING BLOCKS
+    // - Register block types in init()
+    // - Register blocks to relevant Fabric registries in init() if needed
+    // - Go through all the configuration methods below and supply the correct configuration for the block
+    // - Go through all the configurations in ModBlockData (under the data source set) as well
+    // - All configuration methods reside above the factory methods
+    // - Add a block item for each block that should be placeable in ModItems
+
+
     // BLOCKS
     // =============================================
 
@@ -209,6 +218,7 @@ public record ModBlocks() {
     // =============================================
 
     public static void init() {
+        // Register block types
         Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("stair"), SimpleStairBlock.CODEC);
         Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("salt_crystal"), SaltCrystalBlock.CODEC);
         Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("short_plant"), ShortPlantBlock.CODEC);
@@ -225,6 +235,7 @@ public record ModBlocks() {
         Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("segmented_clovers"), SegmentedCloversBlock.CODEC);
         Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("multiface_plant"), MultifacePlantBlock.CODEC);
 
+        // Setup supported blocks
         BlockEntityType.SHELF.addSupportedBlock(ASPEN_SHELF);
         BlockEntityType.SHELF.addSupportedBlock(BEECH_SHELF);
         BlockEntityType.SHELF.addSupportedBlock(MAPLE_SHELF);
@@ -253,6 +264,7 @@ public record ModBlocks() {
         BlockEntityType.HANGING_SIGN.addSupportedBlock(DEAD_WOOD_HANGING_SIGN);
         BlockEntityType.HANGING_SIGN.addSupportedBlock(DEAD_WOOD_WALL_HANGING_SIGN);
 
+        // Setup log stripping
         StrippableBlockRegistry.register(ASPEN_LOG, STRIPPED_ASPEN_LOG);
         StrippableBlockRegistry.register(ASPEN_WOOD, STRIPPED_ASPEN_WOOD);
         StrippableBlockRegistry.register(BEECH_LOG, STRIPPED_BEECH_LOG);
@@ -267,8 +279,21 @@ public record ModBlocks() {
         // TODO Composting, Fuel, Burning, etc.
     }
 
+
+
+    // =====================================================================================================
+    //   CONFIGURATION METHODS
+    // =====================================================================================================
+
+
+
+    // SHEARING
+    // =============================================
+
     @SuppressWarnings("deprecation")
     public static void addShearsRules(List<Tool.Rule> rules) {
+        // Method called from mixin to add custom shears logic
+
         var blockRegistry = BuiltInRegistries.acquireBootstrapRegistrationLookup(BuiltInRegistries.BLOCK);
 
         rules.add(Tool.Rule.overrideSpeed(
@@ -486,6 +511,21 @@ public record ModBlocks() {
         colors.grass(TALL_LAVENDER);
     }
 
+
+
+    // ========================================================================================
+    // Thought you were done? HAH NO
+    // All block data now resides in the data source set, under ModBlockData.
+    // Be sure to fill in block data there as well to properly generate resources.
+    //
+    // Also don't forget to add a block item in ModItems!
+    // ========================================================================================
+
+
+
+    // =====================================================================================================
+    //   FACTORY METHODS
+    // =====================================================================================================
 
 
     // GETTERS

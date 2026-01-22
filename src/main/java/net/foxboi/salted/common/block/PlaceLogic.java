@@ -7,6 +7,12 @@ import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.MossyCarpetBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
+/**
+ * Allows for custom placing logic used by {@link net.minecraft.world.level.levelgen.feature.SimpleBlockFeature}.
+ * This feature has some hardcoded logic for certain blocks, like double blocks, to ensure that it is placed correctly.
+ * Using a mixin, this interface is also checked for by {@code SimpleBlockFeature}, calling the {@link #placeAt} method
+ * to provide placement logic and allowing modded blocks to implement custom placement logic in a more soft-coded way.
+ */
 public interface PlaceLogic {
     boolean placeAt(LevelAccessor level, BlockPos pos, BlockState state, RandomSource rng, int setFlags);
 

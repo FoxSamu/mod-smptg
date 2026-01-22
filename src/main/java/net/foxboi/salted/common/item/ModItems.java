@@ -22,6 +22,13 @@ import net.minecraft.world.level.block.Block;
  */
 @SuppressWarnings("unused")
 public record ModItems() {
+    // IMPORTANT NOTES WHEN ADDING ITEMS
+    // - Register your items to relevant Fabric registries in init() if needed
+    // - Go through all the configuration methods below and supply the correct configuration for the item
+    // - Go through all the configurations in ModItemData (under the data source set) as well
+    // - All configuration methods reside above the factory methods
+
+
     // ITEMS
     // =============================================
 
@@ -200,6 +207,7 @@ public record ModItems() {
     // =============================================
 
     public static void init() {
+        // Register creative inventory tab setup events
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.BUILDING_BLOCKS).register(ModItems::buildingBlocksTab);
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.NATURAL_BLOCKS).register(ModItems::naturalBlocksTab);
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(ModItems::functionalBlocksTab);
@@ -209,8 +217,17 @@ public record ModItems() {
     }
 
 
+
+    // =====================================================================================================
+    //   CONFIGURATION METHODS
+    // =====================================================================================================
+
+
     // TABS
     // =============================================
+
+    // Try to follow Minecraft's order in which items are put into tabs. When a block or a set of blocks has
+    // vanilla variants and SMPTG variants, make sure the vanilla variants appear first.
 
     public static void buildingBlocksTab(FabricItemGroupEntries entries) {
         entries.addAfter(
@@ -482,6 +499,9 @@ public record ModItems() {
     // =============================================
 
     public static void translate(Translator<Item> translator) {
+        // Block items receive the translation ID of the block, so they
+        // don't need to be set here.
+
         translator.name(ASPEN_BOAT, "Aspen Boat");
         translator.name(ASPEN_CHEST_BOAT, "Aspen Chest Boat");
 
@@ -511,6 +531,23 @@ public record ModItems() {
         translator.name(COOKED_SALTED_MUTTON, "Cooked Salted Mutton");
         translator.name(COOKED_SALTED_CHICKEN, "Cooked Salted Chicken");
     }
+
+
+
+    // ========================================================================================
+    // Thought you were done? HAH NO
+    // All item data now resides in the data source set, under ModItemData.
+    // Be sure to fill in item data there as well to properly generate resources.
+    //
+    // However, if you added a block item you're all set by now so don't bother.
+    // ========================================================================================
+
+
+
+
+    // =====================================================================================================
+    //   FACTORY METHODS
+    // =====================================================================================================
 
 
     // FACTORIES
