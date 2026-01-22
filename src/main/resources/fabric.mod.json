@@ -45,6 +45,7 @@
   },
 
   "suggests": {
+    "modmenu": "*",
     "sodium": "*",
     "iris": "*"
   }
