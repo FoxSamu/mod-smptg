@@ -1,16 +1,20 @@
 package net.foxboi.salted.common.levelgen.biome;
 
+import java.util.List;
 import java.util.Optional;
 
 import net.foxboi.salted.common.levelgen.ModVegetationPlacements;
 import net.foxboi.salted.common.misc.biome.BiomeEditor;
+
+import net.minecraft.data.worldgen.Carvers;
 import net.minecraft.data.worldgen.biome.OverworldBiomes;
+import net.minecraft.data.worldgen.placement.MiscOverworldPlacements;
+import net.minecraft.data.worldgen.placement.NetherPlacements;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.sounds.Music;
 import net.minecraft.sounds.Musics;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.attribute.BackgroundMusic;
-import net.minecraft.world.attribute.EnvironmentAttributes;
+import net.minecraft.world.attribute.*;
 
 import static net.foxboi.salted.common.levelgen.biome.VanillaBiomeFeatures.*;
 import static net.minecraft.world.level.levelgen.GenerationStep.Decoration.*;
@@ -150,6 +154,60 @@ public record ModBiomeFeatures() {
         builder.waterColor(0x416DBF);
     }
 
+    public static void netherWastesAmbience(BiomeEditor builder) {
+        builder.putAttribute(
+                EnvironmentAttributes.AMBIENT_SOUNDS,
+                new AmbientSounds(
+                        Optional.of(SoundEvents.AMBIENT_NETHER_WASTES_LOOP),
+                        Optional.of(new AmbientMoodSettings(SoundEvents.AMBIENT_NETHER_WASTES_MOOD, 6000, 8, 2)),
+                        List.of(new AmbientAdditionsSettings(SoundEvents.AMBIENT_NETHER_WASTES_ADDITIONS, 0.0111))
+                )
+        );
+    }
+
+    public static void soulSandValleyAmbience(BiomeEditor builder) {
+        builder.putAttribute(
+                EnvironmentAttributes.AMBIENT_SOUNDS,
+                new AmbientSounds(
+                        Optional.of(SoundEvents.AMBIENT_SOUL_SAND_VALLEY_LOOP),
+                        Optional.of(new AmbientMoodSettings(SoundEvents.AMBIENT_SOUL_SAND_VALLEY_MOOD, 6000, 8, 2)),
+                        List.of(new AmbientAdditionsSettings(SoundEvents.AMBIENT_SOUL_SAND_VALLEY_ADDITIONS, 0.0111))
+                )
+        );
+    }
+
+    public static void basaltDeltasAmbience(BiomeEditor builder) {
+        builder.putAttribute(
+                EnvironmentAttributes.AMBIENT_SOUNDS,
+                new AmbientSounds(
+                        Optional.of(SoundEvents.AMBIENT_BASALT_DELTAS_LOOP),
+                        Optional.of(new AmbientMoodSettings(SoundEvents.AMBIENT_BASALT_DELTAS_MOOD, 6000, 8, 2)),
+                        List.of(new AmbientAdditionsSettings(SoundEvents.AMBIENT_BASALT_DELTAS_ADDITIONS, 0.0111))
+                )
+        );
+    }
+
+    public static void crimsonForestAmbience(BiomeEditor builder) {
+        builder.putAttribute(
+                EnvironmentAttributes.AMBIENT_SOUNDS,
+                new AmbientSounds(
+                        Optional.of(SoundEvents.AMBIENT_CRIMSON_FOREST_LOOP),
+                        Optional.of(new AmbientMoodSettings(SoundEvents.AMBIENT_CRIMSON_FOREST_MOOD, 6000, 8, 2)),
+                        List.of(new AmbientAdditionsSettings(SoundEvents.AMBIENT_CRIMSON_FOREST_ADDITIONS, 0.0111))
+                )
+        );
+    }
+
+    public static void warpedForestAmbience(BiomeEditor builder) {
+        builder.putAttribute(
+                EnvironmentAttributes.AMBIENT_SOUNDS,
+                new AmbientSounds(
+                        Optional.of(SoundEvents.AMBIENT_WARPED_FOREST_LOOP),
+                        Optional.of(new AmbientMoodSettings(SoundEvents.AMBIENT_WARPED_FOREST_MOOD, 6000, 8, 2)),
+                        List.of(new AmbientAdditionsSettings(SoundEvents.AMBIENT_WARPED_FOREST_ADDITIONS, 0.0111))
+                )
+        );
+    }
 
 
     public static void addGlobalGeneration(BiomeEditor builder) {
@@ -220,5 +278,32 @@ public record ModBiomeFeatures() {
 
     public static void addMossCarpetsAroundMoss(BiomeEditor builder) {
         builder.addFeature(VEGETAL_DECORATION, ModVegetationPlacements.PATCH_MOSS_CARPET_AROUND_MOSS);
+    }
+
+    public static void addNetherGlobalGeneration(BiomeEditor builder) {
+        builder.addCarver(Carvers.NETHER_CAVE);
+        builder.addFeature(VEGETAL_DECORATION, MiscOverworldPlacements.SPRING_LAVA);
+
+        addDefaultMushrooms(builder);
+        addNetherDefaultOres(builder);
+    }
+
+    public static void addAshDecorations(BiomeEditor builder) {
+        builder.addFeature(VEGETAL_DECORATION, ModVegetationPlacements.PATCH_ASHCREEP);
+        builder.addFeature(VEGETAL_DECORATION, ModVegetationPlacements.PATCH_ASHVINE);
+        builder.addFeature(UNDERGROUND_DECORATION, ModVegetationPlacements.PATCH_ASH_FIRE);
+    }
+
+    public static void addBurnedStems(BiomeEditor builder) {
+        builder.addFeature(VEGETAL_DECORATION, ModVegetationPlacements.BURNED_STEM);
+    }
+
+    public static void addAshLayers(BiomeEditor builder) {
+        builder.addFeature(TOP_LAYER_MODIFICATION, ModVegetationPlacements.PATCH_ASH_LAYER);
+    }
+
+    public static void addNetherFire(BiomeEditor builder) {
+        builder.addFeature(UNDERGROUND_DECORATION, NetherPlacements.PATCH_FIRE);
+        builder.addFeature(UNDERGROUND_DECORATION, NetherPlacements.PATCH_SOUL_FIRE);
     }
 }

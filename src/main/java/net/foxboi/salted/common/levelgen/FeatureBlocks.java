@@ -1,5 +1,7 @@
 package net.foxboi.salted.common.levelgen;
 
+import net.foxboi.salted.common.block.AbstractColumnPlantBlock;
+import net.foxboi.salted.common.block.ColumnPlantShape;
 import net.foxboi.salted.common.block.ModBlocks;
 import net.foxboi.salted.common.block.SaltCrystalBlock;
 import net.foxboi.salted.common.levelgen.stateprovider.EitherStateProvider;
@@ -51,6 +53,10 @@ public class FeatureBlocks {
     public static final BlockStateProvider PATCHMOSS = BlockStateProvider.simple(ModBlocks.PATCHMOSS);
     public static final BlockStateProvider MOSS_CARPET = BlockStateProvider.simple(Blocks.MOSS_CARPET);
     public static final BlockStateProvider FIREFLY_BUSH = BlockStateProvider.simple(Blocks.FIREFLY_BUSH);
+    public static final BlockStateProvider ASH_LAYER = BlockStateProvider.simple(ModBlocks.ASH_LAYER);
+    public static final BlockStateProvider ASHCREEP = BlockStateProvider.simple(ModBlocks.ASHCREEP);
+    public static final BlockStateProvider ASHVINE = BlockStateProvider.simple(ModBlocks.ASHVINE);
+    public static final BlockStateProvider BURNED_STEM = BlockStateProvider.simple(ModBlocks.BURNED_STEM);
 
     public static BlockStateProvider either(BlockStateProvider a, BlockStateProvider b, double bChance) {
         return new EitherStateProvider(a, b, bChance);

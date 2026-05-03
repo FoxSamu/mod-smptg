@@ -11,13 +11,13 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.material.Fluids;
 
-public class RandomBlobsAndCrystalsFeature extends Feature<RandomBlobsAndCrystalsConfig> {
+public class RandomBlobsAndCrystalsFeature extends Feature<RandomBlobsAndCrystalsConfiguration> {
     public RandomBlobsAndCrystalsFeature() {
-        super(RandomBlobsAndCrystalsConfig.CODEC);
+        super(RandomBlobsAndCrystalsConfiguration.CODEC);
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<RandomBlobsAndCrystalsConfig> ctx) {
+    public boolean place(FeaturePlaceContext<RandomBlobsAndCrystalsConfiguration> ctx) {
         var level = ctx.level();
         var pos = ctx.origin();
         var rng = ctx.random();
@@ -42,7 +42,7 @@ public class RandomBlobsAndCrystalsFeature extends Feature<RandomBlobsAndCrystal
         return placed;
     }
 
-    private boolean createBlob(WorldGenLevel level, BlockPos.MutableBlockPos mpos, RandomSource rng, RandomBlobsAndCrystalsConfig config) {
+    private boolean createBlob(WorldGenLevel level, BlockPos.MutableBlockPos mpos, RandomSource rng, RandomBlobsAndCrystalsConfiguration config) {
         var placed = placeBlock(level, mpos, rng, config);
         for (Direction dir : Direction.values()) {
             mpos.move(dir);
@@ -53,7 +53,7 @@ public class RandomBlobsAndCrystalsFeature extends Feature<RandomBlobsAndCrystal
         return placed;
     }
 
-    private boolean placeBlock(WorldGenLevel level, BlockPos pos, RandomSource rng, RandomBlobsAndCrystalsConfig config) {
+    private boolean placeBlock(WorldGenLevel level, BlockPos pos, RandomSource rng, RandomBlobsAndCrystalsConfiguration config) {
         var replace = level.getBlockState(pos);
 
         var blob = config.blob().orElse(null);
@@ -64,7 +64,7 @@ public class RandomBlobsAndCrystalsFeature extends Feature<RandomBlobsAndCrystal
         return tryPlaceSaltCrystal(level, pos, replace, rng, config);
     }
 
-    private boolean tryPlaceSaltCrystal(WorldGenLevel level, BlockPos pos, BlockState replace, RandomSource rng, RandomBlobsAndCrystalsConfig config) {
+    private boolean tryPlaceSaltCrystal(WorldGenLevel level, BlockPos pos, BlockState replace, RandomSource rng, RandomBlobsAndCrystalsConfiguration config) {
         var crystal = config.crystal().orElse(null);
         if (crystal == null) {
             return false;

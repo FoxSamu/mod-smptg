@@ -11,9 +11,14 @@ public class ModFeatures {
     // FEATURES
     // =============================================
 
-    public static final Feature<RandomBlobsAndCrystalsConfig> RANDOM_BLOBS_AND_CRYSTALS = register(
+    public static final Feature<RandomBlobsAndCrystalsConfiguration> RANDOM_BLOBS_AND_CRYSTALS = register(
             "random_blobs_and_crystals",
             new RandomBlobsAndCrystalsFeature()
+    );
+
+    public static final Feature<ColumnPlantConfiguration> COLUMN_PLANT = register(
+            "column_plant",
+            new ColumnPlantFeature()
     );
 
 

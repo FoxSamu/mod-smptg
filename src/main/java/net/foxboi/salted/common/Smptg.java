@@ -1,8 +1,5 @@
 package net.foxboi.salted.common;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.JsonOps;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.foxboi.salted.common.attribute.ModAttributeTypes;
 import net.foxboi.salted.common.attribute.ModEnvironmentAttributes;
 import net.foxboi.salted.common.levelgen.biome.ModBiomeTags;
@@ -24,12 +21,15 @@ import net.foxboi.salted.common.levelgen.tree.ModFoliagePlacerTypes;
 import net.foxboi.salted.common.levelgen.tree.ModRootPlacerTypes;
 import net.foxboi.salted.common.levelgen.tree.ModTreeDecoratorTypes;
 import net.foxboi.salted.common.levelgen.tree.ModTrunkPlacerTypes;
-import net.foxboi.salted.common.misc.CodecExtension;
+
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Climate;
+
+import net.fabricmc.fabric.api.biome.v1.NetherBiomes;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -99,6 +99,10 @@ public class Smptg {
 
         // Init handlers
         BiomeModificationHelper.init();
+
+        NetherBiomes.addNetherBiome(ModBiomes.BURNED_FOREST, Climate.parameters(
+                .3f, -.6f, 0f, 0f, 0f, 0f, 0.02F
+        ));
     }
 
     /**

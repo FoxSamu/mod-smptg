@@ -70,7 +70,14 @@ public record BiomeSurfaceOverrides(
     }
 
     public static BiomeSurfaceOverrides nether(DefinitionContext context) {
-        return new BiomeSurfaceOverrides(List.of());
+        return new Builder(context.lookupOrThrow(Registries.BIOME))
+                .add(
+                        List.of(
+                                ModBiomes.BURNED_FOREST
+                        ),
+                        SurfaceTypes.ash()
+                )
+                .build();
     }
 
     public static BiomeSurfaceOverrides end(DefinitionContext context) {

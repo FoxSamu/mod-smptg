@@ -3,19 +3,24 @@ package net.foxboi.salted.common.levelgen;
 import java.util.List;
 
 import net.foxboi.salted.common.block.ModBlocks;
+import net.foxboi.salted.common.levelgen.feature.ColumnPlantConfiguration;
 import net.foxboi.salted.common.levelgen.feature.DefinedFeature;
+import net.foxboi.salted.common.levelgen.feature.ModFeatures;
 import net.foxboi.salted.common.misc.data.DataRegistry;
+
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.TreePlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.random.WeightedList;
+import net.minecraft.util.valueproviders.*;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.WeightedPlacedFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.BlockColumnConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.RandomFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
@@ -36,6 +41,27 @@ public record ModVegetationFeatures() {
     public static final ResourceKey<ConfiguredFeature<?, ?>> DENSE_CLOVERS = REGISTRY.register("dense_clovers", block(FeatureBlocks.CLOVERS_1_4));
     public static final ResourceKey<ConfiguredFeature<?, ?>> MOSS_CARPET = REGISTRY.register("moss_carpet", block(FeatureBlocks.MOSS_CARPET));
     public static final ResourceKey<ConfiguredFeature<?, ?>> FIREFLY_BUSH = REGISTRY.register("firefly_bush", block(FeatureBlocks.FIREFLY_BUSH));
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ASH_LAYER = REGISTRY.register("ash_layer", block(FeatureBlocks.ASH_LAYER));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ASHCREEP = REGISTRY.register("ashcreep", block(FeatureBlocks.ASHCREEP));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ASHVINE = REGISTRY.register("ashvine", columnPlant(
+            Direction.DOWN,
+            FeatureBlocks.ASHVINE,
+            BlockPredicate.ONLY_IN_AIR_PREDICATE,
+            UniformFloat.of(0, .75f)
+    ));
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> BURNED_STEM = REGISTRY.register("burned_stem", column(
+            Direction.UP,
+            FeatureBlocks.BURNED_STEM,
+            new WeightedListInt(
+                    weightedIntProvider()
+                            .add(UniformInt.of(1, 2), 7)
+                            .add(UniformInt.of(3, 6), 3)
+                            .build()
+            ),
+            BlockPredicate.ONLY_IN_AIR_PREDICATE
+    ));
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> ASPEN_FOREST_TREE = REGISTRY.register("aspen_forest_tree", DefinedFeature.of(
             Feature.RANDOM_SELECTOR,
@@ -106,7 +132,7 @@ public record ModVegetationFeatures() {
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> BARLEY_FIELD_PLANT = REGISTRY.register("barley_field_plant", block(
             new WeightedStateProvider(
-                    weightedList()
+                    weightedBlockState()
                             .add(ModBlocks.BARLEY.defaultBlockState(), 1200)
                             .add(ModBlocks.TALL_BARLEY.defaultBlockState(), 200)
                             .add(Blocks.SHORT_GRASS.defaultBlockState(), 400)
@@ -118,7 +144,11 @@ public record ModVegetationFeatures() {
     ));
 
 
-    private static WeightedList.Builder<BlockState> weightedList() {
+    private static WeightedList.Builder<BlockState> weightedBlockState() {
+        return new WeightedList.Builder<>();
+    }
+
+    private static WeightedList.Builder<IntProvider> weightedIntProvider() {
         return new WeightedList.Builder<>();
     }
 
@@ -127,6 +157,51 @@ public record ModVegetationFeatures() {
         return DefinedFeature.of(
                 Feature.SIMPLE_BLOCK,
                 () -> new SimpleBlockConfiguration(block)
+        );
+    }
+
+    private static DefinedFeature<?> column(Direction dir, BlockStateProvider body, BlockStateProvider end, IntProvider bodyLength, BlockPredicate replace) {
+        return DefinedFeature.of(
+                Feature.BLOCK_COLUMN,
+                () -> new BlockColumnConfiguration(
+                        List.of(
+                                BlockColumnConfiguration.layer(bodyLength, body),
+                                BlockColumnConfiguration.layer(ConstantInt.of(1), end)
+                        ),
+                        dir,
+                        replace,
+                        true
+                )
+        );
+    }
+
+    private static DefinedFeature<?> column(Direction dir, BlockStateProvider block, IntProvider length, BlockPredicate replace) {
+        return DefinedFeature.of(
+                Feature.BLOCK_COLUMN,
+                () -> new BlockColumnConfiguration(
+                        List.of(
+                                BlockColumnConfiguration.layer(length, block)
+                        ),
+                        dir,
+                        replace,
+                        false
+                )
+        );
+    }
+
+    private static DefinedFeature<?> columnPlant(Direction dir, BlockStateProvider block, BlockPredicate replace, FloatProvider proportionalLength) {
+        return DefinedFeature.of(
+                ModFeatures.COLUMN_PLANT,
+                () -> new ColumnPlantConfiguration(
+                        dir,
+                        block,
+                        replace,
+                        ConstantInt.of(0),
+                        proportionalLength,
+                        1,
+                        128,
+                        false
+                )
         );
     }
 

@@ -1,10 +1,14 @@
 package net.foxboi.salted.common.levelgen;
 
+import java.util.List;
+
+import net.foxboi.salted.common.block.ModBlocks;
 import net.foxboi.salted.common.levelgen.placement.DefinedPlacement;
 import net.foxboi.salted.common.misc.data.DataRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.features.NetherFeatures;
 import net.minecraft.data.worldgen.features.VegetationFeatures;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.valueproviders.ConstantInt;
@@ -179,12 +183,74 @@ public record ModVegetationPlacements() {
     );
 
     public static final ResourceKey<PlacedFeature> PATCH_CLOVERS_DENSE = REGISTRY.register(
-            "patch_clovers",
+            "patch_clovers_dense",
             DefinedPlacement
                     .place(ModVegetationFeatures.DENSE_CLOVERS)
                     .count(UniformInt.of(2, 6))
                     .modified(patchPlacement())
                     .randomPatch(inAir(DEFAULT_GROW_BLOCKS), 96)
+    );
+
+
+    // Ash
+    // ===============================================================
+
+    public static final ResourceKey<PlacedFeature> PATCH_ASHCREEP = REGISTRY.register(
+            "patch_ashcreep",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.ASHCREEP)
+                    .count(UniformInt.of(5, 8))
+                    .modified(netherPatchPlacement())
+                    .randomPatch(inAir(ASH_GROW_BLOCKS), 96)
+    );
+
+    public static final ResourceKey<PlacedFeature> PATCH_ASHVINE = REGISTRY.register(
+            "patch_ashvine",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.ASHVINE)
+                    .count(UniformInt.of(1, 3))
+                    .spreadInChunk()
+                    .atHeight(32, 120)
+                    .scan(Direction.UP, HIGHEST_AIR, 32)
+                    .inBiome()
+                    .randomPatch(inAir(ASH_GROW_BLOCKS, Direction.UP), 96)
+    );
+
+    public static final ResourceKey<PlacedFeature> PATCH_ASH_FIRE = REGISTRY.register(
+            "patch_ash_fire",
+            DefinedPlacement
+                    .place(NetherFeatures.FIRE)
+                    .count(UniformInt.of(2, 4))
+                    .spreadInChunk()
+                    .atHeight(32, 120)
+                    .scan(Direction.DOWN, LOWEST_AIR, 16)
+                    .inBiome()
+                    .randomPatch(inAir(ASH_GROW_BLOCKS), 96)
+    );
+
+    public static final ResourceKey<PlacedFeature> BURNED_STEM = REGISTRY.register(
+            "burned_stem",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.BURNED_STEM)
+                    .count(UniformInt.of(5, 8))
+                    .spreadInChunk()
+                    .atHeight(32, 120)
+                    .scan(Direction.DOWN, LOWEST_AIR, 32)
+                    .onlyIf(inAir(ASH_GROW_BLOCKS))
+                    .inBiome()
+    );
+
+    public static final ResourceKey<PlacedFeature> PATCH_ASH_LAYER = REGISTRY.register(
+            "patch_ash_layer",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.ASH_LAYER)
+                    .count(UniformInt.of(1, 3))
+                    .spreadInChunk()
+                    .atHeight(32, 120)
+                    .scan(Direction.DOWN, LOWEST_AIR, 32)
+                    .onlyIf(inAir(List.of(ModBlocks.ASH_BLOCK)))
+                    .inBiome()
+                    .randomPatch(inAir(ASH_GROW_BLOCKS), 96)
     );
 
 
@@ -243,6 +309,14 @@ public record ModVegetationPlacements() {
         return it -> it
                 .spreadInChunk()
                 .onOceanFloorWg()
+                .inBiome();
+    }
+
+    private static DefinedPlacement.Modifier netherPatchPlacement() {
+        return it -> it
+                .spreadInChunk()
+                .atHeight(32, 120)
+                .scan(Direction.DOWN, LOWEST_AIR, 32)
                 .inBiome();
     }
 

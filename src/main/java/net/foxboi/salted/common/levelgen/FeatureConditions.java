@@ -5,11 +5,12 @@ import java.util.stream.Stream;
 
 import net.foxboi.salted.common.block.ModBlocks;
 import net.minecraft.core.Direction;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 
-import static net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate.matchesBlocks;
+import static net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate.*;
 
 public class FeatureConditions {
     public static final List<Block> MOSS_GROW_BLOCKS = List.of(
@@ -49,6 +50,23 @@ public class FeatureConditions {
             )
     ).toList();
 
+    public static final List<Block> ASH_GROW_BLOCKS = List.of(
+            Blocks.NETHERRACK,
+            Blocks.CRIMSON_NYLIUM,
+            Blocks.WARPED_NYLIUM,
+            ModBlocks.ASH_BLOCK,
+            ModBlocks.PACKED_ASH
+    );
+
+    public static final BlockPredicate LOWEST_AIR = BlockPredicate.allOf(
+            BlockPredicate.ONLY_IN_AIR_PREDICATE,
+            not(matchesTag(Direction.DOWN.getUnitVec3i(), BlockTags.AIR))
+    );
+
+    public static final BlockPredicate HIGHEST_AIR = BlockPredicate.allOf(
+            BlockPredicate.ONLY_IN_AIR_PREDICATE,
+            not(matchesTag(Direction.UP.getUnitVec3i(), BlockTags.AIR))
+    );
 
 
     public static BlockPredicate inAir(List<Block> supportedBlocks) {
@@ -74,6 +92,17 @@ public class FeatureConditions {
                     matchesBlocks(Direction.UP.getUnitVec3i(), Blocks.AIR),
                     matchesBlocks(Blocks.WATER)
             );
+        }
+    }
+
+    public static BlockPredicate inAir(List<Block> supportedBlocks, Direction supportDir) {
+        if (!supportedBlocks.isEmpty()) {
+            return BlockPredicate.allOf(
+                    BlockPredicate.ONLY_IN_AIR_PREDICATE,
+                    matchesBlocks(supportDir.getUnitVec3i(), supportedBlocks)
+            );
+        } else {
+            return BlockPredicate.ONLY_IN_AIR_PREDICATE;
         }
     }
 }

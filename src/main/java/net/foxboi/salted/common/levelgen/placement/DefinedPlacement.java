@@ -7,6 +7,8 @@ import java.util.List;
 import net.foxboi.salted.common.misc.data.DeferredHolder;
 import net.foxboi.salted.common.misc.data.Definition;
 import net.foxboi.salted.common.misc.data.DefinitionContext;
+
+import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
@@ -90,6 +92,10 @@ public class DefinedPlacement implements Definition<PlacedFeature> {
 
     public DefinedPlacement atHeight(int min, int max) {
         return atHeight(UniformHeight.of(VerticalAnchor.absolute(min), VerticalAnchor.absolute(max)));
+    }
+
+    public DefinedPlacement scan(Direction dir, BlockPredicate target, int maxSteps) {
+        return modified(EnvironmentScanPlacement.scanningFor(dir, target, maxSteps));
     }
 
     public DefinedPlacement atSeaLevel() {

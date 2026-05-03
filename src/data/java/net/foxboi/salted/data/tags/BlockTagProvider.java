@@ -157,8 +157,12 @@ public class BlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
                 .add(ModBlocks.TALL_LAVENDER)
                 .add(ModBlocks.GLOBE_THISTLE);
 
-        valueLookupBuilder(BlockTags.DIRT)
+        valueLookupBuilder(BlockTags.GRASS_BLOCKS)
                 .add(ModBlocks.MOSSY_DIRT);
+
+        valueLookupBuilder(BlockTags.NETHER_CARVER_REPLACEABLES)
+                .add(ModBlocks.ASH_BLOCK)
+                .add(ModBlocks.PACKED_ASH);
 
         createTreeMushroomReplacable(BlockTags.REPLACEABLE_BY_TREES, false);
         createTreeMushroomReplacable(BlockTags.REPLACEABLE_BY_MUSHROOMS, true);

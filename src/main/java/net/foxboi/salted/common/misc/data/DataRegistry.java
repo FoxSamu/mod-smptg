@@ -29,6 +29,9 @@ public class DataRegistry<T> {
     }
 
     public ResourceKey<T> register(ResourceKey<T> key, Definition<T> definition) {
+        if (map.containsKey(key)) {
+            throw new IllegalArgumentException("Key " + key.identifier() + " already registered");
+        }
         map.put(key, definition);
         return key;
     }

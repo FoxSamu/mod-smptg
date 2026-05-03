@@ -48,7 +48,7 @@ public record ModTreeFeatures() {
             () -> createAspen(false, false, false, 0f)
     ));
 
-    public static final ResourceKey<ConfiguredFeature<?, ?>> ASPEN_BEES_005 = REGISTRY.register("aspen", DefinedFeature.of(
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ASPEN_BEES_005 = REGISTRY.register("aspen_bees_005", DefinedFeature.of(
             Feature.TREE,
             () -> createAspen(false, false, false, 0.05f)
     ));
