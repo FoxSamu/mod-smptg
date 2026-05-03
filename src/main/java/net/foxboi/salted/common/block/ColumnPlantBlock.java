@@ -40,7 +40,7 @@ public class ColumnPlantBlock extends AbstractColumnPlantBlock implements PlantB
 
     @Override
     protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
-        var shape = state.getValue(END) ? endShape : columnShape;
+        var shape = state.getValue(SHAPE) != ColumnPlantShape.BODY ? endShape : columnShape;
 
         if (plantConfig.hasShapeOffset()) {
             shape = shape.move(state.getOffset(pos).multiply(1, 0, 1));

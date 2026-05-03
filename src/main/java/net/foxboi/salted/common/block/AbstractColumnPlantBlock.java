@@ -5,19 +5,29 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.phys.BlockHitResult;
+
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
+
+import static net.foxboi.salted.common.block.ColumnPlantShape.*;
 
 public abstract class AbstractColumnPlantBlock extends Block {
     public static final BooleanProperty BASE = BooleanProperty.create("base");
-    public static final BooleanProperty END = BooleanProperty.create("end");
+    public static final EnumProperty<ColumnPlantShape> SHAPE = EnumProperty.create("shape", ColumnPlantShape.class);
 
     protected final Direction growDir;
 
@@ -27,7 +37,7 @@ public abstract class AbstractColumnPlantBlock extends Block {
         registerDefaultState(
                 stateDefinition.any()
                         .setValue(BASE, false)
-                        .setValue(END, false)
+                        .setValue(SHAPE, BODY)
         );
 
         this.growDir = growDir;
@@ -35,7 +45,7 @@ public abstract class AbstractColumnPlantBlock extends Block {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(BASE, END);
+        builder.add(BASE, SHAPE);
     }
 
     protected boolean mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos) {
@@ -68,7 +78,7 @@ public abstract class AbstractColumnPlantBlock extends Block {
         }
 
         if (dir == growDir) {
-            state = state.setValue(END, !nearState.is(this));
+            state = state.setValue(SHAPE, !nearState.is(this) ? GROWING : BODY);
         }
 
         return state;
@@ -84,10 +94,28 @@ public abstract class AbstractColumnPlantBlock extends Block {
             return null;
         }
 
+        var blockAbove = level.getBlockState(pos.above());
+
+        var shape = BODY;
+        if (!level.getBlockState(pos.relative(growDir)).is(this)) {
+            shape = blockAbove.is(this) && blockAbove.getValue(SHAPE) == PERMANENT ? PERMANENT : GROWING;
+        }
+
         state = state.setValue(BASE, !level.getBlockState(pos.relative(growDir, -1)).is(this));
-        state = state.setValue(END, !level.getBlockState(pos.relative(growDir)).is(this));
+        state = state.setValue(SHAPE, shape);
 
         return state;
+    }
+
+    @Override
+    protected InteractionResult useItemOn(ItemStack item, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (item.is(ConventionalItemTags.SHEAR_TOOLS)) {
+            item.hurtAndBreak(1, player, hand);
+            level.setBlock(pos, state.setValue(SHAPE, PERMANENT), UPDATE_ALL);
+            return InteractionResult.SUCCESS;
+        }
+
+        return super.useItemOn(item, state, level, pos, player, hand, hitResult);
     }
 
     @Override
@@ -115,6 +143,11 @@ public abstract class AbstractColumnPlantBlock extends Block {
 
     public final boolean canGrowAtLeast(LevelReader level, BlockPos pos, int amount) {
         var end = findEnd(level, pos);
+
+        if (level.getBlockState(end).getValue(SHAPE) == PERMANENT) {
+            return false;
+        }
+
         var mpos = end.mutable().move(growDir);
 
         for (int i = 0; i < amount; i++) {
@@ -133,12 +166,17 @@ public abstract class AbstractColumnPlantBlock extends Block {
             return;
         }
 
-        level.setBlockAndUpdate(originalEnd, level.getBlockState(originalEnd).setValue(END, false));
-        level.setBlockAndUpdate(newEnd, level.getBlockState(originalEnd).setValue(END, true));
+        level.setBlockAndUpdate(originalEnd, level.getBlockState(originalEnd).setValue(SHAPE, BODY));
+        level.setBlockAndUpdate(newEnd, level.getBlockState(originalEnd).setValue(SHAPE, GROWING));
     }
 
     public final int grow(ServerLevel level, BlockPos pos, int amount) {
         var end = findEnd(level, pos);
+
+        if (level.getBlockState(end).getValue(SHAPE) == PERMANENT) {
+            return 0;
+        }
+
         var mpos = end.mutable().move(growDir);
 
         for (int i = 0; i < amount; i++) {

@@ -22,10 +22,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-import net.foxboi.salted.common.block.AbstractColumnPlantBlock;
-import net.foxboi.salted.common.block.DiagonallyAttachableBlock;
-import net.foxboi.salted.common.block.MultilayerBlock;
-import net.foxboi.salted.common.block.SaltCrystalBlock;
+import net.foxboi.salted.common.block.*;
 import net.foxboi.salted.common.misc.DiagonalDirection;
 import net.foxboi.salted.data.ItemTint;
 
@@ -465,9 +462,10 @@ public final class BlockModelsImpl implements BlockModels {
     private void createColumnBlock(Block block, MultiVariant end, MultiVariant base) {
         gen.blockStateOutput.accept(
                 MultiVariantGenerator.dispatch(block).with(
-                        PropertyDispatch.initial(AbstractColumnPlantBlock.END)
-                                .select(true, end)
-                                .select(false, base)
+                        PropertyDispatch.initial(AbstractColumnPlantBlock.SHAPE)
+                                .select(ColumnPlantShape.GROWING, end)
+                                .select(ColumnPlantShape.PERMANENT, end)
+                                .select(ColumnPlantShape.BODY, base)
                 )
         );
     }

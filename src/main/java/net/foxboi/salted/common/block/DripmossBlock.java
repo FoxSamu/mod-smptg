@@ -43,7 +43,7 @@ public class DripmossBlock extends HangingColumnPlantBlock {
             var zDir = rng.nextBoolean() ? 1d : -1d;
 
             var h = rng.nextDouble() * (7d / 16d);
-            var v = rng.nextDouble() * (state.getValue(END) ? 14d / 16d : 1d);
+            var v = rng.nextDouble() * (state.getValue(SHAPE) ? 14d / 16d : 1d);
 
             var x = pos.getX() + 0.5d + xDir * h + offset.x;
             var y = pos.getY() + 1d - v + offset.y;
