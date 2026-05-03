@@ -1,18 +1,20 @@
 package net.foxboi.salted.common.block;
 
 import com.mojang.serialization.MapCodec;
+import net.foxboi.salted.common.Smptg;
 import net.foxboi.salted.common.misc.BonemealSpreadingLogic;
 import net.minecraft.core.BlockPos;
+import net.minecraft.references.BlockIds;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BonemealableBlock;
-import net.minecraft.world.level.block.SpreadingSnowyDirtBlock;
+import net.minecraft.world.level.block.SpreadingSnowyBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class MossyDirtBlock extends SpreadingSnowyDirtBlock implements BonemealableBlock {
+public class MossyDirtBlock extends SpreadingSnowyBlock implements BonemealableBlock {
 	public static final MapCodec<MossyDirtBlock> CODEC = simpleCodec(MossyDirtBlock::new);
 
 	@Override
@@ -21,7 +23,7 @@ public class MossyDirtBlock extends SpreadingSnowyDirtBlock implements Bonemeala
 	}
 
 	public MossyDirtBlock(BlockBehaviour.Properties properties) {
-		super(properties);
+		super(properties, BlockIds.DIRT);
 	}
 
 	@Override

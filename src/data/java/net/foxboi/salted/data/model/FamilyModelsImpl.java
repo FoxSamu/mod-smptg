@@ -6,15 +6,16 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
 
-import com.google.common.collect.ImmutableMap;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.blockstates.BlockModelDefinitionGenerator;
 import net.minecraft.client.data.models.model.*;
-import net.minecraft.client.renderer.block.model.Variant;
+import net.minecraft.client.renderer.block.dispatch.Variant;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+
+import com.google.common.collect.ImmutableMap;
 
 public class FamilyModelsImpl implements FamilyModels {
     interface StateFactory {

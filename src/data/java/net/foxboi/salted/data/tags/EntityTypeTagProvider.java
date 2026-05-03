@@ -2,14 +2,16 @@ package net.foxboi.salted.data.tags;
 
 import java.util.concurrent.CompletableFuture;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.foxboi.salted.common.entity.ModEntityTypes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.tags.EntityTypeTags;
 
-public class EntityTypeTagProvider extends FabricTagProvider.EntityTypeTagProvider {
-    public EntityTypeTagProvider(FabricDataOutput out, CompletableFuture<HolderLookup.Provider> regs) {
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
+
+import net.foxboi.salted.common.entity.ModEntityTypes;
+
+public class EntityTypeTagProvider extends FabricTagsProvider.EntityTypeTagsProvider {
+    public EntityTypeTagProvider(FabricPackOutput out, CompletableFuture<HolderLookup.Provider> regs) {
         super(out, regs);
     }
 

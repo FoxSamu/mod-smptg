@@ -3,17 +3,19 @@ package net.foxboi.salted.client.misc;
 import com.mojang.blaze3d.platform.NativeImage;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.resource.v1.reloader.SimpleResourceReloader;
+import net.fabricmc.fabric.api.resource.v1.reloader.SimpleReloadListener;
 import net.foxboi.salted.common.Smptg;
 import net.foxboi.salted.common.misc.biome.color.ColorMap;
 import net.foxboi.salted.common.misc.biome.color.FoliageColorMap;
 import net.minecraft.resources.FileToIdConverter;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @Environment(EnvType.CLIENT)
-public class ColorMapLoader extends SimpleResourceReloader<ColorMap> {
+public class ColorMapLoader extends SimpleReloadListener<ColorMap> {
     public static final ColorMapLoader DARK_RED_FOLIAGE = new ColorMapLoader(Smptg.id("dark_red_foliage"), FoliageColorMap.DARK_RED);
     public static final ColorMapLoader RED_FOLIAGE = new ColorMapLoader(Smptg.id("red_foliage"), FoliageColorMap.RED);
     public static final ColorMapLoader GOLDEN_FOLIAGE = new ColorMapLoader(Smptg.id("golden_foliage"), FoliageColorMap.GOLDEN);

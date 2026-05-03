@@ -4,28 +4,30 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.foxboi.salted.common.Smptg;
-import net.foxboi.salted.common.block.AbstractColumnPlantBlock;
-import net.foxboi.salted.common.block.DiagonallyAttachableBlock;
-import net.foxboi.salted.common.block.MultilayerBlock;
-import net.foxboi.salted.common.block.SaltCrystalBlock;
-import net.foxboi.salted.common.misc.DiagonalDirection;
-import net.foxboi.salted.data.ItemTint;
 import net.minecraft.client.color.item.ItemTintSource;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.MultiVariant;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.*;
-import net.minecraft.client.renderer.block.model.VariantMutator;
+import net.minecraft.client.renderer.block.dispatch.VariantMutator;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SegmentableBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
+import net.foxboi.salted.common.block.AbstractColumnPlantBlock;
+import net.foxboi.salted.common.block.DiagonallyAttachableBlock;
+import net.foxboi.salted.common.block.MultilayerBlock;
+import net.foxboi.salted.common.block.SaltCrystalBlock;
+import net.foxboi.salted.common.misc.DiagonalDirection;
+import net.foxboi.salted.data.ItemTint;
 
 import static net.minecraft.client.data.models.BlockModelGenerators.*;
 
@@ -71,8 +73,8 @@ public final class BlockModelsImpl implements BlockModels {
             Y_ROT_90
     };
 
-    private static final Map<Block, Identifier> SNOWY_SIDE_TEXTURES = Map.of(
-            Blocks.DIRT, Identifier.withDefaultNamespace("block/grass_block_snow")
+    private static final Map<Block, Material> SNOWY_SIDE_TEXTURES = Map.of(
+            Blocks.DIRT, new Material(Identifier.withDefaultNamespace("block/grass_block_snow"))
     );
 
     private final BlockModelGenerators gen;
@@ -358,7 +360,7 @@ public final class BlockModelsImpl implements BlockModels {
         for (int i = 0; i < 8; i++) {
             var stage = i + 1;
             var name = TextureMapping.getBlockTexture(block, "_stage_" + stage);
-            var variant = plainVariant(ModelTemplates.CROSS.create(name, TextureMapping.cross(name), gen.modelOutput));
+            var variant = plainVariant(ModelTemplates.CROSS.create(name.sprite(), TextureMapping.cross(name), gen.modelOutput));
             disp.select(stage, variant);
         }
 
@@ -436,7 +438,7 @@ public final class BlockModelsImpl implements BlockModels {
 
     private void createMapleLeaves(Block block, TexturedModel.Provider provider, ItemTintSource tint) {
         var model = provider
-                .updateTexture(it -> it.put(TextureSlot.ALL, Smptg.id("block/maple_leaves")))
+                .updateTexture(it -> it.put(TextureSlot.ALL, Materials.of("block/maple_leaves")))
                 .create(block, gen.modelOutput);
 
         gen.blockStateOutput.accept(createSimpleBlock(block, plainVariant(model)));
@@ -470,15 +472,15 @@ public final class BlockModelsImpl implements BlockModels {
         );
     }
 
-    private Identifier createVariant(Block block, ModelTemplate template, Function<Identifier, TextureMapping> textureMapper) {
+    private Identifier createVariant(Block block, ModelTemplate template, Function<Material, TextureMapping> textureMapper) {
         return template.create(block, textureMapper.apply(TextureMapping.getBlockTexture(block)), gen.modelOutput);
     }
 
-    private Identifier createVariant(Block block, String suffix, ModelTemplate template, Function<Identifier, TextureMapping> textureMapper) {
+    private Identifier createVariant(Block block, String suffix, ModelTemplate template, Function<Material, TextureMapping> textureMapper) {
         return template.createWithSuffix(block, suffix, textureMapper.apply(TextureMapping.getBlockTexture(block, suffix)), gen.modelOutput);
     }
 
-    private TextureMapping createShelfFungusMapping(Identifier texture) {
+    private TextureMapping createShelfFungusMapping(Material texture) {
         return new TextureMapping().put(TextureSlot.END, texture);
     }
 

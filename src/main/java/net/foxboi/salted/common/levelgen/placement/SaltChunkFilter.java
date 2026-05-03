@@ -14,8 +14,8 @@ public class SaltChunkFilter extends PlacementFilter {
 
     @Override
     protected boolean shouldPlace(PlacementContext ctx, RandomSource rng, BlockPos pos) {
-        var cpos = new ChunkPos(pos);
-        return Misc.isSaltChunk(ctx.getLevel(), cpos.x, cpos.z);
+        var cpos = ChunkPos.containing(pos);
+        return Misc.isSaltChunk(ctx.getLevel(), cpos.x(), cpos.z());
     }
 
     @Override

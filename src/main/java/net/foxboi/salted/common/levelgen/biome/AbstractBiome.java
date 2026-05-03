@@ -2,11 +2,13 @@ package net.foxboi.salted.common.levelgen.biome;
 
 import net.foxboi.salted.common.misc.biome.BiomeBuilder;
 import net.foxboi.salted.common.misc.biome.BiomeEditor;
+import net.foxboi.salted.common.misc.data.DataRegistry;
 import net.foxboi.salted.common.misc.data.Definition;
 import net.foxboi.salted.common.misc.data.DefinitionContext;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.*;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public abstract class AbstractBiome implements Definition<Biome> {
     @Override

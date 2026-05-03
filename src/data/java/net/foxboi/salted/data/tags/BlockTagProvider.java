@@ -1,21 +1,23 @@
 package net.foxboi.salted.data.tags;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
-import net.foxboi.salted.common.block.ModBlockTags;
-import net.foxboi.salted.common.block.ModBlocks;
-import net.foxboi.salted.data.ModBlockData;
+import java.util.concurrent.CompletableFuture;
+
 import net.minecraft.core.HolderLookup;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
-import java.util.concurrent.CompletableFuture;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
 
-public class BlockTagProvider extends FabricTagProvider.BlockTagProvider {
-    public BlockTagProvider(FabricDataOutput out, CompletableFuture<HolderLookup.Provider> regs) {
+import net.foxboi.salted.common.block.ModBlockTags;
+import net.foxboi.salted.common.block.ModBlocks;
+import net.foxboi.salted.data.ModBlockData;
+
+public class BlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
+    public BlockTagProvider(FabricPackOutput out, CompletableFuture<HolderLookup.Provider> regs) {
         super(out, regs);
     }
 

@@ -6,7 +6,6 @@ import java.util.function.Supplier;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.foxboi.salted.common.Smptg;
 import net.foxboi.salted.common.misc.ColorRegistry;
-import net.foxboi.salted.common.misc.LayerRegistry;
 import net.foxboi.salted.common.misc.Translator;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderSet;
@@ -236,33 +235,33 @@ public record ModBlocks() {
         Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("multiface_plant"), MultifacePlantBlock.CODEC);
 
         // Setup supported blocks
-        BlockEntityType.SHELF.addSupportedBlock(ASPEN_SHELF);
-        BlockEntityType.SHELF.addSupportedBlock(BEECH_SHELF);
-        BlockEntityType.SHELF.addSupportedBlock(MAPLE_SHELF);
-        BlockEntityType.SHELF.addSupportedBlock(REDWOOD_SHELF);
-        BlockEntityType.SHELF.addSupportedBlock(DEAD_WOOD_SHELF);
+        BlockEntityType.SHELF.addValidBlock(ASPEN_SHELF);
+        BlockEntityType.SHELF.addValidBlock(BEECH_SHELF);
+        BlockEntityType.SHELF.addValidBlock(MAPLE_SHELF);
+        BlockEntityType.SHELF.addValidBlock(REDWOOD_SHELF);
+        BlockEntityType.SHELF.addValidBlock(DEAD_WOOD_SHELF);
 
-        BlockEntityType.SIGN.addSupportedBlock(ASPEN_SIGN);
-        BlockEntityType.SIGN.addSupportedBlock(ASPEN_WALL_SIGN);
-        BlockEntityType.SIGN.addSupportedBlock(BEECH_SIGN);
-        BlockEntityType.SIGN.addSupportedBlock(BEECH_WALL_SIGN);
-        BlockEntityType.SIGN.addSupportedBlock(MAPLE_SIGN);
-        BlockEntityType.SIGN.addSupportedBlock(MAPLE_WALL_SIGN);
-        BlockEntityType.SIGN.addSupportedBlock(REDWOOD_SIGN);
-        BlockEntityType.SIGN.addSupportedBlock(REDWOOD_WALL_SIGN);
-        BlockEntityType.SIGN.addSupportedBlock(DEAD_WOOD_SIGN);
-        BlockEntityType.SIGN.addSupportedBlock(DEAD_WOOD_WALL_SIGN);
+        BlockEntityType.SIGN.addValidBlock(ASPEN_SIGN);
+        BlockEntityType.SIGN.addValidBlock(ASPEN_WALL_SIGN);
+        BlockEntityType.SIGN.addValidBlock(BEECH_SIGN);
+        BlockEntityType.SIGN.addValidBlock(BEECH_WALL_SIGN);
+        BlockEntityType.SIGN.addValidBlock(MAPLE_SIGN);
+        BlockEntityType.SIGN.addValidBlock(MAPLE_WALL_SIGN);
+        BlockEntityType.SIGN.addValidBlock(REDWOOD_SIGN);
+        BlockEntityType.SIGN.addValidBlock(REDWOOD_WALL_SIGN);
+        BlockEntityType.SIGN.addValidBlock(DEAD_WOOD_SIGN);
+        BlockEntityType.SIGN.addValidBlock(DEAD_WOOD_WALL_SIGN);
 
-        BlockEntityType.HANGING_SIGN.addSupportedBlock(ASPEN_HANGING_SIGN);
-        BlockEntityType.HANGING_SIGN.addSupportedBlock(ASPEN_WALL_HANGING_SIGN);
-        BlockEntityType.HANGING_SIGN.addSupportedBlock(BEECH_HANGING_SIGN);
-        BlockEntityType.HANGING_SIGN.addSupportedBlock(BEECH_WALL_HANGING_SIGN);
-        BlockEntityType.HANGING_SIGN.addSupportedBlock(MAPLE_HANGING_SIGN);
-        BlockEntityType.HANGING_SIGN.addSupportedBlock(MAPLE_WALL_HANGING_SIGN);
-        BlockEntityType.HANGING_SIGN.addSupportedBlock(REDWOOD_HANGING_SIGN);
-        BlockEntityType.HANGING_SIGN.addSupportedBlock(REDWOOD_WALL_HANGING_SIGN);
-        BlockEntityType.HANGING_SIGN.addSupportedBlock(DEAD_WOOD_HANGING_SIGN);
-        BlockEntityType.HANGING_SIGN.addSupportedBlock(DEAD_WOOD_WALL_HANGING_SIGN);
+        BlockEntityType.HANGING_SIGN.addValidBlock(ASPEN_HANGING_SIGN);
+        BlockEntityType.HANGING_SIGN.addValidBlock(ASPEN_WALL_HANGING_SIGN);
+        BlockEntityType.HANGING_SIGN.addValidBlock(BEECH_HANGING_SIGN);
+        BlockEntityType.HANGING_SIGN.addValidBlock(BEECH_WALL_HANGING_SIGN);
+        BlockEntityType.HANGING_SIGN.addValidBlock(MAPLE_HANGING_SIGN);
+        BlockEntityType.HANGING_SIGN.addValidBlock(MAPLE_WALL_HANGING_SIGN);
+        BlockEntityType.HANGING_SIGN.addValidBlock(REDWOOD_HANGING_SIGN);
+        BlockEntityType.HANGING_SIGN.addValidBlock(REDWOOD_WALL_HANGING_SIGN);
+        BlockEntityType.HANGING_SIGN.addValidBlock(DEAD_WOOD_HANGING_SIGN);
+        BlockEntityType.HANGING_SIGN.addValidBlock(DEAD_WOOD_WALL_HANGING_SIGN);
 
         // Setup log stripping
         StrippableBlockRegistry.register(ASPEN_LOG, STRIPPED_ASPEN_LOG);
@@ -455,60 +454,24 @@ public record ModBlocks() {
 
 
 
-    // RENDER LAYERS
-    // =============================================
-
-    public static void layers(LayerRegistry layers) {
-        layers.cutout(SALT_CRYSTAL);
-
-        layers.cutout(ASPEN_DOOR);
-        layers.cutout(BEECH_DOOR);
-        layers.cutout(MAPLE_DOOR);
-        layers.cutout(REDWOOD_DOOR);
-        layers.cutout(DEAD_WOOD_DOOR);
-
-        layers.cutout(ASPEN_TRAPDOOR);
-        layers.cutout(BEECH_TRAPDOOR);
-        layers.cutout(MAPLE_TRAPDOOR);
-        layers.cutout(REDWOOD_TRAPDOOR);
-        layers.cutout(DEAD_WOOD_TRAPDOOR);
-
-        layers.cutout(CLOVERS);
-        layers.cutout(GRASS_SPROUTS);
-        layers.cutout(BARLEY);
-        layers.cutout(TALL_BARLEY);
-        layers.cutout(CATTAIL);
-        layers.cutout(TALL_CATTAIL);
-        layers.cutout(LAVENDER);
-        layers.cutout(TALL_LAVENDER);
-        layers.cutout(CAVE_GRASS);
-        layers.cutout(DRIPMOSS);
-        layers.cutout(ASHVINE);
-        layers.cutout(ASHCREEP);
-        layers.cutout(PATCHMOSS);
-        layers.cutout(SHELF_FUNGUS);
-        layers.cutout(GLOBE_THISTLE);
-    }
-
-
     // BLOCK COLORS
     // =============================================
 
     public static void colors(ColorRegistry colors) {
-        colors.goldgreenFoliage(ASPEN_LEAVES);
-        colors.redFoliage(RED_MAPLE_LEAVES);
-        colors.goldenFoliage(ORANGE_MAPLE_LEAVES);
-        colors.yellowFoliage(YELLOW_MAPLE_LEAVES);
-        colors.solid(REDWOOD_LEAVES, 0x215931);
-        colors.foliage(BEECH_LEAVES);
-        colors.dryFoliage(DEAD_LEAVES);
+        colors.goldgreenFoliage(ASPEN_LEAVES, true);
+        colors.redFoliage(RED_MAPLE_LEAVES, true);
+        colors.goldenFoliage(ORANGE_MAPLE_LEAVES, true);
+        colors.yellowFoliage(YELLOW_MAPLE_LEAVES, true);
+        colors.solid(REDWOOD_LEAVES, 0x215931, true);
+        colors.foliage(BEECH_LEAVES, true);
+        colors.dryFoliage(DEAD_LEAVES, true);
 
-        colors.grass(CLOVERS);
-        colors.grass(GRASS_SPROUTS);
-        colors.grass(CATTAIL);
-        colors.grass(TALL_CATTAIL);
-        colors.grass(LAVENDER);
-        colors.grass(TALL_LAVENDER);
+        colors.grass(CLOVERS, true);
+        colors.grass(GRASS_SPROUTS, true);
+        colors.grass(CATTAIL, true);
+        colors.grass(TALL_CATTAIL, true);
+        colors.grass(LAVENDER, true);
+        colors.grass(TALL_LAVENDER, true);
     }
 
 

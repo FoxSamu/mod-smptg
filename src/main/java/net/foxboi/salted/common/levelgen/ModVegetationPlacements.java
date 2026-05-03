@@ -14,30 +14,13 @@ import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.placement.*;
 import net.minecraft.world.level.material.Fluids;
 
+import static net.foxboi.salted.common.levelgen.FeatureConditions.*;
 import static net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate.*;
 
 public record ModVegetationPlacements() {
     private static final DataRegistry<PlacedFeature> REGISTRY = DataRegistry.of(Registries.PLACED_FEATURE);
 
     private static final DefinedPlacement.Modifier TREE_THRESHOLD = it -> it.atMaxDepth(0);
-
-    // Bonemeal
-    // ===============================================================
-
-    public static final ResourceKey<PlacedFeature> MOSS_CARPET_BONEMEAL = REGISTRY.register(
-            "moss_carpet_bonemeal",
-            DefinedPlacement.place(ModVegetationFeatures.MOSS_CARPET_BONEMEAL)
-    );
-
-    public static final ResourceKey<PlacedFeature> BARLEY_BONEMEAL = REGISTRY.register(
-            "barley_bonemeal",
-            DefinedPlacement.place(ModVegetationFeatures.BARLEY_BONEMEAL)
-    );
-
-    public static final ResourceKey<PlacedFeature> CLOVERS_BONEMEAL = REGISTRY.register(
-            "clovers_bonemeal",
-            DefinedPlacement.place(ModVegetationFeatures.CLOVERS_BONEMEAL)
-    );
 
 
     // Trees
@@ -46,42 +29,42 @@ public record ModVegetationPlacements() {
     public static final ResourceKey<PlacedFeature> TREES_ASPEN_FOREST = REGISTRY.register(
             "trees_aspen_forest",
             DefinedPlacement
-                    .place(ModVegetationFeatures.TREE_ASPEN_FOREST)
+                    .place(ModVegetationFeatures.ASPEN_FOREST_TREE)
                     .modified(treePlacement(it -> it.countExtra(10, 0.1f, 1)))
     );
 
     public static final ResourceKey<PlacedFeature> TREES_MAPLE_FOREST = REGISTRY.register(
             "trees_maple_forest",
             DefinedPlacement
-                    .place(ModVegetationFeatures.TREE_MAPLE_FOREST)
+                    .place(ModVegetationFeatures.MAPLE_FOREST_TREE)
                     .modified(treePlacement(it -> it.countExtra(10, 0.1f, 1)))
     );
 
     public static final ResourceKey<PlacedFeature> TREES_WOODED_PLAINS = REGISTRY.register(
             "trees_wooded_plains",
             DefinedPlacement
-                    .place(ModVegetationFeatures.TREE_WOODED_PLAINS)
+                    .place(ModVegetationFeatures.WOODED_PLAINS_TREE)
                     .modified(treePlacement(it -> it.countExtra(2, 0.05f, 1)))
     );
 
     public static final ResourceKey<PlacedFeature> TREES_REDWOOD_FOREST_GIANT = REGISTRY.register(
             "trees_redwood_forest_giant",
             DefinedPlacement
-                    .place(ModVegetationFeatures.TREE_REDWOOD_FOREST_GIANT)
+                    .place(ModVegetationFeatures.GIANT_REDWOOD_FOREST_TREE)
                     .modified(treePlacement(it -> it.countExtra(1, 0.02f, 1)))
     );
 
     public static final ResourceKey<PlacedFeature> TREES_REDWOOD_FOREST_SMALL = REGISTRY.register(
             "trees_redwood_forest_small",
             DefinedPlacement
-                    .place(ModVegetationFeatures.TREE_REDWOOD_FOREST_SMALL)
+                    .place(ModVegetationFeatures.SMALL_REDWOOD_FOREST_TREE)
                     .modified(treePlacement(it -> it.countExtra(4, 0.1f, 1)))
     );
 
     public static final ResourceKey<PlacedFeature> TREES_REDWOOD_FOREST_SPARSE = REGISTRY.register(
             "trees_redwood_forest_sparse",
             DefinedPlacement
-                    .place(ModVegetationFeatures.TREE_REDWOOD_FOREST_SMALL)
+                    .place(ModVegetationFeatures.SMALL_REDWOOD_FOREST_TREE)
                     .modified(treePlacement(it -> it.countExtra(2, 0.05f, 1)))
     );
 
@@ -92,17 +75,19 @@ public record ModVegetationPlacements() {
     public static final ResourceKey<PlacedFeature> PATCH_GRASS_SPROUTS = REGISTRY.register(
             "patch_grass_sprouts",
             DefinedPlacement
-                    .place(ModVegetationFeatures.PATCH_GRASS_SPROUTS)
+                    .place(ModVegetationFeatures.GRASS_SPROUTS)
                     .count(UniformInt.of(2, 4))
                     .modified(patchPlacement())
+                    .randomPatch(inAir(DEFAULT_GROW_BLOCKS), 96)
     );
 
     public static final ResourceKey<PlacedFeature> PATCH_GRASS_SPROUTS_EXTRA_COMMON = REGISTRY.register(
             "patch_grass_sprouts_extra_common",
             DefinedPlacement
-                    .place(ModVegetationFeatures.PATCH_GRASS_SPROUTS)
+                    .place(ModVegetationFeatures.GRASS_SPROUTS)
                     .count(UniformInt.of(4, 8))
                     .modified(patchPlacement())
+                    .randomPatch(inAir(DEFAULT_GROW_BLOCKS), 96)
     );
 
 
@@ -112,17 +97,19 @@ public record ModVegetationPlacements() {
     public static final ResourceKey<PlacedFeature> PATCH_BARLEY_RARE = REGISTRY.register(
             "patch_barley_rare",
             DefinedPlacement
-                    .place(ModVegetationFeatures.PATCH_BARLEY)
+                    .place(ModVegetationFeatures.RANDOM_BARLEY)
                     .onAverageOnceEvery(14)
                     .modified(patchPlacement())
+                    .randomPatch(inAir(SANDY_GROW_BLOCKS), 96)
     );
 
     public static final ResourceKey<PlacedFeature> PATCH_BARLEY_COMMON = REGISTRY.register(
             "patch_barley_common",
             DefinedPlacement
-                    .place(ModVegetationFeatures.PATCH_BARLEY)
+                    .place(ModVegetationFeatures.RANDOM_BARLEY)
                     .onAverageOnceEvery(2)
                     .modified(patchPlacement())
+                    .randomPatch(inAir(SANDY_GROW_BLOCKS), 96)
     );
 
 
@@ -136,33 +123,37 @@ public record ModVegetationPlacements() {
     public static final ResourceKey<PlacedFeature> PATCH_CATTAIL_NEAR_WATER = REGISTRY.register(
             "patch_cattail_near_water",
             DefinedPlacement
-                    .place(ModVegetationFeatures.PATCH_CATTAIL)
+                    .place(ModVegetationFeatures.RANDOM_CATTAIL)
                     .count(UniformInt.of(1, 2))
                     .modified(patchPlacement(matchesFluids(Direction.DOWN.getUnitVec3i(), Fluids.WATER)))
+                    .randomPatch(inAir(SANDY_GROW_BLOCKS), 96)
     );
 
     public static final ResourceKey<PlacedFeature> PATCH_CATTAIL_IN_WATER = REGISTRY.register(
             "patch_cattail_in_water",
             DefinedPlacement
-                    .place(ModVegetationFeatures.PATCH_CATTAIL_IN_WATER)
+                    .place(ModVegetationFeatures.TALL_CATTAIL)
                     .count(UniformInt.of(1, 2))
                     .modified(patchPlacement())
+                    .randomPatch(inShallowWater(SANDY_GROW_BLOCKS), 96)
     );
 
     public static final ResourceKey<PlacedFeature> PATCH_CATTAIL_SWAMP = REGISTRY.register(
             "patch_cattail_swamp",
             DefinedPlacement
-                    .place(ModVegetationFeatures.PATCH_CATTAIL)
+                    .place(ModVegetationFeatures.RANDOM_CATTAIL)
                     .count(UniformInt.of(4, 7))
                     .modified(patchPlacement())
+                    .randomPatch(inAir(SANDY_GROW_BLOCKS), 96)
     );
 
     public static final ResourceKey<PlacedFeature> PATCH_CATTAIL_IN_WATER_SWAMP = REGISTRY.register(
             "patch_cattail_in_water_swamp",
             DefinedPlacement
-                    .place(ModVegetationFeatures.PATCH_CATTAIL_IN_WATER)
+                    .place(ModVegetationFeatures.TALL_CATTAIL)
                     .count(UniformInt.of(4, 7))
                     .modified(patchPlacement())
+                    .randomPatch(inShallowWater(SANDY_GROW_BLOCKS), 96)
     );
 
 
@@ -172,25 +163,28 @@ public record ModVegetationPlacements() {
     public static final ResourceKey<PlacedFeature> PATCH_CLOVERS_RARE = REGISTRY.register(
             "patch_clovers_rare",
             DefinedPlacement
-                    .place(ModVegetationFeatures.PATCH_CLOVERS)
+                    .place(ModVegetationFeatures.CLOVERS)
                     .onAverageOnceEvery(2)
                     .modified(patchPlacement())
+                    .randomPatch(inAir(DEFAULT_GROW_BLOCKS), 64)
     );
 
     public static final ResourceKey<PlacedFeature> PATCH_CLOVERS = REGISTRY.register(
             "patch_clovers",
             DefinedPlacement
-                    .place(ModVegetationFeatures.PATCH_CLOVERS)
+                    .place(ModVegetationFeatures.CLOVERS)
                     .count(2)
                     .modified(patchPlacement())
+                    .randomPatch(inAir(DEFAULT_GROW_BLOCKS), 64)
     );
 
     public static final ResourceKey<PlacedFeature> PATCH_CLOVERS_DENSE = REGISTRY.register(
             "patch_clovers",
             DefinedPlacement
-                    .place(ModVegetationFeatures.PATCH_CLOVERS_DENSE)
+                    .place(ModVegetationFeatures.DENSE_CLOVERS)
                     .count(UniformInt.of(2, 6))
                     .modified(patchPlacement())
+                    .randomPatch(inAir(DEFAULT_GROW_BLOCKS), 96)
     );
 
 
@@ -200,17 +194,19 @@ public record ModVegetationPlacements() {
     public static final ResourceKey<PlacedFeature> PATCH_FIREFLY_BUSH_COMMON = REGISTRY.register(
             "patch_firefly_bushes_common",
             DefinedPlacement
-                    .place(VegetationFeatures.PATCH_FIREFLY_BUSH)
-                    .count(ConstantInt.of(4))
+                    .place(ModVegetationFeatures.FIREFLY_BUSH)
+                    .count(ConstantInt.of(3))
                     .modified(patchPlacement())
+                    .randomPatch(inAir(DEFAULT_GROW_BLOCKS), 96)
     );
 
     public static final ResourceKey<PlacedFeature> PATCH_MOSS_CARPET_AROUND_MOSS = REGISTRY.register(
             "patch_moss_carpet_around_moss",
             DefinedPlacement
-                    .place(ModVegetationFeatures.PATCH_MOSS_CARPET)
+                    .place(ModVegetationFeatures.MOSS_CARPET)
                     .count(ConstantInt.of(4))
                     .modified(patchPlacement(matchesBlocks(Direction.DOWN.getUnitVec3i(), FeatureConditions.MOSS_GROW_BLOCKS)))
+                    .randomPatch(inAir(DEFAULT_GROW_BLOCKS), 96, 5)
     );
 
 
@@ -220,8 +216,8 @@ public record ModVegetationPlacements() {
     public static final ResourceKey<PlacedFeature> VEGETATION_BARLEY_FIELD = REGISTRY.register(
             "vegetation_barley_field",
             DefinedPlacement
-                    .place(ModVegetationFeatures.PLANT_BARLEY_FIELD)
-                    .fill(0.75f)
+                    .place(ModVegetationFeatures.BARLEY_FIELD_PLANT)
+                    .fillChunk(0.75f)
                     .onOceanFloorWg()
                     .onlyIf(allOf(ONLY_IN_AIR_PREDICATE, matchesBlocks(Direction.DOWN.getUnitVec3i(), FeatureConditions.SANDY_GROW_BLOCKS)))
                     .inBiome()
@@ -237,7 +233,7 @@ public record ModVegetationPlacements() {
 
     private static DefinedPlacement.Modifier patchPlacement(BlockPredicate predicate) {
         return it -> it
-                .spread()
+                .spreadInChunk()
                 .onOceanFloorWg()
                 .onlyIf(predicate)
                 .inBiome();
@@ -245,7 +241,7 @@ public record ModVegetationPlacements() {
 
     private static DefinedPlacement.Modifier patchPlacement() {
         return it -> it
-                .spread()
+                .spreadInChunk()
                 .onOceanFloorWg()
                 .inBiome();
     }
@@ -253,7 +249,7 @@ public record ModVegetationPlacements() {
     private static DefinedPlacement.Modifier treePlacement(DefinedPlacement.Modifier amount) {
         return it -> it
                 .modified(amount)
-                .spread()
+                .spreadInChunk()
                 .modified(TREE_THRESHOLD)
                 .onOceanFloor()
                 .inBiome();

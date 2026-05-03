@@ -5,21 +5,22 @@ import java.io.UncheckedIOException;
 import java.nio.file.Path;
 import java.util.concurrent.CompletableFuture;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.foxboi.salted.common.Smptg;
-import net.foxboi.salted.common.block.ModBlocks;
-import net.foxboi.salted.data.ModBlockData;
-import net.minecraft.util.Util;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
+import net.minecraft.util.Util;
+
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+
+import net.foxboi.salted.common.Smptg;
+import net.foxboi.salted.data.ModBlockData;
 
 public class ShaderCompatGenerator implements DataProvider {
     private static final String INPUT_DIR = System.getProperty("smptg.shadercompat.input");
 
-    private final FabricDataOutput output;
+    private final FabricPackOutput output;
     private final Path outPath;
 
-    public ShaderCompatGenerator(FabricDataOutput output) {
+    public ShaderCompatGenerator(FabricPackOutput output) {
         this.output = output;
         this.outPath = output.getOutputFolder().resolve("shadercompat");
     }

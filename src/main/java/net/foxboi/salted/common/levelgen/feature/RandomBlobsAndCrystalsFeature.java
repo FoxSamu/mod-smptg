@@ -58,7 +58,7 @@ public class RandomBlobsAndCrystalsFeature extends Feature<RandomBlobsAndCrystal
 
         var blob = config.blob().orElse(null);
         if (blob != null && config.blobPredicate().test(level, pos)) {
-            return level.setBlock(pos, blob.getState(rng, pos), Block.UPDATE_ALL_IMMEDIATE);
+            return level.setBlock(pos, blob.getState(level, rng, pos), Block.UPDATE_ALL_IMMEDIATE);
         }
 
         return tryPlaceSaltCrystal(level, pos, replace, rng, config);
@@ -78,7 +78,7 @@ public class RandomBlobsAndCrystalsFeature extends Feature<RandomBlobsAndCrystal
             var fluid = level.getFluidState(pos);
             var waterlogged = fluid.isSourceOfType(Fluids.WATER);
 
-            var state = crystal.getState(rng, pos)
+            var state = crystal.getState(level, rng, pos)
                     .trySetValue(SaltCrystalBlock.WATERLOGGED, waterlogged);
 
             if (config.tryRotateCrystals() && state.hasProperty(SaltCrystalBlock.FACING)) {

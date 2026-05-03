@@ -5,9 +5,11 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.foxboi.salted.common.block.DiagonallyAttachableBlock;
 import net.foxboi.salted.common.misc.DiagonalDirection;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.IntProviders;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
@@ -16,8 +18,8 @@ import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorTy
 public class AddShelfFungusDecorator extends TreeDecorator {
     public static final MapCodec<AddShelfFungusDecorator> CODEC = RecordCodecBuilder.mapCodec(
             inst -> inst.group(
-                    IntProvider.codec(0, Integer.MAX_VALUE).fieldOf("min_y").forGetter(it -> it.yOffset),
-                    IntProvider.codec(1, Integer.MAX_VALUE).fieldOf("max_y").forGetter(it -> it.layers),
+                    IntProviders.codec(0, Integer.MAX_VALUE).fieldOf("min_y").forGetter(it -> it.yOffset),
+                    IntProviders.codec(1, Integer.MAX_VALUE).fieldOf("max_y").forGetter(it -> it.layers),
                     Codec.floatRange(0f, 1f).fieldOf("probability").forGetter(it -> it.probability),
                     BlockStateProvider.CODEC.fieldOf("fungus").forGetter(it -> it.fungus)
             ).apply(inst, AddShelfFungusDecorator::new)
@@ -60,6 +62,7 @@ public class AddShelfFungusDecorator extends TreeDecorator {
     @Override
     public void place(Context context) {
         var rng = context.random();
+        var level = context.level();
 
         // Find lowest log value, this is the lowest layer we place fungi at
         var lowestLogY = Integer.MAX_VALUE;
@@ -100,7 +103,7 @@ public class AddShelfFungusDecorator extends TreeDecorator {
                 mpos.setWithOffset(pos, dir.getStepX(), 0, dir.getStepZ());
 
                 if (rng.nextFloat() < probability && context.checkBlock(mpos, BlockState::canBeReplaced)) {
-                    context.setBlock(mpos, fungus.getState(rng, mpos).trySetValue(DiagonallyAttachableBlock.FACING, dir));
+                    context.setBlock(mpos, fungus.getState(level, rng, mpos).trySetValue(DiagonallyAttachableBlock.FACING, dir));
                 }
             }
         }

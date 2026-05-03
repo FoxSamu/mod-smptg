@@ -21,7 +21,7 @@ public class SaltItem extends Item {
 
         if (state.is(Blocks.SNOW) || state.is(Blocks.ICE)) {
             if (!level.isClientSide()) {
-                Misc.meltFromSalt(level, pos, level.random);
+                Misc.meltFromSalt(level, pos, level.getRandom());
 
                 // TODO Use custom sound event for proper subtitles
                 level.playSound(null, context.getClickedPos(), SoundEvents.BONE_MEAL_USE, SoundSource.BLOCKS, 1, 1);

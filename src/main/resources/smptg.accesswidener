@@ -1,4 +1,4 @@
-accessWidener v2 named
+accessWidener v2 official
 
 accessible class net/minecraft/advancements/criterion/StatePropertiesPredicate$PropertyMatcher
 accessible class net/minecraft/advancements/criterion/StatePropertiesPredicate$ExactMatcher
@@ -31,7 +31,7 @@ accessible field net/minecraft/world/level/levelgen/NoiseSettings FLOATING_ISLAN
 accessible method net/minecraft/world/level/levelgen/NoiseRouterData end (Lnet/minecraft/core/HolderGetter;)Lnet/minecraft/world/level/levelgen/NoiseRouter;
 accessible method net/minecraft/world/level/levelgen/NoiseRouterData nether (Lnet/minecraft/core/HolderGetter;Lnet/minecraft/core/HolderGetter;)Lnet/minecraft/world/level/levelgen/NoiseRouter;
 accessible method net/minecraft/world/level/levelgen/NoiseRouterData overworld (Lnet/minecraft/core/HolderGetter;Lnet/minecraft/core/HolderGetter;ZZ)Lnet/minecraft/world/level/levelgen/NoiseRouter;
-accessible method net/minecraft/world/level/levelgen/NoiseRouterData caves (Lnet/minecraft/core/HolderGetter;Lnet/minecraft/core/HolderGetter;)Lnet/minecraft/world/level/levelgen/NoiseRouter;
+accessible method net/minecraft/world/level/levelgen/NoiseRouterData caves (Lnet/minecraft/core/HolderGetter;)Lnet/minecraft/world/level/levelgen/NoiseRouter;
 accessible method net/minecraft/world/level/levelgen/NoiseRouterData floatingIslands (Lnet/minecraft/core/HolderGetter;Lnet/minecraft/core/HolderGetter;)Lnet/minecraft/world/level/levelgen/NoiseRouter;
 
 # MultifaceBlock requires the WATERLOGGED property due to this private method - we want a subclass that does not have

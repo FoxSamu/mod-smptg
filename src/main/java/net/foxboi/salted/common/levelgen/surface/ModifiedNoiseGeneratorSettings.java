@@ -83,7 +83,7 @@ public class ModifiedNoiseGeneratorSettings {
                 NoiseSettings.CAVES_NOISE_SETTINGS,
                 Blocks.STONE.defaultBlockState(),
                 Blocks.WATER.defaultBlockState(),
-                NoiseRouterData.caves(ctx.getLookup(Registries.DENSITY_FUNCTION), ctx.getLookup(Registries.NOISE)),
+                NoiseRouterData.caves(ctx.getLookup(Registries.DENSITY_FUNCTION)),
                 ModifiedSurfaceRuleData.overworldLike(getOverrides(ctx, BiomeSurfaceOverrides.OVERWORLD), false, true, true),
                 List.of(),
                 32,

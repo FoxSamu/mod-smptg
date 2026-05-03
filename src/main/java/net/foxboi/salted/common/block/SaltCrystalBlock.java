@@ -227,11 +227,11 @@ public class SaltCrystalBlock extends Block implements SimpleWaterloggedBlock {
 
         var chance = (1 - Math.pow(0.97, speed)) * MAX_GROW_PROBABILITY;
 
-        if (level.random.nextDouble() >= chance) {
+        if (level.getRandom().nextDouble() >= chance) {
             return;
         }
 
-        for (var dir : Direction.allShuffled(level.random)) {
+        for (var dir : Direction.allShuffled(level.getRandom())) {
             mpos.set(pos).move(dir, -1);
             var nearby = level.getBlockState(mpos);
 

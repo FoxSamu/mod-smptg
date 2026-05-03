@@ -11,6 +11,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.IntProviders;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.MultifaceBlock;
@@ -22,8 +23,8 @@ import net.minecraft.world.level.levelgen.synth.NormalNoise;
 public class NoiseBasedMultifaceDecorator extends TreeDecorator {
     public static final MapCodec<NoiseBasedMultifaceDecorator> CODEC = RecordCodecBuilder.mapCodec(
             inst -> inst.group(
-                    IntProvider.codec(0, Integer.MAX_VALUE).fieldOf("min_y").forGetter(it -> it.yOffset),
-                    IntProvider.codec(1, Integer.MAX_VALUE).fieldOf("max_y").forGetter(it -> it.layers),
+                    IntProviders.codec(0, Integer.MAX_VALUE).fieldOf("min_y").forGetter(it -> it.yOffset),
+                    IntProviders.codec(1, Integer.MAX_VALUE).fieldOf("max_y").forGetter(it -> it.layers),
                     Codec.floatRange(-1f, 1f).fieldOf("low_probability").forGetter(it -> it.lowProbability),
                     Codec.floatRange(-1f, 1f).fieldOf("high_probability").forGetter(it -> it.highProbability),
                     Codec.DOUBLE.optionalFieldOf("noise_field_scale", 1d).forGetter(it -> it.noiseFieldScale),
@@ -99,9 +100,7 @@ public class NoiseBasedMultifaceDecorator extends TreeDecorator {
 
     @Override
     public void place(Context context) {
-        if (!(context.level() instanceof LevelAccessor level)) {
-            return;
-        }
+        var level = context.level();
 
         var rng = context.random();
 
@@ -147,9 +146,9 @@ public class NoiseBasedMultifaceDecorator extends TreeDecorator {
                 continue;
             }
 
-            var cacheKey = ChunkPos.asLong(pos.getX(), pos.getZ());
-            var xn = xCache.computeIfAbsent(cacheKey, it -> xNoise.getValue(pos.getX() * noiseFieldScale, 0, pos.getZ() * noiseFieldScale) * noiseValueScale);
-            var zn = zCache.computeIfAbsent(cacheKey, it -> zNoise.getValue(pos.getX() * noiseFieldScale, 0, pos.getZ() * noiseFieldScale) * noiseValueScale);
+            var cacheKey = ChunkPos.pack(pos.getX(), pos.getZ());
+            var xn = xCache.computeIfAbsent(cacheKey, _ -> xNoise.getValue(pos.getX() * noiseFieldScale, 0, pos.getZ() * noiseFieldScale) * noiseValueScale);
+            var zn = zCache.computeIfAbsent(cacheKey, _ -> zNoise.getValue(pos.getX() * noiseFieldScale, 0, pos.getZ() * noiseFieldScale) * noiseValueScale);
 
             // Try add moss in any of the 4 directions
             for (var dir : dirs) {
@@ -164,7 +163,7 @@ public class NoiseBasedMultifaceDecorator extends TreeDecorator {
                 mpos.setWithOffset(pos, dir);
 
                 if (rng.nextFloat() < probability && context.isAir(mpos)) {
-                    var moss = this.moss.getState(rng, mpos);
+                    var moss = this.moss.getState(level, rng, mpos);
                     var face = dir.getOpposite();
 
                     if (moss.getBlock() instanceof AbstractMultifaceBlock amfb) {

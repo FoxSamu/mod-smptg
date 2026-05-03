@@ -10,7 +10,9 @@ import net.foxboi.salted.common.misc.data.DefinitionContext;
 import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
@@ -74,11 +76,11 @@ public class DefinedPlacement implements Definition<PlacedFeature> {
         return modified(PlacementUtils.countExtra(n, extraChance, extra));
     }
 
-    public DefinedPlacement spread() {
+    public DefinedPlacement spreadInChunk() {
         return modified(InSquarePlacement.spread());
     }
 
-    public DefinedPlacement fill(float probability) {
+    public DefinedPlacement fillChunk(float probability) {
         return modified(RepeatInSquarePlacement.fill(probability));
     }
 
@@ -132,6 +134,28 @@ public class DefinedPlacement implements Definition<PlacedFeature> {
 
     public DefinedPlacement atMaxDepth(int depth) {
         return modified(SurfaceWaterDepthFilter.forMaxDepth(depth));
+    }
+
+    public DefinedPlacement spreadRandomly(IntProvider xz, IntProvider y) {
+        return modified(RandomOffsetPlacement.of(xz, y));
+    }
+
+    public DefinedPlacement spreadRandomly(int xz, int y) {
+        return modified(RandomOffsetPlacement.of(UniformInt.of(-xz, xz), UniformInt.of(-y, y)));
+    }
+
+    public DefinedPlacement randomPatch(BlockPredicate predicate, int attempts, int xzSpread, int ySpread) {
+        return count(attempts)
+                .spreadRandomly(xzSpread, ySpread)
+                .onlyIf(predicate);
+    }
+
+    public DefinedPlacement randomPatch(BlockPredicate predicate, int attempts, int xzSpread) {
+        return randomPatch(predicate, attempts, xzSpread, 3);
+    }
+
+    public DefinedPlacement randomPatch(BlockPredicate predicate, int attempts) {
+        return randomPatch(predicate, attempts, 7, 3);
     }
 
     @Override

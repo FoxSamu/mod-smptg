@@ -1,13 +1,13 @@
 package net.foxboi.salted.mixin.common;
 
-import net.foxboi.salted.common.misc.BonemealSpreadingLogic;
-import net.foxboi.salted.common.misc.Misc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.GrassBlock;
 import net.minecraft.world.level.block.state.BlockState;
+
+import net.foxboi.salted.common.misc.BonemealSpreadingLogic;
+import net.foxboi.salted.common.misc.Misc;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -29,9 +29,9 @@ public class GrassBlockMixin {
 
     @Redirect(
             method = "performBonemeal",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;is(Lnet/minecraft/world/level/block/Block;)Z", ordinal = 0)
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;is(Ljava/lang/Object;)Z", ordinal = 0)
     )
-    private boolean checkIsGrassBlock(BlockState instance, Block block) {
+    private boolean checkIsGrassBlock(BlockState instance, Object block) {
         return BonemealSpreadingLogic.GRASS_VALID_BLOCKS.contains(instance.getBlock());
     }
 }

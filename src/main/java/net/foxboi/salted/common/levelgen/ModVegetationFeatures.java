@@ -17,21 +17,27 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.WeightedPlacedFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.RandomFeatureConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 
-import static net.foxboi.salted.common.levelgen.FeatureConditions.*;
-
 public record ModVegetationFeatures() {
     private static final DataRegistry<ConfiguredFeature<?, ?>> REGISTRY = DataRegistry.of(Registries.CONFIGURED_FEATURE);
 
-    public static final ResourceKey<ConfiguredFeature<?, ?>> MOSS_CARPET_BONEMEAL = REGISTRY.register("moss_carpet_bonemeal", block(FeatureBlocks.MOSS_CARPET));
-    public static final ResourceKey<ConfiguredFeature<?, ?>> BARLEY_BONEMEAL = REGISTRY.register("barley_bonemeal", block(FeatureBlocks.BARLEY));
-    public static final ResourceKey<ConfiguredFeature<?, ?>> CLOVERS_BONEMEAL = REGISTRY.register("clovers_bonemeal", block(FeatureBlocks.CLOVERS_1_3));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> GRASS_SPROUTS = REGISTRY.register("grass_sprouts", block(FeatureBlocks.GRASS_SPROUTS));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> RANDOM_BARLEY = REGISTRY.register("random_barley", block(FeatureBlocks.RANDOM_BARLEY));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SMALL_BARLEY = REGISTRY.register("small_barley", block(FeatureBlocks.BARLEY));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> RANDOM_LAVENDER = REGISTRY.register("random_lavender", block(FeatureBlocks.RANDOM_LAVENDER));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SMALL_LAVENDER = REGISTRY.register("small_lavender", block(FeatureBlocks.LAVENDER));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> GLOBE_THISTLE = REGISTRY.register("globe_thistle", block(FeatureBlocks.GLOBE_THISTLE));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> RANDOM_CATTAIL = REGISTRY.register("random_cattail", block(FeatureBlocks.RANDOM_CATTAIL));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> TALL_CATTAIL = REGISTRY.register("tall_cattail", block(FeatureBlocks.TALL_CATTAIL));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CLOVERS = REGISTRY.register("clovers", block(FeatureBlocks.CLOVERS_1_3));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> DENSE_CLOVERS = REGISTRY.register("dense_clovers", block(FeatureBlocks.CLOVERS_1_4));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MOSS_CARPET = REGISTRY.register("moss_carpet", block(FeatureBlocks.MOSS_CARPET));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> FIREFLY_BUSH = REGISTRY.register("firefly_bush", block(FeatureBlocks.FIREFLY_BUSH));
 
-    public static final ResourceKey<ConfiguredFeature<?, ?>> TREE_ASPEN_FOREST = REGISTRY.register("tree_aspen_forest", DefinedFeature.of(
+    public static final ResourceKey<ConfiguredFeature<?, ?>> ASPEN_FOREST_TREE = REGISTRY.register("aspen_forest_tree", DefinedFeature.of(
             Feature.RANDOM_SELECTOR,
             Registries.PLACED_FEATURE,
             features -> new RandomFeatureConfiguration(
@@ -44,7 +50,7 @@ public record ModVegetationFeatures() {
             )
     ));
 
-    public static final ResourceKey<ConfiguredFeature<?, ?>> TREE_MAPLE_FOREST = REGISTRY.register("tree_maple_forest", DefinedFeature.of(
+    public static final ResourceKey<ConfiguredFeature<?, ?>> MAPLE_FOREST_TREE = REGISTRY.register("maple_forest_tree", DefinedFeature.of(
             Feature.RANDOM_SELECTOR,
             Registries.PLACED_FEATURE,
             features -> new RandomFeatureConfiguration(
@@ -62,7 +68,7 @@ public record ModVegetationFeatures() {
             )
     ));
 
-    public static final ResourceKey<ConfiguredFeature<?, ?>> TREE_WOODED_PLAINS = REGISTRY.register("tree_wooded_plains", DefinedFeature.of(
+    public static final ResourceKey<ConfiguredFeature<?, ?>> WOODED_PLAINS_TREE = REGISTRY.register("wooded_plains_tree", DefinedFeature.of(
             Feature.RANDOM_SELECTOR,
             Registries.PLACED_FEATURE,
             features -> new RandomFeatureConfiguration(
@@ -75,7 +81,7 @@ public record ModVegetationFeatures() {
             )
     ));
 
-    public static final ResourceKey<ConfiguredFeature<?, ?>> TREE_REDWOOD_FOREST_GIANT = REGISTRY.register("tree_redwood_forest_giant", DefinedFeature.of(
+    public static final ResourceKey<ConfiguredFeature<?, ?>> GIANT_REDWOOD_FOREST_TREE = REGISTRY.register("giant_redwood_forest_tree", DefinedFeature.of(
             Feature.RANDOM_SELECTOR,
             Registries.PLACED_FEATURE,
             features -> new RandomFeatureConfiguration(
@@ -87,7 +93,7 @@ public record ModVegetationFeatures() {
             )
     ));
 
-    public static final ResourceKey<ConfiguredFeature<?, ?>> TREE_REDWOOD_FOREST_SMALL = REGISTRY.register("tree_redwood_forest_small", DefinedFeature.of(
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SMALL_REDWOOD_FOREST_TREE = REGISTRY.register("small_redwood_forest_tree", DefinedFeature.of(
             Feature.RANDOM_SELECTOR,
             Registries.PLACED_FEATURE,
             features -> new RandomFeatureConfiguration(
@@ -98,69 +104,7 @@ public record ModVegetationFeatures() {
             )
     ));
 
-    public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_GRASS_SPROUTS = REGISTRY.register("patch_grass_sprouts", patch(
-            FeatureBlocks.GRASS_SPROUTS,
-            inAir(DEFAULT_GROW_BLOCKS),
-            96
-    ));
-
-    public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_BARLEY = REGISTRY.register("patch_barley", patch(
-            FeatureBlocks.either(FeatureBlocks.BARLEY, FeatureBlocks.TALL_BARLEY, 0.25),
-            inAir(SANDY_GROW_BLOCKS),
-            96
-    ));
-
-    public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_LAVENDER = REGISTRY.register("patch_lavender", flower(
-            FeatureBlocks.either(FeatureBlocks.LAVENDER, FeatureBlocks.TALL_LAVENDER, 0.25),
-            inAir(SANDY_GROW_BLOCKS),
-            96
-    ));
-
-    public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_LAVENDER_SMALL_ONLY = REGISTRY.register("patch_lavender_small_only", flower(
-            FeatureBlocks.LAVENDER,
-            inAir(SANDY_GROW_BLOCKS),
-            96
-    ));
-
-    public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_GLOBE_THISTLE = REGISTRY.register("patch_globe_thistle", flower(
-            FeatureBlocks.GLOBE_THISTLE,
-            inAir(SANDY_GROW_BLOCKS),
-            96
-    ));
-
-    public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_CATTAIL = REGISTRY.register("patch_cattail", patch(
-            FeatureBlocks.either(FeatureBlocks.CATTAIL, FeatureBlocks.TALL_CATTAIL, 0.75),
-            inAir(SANDY_GROW_BLOCKS),
-            96
-    ));
-
-    public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_CATTAIL_IN_WATER = REGISTRY.register("patch_cattail_in_water", patch(
-            FeatureBlocks.TALL_CATTAIL,
-            inShallowWater(SANDY_GROW_BLOCKS),
-            96
-    ));
-
-    public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_CLOVERS = REGISTRY.register("patch_clovers", patch(
-            FeatureBlocks.CLOVERS_1_3,
-            inAir(DEFAULT_GROW_BLOCKS),
-            64
-    ));
-
-    public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_CLOVERS_DENSE = REGISTRY.register("patch_clovers_dense", patch(
-            FeatureBlocks.CLOVERS_1_4,
-            inAir(DEFAULT_GROW_BLOCKS),
-            96
-    ));
-
-    public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_MOSS_CARPET = REGISTRY.register("patch_moss_carpet", patch(
-            FeatureBlocks.MOSS_CARPET,
-            inAir(DEFAULT_GROW_BLOCKS),
-            96,
-            5,
-            false
-    ));
-
-    public static final ResourceKey<ConfiguredFeature<?, ?>> PLANT_BARLEY_FIELD = REGISTRY.register("plant_barley_field", block(
+    public static final ResourceKey<ConfiguredFeature<?, ?>> BARLEY_FIELD_PLANT = REGISTRY.register("barley_field_plant", block(
             new WeightedStateProvider(
                     weightedList()
                             .add(ModBlocks.BARLEY.defaultBlockState(), 1200)
@@ -176,31 +120,6 @@ public record ModVegetationFeatures() {
 
     private static WeightedList.Builder<BlockState> weightedList() {
         return new WeightedList.Builder<>();
-    }
-
-    private static DefinedFeature<?> flower(BlockStateProvider block, BlockPredicate predicate, int attempts) {
-        return patch(block, predicate, attempts, 7, true);
-    }
-
-    private static DefinedFeature<?> patch(BlockStateProvider block, BlockPredicate predicate, int attempts) {
-        return patch(block, predicate, attempts, 7, false);
-    }
-
-
-    private static DefinedFeature<?> patch(BlockStateProvider block, BlockPredicate predicate, int attempts, int spread, boolean flower) {
-        return DefinedFeature.of(
-                flower ? Feature.FLOWER : Feature.RANDOM_PATCH,
-                () -> new RandomPatchConfiguration(
-                        attempts,
-                        spread,
-                        3,
-                        PlacementUtils.filtered(
-                                Feature.SIMPLE_BLOCK,
-                                new SimpleBlockConfiguration(block),
-                                predicate
-                        )
-                )
-        );
     }
 
 

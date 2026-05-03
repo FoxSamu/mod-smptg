@@ -3,7 +3,8 @@ package net.foxboi.salted.client.entity;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry;
+
 import net.foxboi.salted.common.Smptg;
 import net.minecraft.client.model.object.boat.BoatModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -27,17 +28,17 @@ public class ModModelLayers {
     public static final ModelLayerLocation DEAD_WOOD_CHEST_BOAT = register("chest_boat/dead_wood");
 
     public static void init() {
-        EntityModelLayerRegistry.registerModelLayer(ASPEN_BOAT, BoatModel::createBoatModel);
-        EntityModelLayerRegistry.registerModelLayer(BEECH_BOAT, BoatModel::createBoatModel);
-        EntityModelLayerRegistry.registerModelLayer(MAPLE_BOAT, BoatModel::createBoatModel);
-        EntityModelLayerRegistry.registerModelLayer(REDWOOD_BOAT, BoatModel::createBoatModel);
-        EntityModelLayerRegistry.registerModelLayer(DEAD_WOOD_BOAT, BoatModel::createBoatModel);
+        ModelLayerRegistry.registerModelLayer(ASPEN_BOAT, BoatModel::createBoatModel);
+        ModelLayerRegistry.registerModelLayer(BEECH_BOAT, BoatModel::createBoatModel);
+        ModelLayerRegistry.registerModelLayer(MAPLE_BOAT, BoatModel::createBoatModel);
+        ModelLayerRegistry.registerModelLayer(REDWOOD_BOAT, BoatModel::createBoatModel);
+        ModelLayerRegistry.registerModelLayer(DEAD_WOOD_BOAT, BoatModel::createBoatModel);
 
-        EntityModelLayerRegistry.registerModelLayer(ASPEN_CHEST_BOAT, BoatModel::createChestBoatModel);
-        EntityModelLayerRegistry.registerModelLayer(BEECH_CHEST_BOAT, BoatModel::createChestBoatModel);
-        EntityModelLayerRegistry.registerModelLayer(MAPLE_CHEST_BOAT, BoatModel::createChestBoatModel);
-        EntityModelLayerRegistry.registerModelLayer(REDWOOD_CHEST_BOAT, BoatModel::createChestBoatModel);
-        EntityModelLayerRegistry.registerModelLayer(DEAD_WOOD_CHEST_BOAT, BoatModel::createChestBoatModel);
+        ModelLayerRegistry.registerModelLayer(ASPEN_CHEST_BOAT, BoatModel::createChestBoatModel);
+        ModelLayerRegistry.registerModelLayer(BEECH_CHEST_BOAT, BoatModel::createChestBoatModel);
+        ModelLayerRegistry.registerModelLayer(MAPLE_CHEST_BOAT, BoatModel::createChestBoatModel);
+        ModelLayerRegistry.registerModelLayer(REDWOOD_CHEST_BOAT, BoatModel::createChestBoatModel);
+        ModelLayerRegistry.registerModelLayer(DEAD_WOOD_CHEST_BOAT, BoatModel::createChestBoatModel);
     }
 
     private static ModelLayerLocation register(String name) {

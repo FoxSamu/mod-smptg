@@ -11,7 +11,9 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.IntProviders;
 import net.minecraft.world.level.LevelSimulatedReader;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
@@ -24,8 +26,8 @@ public abstract class AbstractRedwoodTrunkPlacer extends TrunkPlacer {
                 Codec.intRange(0, 64).fieldOf("base_height").forGetter(it -> it.baseHeight), // Minecraft allows up to 32 here, but redwood trees are huge so let's allow some more
                 Codec.intRange(0, 24).fieldOf("height_rand_a").forGetter(it -> it.heightRandA),
                 Codec.intRange(0, 24).fieldOf("height_rand_b").forGetter(it -> it.heightRandB),
-                IntProvider.codec(0, 20).fieldOf("depth").forGetter(it -> it.depth),
-                IntProvider.codec(0, 5).fieldOf("dirt_layers").forGetter(it -> it.dirtLayers)
+                IntProviders.codec(0, 20).fieldOf("depth").forGetter(it -> it.depth),
+                IntProviders.codec(0, 5).fieldOf("dirt_layers").forGetter(it -> it.dirtLayers)
         );
     }
 
@@ -44,14 +46,14 @@ public abstract class AbstractRedwoodTrunkPlacer extends TrunkPlacer {
     protected abstract int getRandomnessMax(int index);
 
     @Override
-    public List<FoliagePlacer.FoliageAttachment> placeTrunk(LevelSimulatedReader level, BiConsumer<BlockPos, BlockState> trunkSetter, RandomSource rng, int height, BlockPos origin, TreeConfiguration config) {
+    public List<FoliagePlacer.FoliageAttachment> placeTrunk(WorldGenLevel level, BiConsumer<BlockPos, BlockState> trunkSetter, RandomSource rng, int height, BlockPos origin, TreeConfiguration config) {
         var dirtLayers = this.dirtLayers.sample(rng);
         var depth = this.depth.sample(rng) + dirtLayers;
 
         var mpos = origin.mutable();
 
         var log = config.trunkProvider;
-        var dirt = config.dirtProvider;
+        var dirt = config.belowTrunkProvider;
 
         var radius = baseRadius();
         var diameter = radius * 2;
@@ -83,12 +85,12 @@ public abstract class AbstractRedwoodTrunkPlacer extends TrunkPlacer {
         );
     }
 
-    private void generateColumn(LevelSimulatedReader level, BiConsumer<BlockPos, BlockState> trunkSetter, RandomSource rng, BlockStateProvider log, BlockStateProvider dirt, int dirtLayers, int x, int z, int height, int depth, BlockPos origin, BlockPos.MutableBlockPos mpos) {
+    private void generateColumn(WorldGenLevel level, BiConsumer<BlockPos, BlockState> trunkSetter, RandomSource rng, BlockStateProvider log, BlockStateProvider dirt, int dirtLayers, int x, int z, int height, int depth, BlockPos origin, BlockPos.MutableBlockPos mpos) {
         for (var y = -depth; y < height; y++) {
             mpos.setWithOffset(origin, x, y, z);
 
             var isDirt = y + depth < dirtLayers;
-            var state = (isDirt ? dirt : log).getState(rng, mpos);
+            var state = (isDirt ? dirt : log).getState(level, rng, mpos);
             if (isDirt ? checkCanPlaceDirt(level, mpos) : checkCanPlaceLog(level, mpos)) {
                 trunkSetter.accept(mpos, state);
             }
@@ -96,16 +98,16 @@ public abstract class AbstractRedwoodTrunkPlacer extends TrunkPlacer {
     }
 
     @Override
-    public boolean isFree(LevelSimulatedReader level, BlockPos pos) {
+    public boolean isFree(WorldGenLevel level, BlockPos pos) {
         return checkCanPlaceLog(level, pos);
     }
 
-    public static boolean checkCanPlaceLog(LevelSimulatedReader level, BlockPos pos) {
+    public static boolean checkCanPlaceLog(WorldGenLevel level, BlockPos pos) {
         // These trees just root through sand and stone
         return level.isStateAtPosition(pos, it -> it.isAir() || it.is(BlockTags.REPLACEABLE_BY_TREES) || it.is(BlockTags.DIRT) || it.is(BlockTags.SAND) || it.is(BlockTags.BASE_STONE_OVERWORLD));
     }
 
-    public static boolean checkCanPlaceDirt(LevelSimulatedReader level, BlockPos pos) {
+    public static boolean checkCanPlaceDirt(WorldGenLevel level, BlockPos pos) {
         return level.isStateAtPosition(pos, it -> it.isAir() || it.is(BlockTags.REPLACEABLE_BY_TREES) || it.is(BlockTags.DIRT));
     }
 }

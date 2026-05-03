@@ -50,19 +50,19 @@ public class BiomeModifier implements BiomeEditor {
 
     @Override
     public BiomeEditor grassColor(OptionalInt color) {
-        context.getEffects().setGrassColor(color);
+        context.getEffects().setGrassColorOverride(color);
         return this;
     }
 
     @Override
     public BiomeEditor foliageColor(OptionalInt color) {
-        context.getEffects().setFoliageColor(color);
+        context.getEffects().setFoliageColorOverride(color);
         return this;
     }
 
     @Override
     public BiomeEditor dryFoliageColor(OptionalInt color) {
-        context.getEffects().setDryFoliageColor(color);
+        context.getEffects().setDryFoliageColorOverride(color);
         return this;
     }
 
@@ -184,31 +184,31 @@ public class BiomeModifier implements BiomeEditor {
 
     @Override
     public BiomeEditor addSpawn(MobCategory category, int weight, MobSpawnSettings.SpawnerData spawn) {
-        context.getSpawnSettings().addSpawn(category, spawn, weight);
+        context.getMobSpawnSettings().addSpawn(category, spawn, weight);
         return this;
     }
 
     @Override
     public BiomeEditor addMobCharge(EntityType<?> entity, double energyBudget, double charge) {
-        context.getSpawnSettings().setSpawnCost(entity, charge, energyBudget);
+        context.getMobSpawnSettings().addMobCharge(entity, charge, energyBudget);
         return this;
     }
 
     @Override
     public BiomeEditor clearMobCharge(EntityType<?> entity) {
-        context.getSpawnSettings().clearSpawnCost(entity);
+        context.getMobSpawnSettings().clearMobCharge(entity);
         return this;
     }
 
     @Override
     public BiomeEditor creatureGenerationProbability(float probability) {
-        context.getSpawnSettings().setCreatureSpawnProbability(probability);
+        context.getMobSpawnSettings().setCreatureGenerationProbability(probability);
         return this;
     }
 
     @Override
     public BiomeEditor removeSpawns(BiPredicate<MobCategory, MobSpawnSettings.SpawnerData> spawnPredicate) {
-        context.getSpawnSettings().removeSpawns(spawnPredicate);
+        context.getMobSpawnSettings().removeSpawns(spawnPredicate);
         return this;
     }
 }

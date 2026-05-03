@@ -1,6 +1,6 @@
 package net.foxboi.salted.data.lang;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.foxboi.salted.common.levelgen.biome.ModBiomes;
 import net.foxboi.salted.common.block.ModBlockTags;
@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.Block;
 import java.util.concurrent.CompletableFuture;
 
 public class DefaultTranslationProvider extends FabricLanguageProvider {
-    public DefaultTranslationProvider(FabricDataOutput out, CompletableFuture<HolderLookup.Provider> regs) {
+    public DefaultTranslationProvider(FabricPackOutput out, CompletableFuture<HolderLookup.Provider> regs) {
         super(out, "en_us", regs);
     }
 

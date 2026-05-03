@@ -1,7 +1,7 @@
 import net.fabricmc.loom.configuration.ide.RunConfigSettings
 
 plugins {
-    id("net.fabricmc.fabric-loom-remap")
+    id("net.fabricmc.fabric-loom")
     id("maven-publish")
 
     idea
@@ -59,9 +59,9 @@ java {
     // Export a sources jar
     withSourcesJar()
 
-    // Use Java 21
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    // Use Java 25
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
 }
 
 // Loom settings
@@ -191,8 +191,7 @@ dependencies {
     // Define some methods to avoid the ugly invoking a string syntax
     // Normally gradle would generate these methods but since these configurations were defined after
     // plugins were setup, gradle cannot generate these.
-    fun DependencyHandlerScope.modClientImplementation(notation: Any) = "modClientImplementation"(notation)
-    fun DependencyHandlerScope.modClientRuntimeOnly(notation: Any) = "modClientRuntimeOnly"(notation)
+    fun DependencyHandlerScope.clientImplementation(notation: Any) = "clientImplementation"(notation)
     fun DependencyHandlerScope.clientRuntimeOnly(notation: Any) = "clientRuntimeOnly"(notation)
     fun DependencyHandlerScope.dataCompileOnly(notation: Any) = "dataCompileOnly"(notation)
 
@@ -200,7 +199,6 @@ dependencies {
     // --------------------------------------------------------------
 
     minecraft("com.mojang:minecraft:${minecraft_version}")
-    mappings(loom.officialMojangMappings())
 
 
     // Mod depencencies
@@ -208,11 +206,11 @@ dependencies {
     // We use the API of these mods.
 
     // Fabric loader + API, the essentials
-    modImplementation("net.fabricmc:fabric-loader:${loader_version}")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:${fabric_version}")
+    implementation("net.fabricmc:fabric-loader:${loader_version}")
+    implementation("net.fabricmc.fabric-api:fabric-api:${fabric_version}")
 
     // Modmenu - altho not required we do compile against it
-    modClientImplementation("com.terraformersmc:modmenu:${modmenu_version}")
+    clientImplementation("com.terraformersmc:modmenu:${modmenu_version}")
 
 
     // Runtime Only
@@ -220,10 +218,10 @@ dependencies {
     // We test against these mods, but don't depend on them.
 
     // Sodium
-    modClientRuntimeOnly("maven.modrinth:sodium:${sodium_version}")
+    clientRuntimeOnly("maven.modrinth:sodium:${sodium_version}")
 
     // Iris
-    modClientRuntimeOnly("maven.modrinth:iris:${iris_version}")
+    clientRuntimeOnly("maven.modrinth:iris:${iris_version}")
 
     // Required by Iris to run
     clientRuntimeOnly("org.antlr:antlr4-runtime:4.13.1")
@@ -266,8 +264,8 @@ publishing {
 
 // Setup all java compile tasks
 tasks.withType<JavaCompile> {
-    // Compile for Java 21
-    options.release = 21
+    // Compile for Java 25
+    options.release = 25
 }
 
 // Setup all resource processing tasks

@@ -5,6 +5,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProviderType;
@@ -38,7 +39,7 @@ public final class EitherStateProvider extends BlockStateProvider {
     }
 
     @Override
-    public BlockState getState(RandomSource rng, BlockPos pos) {
-        return (rng.nextDouble() >= bChance ? b : a).getState(rng, pos);
+    public BlockState getState(WorldGenLevel level, RandomSource rng, BlockPos pos) {
+        return (rng.nextDouble() >= bChance ? b : a).getState(level, rng, pos);
     }
 }

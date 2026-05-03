@@ -1,21 +1,22 @@
 package net.foxboi.salted.data.tags;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
-import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
-import net.foxboi.salted.common.block.ModBlockTags;
-import net.foxboi.salted.common.block.ModBlocks;
-import net.foxboi.salted.common.item.ModItemTags;
-import net.foxboi.salted.common.item.ModItems;
+import java.util.concurrent.CompletableFuture;
+
 import net.minecraft.core.HolderLookup;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 
-import java.util.concurrent.CompletableFuture;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 
-public class ItemTagProvider extends FabricTagProvider.ItemTagProvider {
-    public ItemTagProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> regs, BlockTagProvider blockTags) {
+import net.foxboi.salted.common.block.ModBlockTags;
+import net.foxboi.salted.common.item.ModItemTags;
+import net.foxboi.salted.common.item.ModItems;
+
+public class ItemTagProvider extends FabricTagsProvider.ItemTagsProvider {
+    public ItemTagProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> regs, BlockTagProvider blockTags) {
         super(output, regs, blockTags);
     }
 

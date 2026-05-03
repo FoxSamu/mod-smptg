@@ -1,6 +1,6 @@
 package net.foxboi.salted.data.advancement;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.foxboi.salted.common.Smptg;
 import net.foxboi.salted.common.item.ModItemTags;
@@ -20,7 +20,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class AdvancementProvider extends FabricAdvancementProvider {
-    public AdvancementProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> regs) {
+    public AdvancementProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> regs) {
         super(output, regs);
     }
 

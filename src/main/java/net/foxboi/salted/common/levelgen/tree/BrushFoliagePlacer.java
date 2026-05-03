@@ -7,7 +7,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.IntProviders;
 import net.minecraft.world.level.LevelSimulatedReader;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
@@ -17,7 +19,7 @@ public class BrushFoliagePlacer extends FoliagePlacer {
             inst -> foliagePlacerParts(inst)
                     .and(inst.group(
                             Codec.intRange(0, 16).fieldOf("height").forGetter(it -> it.height),
-                            IntProvider.codec(0, 16).fieldOf("hanging_length").forGetter(it -> it.hangingLength)
+                            IntProviders.codec(0, 16).fieldOf("hanging_length").forGetter(it -> it.hangingLength)
                     ))
                     .apply(inst, BrushFoliagePlacer::new)
     );
@@ -40,7 +42,7 @@ public class BrushFoliagePlacer extends FoliagePlacer {
 
     @Override
     protected void createFoliage(
-            LevelSimulatedReader level,
+            WorldGenLevel level,
             FoliageSetter setter,
             RandomSource rng,
             TreeConfiguration config,
@@ -65,7 +67,7 @@ public class BrushFoliagePlacer extends FoliagePlacer {
     }
 
     protected void placeLeavesRowHanging(
-            LevelSimulatedReader level,
+            WorldGenLevel level,
             FoliageSetter setter,
             RandomSource rng,
             TreeConfiguration config,

@@ -3,6 +3,7 @@ package net.foxboi.salted.common.misc;
 import java.util.Set;
 
 import net.foxboi.salted.common.block.ModBlocks;
+import net.foxboi.salted.common.levelgen.ModVegetationFeatures;
 import net.foxboi.salted.common.levelgen.ModVegetationPlacements;
 import net.foxboi.salted.common.levelgen.biome.ModBiomeTags;
 import net.foxboi.salted.common.misc.cache.CacheKey;
@@ -11,6 +12,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.features.VegetationFeatures;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BiomeTags;
@@ -19,7 +21,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public abstract class BonemealSpreadingLogic {
@@ -106,14 +108,13 @@ public abstract class BonemealSpreadingLogic {
     }
 
     private static class Grass extends BonemealSpreadingLogic {
-        protected final Holder<PlacedFeature> grassFeature;
+        protected final Holder<ConfiguredFeature<?, ?>> grassFeature;
 
         public Grass(ServerLevel level, RandomSource rng, BlockPos pos) {
             super(level, rng, pos);
 
             grassFeature = level.registryAccess()
-                    .lookupOrThrow(Registries.PLACED_FEATURE)
-                    .get(VegetationPlacements.GRASS_BONEMEAL)
+                    .get(VegetationFeatures.GRASS)
                     .orElse(null);
         }
 
@@ -122,8 +123,8 @@ public abstract class BonemealSpreadingLogic {
             return GRASS_VALID_BLOCKS.contains(state.getBlock());
         }
 
-        protected Holder<PlacedFeature> getGrowFeature(ServerLevel level, RandomSource rng, BlockPos pos) {
-            return grassFeature;
+        protected ConfiguredFeature<?, ?> getGrowFeature(ServerLevel level, RandomSource rng, BlockPos pos) {
+            return grassFeature.value();
         }
 
         @Override
@@ -147,7 +148,7 @@ public abstract class BonemealSpreadingLogic {
             // Place plant feature
             var growFeature = getGrowFeature(level, rng, pos);
             if (growFeature != null) {
-                growFeature.value().place(level, level.getChunkSource().getGenerator(), rng, pos);
+                growFeature.place(level, level.getChunkSource().getGenerator(), rng, pos);
             }
         }
     }
@@ -157,13 +158,13 @@ public abstract class BonemealSpreadingLogic {
             super(level, rng, pos);
         }
 
-        protected Holder<PlacedFeature> getGrowFeature(ServerLevel level, RandomSource rng, BlockPos pos) {
+        protected ConfiguredFeature<?, ?> getGrowFeature(ServerLevel level, RandomSource rng, BlockPos pos) {
             if (rng.nextInt(8) == 0) {
-                var flowers = level.getBiome(pos).value().getGenerationSettings().getFlowerFeatures();
+                var flowers = level.getBiome(pos).value().getGenerationSettings().getBoneMealFeatures();
 
                 if (!flowers.isEmpty()) {
                     var flowerIndex = rng.nextInt(flowers.size());
-                    return ((RandomPatchConfiguration) (flowers.get(flowerIndex)).config()).feature();
+                    return flowers.get(flowerIndex);
                 }
             }
 
@@ -172,20 +173,19 @@ public abstract class BonemealSpreadingLogic {
     }
 
     private static class GrassFlowersAndClovers extends GrassAndFlowers {
-        private final Holder<PlacedFeature> cloverFeature;
+        private final Holder<ConfiguredFeature<?, ?>> cloverFeature;
 
         public GrassFlowersAndClovers(ServerLevel level, RandomSource rng, BlockPos pos) {
             super(level, rng, pos);
 
             cloverFeature = level.registryAccess()
-                    .lookupOrThrow(Registries.PLACED_FEATURE)
-                    .get(ModVegetationPlacements.CLOVERS_BONEMEAL)
+                    .get(ModVegetationFeatures.CLOVERS)
                     .orElse(null);
         }
 
-        protected Holder<PlacedFeature> getGrowFeature(ServerLevel level, RandomSource rng, BlockPos pos) {
+        protected ConfiguredFeature<?, ?> getGrowFeature(ServerLevel level, RandomSource rng, BlockPos pos) {
             if (rng.nextInt(4) == 0) {
-                return cloverFeature;
+                return cloverFeature.value();
             }
 
             return super.getGrowFeature(level, rng, pos);
@@ -193,21 +193,20 @@ public abstract class BonemealSpreadingLogic {
     }
 
     private static class GrassAndMoss extends Grass {
-        private final Holder<PlacedFeature> mossFeature;
+        private final Holder<ConfiguredFeature<?, ?>> mossFeature;
 
         public GrassAndMoss(ServerLevel level, RandomSource rng, BlockPos pos) {
             super(level, rng, pos);
 
             mossFeature = level.registryAccess()
-                    .lookupOrThrow(Registries.PLACED_FEATURE)
-                    .get(ModVegetationPlacements.MOSS_CARPET_BONEMEAL)
+                    .get(ModVegetationFeatures.MOSS_CARPET)
                     .orElse(null);
         }
 
 
-        protected Holder<PlacedFeature> getGrowFeature(ServerLevel level, RandomSource rng, BlockPos pos) {
+        protected ConfiguredFeature<?, ?> getGrowFeature(ServerLevel level, RandomSource rng, BlockPos pos) {
             if (rng.nextInt(3) == 0) {
-                return mossFeature;
+                return mossFeature.value();
             }
 
             return super.getGrowFeature(level, rng, pos);
@@ -215,21 +214,20 @@ public abstract class BonemealSpreadingLogic {
     }
 
     private static class Barley extends Grass {
-        private final Holder<PlacedFeature> barleyFeature;
+        private final Holder<ConfiguredFeature<?, ?>> barleyFeature;
 
         public Barley(ServerLevel level, RandomSource rng, BlockPos pos) {
             super(level, rng, pos);
 
             barleyFeature = level.registryAccess()
-                    .lookupOrThrow(Registries.PLACED_FEATURE)
-                    .get(ModVegetationPlacements.BARLEY_BONEMEAL)
+                    .get(ModVegetationFeatures.SMALL_BARLEY)
                     .orElse(null);
         }
 
 
-        protected Holder<PlacedFeature> getGrowFeature(ServerLevel level, RandomSource rng, BlockPos pos) {
+        protected ConfiguredFeature<?, ?> getGrowFeature(ServerLevel level, RandomSource rng, BlockPos pos) {
             if (rng.nextInt(5) != 0) {
-                return barleyFeature;
+                return barleyFeature.value();
             }
 
             return super.getGrowFeature(level, rng, pos);
@@ -278,7 +276,7 @@ public abstract class BonemealSpreadingLogic {
             if (level.getBiome(pos).is(BiomeTags.PRODUCES_CORALS_FROM_BONEMEAL)) {
                 if (iteration == 0 && clickedFace != null && clickedFace.getAxis().isHorizontal()) {
                     placeState = BuiltInRegistries.BLOCK
-                            .getRandomElementOf(BlockTags.WALL_CORALS, level.random)
+                            .getRandomElementOf(BlockTags.WALL_CORALS, level.getRandom())
                             .map(it -> it.value().defaultBlockState())
                             .orElse(placeState);
 
@@ -287,7 +285,7 @@ public abstract class BonemealSpreadingLogic {
                     }
                 } else if (rng.nextInt(4) == 0) {
                     placeState = BuiltInRegistries.BLOCK
-                            .getRandomElementOf(BlockTags.UNDERWATER_BONEMEALS, level.random)
+                            .getRandomElementOf(BlockTags.UNDERWATER_BONEMEALS, level.getRandom())
                             .map(it -> it.value().defaultBlockState())
                             .orElse(placeState);
                 }

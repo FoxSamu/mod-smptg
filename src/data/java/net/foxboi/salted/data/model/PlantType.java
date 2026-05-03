@@ -5,6 +5,7 @@ import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 
@@ -68,7 +69,7 @@ public enum PlantType {
         };
     }
 
-    public TextureMapping getTextureMapping(Identifier texture) {
+    public TextureMapping getTextureMapping(Material texture) {
         return switch (this) {
             case TINTED, NOT_TINTED -> cross(texture);
             case LAYERED -> ModTextureMappings.tintedWithOverlay(texture);

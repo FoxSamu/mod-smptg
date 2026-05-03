@@ -1,21 +1,21 @@
 package net.foxboi.salted.common.item;
 
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.foxboi.salted.common.Smptg;
-import net.foxboi.salted.common.block.ModBlocks;
-import net.foxboi.salted.common.entity.ModEntityTypes;
-import net.foxboi.salted.common.misc.Translator;
 import net.minecraft.core.Registry;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.vehicle.boat.AbstractBoat;
-import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
+
+import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
+import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTabOutput;
+
+import net.foxboi.salted.common.Smptg;
+import net.foxboi.salted.common.block.ModBlocks;
+import net.foxboi.salted.common.entity.ModEntityTypes;
+import net.foxboi.salted.common.misc.Translator;
 
 /**
  * Salted's collection of {@link Item}s. Each {@link Item} instance is provided here in a static field.
@@ -158,15 +158,15 @@ public record ModItems() {
     public static final Item CLOVERS = registerBlock(ModBlocks.CLOVERS);
     public static final Item GRASS_SPROUTS = registerBlock(ModBlocks.GRASS_SPROUTS);
     public static final Item BARLEY = registerBlock(ModBlocks.BARLEY);
-    public static final Item TALL_BARLEY = registerBlock(ModBlocks.TALL_BARLEY);
+    public static final Item TALL_BARLEY = register(ModBlocks.TALL_BARLEY, doubleBlockItem(ModBlocks.TALL_BARLEY));
     public static final Item CATTAIL = registerBlock(ModBlocks.CATTAIL);
-    public static final Item TALL_CATTAIL = registerBlock(ModBlocks.TALL_CATTAIL);
+    public static final Item TALL_CATTAIL = register(ModBlocks.TALL_CATTAIL, doubleBlockItem(ModBlocks.TALL_CATTAIL));
     public static final Item LAVENDER = registerBlock(ModBlocks.LAVENDER);
-    public static final Item TALL_LAVENDER = registerBlock(ModBlocks.TALL_LAVENDER);
+    public static final Item TALL_LAVENDER = register(ModBlocks.TALL_LAVENDER, doubleBlockItem(ModBlocks.TALL_LAVENDER));
     public static final Item CAVE_GRASS = registerBlock(ModBlocks.CAVE_GRASS);
     public static final Item DRIPMOSS = registerBlock(ModBlocks.DRIPMOSS);
     public static final Item PATCHMOSS = registerBlock(ModBlocks.PATCHMOSS);
-    public static final Item GLOBE_THISTLE = registerBlock(ModBlocks.GLOBE_THISTLE);
+    public static final Item GLOBE_THISTLE = register(ModBlocks.GLOBE_THISTLE, doubleBlockItem(ModBlocks.GLOBE_THISTLE));
     public static final Item SHELF_FUNGUS = register(ModBlocks.SHELF_FUNGUS, diagonallyAttachableBlockItem(ModBlocks.SHELF_FUNGUS));
 
     // Salt
@@ -208,12 +208,12 @@ public record ModItems() {
 
     public static void init() {
         // Register creative inventory tab setup events
-        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.BUILDING_BLOCKS).register(ModItems::buildingBlocksTab);
-        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.NATURAL_BLOCKS).register(ModItems::naturalBlocksTab);
-        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(ModItems::functionalBlocksTab);
-        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(ModItems::toolsAndUtilitiesTab);
-        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(ModItems::foodAndDrinksTab);
-        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.INGREDIENTS).register(ModItems::ingredientsTab);
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.BUILDING_BLOCKS).register(ModItems::buildingBlocksTab);
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.NATURAL_BLOCKS).register(ModItems::naturalBlocksTab);
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(ModItems::functionalBlocksTab);
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(ModItems::toolsAndUtilitiesTab);
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(ModItems::foodAndDrinksTab);
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.INGREDIENTS).register(ModItems::ingredientsTab);
     }
 
 
@@ -229,8 +229,8 @@ public record ModItems() {
     // Try to follow Minecraft's order in which items are put into tabs. When a block or a set of blocks has
     // vanilla variants and SMPTG variants, make sure the vanilla variants appear first.
 
-    public static void buildingBlocksTab(FabricItemGroupEntries entries) {
-        entries.addAfter(
+    public static void buildingBlocksTab(FabricCreativeModeTabOutput out) {
+        out.insertAfter(
                 Items.PALE_OAK_BUTTON,
                 ASPEN_LOG,
                 ASPEN_WOOD,
@@ -303,14 +303,14 @@ public record ModItems() {
                 DEAD_WOOD_BUTTON
         );
 
-        entries.addAfter(
+        out.insertAfter(
                 Items.WARPED_BUTTON,
 
                 BURNED_STEM,
                 BURNED_HYPHAE
         );
 
-        entries.addBefore(
+        out.insertBefore(
                 Items.SEA_LANTERN,
                 ROCKSALT,
                 ROCKSALT_STAIRS,
@@ -329,12 +329,12 @@ public record ModItems() {
         );
     }
 
-    public static void naturalBlocksTab(FabricItemGroupEntries entries) {
-        entries.addAfter(
+    public static void naturalBlocksTab(FabricCreativeModeTabOutput out) {
+        out.insertAfter(
                 Items.PODZOL,
                 MOSSY_DIRT
         );
-        entries.addAfter(
+        out.insertAfter(
                 Items.PALE_OAK_LOG,
                 ASPEN_LOG,
                 BEECH_LOG,
@@ -343,7 +343,7 @@ public record ModItems() {
                 DEAD_LOG,
                 BURNED_STEM
         );
-        entries.addBefore(
+        out.insertBefore(
                 Items.PRISMARINE,
                 SALT_BLOCK,
                 SALT_CRUST,
@@ -354,7 +354,7 @@ public record ModItems() {
                 PACKED_ASH
         );
 
-        entries.addAfter(
+        out.insertAfter(
                 Items.PALE_OAK_LEAVES,
                 ASPEN_LEAVES,
                 BEECH_LEAVES,
@@ -364,22 +364,22 @@ public record ModItems() {
                 REDWOOD_LEAVES,
                 DEAD_LEAVES
         );
-        entries.addAfter(
+        out.insertAfter(
                 Items.DEEPSLATE_DIAMOND_ORE,
                 SALT_ORE,
                 DEEPSLATE_SALT_ORE
         );
-        entries.addAfter(
+        out.insertAfter(
                 Items.NETHER_QUARTZ_ORE,
                 NETHER_SALT_ORE
         );
 
-        entries.addBefore(
+        out.insertBefore(
                 Items.SHORT_GRASS,
                 GRASS_SPROUTS
         );
 
-        entries.addAfter(
+        out.insertAfter(
                 Items.BUSH,
                 CLOVERS,
                 BARLEY,
@@ -389,7 +389,7 @@ public record ModItems() {
                 DRIPMOSS
         );
 
-        entries.addAfter(
+        out.insertAfter(
                 Items.TALL_GRASS,
                 TALL_BARLEY,
                 TALL_CATTAIL,
@@ -397,29 +397,29 @@ public record ModItems() {
                 GLOBE_THISTLE
         );
 
-        entries.addAfter(
+        out.insertAfter(
                 Items.NETHER_SPROUTS,
                 ASHCREEP
         );
 
-        entries.addAfter(
+        out.insertAfter(
                 Items.TWISTING_VINES,
                 ASHVINE
         );
 
-        entries.addAfter(
+        out.insertAfter(
                 Items.RED_MUSHROOM,
                 SHELF_FUNGUS
         );
 
-        entries.addAfter(
+        out.insertAfter(
                 Items.MOSS_CARPET,
                 PATCHMOSS
         );
     }
 
-    public static void functionalBlocksTab(FabricItemGroupEntries entries) {
-        entries.addAfter(
+    public static void functionalBlocksTab(FabricCreativeModeTabOutput out) {
+        out.insertAfter(
                 Items.PALE_OAK_SHELF,
                 ASPEN_SHELF,
                 BEECH_SHELF,
@@ -427,7 +427,7 @@ public record ModItems() {
                 REDWOOD_SHELF,
                 DEAD_WOOD_SHELF
         );
-        entries.addAfter(
+        out.insertAfter(
                 Items.PALE_OAK_HANGING_SIGN,
                 ASPEN_SIGN,
                 ASPEN_HANGING_SIGN,
@@ -442,8 +442,8 @@ public record ModItems() {
         );
     }
 
-    public static void toolsAndUtilitiesTab(FabricItemGroupEntries entries) {
-        entries.addAfter(
+    public static void toolsAndUtilitiesTab(FabricCreativeModeTabOutput out) {
+        out.insertAfter(
                 Items.PALE_OAK_CHEST_BOAT,
                 ASPEN_BOAT,
                 ASPEN_CHEST_BOAT,
@@ -458,36 +458,36 @@ public record ModItems() {
         );
     }
 
-    public static void foodAndDrinksTab(FabricItemGroupEntries entries) {
-        entries.addAfter(
+    public static void foodAndDrinksTab(FabricCreativeModeTabOutput out) {
+        out.insertAfter(
                 Items.COOKED_BEEF,
                 SALTED_BEEF,
                 COOKED_SALTED_BEEF
         );
-        entries.addAfter(
+        out.insertAfter(
                 Items.COOKED_PORKCHOP,
                 SALTED_PORKCHOP,
                 COOKED_SALTED_PORKCHOP
         );
-        entries.addAfter(
+        out.insertAfter(
                 Items.COOKED_MUTTON,
                 SALTED_MUTTON,
                 COOKED_SALTED_MUTTON
         );
-        entries.addAfter(
+        out.insertAfter(
                 Items.COOKED_CHICKEN,
                 SALTED_CHICKEN,
                 COOKED_SALTED_CHICKEN
         );
     }
 
-    public static void ingredientsTab(FabricItemGroupEntries entries) {
-        entries.addAfter(
+    public static void ingredientsTab(FabricCreativeModeTabOutput out) {
+        out.insertAfter(
                 Items.AMETHYST_SHARD,
                 ROCKSALT_CHUNK
         );
 
-        entries.addAfter(
+        out.insertAfter(
                 Items.BONE_MEAL,
                 SALT,
                 PINCH_OF_SALT
@@ -562,22 +562,23 @@ public record ModItems() {
     }
 
     private static ItemFactory saltedItem(Item baseItem, int plusNutrition, float plusSaturation) {
-        var baseFood = baseItem.components().get(DataComponents.FOOD);
-        var newFood = baseFood == null ? null : new FoodProperties(
-                baseFood.nutrition() + plusNutrition,
-                baseFood.saturation() + plusSaturation,
-                baseFood.canAlwaysEat()
-        );
-
-        var baseConsumable = baseItem.components().get(DataComponents.CONSUMABLE);
+        // TODO fix this
+//        var baseFood = baseItem.components().get(DataComponents.FOOD);
+//        var newFood = baseFood == null ? null : new FoodProperties(
+//                baseFood.nutrition() + plusNutrition,
+//                baseFood.saturation() + plusSaturation,
+//                baseFood.canAlwaysEat()
+//        );
+//
+//        var baseConsumable = baseItem.components().get(DataComponents.CONSUMABLE);
 
         return props -> {
-            if (newFood != null) {
-                props.component(DataComponents.FOOD, newFood);
-            }
-            if (baseConsumable != null) {
-                props.component(DataComponents.CONSUMABLE, baseConsumable);
-            }
+//            if (newFood != null) {
+//                props.component(DataComponents.FOOD, newFood);
+//            }
+//            if (baseConsumable != null) {
+//                props.component(DataComponents.CONSUMABLE, baseConsumable);
+//            }
             return new SaltedItem(baseItem, props);
         };
     }

@@ -1,12 +1,18 @@
 package net.foxboi.salted.data.model;
 
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.model.ItemModelUtils;
+import net.minecraft.client.data.models.model.ModelLocationUtils;
+import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.resources.model.sprite.Material;
+import net.minecraft.world.item.Item;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+
 import net.foxboi.salted.common.Smptg;
 import net.foxboi.salted.data.ItemTint;
-import net.minecraft.client.data.models.ItemModelGenerators;
-import net.minecraft.client.data.models.model.*;
-import net.minecraft.world.item.Item;
 
 @Environment(EnvType.CLIENT)
 public final class ItemModelsImpl implements ItemModels {
@@ -33,7 +39,7 @@ public final class ItemModelsImpl implements ItemModels {
                 ModelLocationUtils.getModelLocation(item),
                 TextureMapping.layered(
                         TextureMapping.getItemTexture(base),
-                        Smptg.id("item/salted_overlay")
+                        new Material(Smptg.id("item/salted_overlay"))
                 ),
                 gen.modelOutput
         );

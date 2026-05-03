@@ -8,6 +8,7 @@ import net.foxboi.salted.common.block.ModBlockTags;
 import net.foxboi.salted.common.levelgen.FeatureBlocks;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.IntProviders;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
@@ -25,9 +26,9 @@ public record RandomBlobsAndCrystalsConfig(
         boolean tryRotateCrystals
 ) implements FeatureConfiguration {
     public static final Codec<RandomBlobsAndCrystalsConfig> CODEC = RecordCodecBuilder.create(inst -> inst.group(
-            IntProvider.codec(1, 100).fieldOf("iterations").forGetter(it -> it.iterations),
-            IntProvider.codec(0, 8).fieldOf("xz_spread").forGetter(it -> it.xzSpread),
-            IntProvider.codec(0, 8).fieldOf("y_spread").forGetter(it -> it.ySpread),
+            IntProviders.codec(1, 100).fieldOf("iterations").forGetter(it -> it.iterations),
+            IntProviders.codec(0, 8).fieldOf("xz_spread").forGetter(it -> it.xzSpread),
+            IntProviders.codec(0, 8).fieldOf("y_spread").forGetter(it -> it.ySpread),
             BlockPredicate.CODEC.optionalFieldOf("blob_predicate", BlockPredicate.alwaysTrue()).forGetter(it -> it.blobPredicate),
             BlockStateProvider.CODEC.optionalFieldOf("blob").forGetter(it -> it.blob),
             BlockPredicate.CODEC.optionalFieldOf("crystal_predicate", BlockPredicate.alwaysTrue()).forGetter(it -> it.crystalPredicate),

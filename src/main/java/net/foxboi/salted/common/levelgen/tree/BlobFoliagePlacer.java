@@ -9,6 +9,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder.Mu;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.level.LevelSimulatedReader;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerType;
@@ -37,7 +38,7 @@ public class BlobFoliagePlacer extends FoliagePlacer {
 
 	@Override
 	protected void createFoliage(
-		LevelSimulatedReader level,
+		WorldGenLevel level,
 		FoliageSetter setter,
 		RandomSource rng,
 		TreeConfiguration config,

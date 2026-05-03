@@ -8,7 +8,9 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.IntProviders;
 import net.minecraft.world.level.LevelSimulatedReader;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacer;
@@ -16,7 +18,7 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.FoliagePlacerTy
 
 public class RedwoodFoliagePlacer extends FoliagePlacer {
     public static final MapCodec<RedwoodFoliagePlacer> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-            IntProvider.codec(0, 16).fieldOf("offset").forGetter(it -> it.offset),
+            IntProviders.codec(0, 16).fieldOf("offset").forGetter(it -> it.offset),
             Codec.intRange(0, 16).listOf().fieldOf("radii").forGetter(it -> it.radii),
             Codec.intRange(1, 4).fieldOf("layers_per_radius").forGetter(it -> it.layersPerRadius)
     ).apply(inst, RedwoodFoliagePlacer::new));
@@ -46,7 +48,7 @@ public class RedwoodFoliagePlacer extends FoliagePlacer {
 
     @Override
     protected void createFoliage(
-            LevelSimulatedReader level,
+            WorldGenLevel level,
             FoliageSetter setter,
             RandomSource rng,
             TreeConfiguration config,
