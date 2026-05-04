@@ -37,7 +37,8 @@ public class ShapelessRecipeBuilder extends AbstractCraftingRecipeBuilder<Shapel
     }
 
     public ShapelessRecipeBuilder requires(Ingredient ingredient) {
-        return requires(ingredient, 1);
+        ingredients.add(ingredient);
+        return this;
     }
 
     public ShapelessRecipeBuilder requires(Ingredient ingredient, int count) {

@@ -25,7 +25,7 @@ public class CommonDataGenerators {
         pack.addProvider(ModRegistryProvider::new);
         pack.addProvider(ModAdvancementProvider::new);
         pack.addProvider(ModBlockLootTableProvider::new);
-        pack.addProvider(ModRecipesProvider.factory());
+        pack.addProvider(ModRecipesProvider::new);
     }
 
     protected void addShaderCompat(FabricDataGenerator.Pack pack) {
