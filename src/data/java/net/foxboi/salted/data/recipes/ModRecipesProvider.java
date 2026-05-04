@@ -1,260 +1,272 @@
 package net.foxboi.salted.data.recipes;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import java.util.concurrent.CompletableFuture;
+
 import net.foxboi.salted.common.Smptg;
 import net.foxboi.salted.common.item.ModItemTags;
 import net.foxboi.salted.common.item.ModItems;
+import net.foxboi.salted.data.core.recipe.RecipeProvider;
+import net.foxboi.salted.data.core.recipe.RecipeSink;
+import net.foxboi.salted.data.core.recipe.ShapedRecipeBuilder;
+import net.foxboi.salted.data.core.recipe.ShapelessRecipeBuilder;
+
 import net.minecraft.core.HolderLookup;
-import net.minecraft.data.recipes.RecipeBuilder;
-import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.level.ItemLike;
 
 public class ModRecipesProvider extends RecipeProvider {
-    protected ModRecipesProvider(HolderLookup.Provider lookup, RecipeOutput output) {
-        super(lookup, output);
+    public ModRecipesProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+        super(output, registriesFuture, Smptg.ID);
     }
 
     @Override
-    public void buildRecipes() {
+    public void setup(HolderLookup.Provider lookups, RecipeSink sink) {
         // TODO Stonecutting
 
-        buildWood(ModItems.ASPEN_LOG, ModItems.ASPEN_WOOD).save(output);
-        buildWood(ModItems.STRIPPED_ASPEN_LOG, ModItems.STRIPPED_ASPEN_WOOD).save(output);
-        buildPlanks(ModItemTags.ASPEN_LOGS, ModItems.ASPEN_PLANKS).save(output);
-        buildSlab(ModItems.ASPEN_PLANKS, ModItems.ASPEN_SLAB).save(output);
-        buildStairs(ModItems.ASPEN_PLANKS, ModItems.ASPEN_STAIRS).save(output);
-        buildFence(ModItems.ASPEN_PLANKS, ModItems.ASPEN_FENCE).save(output);
-        buildFenceGate(ModItems.ASPEN_PLANKS, ModItems.ASPEN_FENCE_GATE).save(output);
-        buildPressurePlate(ModItems.ASPEN_PLANKS, ModItems.ASPEN_PRESSURE_PLATE).save(output);
-        buildButton(ModItems.ASPEN_PLANKS, ModItems.ASPEN_BUTTON).save(output);
-        buildWoodenDoor(ModItems.ASPEN_PLANKS, ModItems.ASPEN_DOOR).save(output);
-        buildWoodenTrapdoor(ModItems.ASPEN_PLANKS, ModItems.ASPEN_TRAPDOOR).save(output);
-        buildShelf(ModItems.STRIPPED_ASPEN_LOG, ModItems.ASPEN_SHELF).save(output);
-        buildSign(ModItems.ASPEN_PLANKS, ModItems.ASPEN_SIGN).save(output);
-        buildHangingSign(ModItems.STRIPPED_ASPEN_LOG, ModItems.ASPEN_HANGING_SIGN).save(output);
+        buildWood(ModItems.ASPEN_LOG, ModItems.ASPEN_WOOD).save(sink);
+        buildWood(ModItems.STRIPPED_ASPEN_LOG, ModItems.STRIPPED_ASPEN_WOOD).save(sink);
+        buildPlanks(ModItemTags.ASPEN_LOGS, ModItems.ASPEN_PLANKS).save(sink);
+        buildSlab(ModItems.ASPEN_PLANKS, ModItems.ASPEN_SLAB).save(sink);
+        buildStairs(ModItems.ASPEN_PLANKS, ModItems.ASPEN_STAIRS).save(sink);
+        buildFence(ModItems.ASPEN_PLANKS, ModItems.ASPEN_FENCE).save(sink);
+        buildFenceGate(ModItems.ASPEN_PLANKS, ModItems.ASPEN_FENCE_GATE).save(sink);
+        buildPressurePlate(ModItems.ASPEN_PLANKS, ModItems.ASPEN_PRESSURE_PLATE).save(sink);
+        buildButton(ModItems.ASPEN_PLANKS, ModItems.ASPEN_BUTTON).save(sink);
+        buildWoodenDoor(ModItems.ASPEN_PLANKS, ModItems.ASPEN_DOOR).save(sink);
+        buildWoodenTrapdoor(ModItems.ASPEN_PLANKS, ModItems.ASPEN_TRAPDOOR).save(sink);
+        buildShelf(ModItems.STRIPPED_ASPEN_LOG, ModItems.ASPEN_SHELF).save(sink);
+        buildSign(ModItems.ASPEN_PLANKS, ModItems.ASPEN_SIGN).save(sink);
+        buildHangingSign(ModItems.STRIPPED_ASPEN_LOG, ModItems.ASPEN_HANGING_SIGN).save(sink);
 
-        buildWood(ModItems.BEECH_LOG, ModItems.BEECH_WOOD).save(output);
-        buildWood(ModItems.STRIPPED_BEECH_LOG, ModItems.STRIPPED_BEECH_WOOD).save(output);
-        buildPlanks(ModItemTags.BEECH_LOGS, ModItems.BEECH_PLANKS).save(output);
-        buildSlab(ModItems.BEECH_PLANKS, ModItems.BEECH_SLAB).save(output);
-        buildStairs(ModItems.BEECH_PLANKS, ModItems.BEECH_STAIRS).save(output);
-        buildFence(ModItems.BEECH_PLANKS, ModItems.BEECH_FENCE).save(output);
-        buildFenceGate(ModItems.BEECH_PLANKS, ModItems.BEECH_FENCE_GATE).save(output);
-        buildPressurePlate(ModItems.BEECH_PLANKS, ModItems.BEECH_PRESSURE_PLATE).save(output);
-        buildButton(ModItems.BEECH_PLANKS, ModItems.BEECH_BUTTON).save(output);
-        buildWoodenDoor(ModItems.BEECH_PLANKS, ModItems.BEECH_DOOR).save(output);
-        buildWoodenTrapdoor(ModItems.BEECH_PLANKS, ModItems.BEECH_TRAPDOOR).save(output);
-        buildShelf(ModItems.STRIPPED_BEECH_LOG, ModItems.BEECH_SHELF).save(output);
-        buildSign(ModItems.BEECH_PLANKS, ModItems.BEECH_SIGN).save(output);
-        buildHangingSign(ModItems.STRIPPED_BEECH_LOG, ModItems.BEECH_HANGING_SIGN).save(output);
+        buildWood(ModItems.BEECH_LOG, ModItems.BEECH_WOOD).save(sink);
+        buildWood(ModItems.STRIPPED_BEECH_LOG, ModItems.STRIPPED_BEECH_WOOD).save(sink);
+        buildPlanks(ModItemTags.BEECH_LOGS, ModItems.BEECH_PLANKS).save(sink);
+        buildSlab(ModItems.BEECH_PLANKS, ModItems.BEECH_SLAB).save(sink);
+        buildStairs(ModItems.BEECH_PLANKS, ModItems.BEECH_STAIRS).save(sink);
+        buildFence(ModItems.BEECH_PLANKS, ModItems.BEECH_FENCE).save(sink);
+        buildFenceGate(ModItems.BEECH_PLANKS, ModItems.BEECH_FENCE_GATE).save(sink);
+        buildPressurePlate(ModItems.BEECH_PLANKS, ModItems.BEECH_PRESSURE_PLATE).save(sink);
+        buildButton(ModItems.BEECH_PLANKS, ModItems.BEECH_BUTTON).save(sink);
+        buildWoodenDoor(ModItems.BEECH_PLANKS, ModItems.BEECH_DOOR).save(sink);
+        buildWoodenTrapdoor(ModItems.BEECH_PLANKS, ModItems.BEECH_TRAPDOOR).save(sink);
+        buildShelf(ModItems.STRIPPED_BEECH_LOG, ModItems.BEECH_SHELF).save(sink);
+        buildSign(ModItems.BEECH_PLANKS, ModItems.BEECH_SIGN).save(sink);
+        buildHangingSign(ModItems.STRIPPED_BEECH_LOG, ModItems.BEECH_HANGING_SIGN).save(sink);
 
-        buildWood(ModItems.MAPLE_LOG, ModItems.MAPLE_WOOD).save(output);
-        buildWood(ModItems.STRIPPED_MAPLE_LOG, ModItems.STRIPPED_MAPLE_WOOD).save(output);
-        buildPlanks(ModItemTags.MAPLE_LOGS, ModItems.MAPLE_PLANKS).save(output);
-        buildSlab(ModItems.MAPLE_PLANKS, ModItems.MAPLE_SLAB).save(output);
-        buildStairs(ModItems.MAPLE_PLANKS, ModItems.MAPLE_STAIRS).save(output);
-        buildFence(ModItems.MAPLE_PLANKS, ModItems.MAPLE_FENCE).save(output);
-        buildFenceGate(ModItems.MAPLE_PLANKS, ModItems.MAPLE_FENCE_GATE).save(output);
-        buildPressurePlate(ModItems.MAPLE_PLANKS, ModItems.MAPLE_PRESSURE_PLATE).save(output);
-        buildButton(ModItems.MAPLE_PLANKS, ModItems.MAPLE_BUTTON).save(output);
-        buildWoodenDoor(ModItems.MAPLE_PLANKS, ModItems.MAPLE_DOOR).save(output);
-        buildWoodenTrapdoor(ModItems.MAPLE_PLANKS, ModItems.MAPLE_TRAPDOOR).save(output);
-        buildShelf(ModItems.STRIPPED_MAPLE_LOG, ModItems.MAPLE_SHELF).save(output);
-        buildSign(ModItems.MAPLE_PLANKS, ModItems.MAPLE_SIGN).save(output);
-        buildHangingSign(ModItems.STRIPPED_MAPLE_LOG, ModItems.MAPLE_HANGING_SIGN).save(output);
+        buildWood(ModItems.MAPLE_LOG, ModItems.MAPLE_WOOD).save(sink);
+        buildWood(ModItems.STRIPPED_MAPLE_LOG, ModItems.STRIPPED_MAPLE_WOOD).save(sink);
+        buildPlanks(ModItemTags.MAPLE_LOGS, ModItems.MAPLE_PLANKS).save(sink);
+        buildSlab(ModItems.MAPLE_PLANKS, ModItems.MAPLE_SLAB).save(sink);
+        buildStairs(ModItems.MAPLE_PLANKS, ModItems.MAPLE_STAIRS).save(sink);
+        buildFence(ModItems.MAPLE_PLANKS, ModItems.MAPLE_FENCE).save(sink);
+        buildFenceGate(ModItems.MAPLE_PLANKS, ModItems.MAPLE_FENCE_GATE).save(sink);
+        buildPressurePlate(ModItems.MAPLE_PLANKS, ModItems.MAPLE_PRESSURE_PLATE).save(sink);
+        buildButton(ModItems.MAPLE_PLANKS, ModItems.MAPLE_BUTTON).save(sink);
+        buildWoodenDoor(ModItems.MAPLE_PLANKS, ModItems.MAPLE_DOOR).save(sink);
+        buildWoodenTrapdoor(ModItems.MAPLE_PLANKS, ModItems.MAPLE_TRAPDOOR).save(sink);
+        buildShelf(ModItems.STRIPPED_MAPLE_LOG, ModItems.MAPLE_SHELF).save(sink);
+        buildSign(ModItems.MAPLE_PLANKS, ModItems.MAPLE_SIGN).save(sink);
+        buildHangingSign(ModItems.STRIPPED_MAPLE_LOG, ModItems.MAPLE_HANGING_SIGN).save(sink);
 
-        buildWood(ModItems.REDWOOD_LOG, ModItems.REDWOOD_WOOD).save(output);
-        buildWood(ModItems.STRIPPED_REDWOOD_LOG, ModItems.STRIPPED_REDWOOD_WOOD).save(output);
-        buildPlanks(ModItemTags.REDWOOD_LOGS, ModItems.REDWOOD_PLANKS).save(output);
-        buildSlab(ModItems.REDWOOD_PLANKS, ModItems.REDWOOD_SLAB).save(output);
-        buildStairs(ModItems.REDWOOD_PLANKS, ModItems.REDWOOD_STAIRS).save(output);
-        buildFence(ModItems.REDWOOD_PLANKS, ModItems.REDWOOD_FENCE).save(output);
-        buildFenceGate(ModItems.REDWOOD_PLANKS, ModItems.REDWOOD_FENCE_GATE).save(output);
-        buildPressurePlate(ModItems.REDWOOD_PLANKS, ModItems.REDWOOD_PRESSURE_PLATE).save(output);
-        buildButton(ModItems.REDWOOD_PLANKS, ModItems.REDWOOD_BUTTON).save(output);
-        buildWoodenDoor(ModItems.REDWOOD_PLANKS, ModItems.REDWOOD_DOOR).save(output);
-        buildWoodenTrapdoor(ModItems.REDWOOD_PLANKS, ModItems.REDWOOD_TRAPDOOR).save(output);
-        buildShelf(ModItems.STRIPPED_REDWOOD_LOG, ModItems.REDWOOD_SHELF).save(output);
-        buildSign(ModItems.REDWOOD_PLANKS, ModItems.REDWOOD_SIGN).save(output);
-        buildHangingSign(ModItems.STRIPPED_REDWOOD_LOG, ModItems.REDWOOD_HANGING_SIGN).save(output);
+        buildWood(ModItems.REDWOOD_LOG, ModItems.REDWOOD_WOOD).save(sink);
+        buildWood(ModItems.STRIPPED_REDWOOD_LOG, ModItems.STRIPPED_REDWOOD_WOOD).save(sink);
+        buildPlanks(ModItemTags.REDWOOD_LOGS, ModItems.REDWOOD_PLANKS).save(sink);
+        buildSlab(ModItems.REDWOOD_PLANKS, ModItems.REDWOOD_SLAB).save(sink);
+        buildStairs(ModItems.REDWOOD_PLANKS, ModItems.REDWOOD_STAIRS).save(sink);
+        buildFence(ModItems.REDWOOD_PLANKS, ModItems.REDWOOD_FENCE).save(sink);
+        buildFenceGate(ModItems.REDWOOD_PLANKS, ModItems.REDWOOD_FENCE_GATE).save(sink);
+        buildPressurePlate(ModItems.REDWOOD_PLANKS, ModItems.REDWOOD_PRESSURE_PLATE).save(sink);
+        buildButton(ModItems.REDWOOD_PLANKS, ModItems.REDWOOD_BUTTON).save(sink);
+        buildWoodenDoor(ModItems.REDWOOD_PLANKS, ModItems.REDWOOD_DOOR).save(sink);
+        buildWoodenTrapdoor(ModItems.REDWOOD_PLANKS, ModItems.REDWOOD_TRAPDOOR).save(sink);
+        buildShelf(ModItems.STRIPPED_REDWOOD_LOG, ModItems.REDWOOD_SHELF).save(sink);
+        buildSign(ModItems.REDWOOD_PLANKS, ModItems.REDWOOD_SIGN).save(sink);
+        buildHangingSign(ModItems.STRIPPED_REDWOOD_LOG, ModItems.REDWOOD_HANGING_SIGN).save(sink);
 
-        buildWood(ModItems.DEAD_LOG, ModItems.DEAD_WOOD).save(output);
-        buildWood(ModItems.STRIPPED_DEAD_LOG, ModItems.STRIPPED_DEAD_WOOD).save(output);
-        buildPlanks(ModItemTags.DEAD_LOGS, ModItems.DEAD_WOOD_PLANKS).save(output);
-        buildSlab(ModItems.DEAD_WOOD_PLANKS, ModItems.DEAD_WOOD_SLAB).save(output);
-        buildStairs(ModItems.DEAD_WOOD_PLANKS, ModItems.DEAD_WOOD_STAIRS).save(output);
-        buildFence(ModItems.DEAD_WOOD_PLANKS, ModItems.DEAD_WOOD_FENCE).save(output);
-        buildFenceGate(ModItems.DEAD_WOOD_PLANKS, ModItems.DEAD_WOOD_FENCE_GATE).save(output);
-        buildPressurePlate(ModItems.DEAD_WOOD_PLANKS, ModItems.DEAD_WOOD_PRESSURE_PLATE).save(output);
-        buildButton(ModItems.DEAD_WOOD_PLANKS, ModItems.DEAD_WOOD_BUTTON).save(output);
-        buildWoodenDoor(ModItems.DEAD_WOOD_PLANKS, ModItems.DEAD_WOOD_DOOR).save(output);
-        buildWoodenTrapdoor(ModItems.DEAD_WOOD_PLANKS, ModItems.DEAD_WOOD_TRAPDOOR).save(output);
-        buildShelf(ModItems.STRIPPED_DEAD_LOG, ModItems.DEAD_WOOD_SHELF).save(output);
-        buildSign(ModItems.DEAD_WOOD_PLANKS, ModItems.DEAD_WOOD_SIGN).save(output);
-        buildHangingSign(ModItems.STRIPPED_DEAD_LOG, ModItems.DEAD_WOOD_HANGING_SIGN).save(output);
+        buildWood(ModItems.DEAD_LOG, ModItems.DEAD_WOOD).save(sink);
+        buildWood(ModItems.STRIPPED_DEAD_LOG, ModItems.STRIPPED_DEAD_WOOD).save(sink);
+        buildPlanks(ModItemTags.DEAD_LOGS, ModItems.DEAD_WOOD_PLANKS).save(sink);
+        buildSlab(ModItems.DEAD_WOOD_PLANKS, ModItems.DEAD_WOOD_SLAB).save(sink);
+        buildStairs(ModItems.DEAD_WOOD_PLANKS, ModItems.DEAD_WOOD_STAIRS).save(sink);
+        buildFence(ModItems.DEAD_WOOD_PLANKS, ModItems.DEAD_WOOD_FENCE).save(sink);
+        buildFenceGate(ModItems.DEAD_WOOD_PLANKS, ModItems.DEAD_WOOD_FENCE_GATE).save(sink);
+        buildPressurePlate(ModItems.DEAD_WOOD_PLANKS, ModItems.DEAD_WOOD_PRESSURE_PLATE).save(sink);
+        buildButton(ModItems.DEAD_WOOD_PLANKS, ModItems.DEAD_WOOD_BUTTON).save(sink);
+        buildWoodenDoor(ModItems.DEAD_WOOD_PLANKS, ModItems.DEAD_WOOD_DOOR).save(sink);
+        buildWoodenTrapdoor(ModItems.DEAD_WOOD_PLANKS, ModItems.DEAD_WOOD_TRAPDOOR).save(sink);
+        buildShelf(ModItems.STRIPPED_DEAD_LOG, ModItems.DEAD_WOOD_SHELF).save(sink);
+        buildSign(ModItems.DEAD_WOOD_PLANKS, ModItems.DEAD_WOOD_SIGN).save(sink);
+        buildHangingSign(ModItems.STRIPPED_DEAD_LOG, ModItems.DEAD_WOOD_HANGING_SIGN).save(sink);
     }
 
-    private RecipeBuilder buildSlab(ItemLike input, ItemLike output) {
-        return shaped(RecipeCategory.BUILDING_BLOCKS, output, 6)
+    private ShapedRecipeBuilder buildSlab(ItemLike input, ItemLike output) {
+        return shaped(output, 6)
+                .category(CraftingBookCategory.BUILDING)
                 .pattern("###")
                 .define('#', input)
-                .unlockedBy(getHasName(input), has(input));
+                .unlockedBy(input);
     }
 
-    private RecipeBuilder buildStairs(ItemLike input, ItemLike output) {
-        return shaped(RecipeCategory.BUILDING_BLOCKS, output, 4)
+    private ShapedRecipeBuilder buildStairs(ItemLike input, ItemLike output) {
+        return shaped(output, 4)
+                .category(CraftingBookCategory.BUILDING)
                 .pattern("#  ")
                 .pattern("## ")
                 .pattern("###")
                 .define('#', input)
-                .unlockedBy(getHasName(input), has(input));
+                .unlockedBy(input);
     }
 
-    private RecipeBuilder buildWall(ItemLike input, ItemLike output) {
-        return shaped(RecipeCategory.BUILDING_BLOCKS, output, 6)
+    private ShapedRecipeBuilder buildWall(ItemLike input, ItemLike output) {
+        return shaped(output, 6)
+                .category(CraftingBookCategory.BUILDING)
                 .pattern("###")
                 .pattern("###")
                 .define('#', input)
-                .unlockedBy(getHasName(input), has(input));
+                .unlockedBy(input);
     }
 
-    private RecipeBuilder buildFence(ItemLike input, ItemLike output) {
-        return shaped(RecipeCategory.BUILDING_BLOCKS, output, 3)
+    private ShapedRecipeBuilder buildFence(ItemLike input, ItemLike output) {
+        return shaped(output, 3)
+                .category(CraftingBookCategory.BUILDING)
                 .pattern("#/#")
                 .pattern("#/#")
                 .define('#', input)
                 .define('/', Items.STICK)
-                .unlockedBy(getHasName(input), has(input));
+                .unlockedBy(input);
     }
 
-    private RecipeBuilder buildFenceGate(ItemLike input, ItemLike output) {
-        return shaped(RecipeCategory.REDSTONE, output, 1)
+    private ShapedRecipeBuilder buildFenceGate(ItemLike input, ItemLike output) {
+        return shaped(output, 1)
+                .category(CraftingBookCategory.BUILDING)
                 .pattern("/#/")
                 .pattern("/#/")
                 .define('#', input)
                 .define('/', Items.STICK)
-                .unlockedBy(getHasName(input), has(input));
+                .unlockedBy(input);
     }
 
-    private RecipeBuilder buildPressurePlate(ItemLike input, ItemLike output) {
-        return shaped(RecipeCategory.REDSTONE, output, 1)
+    private ShapedRecipeBuilder buildPressurePlate(ItemLike input, ItemLike output) {
+        return shaped(output, 1)
+                .category(CraftingBookCategory.BUILDING)
                 .pattern("##")
                 .define('#', input)
-                .unlockedBy(getHasName(input), has(input));
+                .unlockedBy(input);
     }
 
-    private RecipeBuilder buildButton(ItemLike input, ItemLike output) {
-        return shapeless(RecipeCategory.REDSTONE, output, 1)
+    private ShapelessRecipeBuilder buildButton(ItemLike input, ItemLike output) {
+        return shapeless(output, 1)
+                .category(CraftingBookCategory.BUILDING)
                 .requires(input)
-                .unlockedBy(getHasName(input), has(input));
+                .unlockedBy(input);
     }
 
-    private RecipeBuilder buildWoodenDoor(ItemLike input, ItemLike output) {
-        return shaped(RecipeCategory.REDSTONE, output, 3)
+    private ShapedRecipeBuilder buildWoodenDoor(ItemLike input, ItemLike output) {
+        return shaped(output, 3)
+                .category(CraftingBookCategory.BUILDING)
                 .pattern("##")
                 .pattern("##")
                 .pattern("##")
                 .define('#', input)
-                .unlockedBy(getHasName(input), has(input));
+                .unlockedBy(input);
     }
 
-    private RecipeBuilder buildWoodenTrapdoor(ItemLike input, ItemLike output) {
-        return shaped(RecipeCategory.REDSTONE, output, 2)
+    private ShapedRecipeBuilder buildWoodenTrapdoor(ItemLike input, ItemLike output) {
+        return shaped(output, 2)
+                .category(CraftingBookCategory.BUILDING)
                 .pattern("###")
                 .pattern("###")
                 .define('#', input)
-                .unlockedBy(getHasName(input), has(input));
+                .unlockedBy(input);
     }
 
-    private RecipeBuilder buildShelf(ItemLike input, ItemLike output) {
-        return shaped(RecipeCategory.REDSTONE, output, 6)
+    private ShapedRecipeBuilder buildShelf(ItemLike input, ItemLike output) {
+        return shaped(output, 6)
+                .category(CraftingBookCategory.BUILDING)
                 .pattern("###")
                 .pattern("   ")
                 .pattern("###")
                 .define('#', input)
-                .unlockedBy(getHasName(input), has(input));
+                .unlockedBy(input);
     }
 
-    private RecipeBuilder buildSign(ItemLike input, ItemLike output) {
-        return shaped(RecipeCategory.REDSTONE, output, 3)
+    private ShapedRecipeBuilder buildSign(ItemLike input, ItemLike output) {
+        return shaped(output, 3)
+                .category(CraftingBookCategory.BUILDING)
                 .pattern("###")
                 .pattern("###")
                 .pattern(" / ")
                 .define('#', input)
                 .define('/', Items.STICK)
-                .unlockedBy(getHasName(input), has(input));
+                .unlockedBy(input);
     }
 
-    private RecipeBuilder buildHangingSign(ItemLike input, ItemLike output) {
-        return shaped(RecipeCategory.REDSTONE, output, 6)
+    private ShapedRecipeBuilder buildHangingSign(ItemLike input, ItemLike output) {
+        return shaped(output, 6)
+                .category(CraftingBookCategory.BUILDING)
                 .pattern("| |")
                 .pattern("###")
                 .pattern("###")
                 .define('#', input)
                 .define('|', Items.IRON_CHAIN)
-                .unlockedBy(getHasName(input), has(input));
+                .unlockedBy(input);
     }
 
-    private RecipeBuilder buildBricks(ItemLike input, ItemLike output) {
-        return shaped(RecipeCategory.BUILDING_BLOCKS, output, 4)
+    private ShapedRecipeBuilder buildBricks(ItemLike input, ItemLike output) {
+        return shaped(output, 4)
+                .category(CraftingBookCategory.BUILDING)
                 .pattern("##")
                 .pattern("##")
                 .define('#', input)
-                .unlockedBy(getHasName(input), has(input));
+                .unlockedBy(input);
     }
 
-    private RecipeBuilder buildWood(ItemLike input, ItemLike output) {
-        return shaped(RecipeCategory.BUILDING_BLOCKS, output, 3)
+    private ShapedRecipeBuilder buildWood(ItemLike input, ItemLike output) {
+        return shaped(output, 3)
+                .category(CraftingBookCategory.BUILDING)
                 .pattern("##")
                 .pattern("##")
                 .define('#', input)
-                .unlockedBy(getHasName(input), has(input));
+                .unlockedBy(input);
     }
 
-    private RecipeBuilder buildCompact(ItemLike input, ItemLike output) {
-        return shaped(RecipeCategory.MISC, output)
+    private ShapedRecipeBuilder buildCompact(ItemLike input, ItemLike output) {
+        return shaped(output)
+                .category(CraftingBookCategory.MISC)
                 .pattern("###")
                 .pattern("###")
                 .pattern("###")
                 .define('#', input)
-                .unlockedBy(getHasName(input), has(input));
+                .unlockedBy(input);
     }
 
-    private RecipeBuilder buildExpand(ItemLike input, ItemLike output) {
-        return shapeless(RecipeCategory.MISC, output, 9)
+    private ShapelessRecipeBuilder buildExpand(ItemLike input, ItemLike output) {
+        return shapeless(output, 9)
+                .category(CraftingBookCategory.MISC)
                 .requires(input)
-                .unlockedBy(getHasName(input), has(input));
+                .unlockedBy(input);
     }
 
-    private RecipeBuilder buildPlanks(TagKey<Item> input, ItemLike output) {
-        return shapeless(RecipeCategory.BUILDING_BLOCKS, output, 4)
+    private ShapelessRecipeBuilder buildPlanks(TagKey<Item> input, ItemLike output) {
+        return shapeless(output, 4)
+                .category(CraftingBookCategory.BUILDING)
                 .requires(input)
-                .unlockedBy("has_log", has(input));
+                .unlockedBy(input);
     }
 
-    private RecipeBuilder buildConvert(ItemLike input, ItemLike output, int amount) {
-        return shapeless(RecipeCategory.MISC, output, amount)
+    private ShapelessRecipeBuilder buildConvert(ItemLike input, ItemLike output, int amount) {
+        return shapeless(output, amount)
+                .category(CraftingBookCategory.MISC)
                 .requires(input)
-                .unlockedBy(getHasName(input), has(input));
+                .unlockedBy(input);
     }
 
-    public static FabricDataGenerator.Pack.RegistryDependentFactory<FabricRecipeProvider> factory() {
-        return (output, regs) -> new FabricRecipeProvider(output, regs) {
-            @Override
-            protected RecipeProvider createRecipeProvider(HolderLookup.Provider lookup, RecipeOutput output) {
-                return new ModRecipesProvider(lookup, output);
-            }
-
-            @Override
-            public String getName() {
-                return "Recipes";
-            }
-        };
+    @Override
+    public String getName() {
+        return "Recipes";
     }
 }
