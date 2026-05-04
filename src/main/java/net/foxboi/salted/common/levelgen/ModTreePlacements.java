@@ -1,7 +1,8 @@
 package net.foxboi.salted.common.levelgen;
 
+import net.foxboi.salted.common.Smptg;
 import net.foxboi.salted.common.levelgen.placement.DefinedPlacement;
-import net.foxboi.salted.common.misc.data.DataRegistry;
+import net.foxboi.salted.common.misc.reg.DataRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
@@ -12,7 +13,7 @@ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 @SuppressWarnings("unused")
 public record ModTreePlacements() {
-    private static final DataRegistry<PlacedFeature> REGISTRY = DataRegistry.of(Registries.PLACED_FEATURE);
+    private static final DataRegistry<PlacedFeature> REGISTRY = Smptg.REGISTRAR.data(Registries.PLACED_FEATURE);
 
     // TODO use correct saplings
 

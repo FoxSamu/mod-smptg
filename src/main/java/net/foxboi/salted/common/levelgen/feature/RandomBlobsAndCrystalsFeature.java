@@ -1,12 +1,12 @@
 package net.foxboi.salted.common.levelgen.feature;
 
-import net.foxboi.salted.common.block.SaltCrystalBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.material.Fluids;
@@ -79,11 +79,11 @@ public class RandomBlobsAndCrystalsFeature extends Feature<RandomBlobsAndCrystal
             var waterlogged = fluid.isSourceOfType(Fluids.WATER);
 
             var state = crystal.getState(level, rng, pos)
-                    .trySetValue(SaltCrystalBlock.WATERLOGGED, waterlogged);
+                    .trySetValue(BlockStateProperties.WATERLOGGED, waterlogged);
 
-            if (config.tryRotateCrystals() && state.hasProperty(SaltCrystalBlock.FACING)) {
+            if (config.tryRotateCrystals() && state.hasProperty(BlockStateProperties.FACING)) {
                 for (Direction dir : Direction.allShuffled(rng)) {
-                    state = state.setValue(SaltCrystalBlock.FACING, dir);
+                    state = state.setValue(BlockStateProperties.FACING, dir);
 
                     if (state.canSurvive(level, pos)) {
                         return level.setBlock(pos, state, Block.UPDATE_ALL_IMMEDIATE);

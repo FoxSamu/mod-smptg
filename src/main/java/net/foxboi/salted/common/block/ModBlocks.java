@@ -7,12 +7,15 @@ import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.foxboi.salted.common.Smptg;
 import net.foxboi.salted.common.misc.ColorRegistry;
 import net.foxboi.salted.common.misc.Translator;
+import net.foxboi.salted.common.misc.reg.GameRegistry;
+
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.ColorRGBA;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.IntProvider;
@@ -41,6 +44,8 @@ public record ModBlocks() {
     // - Go through all the configurations in ModBlockData (under the data source set) as well
     // - All configuration methods reside above the factory methods
     // - Add a block item for each block that should be placeable in ModItems
+
+    public static final GameRegistry<Block> REGISTRY = Smptg.REGISTRAR.game(Registries.BLOCK);
 
 
     // BLOCKS
@@ -151,6 +156,11 @@ public record ModBlocks() {
     public static final Block DEAD_WOOD_WALL_HANGING_SIGN = register("dead_wood_wall_hanging_sign", wallHangingSign(ModWoodTypes.DEAD_WOOD), wallSignProps(DEAD_WOOD_PLANKS).strength(0.5f));
 
 
+    // Soils
+
+    public static final Block MOSSY_DIRT = register("mossy_dirt", grassBlock(), props(Blocks.GRASS_BLOCK).sound(SoundType.MOSS));
+
+
     // Ash
 
     public static final Block BURNED_STEM = register("burned_stem", rotatedPillar(), logProps(MapColor.COLOR_BLACK, MapColor.COLOR_BLACK, SoundType.STEM).strength(1f));
@@ -164,53 +174,33 @@ public record ModBlocks() {
     public static final Block ASH_BRICK_SLAB = register("ash_brick_slab", slab(), props(ASH_BRICKS));
     public static final Block ASH_BRICK_STAIRS = register("ash_brick_stairs", stairs(), props(ASH_BRICKS));
 
-    public static final Block ASHCREEP = register("ashcreep", ashcreep(), props(Blocks.POPPY).sound(SoundType.NETHER_SPROUTS).mapColor(MapColor.COLOR_GRAY));
-    public static final Block ASHVINE = register("ashvine", ashvine(), props(Blocks.POPPY).sound(SoundType.WEEPING_VINES).mapColor(MapColor.COLOR_GRAY));
-
-
-    // Soils
-
-    public static final Block MOSSY_DIRT = register("mossy_dirt", grassBlock(), props(Blocks.GRASS_BLOCK).sound(SoundType.MOSS));
-
 
     // Plants
 
     public static final Block CLOVERS = register("clovers", clovers(), props(Blocks.PINK_PETALS).replaceable());
     public static final Block GRASS_SPROUTS = register("grass_sprouts", grassSprouts(), props(Blocks.SHORT_GRASS).sound(SoundType.MOSS_CARPET));
-    public static final Block BARLEY = register("barley", grassyPlant(ModBlocks::tallBarley), props(Blocks.POPPY));
-    public static final Block TALL_BARLEY = register("tall_barley", tallGrassyPlant(), props(Blocks.ROSE_BUSH));
-    public static final Block CATTAIL = register("cattail", grassyPlant(ModBlocks::tallCattail), props(Blocks.POPPY));
-    public static final Block TALL_CATTAIL = register("tall_cattail", partiallyWaterloggableTallGrassyPlant(), props(Blocks.ROSE_BUSH));
-    public static final Block LAVENDER = register("lavender", grassyPlant(ModBlocks::tallLavender), props(Blocks.POPPY));
-    public static final Block TALL_LAVENDER = register("tall_lavender", tallGrassyPlant(), props(Blocks.ROSE_BUSH));
+    public static final Block BARLEY = register("barley", grassyPlant(BlockTags.SUPPORTS_DRY_VEGETATION, ModBlocks::tallBarley), props(Blocks.POPPY));
+    public static final Block TALL_BARLEY = register("tall_barley", tallGrassyPlant(BlockTags.SUPPORTS_DRY_VEGETATION), props(Blocks.ROSE_BUSH));
+    public static final Block CATTAIL = register("cattail", grassyPlant(ModBlockTags.SUPPORTS_WATER_VEGETATION, ModBlocks::tallCattail), props(Blocks.POPPY));
+    public static final Block TALL_CATTAIL = register("tall_cattail", partiallyWaterloggableTallGrassyPlant(ModBlockTags.SUPPORTS_WATER_VEGETATION), props(Blocks.ROSE_BUSH));
+    public static final Block LAVENDER = register("lavender", grassyPlant(BlockTags.SUPPORTS_VEGETATION, ModBlocks::tallLavender), props(Blocks.POPPY));
+    public static final Block TALL_LAVENDER = register("tall_lavender", tallGrassyPlant(BlockTags.SUPPORTS_VEGETATION), props(Blocks.ROSE_BUSH));
     public static final Block CAVE_GRASS = register("cave_grass", caveGrass(), props(Blocks.SHORT_GRASS).sound(SoundType.MOSS_CARPET).mapColor(MapColor.SAND));
     public static final Block DRIPMOSS = register("dripmoss", dripmoss(), props(Blocks.POPPY).sound(SoundType.MOSS_CARPET).mapColor(MapColor.SAND));
     public static final Block PATCHMOSS = register("patchmoss", multifacePlant(), patchmossProps());
-    public static final Block GLOBE_THISTLE = register("globe_thistle", tallGrassyPlant(), props(Blocks.ROSE_BUSH));
+    public static final Block GLOBE_THISTLE = register("globe_thistle", tallGrassyPlant(BlockTags.SUPPORTS_VEGETATION), props(Blocks.ROSE_BUSH));
 
     public static final Block SHELF_FUNGUS = register("shelf_fungus", shelfFungus(), props(Blocks.POPPY).mapColor(MapColor.SAND).offsetType(BlockBehaviour.OffsetType.XYZ));
 
 
-    // Salt
+    // Nether Plants
 
-    public static final Block SALT_BLOCK = register("salt_block", falling(0xFFFFFFFF), props(Blocks.SAND).mapColor(DyeColor.WHITE));
-    public static final Block SALT_CRUST = register("salt_crust", block(), props(Blocks.DIRT).sound(SoundType.BASALT).mapColor(DyeColor.WHITE));
+    public static final Block ASHCREEP = register("ashcreep", ashcreep(), props(Blocks.POPPY).sound(SoundType.NETHER_SPROUTS).mapColor(MapColor.NONE));
+    public static final Block ASHVINE = register("ashvine", ashvine(), props(Blocks.POPPY).sound(SoundType.WEEPING_VINES).mapColor(MapColor.COLOR_GRAY));
 
-    public static final Block ROCKSALT = register("rocksalt", block(), props(Blocks.SANDSTONE).mapColor(DyeColor.WHITE));
-    public static final Block ROCKSALT_SLAB = register("rocksalt_slab", slab(), props(ROCKSALT));
-    public static final Block ROCKSALT_STAIRS = register("rocksalt_stairs", stairs(), props(ROCKSALT));
-    public static final Block ROCKSALT_WALL = register("rocksalt_wall", wall(), props(ROCKSALT));
-
-    public static final Block ROCKSALT_BRICKS = register("rocksalt_bricks", block(), props(ROCKSALT));
-    public static final Block ROCKSALT_BRICK_SLAB = register("rocksalt_brick_slab", slab(), props(ROCKSALT));
-    public static final Block ROCKSALT_BRICK_STAIRS = register("rocksalt_brick_stairs", stairs(), props(ROCKSALT));
-    public static final Block ROCKSALT_BRICK_WALL = register("rocksalt_brick_wall", wall(), props(ROCKSALT));
-
-    public static final Block SALT_CRYSTAL = register("salt_crystal", saltCrystal(), props(Blocks.AMETHYST_CLUSTER).lightLevel(state -> 0).strength(0.8F).mapColor(DyeColor.WHITE).sound(SoundType.CALCITE).noCollision());
-
-    public static final Block SALT_ORE = register("salt_ore", xpDropping(1, 3), props(Blocks.COAL_ORE));
-    public static final Block DEEPSLATE_SALT_ORE = register("deepslate_salt_ore", xpDropping(1, 3), props(Blocks.DEEPSLATE_COAL_ORE));
-    public static final Block NETHER_SALT_ORE = register("nether_salt_ore", xpDropping(2, 5), props(Blocks.NETHER_QUARTZ_ORE));
+    public static final Block EMBERGRASS = register("embergrass", embergrass(), props(Blocks.POPPY).sound(SoundType.NETHER_SPROUTS).mapColor(MapColor.NONE));
+    public static final Block EMBERWEED = register("emberweed", emberweed(), props(Blocks.POPPY).sound(SoundType.ROOTS).mapColor(MapColor.NONE));
+    public static final Block EMBERS = register("embers", embers(), props(Blocks.LEAF_LITTER).sound(SoundType.LEAF_LITTER).mapColor(MapColor.NONE));
 
 
     // INITIALISATION
@@ -219,7 +209,6 @@ public record ModBlocks() {
     public static void init() {
         // Register block types
         Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("stair"), SimpleStairBlock.CODEC);
-        Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("salt_crystal"), SaltCrystalBlock.CODEC);
         Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("short_plant"), ShortPlantBlock.CODEC);
         Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("hanging_short_plant"), HangingShortPlantBlock.CODEC);
         Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("tall_plant"), TallPlantBlock.CODEC);
@@ -233,6 +222,7 @@ public record ModBlocks() {
         Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("segmented_flowers"), SegmentedFlowersBlock.CODEC);
         Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("segmented_clovers"), SegmentedCloversBlock.CODEC);
         Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("multiface_plant"), MultifacePlantBlock.CODEC);
+        Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("ember_plant"), EmberPlantBlock.CODEC);
 
         // Setup supported blocks
         BlockEntityType.SHELF.addValidBlock(ASPEN_SHELF);
@@ -399,6 +389,9 @@ public record ModBlocks() {
         translator.name(DEAD_WOOD_SIGN, "Dead Wood Sign");
         translator.name(DEAD_WOOD_HANGING_SIGN, "Dead Wood Hanging Sign");
 
+        // Soils
+        translator.name(MOSSY_DIRT, "Mossy Dirt");
+
         // Ash
         translator.name(BURNED_STEM, "Burned Stem");
         translator.name(BURNED_HYPHAE, "Burned Hyphae");
@@ -409,11 +402,6 @@ public record ModBlocks() {
         translator.name(ASH_BRICKS, "Ash Bricks");
         translator.name(ASH_BRICK_SLAB, "Ash Brick Slab");
         translator.name(ASH_BRICK_STAIRS, "Ash Brick Stairs");
-        translator.name(ASHVINE, "Ashvine");
-        translator.name(ASHCREEP, "Ashcreep");
-
-        // Soils
-        translator.name(MOSSY_DIRT, "Mossy Dirt");
 
         // Plants
         translator.name(CLOVERS, "Clovers");
@@ -431,25 +419,12 @@ public record ModBlocks() {
 
         translator.name(SHELF_FUNGUS, "Shelf Fungus");
 
-        // Salt
-        translator.name(SALT_BLOCK, "Block of Salt");
-        translator.name(SALT_CRUST, "Salt Crust");
-
-        translator.name(ROCKSALT, "Rocksalt");
-        translator.name(ROCKSALT_SLAB, "Rocksalt Slab");
-        translator.name(ROCKSALT_STAIRS, "Rocksalt Stairs");
-        translator.name(ROCKSALT_WALL, "Rocksalt Wall");
-
-        translator.name(ROCKSALT_BRICKS, "Rocksalt Bricks");
-        translator.name(ROCKSALT_BRICK_SLAB, "Rocksalt Brick Slab");
-        translator.name(ROCKSALT_BRICK_STAIRS, "Rocksalt Brick Stairs");
-        translator.name(ROCKSALT_BRICK_WALL, "Rocksalt Brick Wall");
-
-        translator.name(SALT_CRYSTAL, "Salt Crystal");
-
-        translator.name(SALT_ORE, "Salt Ore");
-        translator.name(DEEPSLATE_SALT_ORE, "Deepslate Salt Ore");
-        translator.name(NETHER_SALT_ORE, "Nether Salt Ore");
+        // Nether Plants
+        translator.name(ASHVINE, "Ashvine");
+        translator.name(ASHCREEP, "Ashcreep");
+        translator.name(EMBERGRASS, "Embergrass");
+        translator.name(EMBERWEED, "Emberweed");
+        translator.name(EMBERS, "Embers");
     }
 
 
@@ -522,37 +497,37 @@ public record ModBlocks() {
         return MossyDirtBlock::new;
     }
 
-    private static BlockFactory grassyPlant() {
+    private static BlockFactory grassyPlant(TagKey<Block> support) {
         return props -> new ShortPlantBlock(
                 PlantConfig.of()
-                        .canGrowOn(PlantConfig.GROW_ON_DIRT_SAND)
+                        .canGrowOn(support)
                         .size(14, 14),
                 props
         );
     }
 
-    private static BlockFactory grassyPlant(Supplier<BlockState> tallVersion) {
+    private static BlockFactory grassyPlant(TagKey<Block> support, Supplier<BlockState> tallVersion) {
         return props -> new ShortPlantBlock(
                 PlantConfig.of()
-                        .canGrowOn(PlantConfig.GROW_ON_DIRT_SAND)
+                        .canGrowOn(support)
                         .bonemealBehavior(BonemealBehaviors.growIntoTallPlant(tallVersion))
                         .size(14, 14),
                 props
         );
     }
 
-    private static BlockFactory tallGrassyPlant() {
+    private static BlockFactory tallGrassyPlant(TagKey<Block> support) {
         return props -> new TallPlantBlock(
                 PlantConfig.of()
-                        .canGrowOn(PlantConfig.GROW_ON_DIRT_SAND),
+                        .canGrowOn(support),
                 props
         );
     }
 
-    private static BlockFactory partiallyWaterloggableTallGrassyPlant() {
+    private static BlockFactory partiallyWaterloggableTallGrassyPlant(TagKey<Block> support) {
         return props -> new PartiallyWaterloggableTallPlantBlock(
                 PlantConfig.of()
-                        .canGrowOn(PlantConfig.GROW_ON_DIRT_SAND),
+                        .canGrowOn(support),
                 props
         );
     }
@@ -581,7 +556,7 @@ public record ModBlocks() {
     private static BlockFactory grassSprouts() {
         return props -> new ShortPlantBlock(
                 PlantConfig.of()
-                        .canGrowOn(PlantConfig.GROW_ON_DIRT_SAND)
+                        .canGrowOn(BlockTags.SUPPORTS_VEGETATION)
                         .size(14, 4)
                         .bonemealBehavior(BonemealBehaviors.growIntoShortPlant(Blocks.SHORT_GRASS::defaultBlockState)),
                 props
@@ -591,7 +566,7 @@ public record ModBlocks() {
     private static BlockFactory caveGrass() {
         return props -> new ShortPlantBlock(
                 PlantConfig.of()
-                        .canGrowOn(PlantConfig.GROW_ON_DIRT_SAND_STONE)
+                        .canGrowOn(ModBlockTags.SUPPORTS_CAVE_VEGETATION)
                         .size(14, 4),
                 props
         );
@@ -600,7 +575,7 @@ public record ModBlocks() {
     private static BlockFactory ashcreep() {
         return props -> new ShortPlantBlock(
                 PlantConfig.of()
-                        .canGrowOn(PlantConfig.GROW_ON_ASH)
+                        .canGrowOn(ModBlockTags.SUPPORTS_ASH_VEGETATION)
                         .size(14, 4),
                 props
         );
@@ -616,8 +591,31 @@ public record ModBlocks() {
         );
     }
 
-    private static BlockFactory saltCrystal() {
-        return SaltCrystalBlock::new;
+    private static BlockFactory embergrass() {
+        return props -> new EmberPlantBlock(
+                PlantConfig.of()
+                        .canGrowOn(ModBlockTags.SUPPORTS_EMBER_VEGETATION)
+                        .size(14, 4),
+                props
+        );
+    }
+
+    private static BlockFactory emberweed() {
+        return props -> new EmberPlantBlock(
+                PlantConfig.of()
+                        .canGrowOn(ModBlockTags.SUPPORTS_EMBER_VEGETATION)
+                        .size(14, 6),
+                props
+        );
+    }
+
+    private static BlockFactory embers() {
+        return props -> new EmbersBlock(
+                PlantConfig.of()
+                        .canGrowOn(PlantConfig.GROW_ON_STURDY_FACE)
+                        .size(16, 1),
+                props
+        );
     }
 
     private static BlockFactory leaves(float particleChance) {
@@ -859,12 +857,6 @@ public record ModBlocks() {
     // =============================================
 
     private static Block register(String name, BlockFactory factory, BlockBehaviour.Properties properties) {
-        var key = Smptg.key(Registries.BLOCK, name);
-        return register(key, factory, properties);
-    }
-
-    private static Block register(ResourceKey<Block> key, BlockFactory factory, BlockBehaviour.Properties properties) {
-        var block = factory.create(properties.setId(key));
-        return Registry.register(BuiltInRegistries.BLOCK, key, block);
+        return REGISTRY.register(name, factory, properties);
     }
 }

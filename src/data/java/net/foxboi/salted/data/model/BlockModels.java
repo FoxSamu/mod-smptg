@@ -68,6 +68,23 @@ public interface BlockModels {
     void emissiveCrossPlant(Block block);
 
     /**
+     * Creates an untinted glowing cross plant.
+     */
+    void glowingCrossPlant(Block block);
+
+    /**
+     * Creates a tinted glowing cross plant.
+     */
+    void tintedGlowingCrossPlant(Block block, ItemTint tint);
+
+    /**
+     * Creates a tinted glowing cross plant.
+     */
+    default void tintedGlowingCrossPlant(Block block, int tint) {
+        tintedGlowingCrossPlant(block, ItemTint.constant(tint));
+    }
+
+    /**
      * Creates an untinted double-block cross plant.
      */
     void tallCrossPlant(Block block);
@@ -100,6 +117,23 @@ public interface BlockModels {
      * Creates an untinted double-block cross plant with emissive overlay.
      */
     void tallEmissiveCrossPlant(Block block);
+
+    /**
+     * Creates an untinted glowing tall cross plant.
+     */
+    void tallGlowingCrossPlant(Block block);
+
+    /**
+     * Creates a tinted glowing tall cross plant.
+     */
+    void tallTintedGlowingCrossPlant(Block block, ItemTint tint);
+
+    /**
+     * Creates a tinted glowing tall cross plant.
+     */
+    default void tallTintedGlowingCrossPlant(Block block, int tint) {
+        tallTintedGlowingCrossPlant(block, ItemTint.constant(tint));
+    }
 
     /**
      * Creates an untinted column cross plant.
@@ -136,6 +170,23 @@ public interface BlockModels {
     void columnEmissiveCrossPlant(Block block);
 
     /**
+     * Creates an untinted glowing column cross plant.
+     */
+    void columnGlowingCrossPlant(Block block);
+
+    /**
+     * Creates a tinted glowing column cross plant.
+     */
+    void columnTintedGlowingCrossPlant(Block block, ItemTint tint);
+
+    /**
+     * Creates a tinted glowing column cross plant.
+     */
+    default void columnTintedGlowingCrossPlant(Block block, int tint) {
+        columnTintedGlowingCrossPlant(block, ItemTint.constant(tint));
+    }
+
+    /**
      * Creates an untinted flower bed.
      */
     void flowerBed(Block block);
@@ -150,6 +201,57 @@ public interface BlockModels {
      */
     default void tintedFlowerBed(Block block, int tint) {
         tintedFlowerBed(block, ItemTint.constant(tint));
+    }
+
+    /**
+     * Creates an untinted leaf litter.
+     */
+    void flatSegmentedPlant(Block block);
+
+    /**
+     * Creates a tinted leaf litter.
+     */
+    void tintedFlatSegmentedPlant(Block block, ItemTint tint);
+
+    /**
+     * Creates a tinted leaf litter.
+     */
+    default void tintedFlatSegmentedPlant(Block block, int tint) {
+        tintedFlatSegmentedPlant(block, ItemTint.constant(tint));
+    }
+
+    /**
+     * Creates a tinted leaf litter with an untinted overlay.
+     */
+    void layeredFlatSegmentedPlant(Block block, ItemTint tint);
+
+    /**
+     * Creates a tinted leaf litter with an untinted overlay.
+     */
+    default void layeredFlatSegmentedPlant(Block block, int tint) {
+        layeredFlatSegmentedPlant(block, ItemTint.constant(tint));
+    }
+
+    /**
+     * Creates an untinted leaf litter with an emissive overlay.
+     */
+    void emissiveFlatSegmentedPlant(Block block);
+
+    /**
+     * Creates an untinted glowing leaf litter.
+     */
+    void glowingFlatSegmentedPlant(Block block);
+
+    /**
+     * Creates a tinted glowing leaf litter.
+     */
+    void tintedGlowingFlatSegmentedPlant(Block block, ItemTint tint);
+
+    /**
+     * Creates a tinted glowing leaf litter.
+     */
+    default void tintedGlowingFlatSegmentedPlant(Block block, int tint) {
+        tintedGlowingFlatSegmentedPlant(block, ItemTint.constant(tint));
     }
 
     /**
@@ -217,9 +319,4 @@ public interface BlockModels {
      * Creates a shelf fungus.
      */
     void shelfFungus(Block block);
-
-    /**
-     * Creates a salt crystal model.
-     */
-    void saltCrystal(Block block);
 }

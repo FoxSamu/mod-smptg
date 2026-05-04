@@ -1,10 +1,13 @@
 package net.foxboi.salted.common.levelgen.surface;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.function.Function;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.KeyDispatchDataCodec;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
@@ -27,32 +30,61 @@ public record BiomeOverrideRule(
     @Override
     public SurfaceRules.SurfaceRule apply(SurfaceRules.Context context) {
         var overrides = this.overrides.value();
-        var entries = new ArrayList<Entry>();
+
+        // Try collecting to map for constant-ish time lookup, otherwise fall back to linear search
+        var entries = new ArrayList<SearchEntry>();
+        var optimizedEntries = new HashMap<ResourceKey<Biome>, SurfaceRules.SurfaceRule>();
+        var useOptimized = true;
 
         for (var override : overrides.overrides()) {
-            entries.add(new Entry(
-                    override.biomes(),
-                    override.rule().apply(context)
-            ));
+            var biomes = override.biomes();
+            var rule = override.rule().apply(context);
+
+            entries.add(new SearchEntry(biomes, rule));
+
+            if (biomes.isBound()) {
+                for (var biome : biomes) {
+                    if (biome instanceof Holder.Reference<Biome> reference) {
+                        optimizedEntries.put(reference.key(), rule);
+                    } else {
+                        useOptimized = false;
+                    }
+                }
+            } else {
+                useOptimized = false;
+            }
         }
 
-        return new Rule(context, entries);
+        if (useOptimized) {
+            return new LookupRule(context, holder -> {
+                if (holder instanceof Holder.Reference<Biome> reference) {
+                    return optimizedEntries.get(reference.key());
+                } else {
+                    // Minecraft does not allow inlined biomes, this should
+                    // never happen. If it happens anyway, we don't have any
+                    // surface rule defined so null will do.
+                    return null;
+                }
+            });
+        } else {
+            return new LinearSearchRule(context, entries);
+        }
     }
 
-    private record Entry(
+    private record SearchEntry(
             HolderSet<Biome> biomes,
             SurfaceRules.SurfaceRule rule
     ) {
     }
 
-    private static final class Rule implements SurfaceRules.SurfaceRule {
+    private static final class LinearSearchRule implements SurfaceRules.SurfaceRule {
         private final SurfaceRules.Context context;
-        private final List<Entry> entries;
+        private final List<SearchEntry> entries;
 
         private long lastUpdate;
-        private Entry current;
+        private SearchEntry current;
 
-        private Rule(SurfaceRules.Context context, List<Entry> entries) {
+        private LinearSearchRule(SurfaceRules.Context context, List<SearchEntry> entries) {
             this.context = context;
             this.entries = entries;
 
@@ -80,6 +112,34 @@ public record BiomeOverrideRule(
 
             return null;
         }
+    }
 
+    private static final class LookupRule implements SurfaceRules.SurfaceRule {
+        private final SurfaceRules.Context context;
+        private final Function<Holder<Biome>, SurfaceRules.SurfaceRule> entries;
+
+        private long lastUpdate;
+        private SurfaceRules.SurfaceRule current;
+
+        private LookupRule(SurfaceRules.Context context, Function<Holder<Biome>, SurfaceRules.SurfaceRule> entries) {
+            this.context = context;
+            this.entries = entries;
+
+            this.lastUpdate = context.lastUpdateY - 1;
+        }
+
+        @Override
+        public BlockState tryApply(int x, int y, int z) {
+            if (context.lastUpdateY != lastUpdate) {
+                current = entries.apply(context.biome.get());
+                lastUpdate = context.lastUpdateY;
+            }
+
+            if (current != null) {
+                return current.tryApply(x, y, z);
+            }
+
+            return null;
+        }
     }
 }

@@ -15,18 +15,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(IceBlock.class)
 public abstract class IceBlockMixin {
-    @Shadow
-    protected abstract void melt(BlockState blockState, Level level, BlockPos blockPos);
-
-    @Inject(
-            method = "randomTick",
-            at = @At("HEAD"),
-            cancellable = true
-    )
-    private void onRandomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource rng, CallbackInfo ci) {
-        if (Misc.isNextToSalt(level, pos)) {
-            melt(state, level, pos);
-            ci.cancel();
-        }
-    }
+//    @Shadow
+//    protected abstract void melt(BlockState blockState, Level level, BlockPos blockPos);
+//
+//    @Inject(
+//            method = "randomTick",
+//            at = @At("HEAD"),
+//            cancellable = true
+//    )
+//    private void onRandomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource rng, CallbackInfo ci) {
+//        if (Misc.isNextToSalt(level, pos)) {
+//            melt(state, level, pos);
+//            ci.cancel();
+//        }
+//    }
 }

@@ -18,9 +18,29 @@ public class ModTextureMappings {
                 .put(ModTextureSlots.UNTINTED, Materials.withSuffix(texture, "_overlay"));
     }
 
+    public static TextureMapping crossEmissive(Block block) {
+        return crossEmissive(getBlockTexture(block));
+    }
+
     public static TextureMapping crossEmissive(Material texture) {
         return new TextureMapping()
                 .put(TextureSlot.CROSS, texture)
+                .put(TextureSlot.CROSS_EMISSIVE, Materials.withSuffix(texture, "_emissive"));
+    }
+
+    public static TextureMapping textureEmissive(Block block) {
+        return textureEmissive(getBlockTexture(block));
+    }
+
+    public static TextureMapping textureEmissive(Material texture) {
+        return new TextureMapping()
+                .put(TextureSlot.TEXTURE, texture)
+                .put(ModTextureSlots.EMISSIVE, Materials.withSuffix(texture, "_emissive"));
+    }
+
+    public static TextureMapping plantEmissive(Material texture) {
+        return new TextureMapping()
+                .put(TextureSlot.PLANT, texture)
                 .put(TextureSlot.CROSS_EMISSIVE, Materials.withSuffix(texture, "_emissive"));
     }
 }

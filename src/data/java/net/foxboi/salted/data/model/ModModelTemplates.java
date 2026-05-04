@@ -11,7 +11,10 @@ public class ModModelTemplates {
     public static final ModelTemplate TINTED_FLOWERBED_2 = create("tinted_flowerbed_2", "_2", TextureSlot.FLOWERBED, TextureSlot.STEM);
     public static final ModelTemplate TINTED_FLOWERBED_3 = create("tinted_flowerbed_3", "_3", TextureSlot.FLOWERBED, TextureSlot.STEM);
     public static final ModelTemplate TINTED_FLOWERBED_4 = create("tinted_flowerbed_4", "_4", TextureSlot.FLOWERBED, TextureSlot.STEM);
+
     public static final ModelTemplate LAYERED_CROSS = create("layered_cross", ModTextureSlots.UNTINTED, ModTextureSlots.TINTED);
+    public static final ModelTemplate GLOWING_CROSS = create("glowing_cross", TextureSlot.CROSS);
+    public static final ModelTemplate TINTED_GLOWING_CROSS = create("tinted_glowing_cross", TextureSlot.CROSS);
 
     public static final ModelTemplate LAYER_HEIGHT2 = create("layer_height2", "_height2", TextureSlot.TEXTURE);
     public static final ModelTemplate LAYER_HEIGHT4 = create("layer_height4", "_height4", TextureSlot.TEXTURE);
@@ -27,6 +30,36 @@ public class ModModelTemplates {
 
     public static final ModelTemplate FLAT = create("flat", TextureSlot.TEXTURE);
     public static final ModelTemplate FLAT_TINTED = create("flat_tinted", TextureSlot.TEXTURE);
+
+    public static final ModelTemplate FLAT_SEGMENT_1 = create("flat_segment_1", "_1", TextureSlot.TEXTURE);
+    public static final ModelTemplate FLAT_SEGMENT_2 = create("flat_segment_2", "_2", TextureSlot.TEXTURE);
+    public static final ModelTemplate FLAT_SEGMENT_3 = create("flat_segment_3", "_3", TextureSlot.TEXTURE);
+    public static final ModelTemplate FLAT_SEGMENT_4 = create("flat_segment_4", "_4", TextureSlot.TEXTURE);
+
+    public static final ModelTemplate TINTED_FLAT_SEGMENT_1 = create("tinted_flat_segment_1", "_1", TextureSlot.TEXTURE);
+    public static final ModelTemplate TINTED_FLAT_SEGMENT_2 = create("tinted_flat_segment_2", "_2", TextureSlot.TEXTURE);
+    public static final ModelTemplate TINTED_FLAT_SEGMENT_3 = create("tinted_flat_segment_3", "_3", TextureSlot.TEXTURE);
+    public static final ModelTemplate TINTED_FLAT_SEGMENT_4 = create("tinted_flat_segment_4", "_4", TextureSlot.TEXTURE);
+
+    public static final ModelTemplate LAYERED_FLAT_SEGMENT_1 = create("layered_flat_segment_1", "_1", ModTextureSlots.UNTINTED, ModTextureSlots.TINTED);
+    public static final ModelTemplate LAYERED_FLAT_SEGMENT_2 = create("layered_flat_segment_2", "_2", ModTextureSlots.UNTINTED, ModTextureSlots.TINTED);
+    public static final ModelTemplate LAYERED_FLAT_SEGMENT_3 = create("layered_flat_segment_3", "_3", ModTextureSlots.UNTINTED, ModTextureSlots.TINTED);
+    public static final ModelTemplate LAYERED_FLAT_SEGMENT_4 = create("layered_flat_segment_4", "_4", ModTextureSlots.UNTINTED, ModTextureSlots.TINTED);
+
+    public static final ModelTemplate EMISSIVE_FLAT_SEGMENT_1 = create("emissive_flat_segment_1", "_1", TextureSlot.TEXTURE, ModTextureSlots.EMISSIVE);
+    public static final ModelTemplate EMISSIVE_FLAT_SEGMENT_2 = create("emissive_flat_segment_2", "_2", TextureSlot.TEXTURE, ModTextureSlots.EMISSIVE);
+    public static final ModelTemplate EMISSIVE_FLAT_SEGMENT_3 = create("emissive_flat_segment_3", "_3", TextureSlot.TEXTURE, ModTextureSlots.EMISSIVE);
+    public static final ModelTemplate EMISSIVE_FLAT_SEGMENT_4 = create("emissive_flat_segment_4", "_4", TextureSlot.TEXTURE, ModTextureSlots.EMISSIVE);
+
+    public static final ModelTemplate GLOWING_FLAT_SEGMENT_1 = create("glowing_flat_segment_1", "_1", TextureSlot.TEXTURE);
+    public static final ModelTemplate GLOWING_FLAT_SEGMENT_2 = create("glowing_flat_segment_2", "_2", TextureSlot.TEXTURE);
+    public static final ModelTemplate GLOWING_FLAT_SEGMENT_3 = create("glowing_flat_segment_3", "_3", TextureSlot.TEXTURE);
+    public static final ModelTemplate GLOWING_FLAT_SEGMENT_4 = create("glowing_flat_segment_4", "_4", TextureSlot.TEXTURE);
+
+    public static final ModelTemplate TINTED_GLOWING_FLAT_SEGMENT_1 = create("tinted_glowing_flat_segment_1", "_1", TextureSlot.TEXTURE);
+    public static final ModelTemplate TINTED_GLOWING_FLAT_SEGMENT_2 = create("tinted_glowing_flat_segment_2", "_2", TextureSlot.TEXTURE);
+    public static final ModelTemplate TINTED_GLOWING_FLAT_SEGMENT_3 = create("tinted_glowing_flat_segment_3", "_3", TextureSlot.TEXTURE);
+    public static final ModelTemplate TINTED_GLOWING_FLAT_SEGMENT_4 = create("tinted_glowing_flat_segment_4", "_4", TextureSlot.TEXTURE);
 
     private static ModelTemplate create(TextureSlot... slots) {
         return new ModelTemplate(Optional.empty(), Optional.empty(), slots);

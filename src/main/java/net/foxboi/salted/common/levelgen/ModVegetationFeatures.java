@@ -2,11 +2,12 @@ package net.foxboi.salted.common.levelgen;
 
 import java.util.List;
 
+import net.foxboi.salted.common.Smptg;
 import net.foxboi.salted.common.block.ModBlocks;
 import net.foxboi.salted.common.levelgen.feature.ColumnPlantConfiguration;
 import net.foxboi.salted.common.levelgen.feature.DefinedFeature;
 import net.foxboi.salted.common.levelgen.feature.ModFeatures;
-import net.foxboi.salted.common.misc.data.DataRegistry;
+import net.foxboi.salted.common.misc.reg.DataRegistry;
 
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
@@ -27,7 +28,7 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvi
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 
 public record ModVegetationFeatures() {
-    private static final DataRegistry<ConfiguredFeature<?, ?>> REGISTRY = DataRegistry.of(Registries.CONFIGURED_FEATURE);
+    private static final DataRegistry<ConfiguredFeature<?, ?>> REGISTRY = Smptg.REGISTRAR.data(Registries.CONFIGURED_FEATURE);
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> GRASS_SPROUTS = REGISTRY.register("grass_sprouts", block(FeatureBlocks.GRASS_SPROUTS));
     public static final ResourceKey<ConfiguredFeature<?, ?>> RANDOM_BARLEY = REGISTRY.register("random_barley", block(FeatureBlocks.RANDOM_BARLEY));

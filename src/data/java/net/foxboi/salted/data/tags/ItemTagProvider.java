@@ -22,16 +22,6 @@ public class ItemTagProvider extends FabricTagsProvider.ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider regs) {
-        valueLookupBuilder(ModItemTags.SALTED_FOODS)
-                .add(ModItems.SALTED_BEEF)
-                .add(ModItems.SALTED_PORKCHOP)
-                .add(ModItems.SALTED_MUTTON)
-                .add(ModItems.SALTED_CHICKEN)
-                .add(ModItems.COOKED_SALTED_BEEF)
-                .add(ModItems.COOKED_SALTED_PORKCHOP)
-                .add(ModItems.COOKED_SALTED_MUTTON)
-                .add(ModItems.COOKED_SALTED_CHICKEN);
-
         valueLookupBuilder(ItemTags.BOATS)
                 .add(ModItems.ASPEN_BOAT)
                 .add(ModItems.BEECH_BOAT)
@@ -73,8 +63,6 @@ public class ItemTagProvider extends FabricTagsProvider.ItemTagsProvider {
         copy(ModBlockTags.MAPLE_LOGS, ModItemTags.MAPLE_LOGS);
         copy(ModBlockTags.REDWOOD_LOGS, ModItemTags.REDWOOD_LOGS);
         copy(ModBlockTags.DEAD_LOGS, ModItemTags.DEAD_LOGS);
-
-        copy(ModBlockTags.SALT_ORES, ModItemTags.SALT_ORES);
 
         copy(ConventionalBlockTags.ORES_IN_GROUND_STONE, ConventionalItemTags.ORES_IN_GROUND_STONE);
         copy(ConventionalBlockTags.ORES_IN_GROUND_DEEPSLATE, ConventionalItemTags.ORES_IN_GROUND_DEEPSLATE);

@@ -1,6 +1,5 @@
 package net.foxboi.salted.data.loot;
 
-import net.foxboi.salted.common.block.SaltCrystalBlock;
 import net.foxboi.salted.common.item.ModItems;
 import net.minecraft.advancements.criterion.StatePropertiesPredicate;
 import net.minecraft.core.Holder;
@@ -30,10 +29,10 @@ import java.util.List;
 import java.util.Optional;
 
 public class BlockDrops {
-    private final BlockLootTableProvider generator;
+    private final ModBlockLootTableProvider generator;
     private final HolderLookup<Enchantment> enchantments;
 
-    public BlockDrops(BlockLootTableProvider generator, HolderLookup.Provider lookup) {
+    public BlockDrops(ModBlockLootTableProvider generator, HolderLookup.Provider lookup) {
         this.generator = generator;
         this.enchantments = lookup.lookupOrThrow(Registries.ENCHANTMENT);
     }
@@ -85,27 +84,6 @@ public class BlockDrops {
      */
     public void door(Block block) {
         generator.add(block, generator::createDoorTable);
-    }
-
-    /**
-     * Block drops like a salt crystal: it drops a bunch of rocksalt chunks based on growth stage.
-     */
-    public void saltCrystal(Block block) {
-        generator.add(block, this::createSaltCrystalTable);
-    }
-
-    /**
-     * Block drops like a salt ore: it drops a bunch of rocksalt chunks.
-     */
-    public void saltOre(Block block) {
-        generator.add(block, it -> createSaltOreLootTable(it, false));
-    }
-
-    /**
-     * Block drops like a nether salt ore: it drops a bunch of rocksalt chunks, more than regular salt ore.
-     */
-    public void netherSaltOre(Block block) {
-        generator.add(block, it -> createSaltOreLootTable(it, true));
     }
 
 
@@ -161,48 +139,6 @@ public class BlockDrops {
 
     // TABLES
     // =============================================
-
-    private LootTable.Builder createSaltCrystalTable(Block block) {
-        var loot = LootTable.lootTable();
-        var pool = LootPool.lootPool();
-
-        var item = LootItem.lootTableItem(ModItems.ROCKSALT_CHUNK);
-
-        // Add base drops
-        for (int age = 1; age <= 8; age ++) {
-            var min = 1 + 0.2f * age;
-            var max = 1 + 0.4f * age;
-
-            var ageCount = uniformCount(min, max).when(propertyIsExactly(block, SaltCrystalBlock.AGE, age));
-            item.apply(ageCount);
-        }
-
-        // Add fortune effect
-        item.apply(
-                ApplyBonusCount.addUniformBonusCount(enchantment(Enchantments.FORTUNE))
-                        .when(propertyIsAtMost(block, SaltCrystalBlock.AGE, 6))
-        );
-        item.apply(
-                ApplyBonusCount.addUniformBonusCount(enchantment(Enchantments.FORTUNE), 2)
-                        .when(propertyIsAtLeast(block, SaltCrystalBlock.AGE, 7))
-        );
-
-        pool.add(generator.applyExplosionDecay(block, item));
-        loot.withPool(pool);
-
-        return loot;
-    }
-
-    private LootTable.Builder createSaltOreLootTable(Block block, boolean nether) {
-        return generator.createSilkTouchDispatchTable(
-                block,
-                generator.applyExplosionDecay(
-                        block, LootItem.lootTableItem(ModItems.ROCKSALT_CHUNK)
-                                .apply(nether ? uniformCount(3f, 8f) : uniformCount(2f, 5f))
-                                .apply(ApplyBonusCount.addOreBonusCount(enchantment(Enchantments.FORTUNE)))
-                )
-        );
-    }
 
     private LootTable.Builder createShortBarley(Block block) {
         var loot = LootTable.lootTable();

@@ -5,8 +5,10 @@
 
   "mixins": [
     "BiomeMixin", "BiomeModificationContextImplEffectsContextImplMixin", "BiomeSpecialEffectsMixin", "BlockMixin", "BonemealItemMixin",
-    "BucketItemMixin", "CacheHolderMixin", "GrassBlockMixin", "IceBlockMixin", "IdentifierMixin", "LevelMixin", "MultifaceBlockMixin",
-    "OverworldBiomeBuilderMixin", "ServerLevelMixin", "ShearsItemMixin", "SimpleBlockFeatureMixin", "SlimeMixin", "SnowLayerBlockMixin"
+    "BucketItemMixin", "CacheHolderMixin", "GrassBlockMixin", "IceBlockMixin", "IdentifierMixin", "LevelMixin",
+    "MultifaceBlockMixin", "NoiseGeneratorSettingsMixin", "OverworldBiomeBuilderMixin", "PlayerListMixin",
+    "RegistryLoadTaskPendingRegistrationMixin", "ServerLevelMixin", "ShearsItemMixin",
+    "SimpleBlockFeatureMixin", "SlimeMixin", "SnowLayerBlockMixin"
   ],
 
   "injectors": {

@@ -27,7 +27,7 @@ public class SegmentedPlantBlock extends VegetationBlock implements PlantBlock, 
     private final Function<BlockState, VoxelShape> shapes;
 
     @Override
-    protected MapCodec<? extends VegetationBlock> codec() {
+    protected MapCodec<? extends SegmentedPlantBlock> codec() {
         return CODEC;
     }
 
@@ -61,6 +61,11 @@ public class SegmentedPlantBlock extends VegetationBlock implements PlantBlock, 
     @Override
     public boolean canBeReplaced(BlockState state, BlockPlaceContext ctx) {
         return canBeReplaced(state, ctx, getSegmentAmountProperty()) || super.canBeReplaced(state, ctx);
+    }
+
+    @Override
+    protected boolean mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos) {
+        return plantConfig.canGrowOn(state, level, pos, Direction.UP);
     }
 
     @Override

@@ -7,6 +7,7 @@ import java.util.function.Function;
 import net.minecraft.client.color.item.ItemTintSource;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.MultiVariant;
+import net.minecraft.client.data.models.blockstates.ConditionBuilder;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.*;
@@ -74,6 +75,11 @@ public final class BlockModelsImpl implements BlockModels {
             Blocks.DIRT, new Material(Identifier.withDefaultNamespace("block/grass_block_snow"))
     );
 
+    private static final Function<ConditionBuilder, ConditionBuilder> FLAT_SEGMENT_1_SEGMENT_CONDITION = condition -> condition.term(BlockStateProperties.SEGMENT_AMOUNT, 1);
+    private static final Function<ConditionBuilder, ConditionBuilder> FLAT_SEGMENT_2_SEGMENT_CONDITION = condition -> condition.term(BlockStateProperties.SEGMENT_AMOUNT, 2, 3);
+    private static final Function<ConditionBuilder, ConditionBuilder> FLAT_SEGMENT_3_SEGMENT_CONDITION = condition -> condition.term(BlockStateProperties.SEGMENT_AMOUNT, 3);
+    private static final Function<ConditionBuilder, ConditionBuilder> FLAT_SEGMENT_4_SEGMENT_CONDITION = condition -> condition.term(BlockStateProperties.SEGMENT_AMOUNT, 4);
+
     private final BlockModelGenerators gen;
 
     public BlockModelsImpl(BlockModelGenerators gen) {
@@ -102,7 +108,7 @@ public final class BlockModelsImpl implements BlockModels {
     }
 
 
-    private void crossPlant(Block block, PlantType type, ItemTintSource... tints) {
+    private void crossPlant(Block block, BlockStyle type, ItemTintSource... tints) {
         createCrossBlock(block, type);
         gen.itemModelOutput.accept(block.asItem(), ItemModelUtils.tintedModel(type.createItemModel(gen, block), tints));
     }
@@ -111,31 +117,41 @@ public final class BlockModelsImpl implements BlockModels {
      * Creates an untinted cross plant.
      */
     public void crossPlant(Block block) {
-        crossPlant(block, PlantType.NOT_TINTED);
+        crossPlant(block, BlockStyle.NONE);
     }
 
     /**
      * Creates a tinted cross plant.
      */
     public void tintedCrossPlant(Block block, ItemTint tint) {
-        crossPlant(block, PlantType.TINTED, ModelProvider.createTintSource(tint));
+        crossPlant(block, BlockStyle.TINTED, ModelProvider.createTintSource(tint));
     }
 
     /**
      * Creates a tinted cross plant with an untinted overlay.
      */
     public void layeredCrossPlant(Block block, ItemTint tint) {
-        crossPlant(block, PlantType.LAYERED, ModelProvider.createTintSource(tint));
+        crossPlant(block, BlockStyle.LAYERED, ModelProvider.createTintSource(tint));
     }
 
     /**
      * Creates an untinted cross plant with an emissive overlay.
      */
     public void emissiveCrossPlant(Block block) {
-        crossPlant(block, PlantType.EMISSIVE_NOT_TINTED);
+        crossPlant(block, BlockStyle.EMISSIVE);
     }
 
-    private void tallCrossPlant(Block block, PlantType type, ItemTintSource... tints) {
+    @Override
+    public void glowingCrossPlant(Block block) {
+        crossPlant(block, BlockStyle.GLOWING);
+    }
+
+    @Override
+    public void tintedGlowingCrossPlant(Block block, ItemTint tint) {
+        crossPlant(block, BlockStyle.TINTED_GLOWING, ModelProvider.createTintSource(tint));
+    }
+
+    private void tallCrossPlant(Block block, BlockStyle type, ItemTintSource... tints) {
         createDoublePlant(block, type);
         gen.itemModelOutput.accept(block.asItem(), ItemModelUtils.tintedModel(type.createItemModel(gen, block, "_top"), tints));
     }
@@ -144,32 +160,42 @@ public final class BlockModelsImpl implements BlockModels {
      * Creates an untinted double-block cross plant.
      */
     public void tallCrossPlant(Block block) {
-        tallCrossPlant(block, PlantType.NOT_TINTED);
+        tallCrossPlant(block, BlockStyle.NONE);
     }
 
     /**
      * Creates a tinted double-block cross plant.
      */
     public void tallTintedCrossPlant(Block block, ItemTint tint) {
-        tallCrossPlant(block, PlantType.TINTED, ModelProvider.createTintSource(tint));
+        tallCrossPlant(block, BlockStyle.TINTED, ModelProvider.createTintSource(tint));
     }
 
     /**
      * Creates a tinted double-block cross plant with untinted overlay.
      */
     public void tallLayeredCrossPlant(Block block, ItemTint tint) {
-        tallCrossPlant(block, PlantType.LAYERED, ModelProvider.createTintSource(tint));
+        tallCrossPlant(block, BlockStyle.LAYERED, ModelProvider.createTintSource(tint));
     }
 
     /**
      * Creates an untinted double-block cross plant with emissive overlay.
      */
     public void tallEmissiveCrossPlant(Block block) {
-        tallCrossPlant(block, PlantType.EMISSIVE_NOT_TINTED);
+        tallCrossPlant(block, BlockStyle.EMISSIVE);
+    }
+
+    @Override
+    public void tallGlowingCrossPlant(Block block) {
+        tallCrossPlant(block, BlockStyle.GLOWING);
+    }
+
+    @Override
+    public void tallTintedGlowingCrossPlant(Block block, ItemTint tint) {
+        tallCrossPlant(block, BlockStyle.TINTED_GLOWING, ModelProvider.createTintSource(tint));
     }
 
 
-    private void columnCrossPlant(Block block, PlantType type, ItemTintSource... tints) {
+    private void columnCrossPlant(Block block, BlockStyle type, ItemTintSource... tints) {
         createColumnPlant(block, type);
         gen.itemModelOutput.accept(block.asItem(), ItemModelUtils.tintedModel(type.createItemModel(gen, block, "_end"), tints));
     }
@@ -178,28 +204,38 @@ public final class BlockModelsImpl implements BlockModels {
      * Creates an untinted double-block cross plant.
      */
     public void columnCrossPlant(Block block) {
-        columnCrossPlant(block, PlantType.NOT_TINTED);
+        columnCrossPlant(block, BlockStyle.NONE);
     }
 
     /**
      * Creates a tinted double-block cross plant.
      */
     public void columnTintedCrossPlant(Block block, ItemTint tint) {
-        columnCrossPlant(block, PlantType.TINTED, ModelProvider.createTintSource(tint));
+        columnCrossPlant(block, BlockStyle.TINTED, ModelProvider.createTintSource(tint));
     }
 
     /**
      * Creates a tinted double-block cross plant with untinted overlay.
      */
     public void columnLayeredCrossPlant(Block block, ItemTint tint) {
-        columnCrossPlant(block, PlantType.LAYERED, ModelProvider.createTintSource(tint));
+        columnCrossPlant(block, BlockStyle.LAYERED, ModelProvider.createTintSource(tint));
     }
 
     /**
      * Creates an untinted double-block cross plant with emissive overlay.
      */
     public void columnEmissiveCrossPlant(Block block) {
-        columnCrossPlant(block, PlantType.EMISSIVE_NOT_TINTED);
+        columnCrossPlant(block, BlockStyle.EMISSIVE);
+    }
+
+    @Override
+    public void columnGlowingCrossPlant(Block block) {
+        columnCrossPlant(block, BlockStyle.GLOWING);
+    }
+
+    @Override
+    public void columnTintedGlowingCrossPlant(Block block, ItemTint tint) {
+        columnCrossPlant(block, BlockStyle.TINTED_GLOWING, ModelProvider.createTintSource(tint));
     }
 
 
@@ -249,6 +285,42 @@ public final class BlockModelsImpl implements BlockModels {
         );
 
         gen.itemModelOutput.accept(block.asItem(), ItemModelUtils.tintedModel(gen.createFlatItemModel(block.asItem()), ModelProvider.createTintSource(tint)));
+    }
+
+
+    private void flatSegmentedPlant(Block block, BlockStyle type, ItemTintSource... tints) {
+        createFlatSegmentedPlant(block, type);
+        gen.itemModelOutput.accept(block.asItem(), ItemModelUtils.tintedModel(type.createItemModel(gen, block), tints));
+    }
+
+    @Override
+    public void flatSegmentedPlant(Block block) {
+        flatSegmentedPlant(block, BlockStyle.NONE);
+    }
+
+    @Override
+    public void tintedFlatSegmentedPlant(Block block, ItemTint tint) {
+        flatSegmentedPlant(block, BlockStyle.TINTED, ModelProvider.createTintSource(tint));
+    }
+
+    @Override
+    public void layeredFlatSegmentedPlant(Block block, ItemTint tint) {
+        flatSegmentedPlant(block, BlockStyle.LAYERED, ModelProvider.createTintSource(tint));
+    }
+
+    @Override
+    public void emissiveFlatSegmentedPlant(Block block) {
+        flatSegmentedPlant(block, BlockStyle.EMISSIVE);
+    }
+
+    @Override
+    public void glowingFlatSegmentedPlant(Block block) {
+        flatSegmentedPlant(block, BlockStyle.GLOWING);
+    }
+
+    @Override
+    public void tintedGlowingFlatSegmentedPlant(Block block, ItemTint tint) {
+        flatSegmentedPlant(block, BlockStyle.TINTED_GLOWING, ModelProvider.createTintSource(tint));
     }
 
     /**
@@ -349,26 +421,6 @@ public final class BlockModelsImpl implements BlockModels {
     }
 
     /**
-     * Creates a salt crystal model.
-     */
-    public void saltCrystal(Block block) {
-        var disp = PropertyDispatch.initial(SaltCrystalBlock.AGE);
-
-        for (int i = 0; i < 8; i++) {
-            var stage = i + 1;
-            var name = TextureMapping.getBlockTexture(block, "_stage_" + stage);
-            var variant = plainVariant(ModelTemplates.CROSS.create(name.sprite(), TextureMapping.cross(name), gen.modelOutput));
-            disp.select(stage, variant);
-        }
-
-        gen.blockStateOutput.accept(
-                MultiVariantGenerator.dispatch(block)
-                        .with(disp)
-                        .with(ROTATIONS_COLUMN_WITH_FACING)
-        );
-    }
-
-    /**
      * Creates an multilayer model.
      */
     public void multilayer(Block block, Block fullBlock) {
@@ -442,21 +494,36 @@ public final class BlockModelsImpl implements BlockModels {
         gen.registerSimpleTintedItemModel(block, model, tint);
     }
 
-    private void createCrossBlock(Block block, PlantType type) {
-        var plant = plainVariant(createVariant(block, type.getCross(), type::getTextureMapping));
+    private void createCrossBlock(Block block, BlockStyle type) {
+        var plant = plainVariant(createVariant(block, type.getCross(), type::getCrossTextureMapping));
         gen.blockStateOutput.accept(createSimpleBlock(block, plant));
     }
 
-    private void createDoublePlant(Block block, PlantType type) {
-        var top = plainVariant(createVariant(block, "_top", type.getCross(), type::getTextureMapping));
-        var bottom = plainVariant(createVariant(block, "_bottom", type.getCross(), type::getTextureMapping));
+    private void createDoublePlant(Block block, BlockStyle type) {
+        var top = plainVariant(createVariant(block, "_top", type.getCross(), type::getCrossTextureMapping));
+        var bottom = plainVariant(createVariant(block, "_bottom", type.getCross(), type::getCrossTextureMapping));
         gen.createDoubleBlock(block, top, bottom);
     }
 
-    private void createColumnPlant(Block block, PlantType type) {
-        var end = plainVariant(createVariant(block, "_end", type.getCross(), type::getTextureMapping));
-        var base = plainVariant(createVariant(block, type.getCross(), type::getTextureMapping));
+    private void createColumnPlant(Block block, BlockStyle type) {
+        var end = plainVariant(createVariant(block, "_end", type.getCross(), type::getCrossTextureMapping));
+        var base = plainVariant(createVariant(block, type.getCross(), type::getCrossTextureMapping));
         createColumnBlock(block, end, base);
+    }
+
+    private void createFlatSegmentedPlant(Block block, BlockStyle type) {
+        var model1 = plainVariant(createVariant(block, type.getFlatSegment1(), type::getDefaultTextureMapping));
+        var model2 = plainVariant(createVariant(block, type.getFlatSegment2(), type::getDefaultTextureMapping));
+        var model3 = plainVariant(createVariant(block, type.getFlatSegment3(), type::getDefaultTextureMapping));
+        var model4 = plainVariant(createVariant(block, type.getFlatSegment4(), type::getDefaultTextureMapping));
+
+        gen.createSegmentedBlock(
+                block,
+                model1, FLAT_SEGMENT_1_SEGMENT_CONDITION,
+                model2, FLAT_SEGMENT_2_SEGMENT_CONDITION,
+                model3, FLAT_SEGMENT_3_SEGMENT_CONDITION,
+                model4, FLAT_SEGMENT_4_SEGMENT_CONDITION
+        );
     }
 
     private void createColumnBlock(Block block, MultiVariant end, MultiVariant base) {

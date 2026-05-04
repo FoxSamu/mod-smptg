@@ -14,16 +14,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(SnowLayerBlock.class)
 public class SnowLayerBlockMixin {
-    @Inject(
-            method = "randomTick",
-            at = @At("HEAD"),
-            cancellable = true
-    )
-    private void onRandomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource rng, CallbackInfo ci) {
-        if (Misc.isNextToSalt(level, pos)) {
-            Block.dropResources(state, level, pos);
-            level.removeBlock(pos, false);
-            ci.cancel();
-        }
-    }
+//    @Inject(
+//            method = "randomTick",
+//            at = @At("HEAD"),
+//            cancellable = true
+//    )
+//    private void onRandomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource rng, CallbackInfo ci) {
+//        if (Misc.isNextToSalt(level, pos)) {
+//            Block.dropResources(state, level, pos);
+//            level.removeBlock(pos, false);
+//            ci.cancel();
+//        }
+//    }
 }

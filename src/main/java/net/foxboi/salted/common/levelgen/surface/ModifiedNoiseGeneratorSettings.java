@@ -16,26 +16,26 @@ import net.minecraft.world.level.levelgen.NoiseRouterData;
 import net.minecraft.world.level.levelgen.NoiseSettings;
 
 public class ModifiedNoiseGeneratorSettings {
-    public static void bootstrap(FabricDynamicRegistryProvider.Entries ctx) {
-        ctx.add(NoiseGeneratorSettings.OVERWORLD, overworld(ctx, false, false));
-        ctx.add(NoiseGeneratorSettings.LARGE_BIOMES, overworld(ctx, false, true));
-        ctx.add(NoiseGeneratorSettings.AMPLIFIED, overworld(ctx, true, false));
-        ctx.add(NoiseGeneratorSettings.NETHER, nether(ctx));
-        ctx.add(NoiseGeneratorSettings.END, end(ctx));
-        ctx.add(NoiseGeneratorSettings.CAVES, caves(ctx));
-        ctx.add(NoiseGeneratorSettings.FLOATING_ISLANDS, floatingIslands(ctx));
+    public static void bootstrap(BootstrapContext<NoiseGeneratorSettings> ctx) {
+        ctx.register(NoiseGeneratorSettings.OVERWORLD, overworld(ctx, false, false));
+        ctx.register(NoiseGeneratorSettings.LARGE_BIOMES, overworld(ctx, false, true));
+        ctx.register(NoiseGeneratorSettings.AMPLIFIED, overworld(ctx, true, false));
+        ctx.register(NoiseGeneratorSettings.NETHER, nether(ctx));
+        ctx.register(NoiseGeneratorSettings.END, end(ctx));
+        ctx.register(NoiseGeneratorSettings.CAVES, caves(ctx));
+        ctx.register(NoiseGeneratorSettings.FLOATING_ISLANDS, floatingIslands(ctx));
     }
 
-    private static Holder<BiomeSurfaceOverrides> getOverrides(FabricDynamicRegistryProvider.Entries ctx, ResourceKey<BiomeSurfaceOverrides> key) {
-        return ctx.getLookup(ModRegistries.BIOME_SURFACE_OVERRIDES).getOrThrow(key);
+    private static Holder<BiomeSurfaceOverrides> getOverrides(BootstrapContext<NoiseGeneratorSettings> ctx, ResourceKey<BiomeSurfaceOverrides> key) {
+        return ctx.lookup(ModRegistries.BIOME_SURFACE_OVERRIDES).getOrThrow(key);
     }
 
-    private static NoiseGeneratorSettings end(FabricDynamicRegistryProvider.Entries ctx) {
+    private static NoiseGeneratorSettings end(BootstrapContext<NoiseGeneratorSettings> ctx) {
         return new NoiseGeneratorSettings(
                 NoiseSettings.END_NOISE_SETTINGS,
                 Blocks.END_STONE.defaultBlockState(),
                 Blocks.AIR.defaultBlockState(),
-                NoiseRouterData.end(ctx.getLookup(Registries.DENSITY_FUNCTION)),
+                NoiseRouterData.end(ctx.lookup(Registries.DENSITY_FUNCTION)),
                 ModifiedSurfaceRuleData.end(getOverrides(ctx, BiomeSurfaceOverrides.END)),
                 List.of(),
                 0,
@@ -46,12 +46,12 @@ public class ModifiedNoiseGeneratorSettings {
         );
     }
 
-    private static NoiseGeneratorSettings nether(FabricDynamicRegistryProvider.Entries ctx) {
+    private static NoiseGeneratorSettings nether(BootstrapContext<NoiseGeneratorSettings> ctx) {
         return new NoiseGeneratorSettings(
                 NoiseSettings.NETHER_NOISE_SETTINGS,
                 Blocks.NETHERRACK.defaultBlockState(),
                 Blocks.LAVA.defaultBlockState(),
-                NoiseRouterData.nether(ctx.getLookup(Registries.DENSITY_FUNCTION), ctx.getLookup(Registries.NOISE)),
+                NoiseRouterData.nether(ctx.lookup(Registries.DENSITY_FUNCTION), ctx.lookup(Registries.NOISE)),
                 ModifiedSurfaceRuleData.nether(getOverrides(ctx, BiomeSurfaceOverrides.NETHER)),
                 List.of(),
                 32,
@@ -62,12 +62,12 @@ public class ModifiedNoiseGeneratorSettings {
         );
     }
 
-    private static NoiseGeneratorSettings overworld(FabricDynamicRegistryProvider.Entries ctx, boolean amplified, boolean largeBiomes) {
+    private static NoiseGeneratorSettings overworld(BootstrapContext<NoiseGeneratorSettings> ctx, boolean amplified, boolean largeBiomes) {
         return new NoiseGeneratorSettings(
                 NoiseSettings.OVERWORLD_NOISE_SETTINGS,
                 Blocks.STONE.defaultBlockState(),
                 Blocks.WATER.defaultBlockState(),
-                NoiseRouterData.overworld(ctx.getLookup(Registries.DENSITY_FUNCTION), ctx.getLookup(Registries.NOISE), largeBiomes, amplified),
+                NoiseRouterData.overworld(ctx.lookup(Registries.DENSITY_FUNCTION), ctx.lookup(Registries.NOISE), largeBiomes, amplified),
                 ModifiedSurfaceRuleData.overworld(getOverrides(ctx, BiomeSurfaceOverrides.OVERWORLD)),
                 new OverworldBiomeBuilder().spawnTarget(),
                 63,
@@ -78,12 +78,12 @@ public class ModifiedNoiseGeneratorSettings {
         );
     }
 
-    private static NoiseGeneratorSettings caves(FabricDynamicRegistryProvider.Entries ctx) {
+    private static NoiseGeneratorSettings caves(BootstrapContext<NoiseGeneratorSettings> ctx) {
         return new NoiseGeneratorSettings(
                 NoiseSettings.CAVES_NOISE_SETTINGS,
                 Blocks.STONE.defaultBlockState(),
                 Blocks.WATER.defaultBlockState(),
-                NoiseRouterData.caves(ctx.getLookup(Registries.DENSITY_FUNCTION)),
+                NoiseRouterData.caves(ctx.lookup(Registries.DENSITY_FUNCTION)),
                 ModifiedSurfaceRuleData.overworldLike(getOverrides(ctx, BiomeSurfaceOverrides.OVERWORLD), false, true, true),
                 List.of(),
                 32,
@@ -94,12 +94,12 @@ public class ModifiedNoiseGeneratorSettings {
         );
     }
 
-    private static NoiseGeneratorSettings floatingIslands(FabricDynamicRegistryProvider.Entries ctx) {
+    private static NoiseGeneratorSettings floatingIslands(BootstrapContext<NoiseGeneratorSettings> ctx) {
         return new NoiseGeneratorSettings(
                 NoiseSettings.FLOATING_ISLANDS_NOISE_SETTINGS,
                 Blocks.STONE.defaultBlockState(),
                 Blocks.WATER.defaultBlockState(),
-                NoiseRouterData.floatingIslands(ctx.getLookup(Registries.DENSITY_FUNCTION), ctx.getLookup(Registries.NOISE)),
+                NoiseRouterData.floatingIslands(ctx.lookup(Registries.DENSITY_FUNCTION), ctx.lookup(Registries.NOISE)),
                 ModifiedSurfaceRuleData.overworldLike(getOverrides(ctx, BiomeSurfaceOverrides.OVERWORLD), false, false, false),
                 List.of(),
                 -64,

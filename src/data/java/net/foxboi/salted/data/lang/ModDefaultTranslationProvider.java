@@ -9,7 +9,7 @@ import net.foxboi.salted.common.entity.ModEntityTypes;
 import net.foxboi.salted.common.item.ModItemTags;
 import net.foxboi.salted.common.item.ModItems;
 import net.foxboi.salted.common.misc.Translator;
-import net.foxboi.salted.data.advancement.AdvancementProvider;
+import net.foxboi.salted.data.advancement.ModAdvancementProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
@@ -19,8 +19,8 @@ import net.minecraft.world.level.block.Block;
 
 import java.util.concurrent.CompletableFuture;
 
-public class DefaultTranslationProvider extends FabricLanguageProvider {
-    public DefaultTranslationProvider(FabricPackOutput out, CompletableFuture<HolderLookup.Provider> regs) {
+public class ModDefaultTranslationProvider extends FabricLanguageProvider {
+    public ModDefaultTranslationProvider(FabricPackOutput out, CompletableFuture<HolderLookup.Provider> regs) {
         super(out, "en_us", regs);
     }
 
@@ -35,7 +35,7 @@ public class DefaultTranslationProvider extends FabricLanguageProvider {
 
         ModBiomes.translate(resource("biome", builder));
 
-        AdvancementProvider.translate(rawKey(builder));
+        ModAdvancementProvider.translate(rawKey(builder));
     }
 
     private static Translator<String> rawKey(FabricLanguageProvider.TranslationBuilder builder) {

@@ -1,6 +1,5 @@
 package net.foxboi.salted.mixin.common;
 
-import net.foxboi.salted.common.block.SaltCrystalBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,7 +15,6 @@ public class ServerLevelMixin {
     private BlockPos onRandomTick(ServerLevel self, int i, int j, int k, int l) {
         var pos = self.getBlockRandomPos(i, j, k, l);
 
-        SaltCrystalBlock.spontaneouslyGenerateSaltCrystal(self, pos);
 
         return pos;
     }

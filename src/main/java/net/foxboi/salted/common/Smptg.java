@@ -29,7 +29,10 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Climate;
 
 import net.fabricmc.fabric.api.biome.v1.NetherBiomes;
+import net.fabricmc.loader.api.FabricLoader;
 
+import net.foxboi.salted.common.misc.datamod.DataModificationHandler;
+import net.foxboi.salted.common.misc.reg.Registrar;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -43,6 +46,7 @@ public class Smptg {
 
     public static final String ID = "smptg";
     public static final Logger LOGGER = LogManager.getLogger(ID);
+    public static final Registrar REGISTRAR = new Registrar(ID);
 
     protected Smptg() {
         if (instance != null) {
@@ -69,10 +73,11 @@ public class Smptg {
         ModItemTags.init();
         ModBiomeTags.init();
 
-        // Init built in registries
+        // Init unconventional registries
         ModBlockSetTypes.init();
         ModWoodTypes.init();
 
+        // Init built in registries
         ModBlocks.init();
         ModItems.init();
 
@@ -88,7 +93,7 @@ public class Smptg {
         ModAttributeTypes.init();
         ModEnvironmentAttributes.init();
 
-        // Init worldgen registry
+        // Init data pack registries
         ModBiomes.init();
         ModNoises.init();
 
@@ -97,20 +102,26 @@ public class Smptg {
         ModVegetationFeatures.init();
         ModVegetationPlacements.init();
 
+        // Finalize registration
+        REGISTRAR.registerGameEntries();
+
+        if (!FabricLoader.getInstance().isModLoaded("smptg-data")) {
+            REGISTRAR.freezeAndDeleteAll();
+        } else {
+            LOGGER.info("Retaining registrar data for data generation");
+            REGISTRAR.freezeAll();
+        }
+
         // Init handlers
         BiomeModificationHelper.init();
+        DataModificationHandler.init();
 
+        // TODO move this somewhere else
         NetherBiomes.addNetherBiome(ModBiomes.BURNED_FOREST, Climate.parameters(
-                .3f, -.6f, 0f, 0f, 0f, 0f, 0.02F
+                .3f, -.45f, 0f, 0f, 0f, 0f, 0f
         ));
-    }
 
-    /**
-     * Returns the biome blend radius, as configured on the client. When running on a dedicated server, this returns 0.
-     * @return The biome blend radius.
-     */
-    public int getBiomeBlendRadius() {
-        return 0;
+
     }
 
     /**

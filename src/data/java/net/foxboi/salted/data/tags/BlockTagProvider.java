@@ -27,12 +27,14 @@ public class BlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
         ModBlockData.tools(toolTags);
 
         valueLookupBuilder(BlockTags.ENDERMAN_HOLDABLE)
-                .add(ModBlocks.SALT_BLOCK)
-                .add(ModBlocks.ASH_BLOCK);
+                .add(ModBlocks.ASH_BLOCK)
+                .add(ModBlocks.EMBERGRASS)
+                .add(ModBlocks.EMBERWEED)
+                .add(ModBlocks.LAVENDER)
+                .add(ModBlocks.BARLEY)
+                .add(ModBlocks.CATTAIL);
 
         valueLookupBuilder(BlockTags.SLABS)
-                .add(ModBlocks.ROCKSALT_SLAB)
-                .add(ModBlocks.ROCKSALT_BRICK_SLAB)
                 .add(ModBlocks.ASH_BRICK_SLAB);
 
         valueLookupBuilder(BlockTags.WOODEN_SLABS)
@@ -43,8 +45,6 @@ public class BlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
                 .add(ModBlocks.DEAD_WOOD_SLAB);
 
         valueLookupBuilder(BlockTags.STAIRS)
-                .add(ModBlocks.ROCKSALT_STAIRS)
-                .add(ModBlocks.ROCKSALT_BRICK_STAIRS)
                 .add(ModBlocks.ASH_BRICK_STAIRS);
 
         valueLookupBuilder(BlockTags.WOODEN_STAIRS)
@@ -54,9 +54,7 @@ public class BlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
                 .add(ModBlocks.REDWOOD_STAIRS)
                 .add(ModBlocks.DEAD_WOOD_STAIRS);
 
-        valueLookupBuilder(BlockTags.WALLS)
-                .add(ModBlocks.ROCKSALT_WALL)
-                .add(ModBlocks.ROCKSALT_BRICK_WALL);
+        valueLookupBuilder(BlockTags.WALLS);
 
         valueLookupBuilder(BlockTags.WOODEN_FENCES)
                 .add(ModBlocks.ASPEN_FENCE)
@@ -201,36 +199,7 @@ public class BlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
                 .add(ModBlocks.STRIPPED_DEAD_LOG)
                 .add(ModBlocks.STRIPPED_DEAD_WOOD);
 
-        valueLookupBuilder(ModBlockTags.GROWS_SALT)
-                .addTag(ModBlockTags.SALT_ORES)
-                .addTag(ModBlockTags.GROWS_SALT_MORE_LIKELY)
-                .add(ModBlocks.ROCKSALT)
-                .add(ModBlocks.ROCKSALT_SLAB)
-                .add(ModBlocks.ROCKSALT_STAIRS)
-                .add(ModBlocks.ROCKSALT_WALL)
-                .add(ModBlocks.ROCKSALT_BRICKS)
-                .add(ModBlocks.ROCKSALT_BRICK_SLAB)
-                .add(ModBlocks.ROCKSALT_BRICK_STAIRS)
-                .add(ModBlocks.ROCKSALT_BRICK_WALL);
-
-        valueLookupBuilder(ModBlockTags.GROWS_SALT_MORE_LIKELY)
-                .add(ModBlocks.SALT_BLOCK);
-
-        valueLookupBuilder(ModBlockTags.APPLIES_SALT_TO_DROPS)
-                .add(ModBlocks.SALT_BLOCK)
-                .add(ModBlocks.SALT_CRUST);
-
-        valueLookupBuilder(ModBlockTags.DAMAGES_SLIMES)
-                .addTag(ModBlockTags.GROWS_SALT)
-                .addTag(ModBlockTags.GROWS_SALT_MORE_LIKELY)
-                .add(ModBlocks.SALT_CRYSTAL);
-
-        valueLookupBuilder(ModBlockTags.SALT_CRUST_CAN_REPLACE)
-                .addTag(vanilla(BlockTags.DIRT))
-                .addTag(vanilla(BlockTags.SAND))
-                .add(Blocks.GRAVEL)
-                .add(Blocks.CLAY)
-                .add(ModBlocks.SALT_BLOCK);
+        valueLookupBuilder(ModBlockTags.DAMAGES_SLIMES);
 
         valueLookupBuilder(ModBlockTags.OVERWORLD_STONE)
                 .add(Blocks.STONE)
@@ -240,34 +209,35 @@ public class BlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
                 .add(Blocks.DIORITE)
                 .add(Blocks.TUFF);
 
-        valueLookupBuilder(ModBlockTags.CAVE_PLANT_CAN_GROW_ON)
+        valueLookupBuilder(ModBlockTags.SUPPORTS_CAVE_VEGETATION)
                 .addTag(vanilla(BlockTags.DIRT))
                 .addTag(vanilla(BlockTags.SAND))
                 .addTag(ModBlockTags.OVERWORLD_STONE)
                 .add(Blocks.GRAVEL)
                 .add(Blocks.FARMLAND);
 
-        valueLookupBuilder(ModBlockTags.ASH_PLANT_CAN_GROW_ON)
+        valueLookupBuilder(ModBlockTags.SUPPORTS_ASH_VEGETATION)
                 .add(Blocks.NETHERRACK)
                 .add(ModBlocks.ASH_BLOCK)
                 .add(ModBlocks.PACKED_ASH);
 
-        valueLookupBuilder(ModBlockTags.SALT_ORES)
-                .add(ModBlocks.SALT_ORE)
-                .add(ModBlocks.DEEPSLATE_SALT_ORE)
-                .add(ModBlocks.NETHER_SALT_ORE);
+        valueLookupBuilder(ModBlockTags.SUPPORTS_EMBER_VEGETATION)
+                .addTag(vanilla(BlockTags.SUPPORTS_DRY_VEGETATION))
+                .add(Blocks.NETHERRACK)
+                .add(Blocks.CRIMSON_NYLIUM)
+                .add(Blocks.WARPED_NYLIUM)
+                .add(Blocks.SOUL_SAND)
+                .add(Blocks.SOUL_SOIL)
+                .add(ModBlocks.ASH_BLOCK)
+                .add(ModBlocks.PACKED_ASH);
 
-        valueLookupBuilder(ConventionalBlockTags.ORES_IN_GROUND_STONE)
-                .add(ModBlocks.SALT_ORE);
+        valueLookupBuilder(ConventionalBlockTags.ORES_IN_GROUND_STONE);
 
-        valueLookupBuilder(ConventionalBlockTags.ORES_IN_GROUND_DEEPSLATE)
-                .add(ModBlocks.DEEPSLATE_SALT_ORE);
+        valueLookupBuilder(ConventionalBlockTags.ORES_IN_GROUND_DEEPSLATE);
 
-        valueLookupBuilder(ConventionalBlockTags.ORES_IN_GROUND_NETHERRACK)
-                .add(ModBlocks.NETHER_SALT_ORE);
+        valueLookupBuilder(ConventionalBlockTags.ORES_IN_GROUND_NETHERRACK);
 
-        valueLookupBuilder(ConventionalBlockTags.CLUSTERS)
-                .add(ModBlocks.SALT_CRYSTAL);
+        valueLookupBuilder(ConventionalBlockTags.CLUSTERS);
     }
 
     private void createInfiniburn(TagKey<Block> tag) {

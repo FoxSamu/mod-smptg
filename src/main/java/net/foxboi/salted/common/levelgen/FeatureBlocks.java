@@ -1,9 +1,6 @@
 package net.foxboi.salted.common.levelgen;
 
-import net.foxboi.salted.common.block.AbstractColumnPlantBlock;
-import net.foxboi.salted.common.block.ColumnPlantShape;
 import net.foxboi.salted.common.block.ModBlocks;
-import net.foxboi.salted.common.block.SaltCrystalBlock;
 import net.foxboi.salted.common.levelgen.stateprovider.EitherStateProvider;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -16,9 +13,6 @@ import net.minecraft.world.level.levelgen.feature.stateproviders.RandomizedIntSt
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 
 public class FeatureBlocks {
-    public static final BlockStateProvider SALT_CRUST = BlockStateProvider.simple(ModBlocks.SALT_CRUST);
-    public static final BlockStateProvider SALT_BLOCK = BlockStateProvider.simple(ModBlocks.SALT_BLOCK);
-    public static final BlockStateProvider SALT_CRYSTAL = saltCrystal();
 
     public static final BlockStateProvider ASPEN_LOG = BlockStateProvider.simple(ModBlocks.ASPEN_LOG);
     public static final BlockStateProvider BIRCH_LOG = BlockStateProvider.simple(Blocks.BIRCH_LOG);
@@ -56,6 +50,8 @@ public class FeatureBlocks {
     public static final BlockStateProvider ASH_LAYER = BlockStateProvider.simple(ModBlocks.ASH_LAYER);
     public static final BlockStateProvider ASHCREEP = BlockStateProvider.simple(ModBlocks.ASHCREEP);
     public static final BlockStateProvider ASHVINE = BlockStateProvider.simple(ModBlocks.ASHVINE);
+    public static final BlockStateProvider EMBERGRASS = BlockStateProvider.simple(ModBlocks.EMBERGRASS);
+    public static final BlockStateProvider EMBERWEED = BlockStateProvider.simple(ModBlocks.EMBERWEED);
     public static final BlockStateProvider BURNED_STEM = BlockStateProvider.simple(ModBlocks.BURNED_STEM);
 
     public static BlockStateProvider either(BlockStateProvider a, BlockStateProvider b, double bChance) {
@@ -77,22 +73,5 @@ public class FeatureBlocks {
                 property,
                 UniformInt.of(min, max)
         );
-    }
-
-    private static BlockStateProvider saltCrystal() {
-        var weightedList = new WeightedList.Builder<BlockState>();
-
-        var weights = new int[] { -1, 1, 1, 1, 1, 1, 2, 2, 3 };
-
-        for (int age = 1; age <= 8; age ++) {
-            weightedList.add(
-                    ModBlocks.SALT_CRYSTAL.defaultBlockState()
-                            .setValue(SaltCrystalBlock.AGE, age)
-                            .setValue(SaltCrystalBlock.PERSISTENT, true),
-                    weights[age]
-            );
-        }
-
-        return new WeightedStateProvider(weightedList);
     }
 }

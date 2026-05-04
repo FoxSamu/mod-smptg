@@ -6,9 +6,10 @@ import java.util.List;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.foxboi.salted.common.ModRegistries;
+import net.foxboi.salted.common.Smptg;
 import net.foxboi.salted.common.levelgen.biome.ModBiomes;
-import net.foxboi.salted.common.misc.data.DataRegistry;
-import net.foxboi.salted.common.misc.data.DefinitionContext;
+import net.foxboi.salted.common.misc.reg.DataRegistry;
+import net.foxboi.salted.common.misc.reg.DefinitionContext;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
@@ -36,11 +37,11 @@ public record BiomeSurfaceOverrides(
     // Keys
     // ================================================
 
-    private static final DataRegistry<BiomeSurfaceOverrides> REGISTRY = DataRegistry.of(ModRegistries.BIOME_SURFACE_OVERRIDES);
+    private static final DataRegistry<BiomeSurfaceOverrides> REGISTRY = Smptg.REGISTRAR.data(ModRegistries.BIOME_SURFACE_OVERRIDES);
 
-    public static final ResourceKey<BiomeSurfaceOverrides> OVERWORLD = REGISTRY.register("overworld", (key, context) -> overworld(context));
-    public static final ResourceKey<BiomeSurfaceOverrides> NETHER = REGISTRY.register("nether", (key, context) -> nether(context));
-    public static final ResourceKey<BiomeSurfaceOverrides> END = REGISTRY.register("end", (key, context) -> end(context));
+    public static final ResourceKey<BiomeSurfaceOverrides> OVERWORLD = REGISTRY.register("overworld", (_, context) -> overworld(context));
+    public static final ResourceKey<BiomeSurfaceOverrides> NETHER = REGISTRY.register("nether", (_, context) -> nether(context));
+    public static final ResourceKey<BiomeSurfaceOverrides> END = REGISTRY.register("end", (_, context) -> end(context));
 
 
     // Definitions

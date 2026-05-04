@@ -1,11 +1,17 @@
 package net.foxboi.salted.common.item;
 
+import java.util.function.BiFunction;
+import java.util.function.Function;
+
+import org.jspecify.annotations.NonNull;
+
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 
 /**
  * A functional interface that creates an {@link Item} from {@link Item.Properties}. Used in {@link ModItems}.
  */
-public interface ItemFactory {
+public interface ItemFactory extends BiFunction<ResourceKey<Item>, Item.Properties, Item> {
     /**
      * Instantiates an {@link Item}.
      *
@@ -14,4 +20,9 @@ public interface ItemFactory {
      * @return The created {@link Item}.
      */
     Item create(Item.Properties properties);
+
+    @Override
+    default Item apply(ResourceKey<Item> key, Item.Properties properties) {
+        return create(properties.setId(key));
+    }
 }

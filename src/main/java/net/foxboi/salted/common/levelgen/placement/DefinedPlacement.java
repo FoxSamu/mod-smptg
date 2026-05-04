@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import net.foxboi.salted.common.misc.data.DeferredHolder;
-import net.foxboi.salted.common.misc.data.Definition;
-import net.foxboi.salted.common.misc.data.DefinitionContext;
+import net.foxboi.salted.common.misc.reg.DeferredHolder;
+import net.foxboi.salted.common.misc.reg.Definition;
+import net.foxboi.salted.common.misc.reg.DefinitionContext;
 
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.levelgen.Heightmap;

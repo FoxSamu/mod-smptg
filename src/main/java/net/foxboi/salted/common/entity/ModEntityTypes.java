@@ -1,13 +1,18 @@
 package net.foxboi.salted.common.entity;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
+import com.mojang.datafixers.types.Func;
 import net.foxboi.salted.common.Smptg;
 import net.foxboi.salted.common.item.ModItems;
 import net.foxboi.salted.common.misc.Translator;
+import net.foxboi.salted.common.misc.reg.GameRegistry;
+
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -18,6 +23,8 @@ import net.minecraft.world.entity.vehicle.boat.Raft;
 import net.minecraft.world.item.Item;
 
 public class ModEntityTypes {
+    private static final GameRegistry<EntityType<?>> REGISTRY = Smptg.REGISTRAR.game(Registries.ENTITY_TYPE);
+
     public static final EntityType<Boat> ASPEN_BOAT = registerBoat("aspen_boat", boatFactory(() -> ModItems.ASPEN_BOAT));
     public static final EntityType<Boat> BEECH_BOAT = registerBoat("beech_boat", boatFactory(() -> ModItems.BEECH_BOAT));
     public static final EntityType<Boat> MAPLE_BOAT = registerBoat("maple_boat", boatFactory(() -> ModItems.MAPLE_BOAT));
@@ -49,8 +56,7 @@ public class ModEntityTypes {
     }
 
     private static <E extends Entity> EntityType<E> register(String id, EntityType.Builder<E> type) {
-        var key = Smptg.key(Registries.ENTITY_TYPE, id);
-        return Registry.register(BuiltInRegistries.ENTITY_TYPE, key, type.build(key));
+        return REGISTRY.register(id, (Function<ResourceKey<EntityType<?>>, EntityType<E>>) type::build);
     }
 
     private static <E extends Entity> EntityType<E> registerBoat(String id, EntityType.EntityFactory<E> factory) {

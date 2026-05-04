@@ -2,14 +2,19 @@ package net.foxboi.salted.common.levelgen.placement;
 
 import com.mojang.serialization.MapCodec;
 import net.foxboi.salted.common.Smptg;
+import net.foxboi.salted.common.misc.reg.GameRegistry;
+
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
 @SuppressWarnings("unused")
 public record ModPlacementTypes() {
+    private static final GameRegistry<PlacementModifierType<?>> REGISTRY = Smptg.REGISTRAR.game(Registries.PLACEMENT_MODIFIER_TYPE);
+
     // FEATURES
     // =============================================
 
@@ -29,7 +34,6 @@ public record ModPlacementTypes() {
     // =============================================
 
     private static <P extends PlacementModifier> PlacementModifierType<P> register(String name, MapCodec<P> codec) {
-        var key = Smptg.key(Registries.PLACEMENT_MODIFIER_TYPE, name);
-        return Registry.register(BuiltInRegistries.PLACEMENT_MODIFIER_TYPE, key, () -> codec);
+        return REGISTRY.register(name, () -> codec);
     }
 }

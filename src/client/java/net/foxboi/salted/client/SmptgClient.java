@@ -52,12 +52,4 @@ public class SmptgClient extends Smptg implements ClientModInitializer {
         ColorResolverRegistry.register(FoliageColorMap.GOLDEN);
         ColorResolverRegistry.register(FoliageColorMap.YELLOW);
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getBiomeBlendRadius() {
-        return Minecraft.getInstance().options.biomeBlendRadius().get();
-    }
 }

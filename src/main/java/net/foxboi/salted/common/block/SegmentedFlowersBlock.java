@@ -11,7 +11,7 @@ public class SegmentedFlowersBlock extends SegmentedPlantBlock {
     public static final IntegerProperty AMOUNT = BlockStateProperties.FLOWER_AMOUNT;
 
     @Override
-    protected MapCodec<? extends VegetationBlock> codec() {
+    protected MapCodec<? extends SegmentedFlowersBlock> codec() {
         return CODEC;
     }
 

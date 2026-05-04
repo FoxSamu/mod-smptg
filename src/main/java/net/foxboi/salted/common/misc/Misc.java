@@ -131,18 +131,18 @@ public class Misc {
         return false;
     }
 
-    public static boolean isNextToSalt(LevelReader level, BlockPos pos) {
-        for (var dir : Direction.values()) {
-            if (level.getBlockState(pos.relative(dir)).is(ModBlockTags.GROWS_SALT_MORE_LIKELY)) {
-                return true;
-            }
-            if (level.getBlockState(pos.relative(dir)).is(ModBlockTags.GROWS_SALT)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
+//    public static boolean isNextToSalt(LevelReader level, BlockPos pos) {
+//        for (var dir : Direction.values()) {
+//            if (level.getBlockState(pos.relative(dir)).is(ModBlockTags.GROWS_SALT_MORE_LIKELY)) {
+//                return true;
+//            }
+//            if (level.getBlockState(pos.relative(dir)).is(ModBlockTags.GROWS_SALT)) {
+//                return true;
+//            }
+//        }
+//
+//        return false;
+//    }
 
     public static void meltFromSalt(Level level, BlockPos pos, RandomSource rng) {
         var toVisit = new ArrayList<BlockPos>();

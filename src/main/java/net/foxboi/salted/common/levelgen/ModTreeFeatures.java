@@ -5,10 +5,11 @@ import java.util.List;
 import java.util.OptionalInt;
 
 import com.google.common.collect.ImmutableList;
+import net.foxboi.salted.common.Smptg;
 import net.foxboi.salted.common.block.ModBlocks;
 import net.foxboi.salted.common.levelgen.feature.DefinedFeature;
 import net.foxboi.salted.common.levelgen.tree.*;
-import net.foxboi.salted.common.misc.data.DataRegistry;
+import net.foxboi.salted.common.misc.reg.DataRegistry;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -41,7 +42,7 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
 
 public record ModTreeFeatures() {
-    private static final DataRegistry<ConfiguredFeature<?, ?>> REGISTRY = DataRegistry.of(Registries.CONFIGURED_FEATURE);
+    private static final DataRegistry<ConfiguredFeature<?, ?>> REGISTRY = Smptg.REGISTRAR.data(Registries.CONFIGURED_FEATURE);
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> ASPEN = REGISTRY.register("aspen", DefinedFeature.of(
             Feature.TREE,

@@ -8,6 +8,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -19,7 +20,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public final class PlantConfig {
     public static final Codec<PlantConfig> CODEC = MapCodec.unit(new PlantConfig()).codec();
 
-    private CanGrowOn canGrowOn = GROW_ON_DIRT;
+    private CanGrowOn canGrowOn = GROW_DEFAULT;
     private double width = 16;
     private double height = 16;
     private boolean offsetShape = false;
@@ -35,6 +36,11 @@ public final class PlantConfig {
 
     public PlantConfig canGrowOn(CanGrowOn canGrowOn) {
         this.canGrowOn = canGrowOn;
+        return this;
+    }
+
+    public PlantConfig canGrowOn(TagKey<Block> tag) {
+        this.canGrowOn = (state, _, _, _) -> state.is(tag);
         return this;
     }
 
@@ -110,17 +116,8 @@ public final class PlantConfig {
     public static final CanGrowOn GROW_ON_FULL_FACE =
             (state, level, pos, dir) -> Block.isFaceFull(state.getBlockSupportShape(level, pos), dir) || Block.isFaceFull(state.getCollisionShape(level, pos), dir);
 
-    public static final CanGrowOn GROW_ON_DIRT =
-            (state, level, pos, dir) -> isDirt(state, dir);
-
-    public static final CanGrowOn GROW_ON_DIRT_SAND =
-            (state, level, pos, dir) -> isDirt(state, dir) || state.is(BlockTags.SAND);
-
-    public static final CanGrowOn GROW_ON_DIRT_SAND_STONE =
-            (state, level, pos, dir) -> isDirt(state, dir) || state.is(BlockTags.SAND) || state.is(ModBlockTags.OVERWORLD_STONE) || state.is(Blocks.GRAVEL);
-
-    public static final CanGrowOn GROW_ON_ASH =
-            (state, level, pos, dir) -> state.is(ModBlockTags.ASH_PLANT_CAN_GROW_ON);
+    public static final CanGrowOn GROW_DEFAULT =
+            (state, _, _, _) -> state.is(BlockTags.SUPPORTS_VEGETATION);
 
     public static PlantConfig of() {
         return new PlantConfig();

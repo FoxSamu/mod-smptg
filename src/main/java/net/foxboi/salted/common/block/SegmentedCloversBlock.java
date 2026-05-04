@@ -10,7 +10,7 @@ public class SegmentedCloversBlock extends SegmentedPlantBlock {
     public static final IntegerProperty AMOUNT = IntegerProperty.create("clover_amount", 1, 4);
 
     @Override
-    protected MapCodec<? extends VegetationBlock> codec() {
+    protected MapCodec<? extends SegmentedCloversBlock> codec() {
         return CODEC;
     }
 

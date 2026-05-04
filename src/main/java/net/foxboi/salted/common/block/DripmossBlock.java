@@ -30,7 +30,7 @@ public class DripmossBlock extends HangingColumnPlantBlock {
 
     @Override
     protected boolean mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos) {
-        return state.is(ModBlockTags.CAVE_PLANT_CAN_GROW_ON);
+        return state.is(ModBlockTags.SUPPORTS_CAVE_VEGETATION);
     }
 
     @Override

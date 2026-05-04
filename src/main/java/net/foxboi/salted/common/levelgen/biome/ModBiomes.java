@@ -1,6 +1,7 @@
 package net.foxboi.salted.common.levelgen.biome;
 
-import net.foxboi.salted.common.misc.data.DataRegistry;
+import net.foxboi.salted.common.Smptg;
+import net.foxboi.salted.common.misc.reg.DataRegistry;
 import net.foxboi.salted.common.misc.Translator;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -9,7 +10,7 @@ import net.minecraft.world.level.biome.Biome;
 import static net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate.matchesBlocks;
 
 public record ModBiomes() {
-    private static final DataRegistry<Biome> REGISTRY = DataRegistry.of(Registries.BIOME);
+    private static final DataRegistry<Biome> REGISTRY = Smptg.REGISTRAR.data(Registries.BIOME);
 
     public static final ResourceKey<Biome> ASPEN_FOREST = REGISTRY.register("aspen_forest", new AspenForest());
     public static final ResourceKey<Biome> MAPLE_FOREST = REGISTRY.register("maple_forest", new MapleForest());

@@ -18,12 +18,6 @@ public record ModBlockData() {
     // =============================================
 
     public static void models(BlockModels models) {
-        models.randomlyRotatedCube(SALT_BLOCK);
-        models.cube(SALT_CRUST);
-        models.cube(SALT_ORE);
-        models.cube(DEEPSLATE_SALT_ORE);
-        models.cube(NETHER_SALT_ORE);
-
         models.multilayer(ASH_LAYER, ASH_BLOCK);
         models.randomlyRotatedCube(ASH_BLOCK);
         models.cube(PACKED_ASH);
@@ -45,24 +39,17 @@ public record ModBlockData() {
         models.columnCrossPlant(ASHVINE);
         models.multiface(PATCHMOSS);
         models.shelfFungus(SHELF_FUNGUS);
+        models.emissiveCrossPlant(EMBERGRASS);
+        models.emissiveCrossPlant(EMBERWEED);
+        models.glowingFlatSegmentedPlant(EMBERS);
 
         models.wood(BURNED_STEM)
                 .logWithHorizontal(BURNED_STEM)
                 .wood(BURNED_HYPHAE);
 
-        models.family(ROCKSALT)
-                .slab(ROCKSALT_SLAB)
-                .stairs(ROCKSALT_STAIRS)
-                .wall(ROCKSALT_WALL);
-
         models.family(ASH_BRICKS)
                 .slab(ASH_BRICK_SLAB)
                 .stairs(ASH_BRICK_STAIRS);
-
-        models.family(ROCKSALT_BRICKS)
-                .slab(ROCKSALT_BRICK_SLAB)
-                .stairs(ROCKSALT_BRICK_STAIRS)
-                .wall(ROCKSALT_BRICK_WALL);
 
         models.family(ASPEN_PLANKS)
                 .log(ASPEN_LOG)
@@ -156,8 +143,6 @@ public record ModBlockData() {
         models.mapleLeaves(YELLOW_MAPLE_LEAVES, FoliageColorMap.YELLOW_DEFAULT);
         models.tintedLeaves(REDWOOD_LEAVES, 0x215931);
         models.tintedLeaves(DEAD_LEAVES, DryFoliageColor.FOLIAGE_DRY_DEFAULT);
-
-        models.saltCrystal(SALT_CRYSTAL);
     }
 
 
@@ -277,26 +262,6 @@ public record ModBlockData() {
         tools.pickaxe(ASH_BRICK_STAIRS);
 
         tools.shovel(MOSSY_DIRT);
-
-
-        tools.shovel(SALT_BLOCK);
-        tools.pickaxe(SALT_CRUST);
-
-        tools.pickaxe(ROCKSALT);
-        tools.pickaxe(ROCKSALT_SLAB);
-        tools.pickaxe(ROCKSALT_STAIRS);
-        tools.pickaxe(ROCKSALT_WALL);
-
-        tools.pickaxe(ROCKSALT_BRICKS);
-        tools.pickaxe(ROCKSALT_BRICK_SLAB);
-        tools.pickaxe(ROCKSALT_BRICK_STAIRS);
-        tools.pickaxe(ROCKSALT_BRICK_WALL);
-
-        tools.pickaxe(SALT_CRYSTAL);
-
-        tools.pickaxe(SALT_ORE);
-        tools.pickaxe(DEEPSLATE_SALT_ORE);
-        tools.pickaxe(NETHER_SALT_ORE);
     }
 
 
@@ -401,6 +366,9 @@ public record ModBlockData() {
         drops.self(ASH_BRICK_STAIRS);
         drops.self(ASHVINE);
         drops.selfIfShears(ASHCREEP);
+        drops.selfIfShears(EMBERGRASS);
+        drops.selfIfShears(EMBERWEED);
+        drops.segmented(EMBERS);
 
 
         drops.selfIfSilkTouch(MOSSY_DIRT, Blocks.DIRT);
@@ -418,26 +386,6 @@ public record ModBlockData() {
         drops.multiface(PATCHMOSS);
         drops.self(SHELF_FUNGUS);
         drops.selfIfLower(GLOBE_THISTLE);
-
-
-        drops.self(SALT_BLOCK);
-        drops.self(SALT_CRUST);
-
-        drops.self(ROCKSALT);
-        drops.slab(ROCKSALT_SLAB);
-        drops.self(ROCKSALT_STAIRS);
-        drops.self(ROCKSALT_WALL);
-
-        drops.self(ROCKSALT_BRICKS);
-        drops.slab(ROCKSALT_BRICK_SLAB);
-        drops.self(ROCKSALT_BRICK_STAIRS);
-        drops.self(ROCKSALT_BRICK_WALL);
-
-        drops.saltCrystal(SALT_CRYSTAL);
-
-        drops.saltOre(SALT_ORE);
-        drops.saltOre(DEEPSLATE_SALT_ORE);
-        drops.netherSaltOre(NETHER_SALT_ORE);
     }
 
 
@@ -460,6 +408,8 @@ public record ModBlockData() {
         compat.plant(BARLEY);
         compat.plant(CAVE_GRASS);
         compat.plant(ASHCREEP);
+        compat.plant(EMBERWEED);
+        compat.plant(EMBERGRASS);
 
         compat.tallPlant(TALL_CATTAIL);
         compat.tallPlant(TALL_LAVENDER);

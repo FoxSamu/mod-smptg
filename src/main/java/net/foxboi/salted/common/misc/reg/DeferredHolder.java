@@ -1,4 +1,4 @@
-package net.foxboi.salted.common.misc.data;
+package net.foxboi.salted.common.misc.reg;
 
 import java.util.Optional;
 

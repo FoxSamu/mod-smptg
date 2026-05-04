@@ -16,10 +16,6 @@ public record ModItemTags() {
     public static final TagKey<Item> REDWOOD_LOGS = tag("redwood_logs");
     public static final TagKey<Item> DEAD_LOGS = tag("dead_logs");
 
-    public static final TagKey<Item> SALTED_FOODS = tag("salted_foods");
-
-    public static final TagKey<Item> SALT_ORES = tag("salt_ores");
-
 
     // INITIALISATION
     // =============================================
@@ -38,9 +34,6 @@ public record ModItemTags() {
         translator.name(MAPLE_LOGS, "Maple Logs");
         translator.name(REDWOOD_LOGS, "Redwood Logs");
         translator.name(DEAD_LOGS, "Dead Logs");
-
-        translator.name(SALTED_FOODS, "Salted Foods");
-        translator.name(SALT_ORES, "Salt Ores");
     }
 
 

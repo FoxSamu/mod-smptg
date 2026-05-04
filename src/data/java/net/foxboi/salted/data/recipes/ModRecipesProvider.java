@@ -15,36 +15,14 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 
-public class RecipesProvider extends RecipeProvider {
-    protected RecipesProvider(HolderLookup.Provider lookup, RecipeOutput output) {
+public class ModRecipesProvider extends RecipeProvider {
+    protected ModRecipesProvider(HolderLookup.Provider lookup, RecipeOutput output) {
         super(lookup, output);
     }
 
     @Override
     public void buildRecipes() {
         // TODO Stonecutting
-
-        buildConvert(ModItems.ROCKSALT_CHUNK, ModItems.SALT, 2).save(output, Smptg.sid("salt_from_chunk"));
-        buildConvert(ModItems.SALT_CRUST, ModItems.SALT, 12).save(output, Smptg.sid("salt_from_crust"));
-
-        buildExpand(ModItems.SALT, ModItems.PINCH_OF_SALT).save(output, Smptg.sid("pinch_from_salt"));
-        buildCompact(ModItems.PINCH_OF_SALT, ModItems.SALT).save(output, Smptg.sid("salt_from_pinch"));
-
-        buildExpand(ModItems.ROCKSALT, ModItems.ROCKSALT_CHUNK).save(output, Smptg.sid("chunks_from_rocksalt"));
-        buildCompact(ModItems.ROCKSALT_CHUNK, ModItems.ROCKSALT).save(output, Smptg.sid("rocksalt_from_chunks"));
-
-        buildExpand(ModItems.SALT_BLOCK, ModItems.SALT).save(output, Smptg.sid("salt_from_block"));
-        buildCompact(ModItems.SALT, ModItems.SALT_BLOCK).save(output, Smptg.sid("block_from_salt"));
-
-        buildBricks(ModItems.ROCKSALT, ModItems.ROCKSALT_BRICKS).save(output);
-
-        buildSlab(ModItems.ROCKSALT, ModItems.ROCKSALT_SLAB).save(output);
-        buildStairs(ModItems.ROCKSALT, ModItems.ROCKSALT_STAIRS).save(output);
-        buildWall(ModItems.ROCKSALT, ModItems.ROCKSALT_WALL).save(output);
-
-        buildSlab(ModItems.ROCKSALT_BRICKS, ModItems.ROCKSALT_BRICK_SLAB).save(output);
-        buildStairs(ModItems.ROCKSALT_BRICKS, ModItems.ROCKSALT_BRICK_STAIRS).save(output);
-        buildWall(ModItems.ROCKSALT_BRICKS, ModItems.ROCKSALT_BRICK_WALL).save(output);
 
         buildWood(ModItems.ASPEN_LOG, ModItems.ASPEN_WOOD).save(output);
         buildWood(ModItems.STRIPPED_ASPEN_LOG, ModItems.STRIPPED_ASPEN_WOOD).save(output);
@@ -270,7 +248,7 @@ public class RecipesProvider extends RecipeProvider {
         return (output, regs) -> new FabricRecipeProvider(output, regs) {
             @Override
             protected RecipeProvider createRecipeProvider(HolderLookup.Provider lookup, RecipeOutput output) {
-                return new RecipesProvider(lookup, output);
+                return new ModRecipesProvider(lookup, output);
             }
 
             @Override

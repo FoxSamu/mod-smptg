@@ -3,8 +3,8 @@ package net.foxboi.salted.common.levelgen.feature;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import net.foxboi.salted.common.misc.data.Definition;
-import net.foxboi.salted.common.misc.data.DefinitionContext;
+import net.foxboi.salted.common.misc.reg.Definition;
+import net.foxboi.salted.common.misc.reg.DefinitionContext;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;

@@ -16,6 +16,7 @@ import net.foxboi.salted.common.Smptg;
 import net.foxboi.salted.common.block.ModBlocks;
 import net.foxboi.salted.common.entity.ModEntityTypes;
 import net.foxboi.salted.common.misc.Translator;
+import net.foxboi.salted.common.misc.reg.GameRegistry;
 
 /**
  * Salted's collection of {@link Item}s. Each {@link Item} instance is provided here in a static field.
@@ -27,6 +28,8 @@ public record ModItems() {
     // - Go through all the configuration methods below and supply the correct configuration for the item
     // - Go through all the configurations in ModItemData (under the data source set) as well
     // - All configuration methods reside above the factory methods
+
+    public static final GameRegistry<Item> REGISTRY = Smptg.REGISTRAR.game(Registries.ITEM);
 
 
     // ITEMS
@@ -148,6 +151,9 @@ public record ModItems() {
 
     public static final Item ASHVINE = registerBlock(ModBlocks.ASHVINE);
     public static final Item ASHCREEP = registerBlock(ModBlocks.ASHCREEP);
+    public static final Item EMBERGRASS = registerBlock(ModBlocks.EMBERGRASS);
+    public static final Item EMBERWEED = registerBlock(ModBlocks.EMBERWEED);
+    public static final Item EMBERS = registerBlock(ModBlocks.EMBERS);
 
     // Soils
 
@@ -168,39 +174,6 @@ public record ModItems() {
     public static final Item PATCHMOSS = registerBlock(ModBlocks.PATCHMOSS);
     public static final Item GLOBE_THISTLE = register(ModBlocks.GLOBE_THISTLE, doubleBlockItem(ModBlocks.GLOBE_THISTLE));
     public static final Item SHELF_FUNGUS = register(ModBlocks.SHELF_FUNGUS, diagonallyAttachableBlockItem(ModBlocks.SHELF_FUNGUS));
-
-    // Salt
-
-    public static final Item SALT_BLOCK = registerBlock(ModBlocks.SALT_BLOCK);
-    public static final Item SALT_CRUST = registerBlock(ModBlocks.SALT_CRUST);
-
-    public static final Item ROCKSALT = registerBlock(ModBlocks.ROCKSALT);
-    public static final Item ROCKSALT_SLAB = registerBlock(ModBlocks.ROCKSALT_SLAB);
-    public static final Item ROCKSALT_STAIRS = registerBlock(ModBlocks.ROCKSALT_STAIRS);
-    public static final Item ROCKSALT_WALL = registerBlock(ModBlocks.ROCKSALT_WALL);
-
-    public static final Item ROCKSALT_BRICKS = registerBlock(ModBlocks.ROCKSALT_BRICKS);
-    public static final Item ROCKSALT_BRICK_SLAB = registerBlock(ModBlocks.ROCKSALT_BRICK_SLAB);
-    public static final Item ROCKSALT_BRICK_STAIRS = registerBlock(ModBlocks.ROCKSALT_BRICK_STAIRS);
-    public static final Item ROCKSALT_BRICK_WALL = registerBlock(ModBlocks.ROCKSALT_BRICK_WALL);
-
-    public static final Item SALT_ORE = registerBlock(ModBlocks.SALT_ORE);
-    public static final Item DEEPSLATE_SALT_ORE = registerBlock(ModBlocks.DEEPSLATE_SALT_ORE);
-    public static final Item NETHER_SALT_ORE = registerBlock(ModBlocks.NETHER_SALT_ORE);
-
-    public static final Item SALT = register("salt", saltItem());
-    public static final Item PINCH_OF_SALT = register("pinch_of_salt", item());
-    public static final Item ROCKSALT_CHUNK = register("rocksalt_chunk", item());
-
-    public static final Item SALTED_BEEF = register("salted_beef", saltedItem(Items.BEEF, 1, 0.2f));
-    public static final Item SALTED_PORKCHOP = register("salted_porkchop", saltedItem(Items.PORKCHOP, 1, 0.2f));
-    public static final Item SALTED_MUTTON = register("salted_mutton", saltedItem(Items.MUTTON, 1, 0.2f));
-    public static final Item SALTED_CHICKEN = register("salted_chicken", saltedItem(Items.CHICKEN, 1, 0.2f));
-
-    public static final Item COOKED_SALTED_BEEF = register("cooked_salted_beef", saltedItem(Items.COOKED_BEEF, 2, 2.3f));
-    public static final Item COOKED_SALTED_PORKCHOP = register("cooked_salted_porkchop", saltedItem(Items.COOKED_PORKCHOP, 2, 2.3f));
-    public static final Item COOKED_SALTED_MUTTON = register("cooked_salted_mutton", saltedItem(Items.COOKED_MUTTON, 2, 2.0f));
-    public static final Item COOKED_SALTED_CHICKEN = register("cooked_salted_chicken", saltedItem(Items.COOKED_CHICKEN, 2, 2.0f));
 
 
     // INITIALISATION
@@ -305,23 +278,12 @@ public record ModItems() {
 
         out.insertAfter(
                 Items.WARPED_BUTTON,
-
                 BURNED_STEM,
                 BURNED_HYPHAE
         );
 
         out.insertBefore(
                 Items.SEA_LANTERN,
-                ROCKSALT,
-                ROCKSALT_STAIRS,
-                ROCKSALT_SLAB,
-                ROCKSALT_WALL,
-
-                ROCKSALT_BRICKS,
-                ROCKSALT_BRICK_STAIRS,
-                ROCKSALT_BRICK_SLAB,
-                ROCKSALT_BRICK_WALL,
-
                 PACKED_ASH,
                 ASH_BRICKS,
                 ASH_BRICK_SLAB,
@@ -345,9 +307,6 @@ public record ModItems() {
         );
         out.insertBefore(
                 Items.PRISMARINE,
-                SALT_BLOCK,
-                SALT_CRUST,
-                ROCKSALT,
 
                 ASH_BLOCK,
                 ASH_LAYER,
@@ -363,15 +322,6 @@ public record ModItems() {
                 YELLOW_MAPLE_LEAVES,
                 REDWOOD_LEAVES,
                 DEAD_LEAVES
-        );
-        out.insertAfter(
-                Items.DEEPSLATE_DIAMOND_ORE,
-                SALT_ORE,
-                DEEPSLATE_SALT_ORE
-        );
-        out.insertAfter(
-                Items.NETHER_QUARTZ_ORE,
-                NETHER_SALT_ORE
         );
 
         out.insertBefore(
@@ -399,7 +349,10 @@ public record ModItems() {
 
         out.insertAfter(
                 Items.NETHER_SPROUTS,
-                ASHCREEP
+                ASHCREEP,
+                EMBERGRASS,
+                EMBERWEED,
+                EMBERS
         );
 
         out.insertAfter(
@@ -459,39 +412,9 @@ public record ModItems() {
     }
 
     public static void foodAndDrinksTab(FabricCreativeModeTabOutput out) {
-        out.insertAfter(
-                Items.COOKED_BEEF,
-                SALTED_BEEF,
-                COOKED_SALTED_BEEF
-        );
-        out.insertAfter(
-                Items.COOKED_PORKCHOP,
-                SALTED_PORKCHOP,
-                COOKED_SALTED_PORKCHOP
-        );
-        out.insertAfter(
-                Items.COOKED_MUTTON,
-                SALTED_MUTTON,
-                COOKED_SALTED_MUTTON
-        );
-        out.insertAfter(
-                Items.COOKED_CHICKEN,
-                SALTED_CHICKEN,
-                COOKED_SALTED_CHICKEN
-        );
     }
 
     public static void ingredientsTab(FabricCreativeModeTabOutput out) {
-        out.insertAfter(
-                Items.AMETHYST_SHARD,
-                ROCKSALT_CHUNK
-        );
-
-        out.insertAfter(
-                Items.BONE_MEAL,
-                SALT,
-                PINCH_OF_SALT
-        );
     }
 
 
@@ -516,20 +439,6 @@ public record ModItems() {
 
         translator.name(DEAD_WOOD_BOAT, "Dead Wood Boat");
         translator.name(DEAD_WOOD_CHEST_BOAT, "Dead Wood Chest Boat");
-
-        translator.name(SALT, "Salt");
-        translator.name(PINCH_OF_SALT, "Pinch of Salt");
-        translator.name(ROCKSALT_CHUNK, "Rocksalt Chunk");
-
-        translator.name(SALTED_BEEF, "Raw Salted Beef");
-        translator.name(SALTED_PORKCHOP, "Raw Salted Porkchop");
-        translator.name(SALTED_MUTTON, "Raw Salted Mutton");
-        translator.name(SALTED_CHICKEN, "Raw Salted Chicken");
-
-        translator.name(COOKED_SALTED_BEEF, "Salted Steak");
-        translator.name(COOKED_SALTED_PORKCHOP, "Cooked Salted Porkchop");
-        translator.name(COOKED_SALTED_MUTTON, "Cooked Salted Mutton");
-        translator.name(COOKED_SALTED_CHICKEN, "Cooked Salted Chicken");
     }
 
 
@@ -555,32 +464,6 @@ public record ModItems() {
 
     private static ItemFactory item() {
         return Item::new;
-    }
-
-    private static ItemFactory saltItem() {
-        return SaltItem::new;
-    }
-
-    private static ItemFactory saltedItem(Item baseItem, int plusNutrition, float plusSaturation) {
-        // TODO fix this
-//        var baseFood = baseItem.components().get(DataComponents.FOOD);
-//        var newFood = baseFood == null ? null : new FoodProperties(
-//                baseFood.nutrition() + plusNutrition,
-//                baseFood.saturation() + plusSaturation,
-//                baseFood.canAlwaysEat()
-//        );
-//
-//        var baseConsumable = baseItem.components().get(DataComponents.CONSUMABLE);
-
-        return props -> {
-//            if (newFood != null) {
-//                props.component(DataComponents.FOOD, newFood);
-//            }
-//            if (baseConsumable != null) {
-//                props.component(DataComponents.CONSUMABLE, baseConsumable);
-//            }
-            return new SaltedItem(baseItem, props);
-        };
     }
 
     private static ItemFactory boatItem(EntityType<? extends AbstractBoat> type) {
@@ -623,12 +506,11 @@ public record ModItems() {
         return register(copyName, factory, new Item.Properties());
     }
 
-    @SuppressWarnings("deprecation")
     private static Item register(Block copyName, ItemFactory factory, Item.Properties properties) {
-        var blockKey = copyName.builtInRegistryHolder().key();
+        var blockKey = ModBlocks.REGISTRY.keyOf(copyName);
         var itemKey = ResourceKey.create(Registries.ITEM, blockKey.identifier());
 
-        return register(itemKey, factory, properties);
+        return REGISTRY.register(itemKey, factory, properties);
     }
 
     private static Item register(String name, ItemFactory factory) {
@@ -636,16 +518,6 @@ public record ModItems() {
     }
 
     private static Item register(String name, ItemFactory factory, Item.Properties properties) {
-        var key = Smptg.key(Registries.ITEM, name);
-        return register(key, factory, properties);
-    }
-
-    private static Item register(ResourceKey<Item> key, ItemFactory factory) {
-        return register(key, factory, new Item.Properties());
-    }
-
-    private static Item register(ResourceKey<Item> key, ItemFactory factory, Item.Properties properties) {
-        var item = factory.create(properties.setId(key));
-        return Registry.register(BuiltInRegistries.ITEM, key, item);
+        return REGISTRY.register(name, factory, properties);
     }
 }

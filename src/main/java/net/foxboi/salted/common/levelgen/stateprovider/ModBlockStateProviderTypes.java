@@ -1,18 +1,20 @@
 package net.foxboi.salted.common.levelgen.stateprovider;
 
 import net.foxboi.salted.common.Smptg;
+import net.foxboi.salted.common.misc.reg.GameRegistry;
+
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProviderType;
+import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
 @SuppressWarnings("unused")
 public record ModBlockStateProviderTypes() {
-    public static final BlockStateProviderType<EitherStateProvider> EITHER = register("either", EitherStateProvider.TYPE);
+    private static final GameRegistry<BlockStateProviderType<?>> REGISTRY = Smptg.REGISTRAR.game(Registries.BLOCK_STATE_PROVIDER_TYPE);
 
-    private static <BSP extends BlockStateProvider> BlockStateProviderType<BSP> register(String id, BlockStateProviderType<BSP> type) {
-        return Registry.register(BuiltInRegistries.BLOCKSTATE_PROVIDER_TYPE, Smptg.id(id), type);
-    }
+    public static final BlockStateProviderType<EitherStateProvider> EITHER = REGISTRY.register("either", EitherStateProvider.TYPE);
 
     public static void init() {
     }

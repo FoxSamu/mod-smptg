@@ -2,14 +2,14 @@ package net.foxboi.salted.common.levelgen;
 
 import java.util.List;
 
+import net.foxboi.salted.common.Smptg;
 import net.foxboi.salted.common.block.ModBlocks;
 import net.foxboi.salted.common.levelgen.placement.DefinedPlacement;
-import net.foxboi.salted.common.misc.data.DataRegistry;
+import net.foxboi.salted.common.misc.reg.DataRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.features.NetherFeatures;
-import net.minecraft.data.worldgen.features.VegetationFeatures;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -22,7 +22,7 @@ import static net.foxboi.salted.common.levelgen.FeatureConditions.*;
 import static net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate.*;
 
 public record ModVegetationPlacements() {
-    private static final DataRegistry<PlacedFeature> REGISTRY = DataRegistry.of(Registries.PLACED_FEATURE);
+    private static final DataRegistry<PlacedFeature> REGISTRY = Smptg.REGISTRAR.data(Registries.PLACED_FEATURE);
 
     private static final DefinedPlacement.Modifier TREE_THRESHOLD = it -> it.atMaxDepth(0);
 
