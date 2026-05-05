@@ -253,6 +253,42 @@ public record ModVegetationPlacements() {
                     .randomPatch(inAir(ASH_GROW_BLOCKS), 96)
     );
 
+    public static final ResourceKey<PlacedFeature> PATCH_EMBERWEED = REGISTRY.register(
+            "patch_emberweed",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.EMBERWEED)
+                    .count(ConstantInt.of(3))
+                    .spreadInChunk()
+                    .atHeight(32, 120)
+                    .scan(Direction.DOWN, LOWEST_AIR, 32)
+                    .inBiome()
+                    .randomPatch(inAir(ASH_GROW_BLOCKS), 64, 4)
+    );
+
+    public static final ResourceKey<PlacedFeature> PATCH_EMBERGRASS = REGISTRY.register(
+            "patch_embergrass",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.EMBERGRASS)
+                    .count(ConstantInt.of(5))
+                    .spreadInChunk()
+                    .atHeight(32, 120)
+                    .scan(Direction.DOWN, LOWEST_AIR, 16)
+                    .inBiome()
+                    .randomPatch(inAir(ASH_GROW_BLOCKS), 96, 6)
+    );
+
+    public static final ResourceKey<PlacedFeature> PATCH_EMBERS = REGISTRY.register(
+            "patch_embers",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.EMBERS)
+                    .count(ConstantInt.of(5))
+                    .spreadInChunk()
+                    .atHeight(32, 120)
+                    .scan(Direction.DOWN, LOWEST_AIR, 16)
+                    .inBiome()
+                    .randomPatch(inAir(ASH_GROW_BLOCKS), 64, 3, 2)
+    );
+
 
     // Misc
     // ===============================================================

@@ -8,7 +8,7 @@
     "BucketItemMixin", "CacheHolderMixin", "GrassBlockMixin", "IceBlockMixin", "IdentifierMixin", "LevelMixin",
     "MultifaceBlockMixin", "NoiseGeneratorSettingsMixin", "OverworldBiomeBuilderMixin", "PlayerListMixin",
     "RegistryLoadTaskPendingRegistrationMixin", "ServerLevelMixin", "ShearsItemMixin",
-    "SimpleBlockFeatureMixin", "SlimeMixin", "SnowLayerBlockMixin"
+    "SimpleBlockFeatureMixin", "SlimeMixin", "SnowLayerBlockMixin", "NodeEvaluatorMixin"
   ],
 
   "injectors": {

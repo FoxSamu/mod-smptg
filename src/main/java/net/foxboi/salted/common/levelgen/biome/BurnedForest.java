@@ -28,6 +28,7 @@ public class BurnedForest extends NetherBiome {
         super.generation(builder);
 
         addBurnedStems(builder);
+        addEmberPlants(builder);
         addAshDecorations(builder);
         addAshLayers(builder);
     }

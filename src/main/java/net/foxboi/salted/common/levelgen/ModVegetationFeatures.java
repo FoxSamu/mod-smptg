@@ -52,6 +52,10 @@ public record ModVegetationFeatures() {
             UniformFloat.of(0, .75f)
     ));
 
+    public static final ResourceKey<ConfiguredFeature<?, ?>> EMBERWEED = REGISTRY.register("emberweed", block(FeatureBlocks.EMBERWEED));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> EMBERGRASS = REGISTRY.register("embergrass", block(FeatureBlocks.EMBERGRASS));
+    public static final ResourceKey<ConfiguredFeature<?, ?>> EMBERS = REGISTRY.register("embers", block(FeatureBlocks.EMBERS));
+
     public static final ResourceKey<ConfiguredFeature<?, ?>> BURNED_STEM = REGISTRY.register("burned_stem", column(
             Direction.UP,
             FeatureBlocks.BURNED_STEM,

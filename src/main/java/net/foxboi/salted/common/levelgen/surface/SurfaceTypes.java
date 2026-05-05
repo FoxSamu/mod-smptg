@@ -70,12 +70,12 @@ public class SurfaceTypes {
 
     public static RuleSource ash() {
         return sequence(
-                ifTrue(noiseCondition(ModNoises.ASH, 0.12), NETHERRACK),
-                sequence(
+                ifTrue(stoneDepthCheck(0, true, CaveSurface.FLOOR), sequence(
                         ifTrue(stoneDepthCheck(1, false, CaveSurface.CEILING), PACKED_ASH),
-                        ifTrue(stoneDepthCheck(0, true, CaveSurface.FLOOR), ASH),
-                        ifTrue(stoneDepthCheck(4, true, CaveSurface.FLOOR), PACKED_ASH)
-                )
+                        ASH
+                )),
+                ifTrue(stoneDepthCheck(4, true, CaveSurface.FLOOR), PACKED_ASH),
+                ifTrue(stoneDepthCheck(0, true, CaveSurface.CEILING), PACKED_ASH)
         );
     }
 }

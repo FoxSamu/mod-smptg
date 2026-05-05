@@ -52,8 +52,6 @@ public class FeatureConditions {
 
     public static final List<Block> ASH_GROW_BLOCKS = List.of(
             Blocks.NETHERRACK,
-            Blocks.CRIMSON_NYLIUM,
-            Blocks.WARPED_NYLIUM,
             ModBlocks.ASH_BLOCK,
             ModBlocks.PACKED_ASH
     );

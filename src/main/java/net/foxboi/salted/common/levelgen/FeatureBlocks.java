@@ -52,6 +52,7 @@ public class FeatureBlocks {
     public static final BlockStateProvider ASHVINE = BlockStateProvider.simple(ModBlocks.ASHVINE);
     public static final BlockStateProvider EMBERGRASS = BlockStateProvider.simple(ModBlocks.EMBERGRASS);
     public static final BlockStateProvider EMBERWEED = BlockStateProvider.simple(ModBlocks.EMBERWEED);
+    public static final BlockStateProvider EMBERS = segmented(ModBlocks.EMBERS, 1, 4);
     public static final BlockStateProvider BURNED_STEM = BlockStateProvider.simple(ModBlocks.BURNED_STEM);
 
     public static BlockStateProvider either(BlockStateProvider a, BlockStateProvider b, double bChance) {

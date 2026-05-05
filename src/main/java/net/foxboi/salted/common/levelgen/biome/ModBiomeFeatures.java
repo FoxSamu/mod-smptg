@@ -294,6 +294,12 @@ public record ModBiomeFeatures() {
         builder.addFeature(UNDERGROUND_DECORATION, ModVegetationPlacements.PATCH_ASH_FIRE);
     }
 
+    public static void addEmberPlants(BiomeEditor builder) {
+        builder.addFeature(VEGETAL_DECORATION, ModVegetationPlacements.PATCH_EMBERGRASS);
+        builder.addFeature(VEGETAL_DECORATION, ModVegetationPlacements.PATCH_EMBERWEED);
+        builder.addFeature(VEGETAL_DECORATION, ModVegetationPlacements.PATCH_EMBERS);
+    }
+
     public static void addBurnedStems(BiomeEditor builder) {
         builder.addFeature(VEGETAL_DECORATION, ModVegetationPlacements.BURNED_STEM);
     }
