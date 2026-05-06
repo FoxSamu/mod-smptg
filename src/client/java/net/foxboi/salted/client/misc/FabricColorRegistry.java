@@ -1,6 +1,8 @@
 package net.foxboi.salted.client.misc;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry;
 
@@ -124,81 +126,81 @@ public class FabricColorRegistry implements ColorRegistry {
     }
 
     @Override
-    public void foliage(Block block, boolean colorParticles) {
+    public void foliage(Block block, boolean colorParticles, int indices) {
         BlockColorRegistry.register(
-                List.of(withParicleColor(FOLIAGE, colorParticles)),
+                create(indices, withParicleColor(FOLIAGE, colorParticles)),
                 block
         );
     }
 
     @Override
-    public void dryFoliage(Block block, boolean colorParticles) {
+    public void dryFoliage(Block block, boolean colorParticles, int indices) {
         BlockColorRegistry.register(
-                List.of(withParicleColor(DRY_FOLIAGE, colorParticles)),
+                create(indices, withParicleColor(DRY_FOLIAGE, colorParticles)),
                 block
         );
     }
 
     @Override
-    public void water(Block block, boolean colorParticles) {
+    public void water(Block block, boolean colorParticles, int indices) {
         BlockColorRegistry.register(
-                List.of(withParicleColor(WATER, colorParticles)),
+                create(indices, withParicleColor(WATER, colorParticles)),
                 block
         );
     }
 
     @Override
-    public void grass(Block block, boolean colorParticles) {
+    public void grass(Block block, boolean colorParticles, int indices) {
         BlockColorRegistry.register(
-                List.of(withParicleColor(GRASS, colorParticles)),
+                create(indices, withParicleColor(GRASS, colorParticles)),
                 block
         );
     }
 
     @Override
-    public void darkRedFoliage(Block block, boolean colorParticles) {
+    public void darkRedFoliage(Block block, boolean colorParticles, int indices) {
         BlockColorRegistry.register(
-                List.of(withParicleColor(DARK_RED_FOLIAGE, colorParticles)),
+                create(indices, withParicleColor(DARK_RED_FOLIAGE, colorParticles)),
                 block
         );
     }
 
     @Override
-    public void redFoliage(Block block, boolean colorParticles) {
+    public void redFoliage(Block block, boolean colorParticles, int indices) {
         BlockColorRegistry.register(
-                List.of(withParicleColor(RED_FOLIAGE, colorParticles)),
+                create(indices, withParicleColor(RED_FOLIAGE, colorParticles)),
                 block
         );
     }
 
     @Override
-    public void goldenFoliage(Block block, boolean colorParticles) {
+    public void goldenFoliage(Block block, boolean colorParticles, int indices) {
         BlockColorRegistry.register(
-                List.of(withParicleColor(GOLDEN_FOLIAGE, colorParticles)),
+                create(indices, withParicleColor(GOLDEN_FOLIAGE, colorParticles)),
                 block
         );
     }
 
     @Override
-    public void goldgreenFoliage(Block block, boolean colorParticles) {
+    public void goldgreenFoliage(Block block, boolean colorParticles, int indices) {
         BlockColorRegistry.register(
-                List.of(withParicleColor(GOLDGREEN_FOLIAGE, colorParticles)),
+                create(indices, withParicleColor(GOLDGREEN_FOLIAGE, colorParticles)),
                 block
         );
     }
 
     @Override
-    public void yellowFoliage(Block block, boolean colorParticles) {
+    public void yellowFoliage(Block block, boolean colorParticles, int indices) {
         BlockColorRegistry.register(
-                List.of(withParicleColor(YELLOW_FOLIAGE, colorParticles)),
+                create(indices, withParicleColor(YELLOW_FOLIAGE, colorParticles)),
                 block
         );
     }
 
     @Override
-    public void solid(Block block, int rgb, boolean colorParticles) {
+    public void solid(Block block, int rgb, boolean colorParticles, int indices) {
         BlockColorRegistry.register(
-                List.of(new BlockTintSource() {
+                create(indices, new BlockTintSource() {
                     @Override
                     public int colorAsTerrainParticle(BlockState state, BlockAndTintGetter level, BlockPos pos) {
                         return colorParticles ? 0xFF000000 | rgb : 0xFFFFFFFF;
@@ -211,5 +213,9 @@ public class FabricColorRegistry implements ColorRegistry {
                 }),
                 block
         );
+    }
+
+    private static List<BlockTintSource> create(int indices, BlockTintSource src) {
+        return IntStream.range(0, indices).mapToObj(_ -> src).toList();
     }
 }

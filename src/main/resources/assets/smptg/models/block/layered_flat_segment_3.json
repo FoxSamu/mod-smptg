@@ -1,23 +1,23 @@
 {
   "ambientocclusion": false,
   "textures": {
-    "particle": "#untinted"
+    "particle": "#texture"
   },
   "elements": [
     {
       "from": [8, 0.25, 8],
       "to": [16, 0.25, 16],
       "faces": {
-        "up": {"uv": [8, 8, 16, 16], "texture": "#untinted"},
-        "down": {"uv": [8, 16, 16, 8], "texture": "#untinted"}
+        "up": {"uv": [8, 8, 16, 16], "texture": "#texture", "tintindex": 0},
+        "down": {"uv": [8, 16, 16, 8], "texture": "#texture", "tintindex": 0}
       }
     },
     {
       "from": [8, 0.25, 8],
       "to": [16, 0.25, 16],
       "faces": {
-        "up": {"uv": [8, 8, 16, 16], "texture": "#tinted", "tintindex": 0},
-        "down": {"uv": [8, 16, 16, 8], "texture": "#tinted", "tintindex": 0}
+        "up": {"uv": [8, 8, 16, 16], "texture": "#overlay"},
+        "down": {"uv": [8, 16, 16, 8], "texture": "#overlay"}
       }
     }
   ]

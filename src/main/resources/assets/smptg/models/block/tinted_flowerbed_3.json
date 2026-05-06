@@ -8,8 +8,8 @@
             "from": [8, 2, 8],
             "to": [16, 2, 16],
             "faces": {
-                "up": { "uv": [8, 8, 16, 16], "texture": "#flowerbed", "tintindex": 1 },
-                "down": { "uv": [8, 16, 16, 8], "texture": "#flowerbed", "tintindex": 1 }
+                "up": { "uv": [8, 8, 16, 16], "texture": "#flowerbed", "tintindex": 0 },
+                "down": { "uv": [8, 16, 16, 8], "texture": "#flowerbed", "tintindex": 0 }
             }
         },
         {

@@ -8,9 +8,11 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.vehicle.boat.AbstractBoat;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.FuelValues;
 
 import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTabOutput;
+import net.fabricmc.fabric.api.registry.FuelValueEvents;
 
 import net.foxboi.salted.common.Smptg;
 import net.foxboi.salted.common.block.ModBlocks;
@@ -187,6 +189,11 @@ public record ModItems() {
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(ModItems::toolsAndUtilitiesTab);
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(ModItems::foodAndDrinksTab);
         CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.INGREDIENTS).register(ModItems::ingredientsTab);
+
+        FuelValueEvents.BUILD.register((builder, context) -> setupFuel(builder, context.baseSmeltTime()));
+    }
+
+    public static void setupFuel(FuelValues.Builder builder, int baseUnit) {
     }
 
 

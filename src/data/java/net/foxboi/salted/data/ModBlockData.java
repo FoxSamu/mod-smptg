@@ -1,11 +1,12 @@
 package net.foxboi.salted.data;
 
-import net.foxboi.salted.common.Smptg;
 import net.foxboi.salted.common.misc.biome.color.FoliageColorMap;
+import net.foxboi.salted.data.core.model.ItemTint;
 import net.foxboi.salted.data.loot.BlockDrops;
 import net.foxboi.salted.data.model.BlockModels;
 import net.foxboi.salted.data.shadercompat.ShaderCompat;
 import net.foxboi.salted.data.tags.ToolTags;
+
 import net.minecraft.world.level.DryFoliageColor;
 import net.minecraft.world.level.FoliageColor;
 import net.minecraft.world.level.block.Blocks;
@@ -22,127 +23,139 @@ public record ModBlockData() {
         models.randomlyRotatedCube(ASH_BLOCK);
         models.cube(PACKED_ASH);
 
-        models.randomlyRotatedCoveredBlock(MOSSY_DIRT, Blocks.DIRT);
+        models.overgrownDirt(MOSSY_DIRT);
 
-        models.tintedFlowerBed(CLOVERS, ItemTint.grass());
-        models.tintedCrossPlant(GRASS_SPROUTS, ItemTint.grass());
-        models.crossPlant(BARLEY);
-        models.tallCrossPlant(TALL_BARLEY);
-        models.tallCrossPlant(GLOBE_THISTLE);
-        models.layeredCrossPlant(CATTAIL, ItemTint.grass());
-        models.tallLayeredCrossPlant(TALL_CATTAIL, ItemTint.grass());
-        models.layeredCrossPlant(LAVENDER, ItemTint.grass());
-        models.tallLayeredCrossPlant(TALL_LAVENDER, ItemTint.grass());
-        models.crossPlant(CAVE_GRASS);
-        models.columnCrossPlant(DRIPMOSS);
-        models.crossPlant(ASHCREEP);
-        models.columnCrossPlant(ASHVINE);
-        models.multiface(PATCHMOSS);
+        models.flowerbedPlant(CLOVERS).tinted(ItemTint.grass()).withGeneratedItem().build();
+        models.crossPlant(GRASS_SPROUTS).tinted(ItemTint.grass()).build();
+        models.crossPlant(BARLEY).basic().build();
+        models.tallCrossPlant(TALL_BARLEY).basic().build();
+        models.tallCrossPlant(GLOBE_THISTLE).basic().build();
+        models.crossPlant(CATTAIL).layered(ItemTint.grass()).build();
+        models.tallCrossPlant(TALL_CATTAIL).layered(ItemTint.grass()).build();
+        models.crossPlant(LAVENDER).layered(ItemTint.grass()).build();
+        models.tallCrossPlant(TALL_LAVENDER).layered(ItemTint.grass()).build();
+        models.crossPlant(CAVE_GRASS).basic().build();
+        models.columnCrossPlant(DRIPMOSS).basic().build();
+        models.crossPlant(ASHCREEP).basic().build();
+        models.columnCrossPlant(ASHVINE).basic().build();
+        models.multifacePlant(PATCHMOSS).basic().build();
+
+        models.crossPlant(EMBERGRASS).emissive().build();
+        models.crossPlant(EMBERWEED).emissive().build();
+        models.flatSegmentedPlant(EMBERS).glowing().build();
+
         models.shelfFungus(SHELF_FUNGUS);
-        models.emissiveCrossPlant(EMBERGRASS);
-        models.emissiveCrossPlant(EMBERWEED);
-        models.glowingFlatSegmentedPlant(EMBERS);
 
-        models.wood(BURNED_STEM)
-                .logWithHorizontal(BURNED_STEM)
-                .wood(BURNED_HYPHAE);
+        models.logWithHorizontal(BURNED_STEM);
+        models.wood(BURNED_HYPHAE, BURNED_STEM);
+
+        models.log(ASPEN_LOG);
+        models.log(STRIPPED_ASPEN_LOG);
+        models.wood(ASPEN_WOOD, ASPEN_LOG);
+        models.wood(STRIPPED_ASPEN_WOOD, STRIPPED_ASPEN_LOG);
+
+        models.log(BEECH_LOG);
+        models.log(STRIPPED_BEECH_LOG);
+        models.wood(BEECH_WOOD, BEECH_LOG);
+        models.wood(STRIPPED_BEECH_WOOD, STRIPPED_BEECH_LOG);
+
+        models.log(MAPLE_LOG);
+        models.log(STRIPPED_MAPLE_LOG);
+        models.wood(MAPLE_WOOD, MAPLE_LOG);
+        models.wood(STRIPPED_MAPLE_WOOD, STRIPPED_MAPLE_LOG);
+
+        models.log(REDWOOD_LOG);
+        models.log(STRIPPED_REDWOOD_LOG);
+        models.wood(REDWOOD_WOOD, REDWOOD_LOG);
+        models.wood(STRIPPED_REDWOOD_WOOD, STRIPPED_REDWOOD_LOG);
+
+        models.log(DEAD_LOG);
+        models.log(STRIPPED_DEAD_LOG);
+        models.wood(DEAD_WOOD, DEAD_LOG);
+        models.wood(STRIPPED_DEAD_WOOD, STRIPPED_DEAD_LOG);
 
         models.family(ASH_BRICKS)
-                .slab(ASH_BRICK_SLAB)
-                .stairs(ASH_BRICK_STAIRS);
+                .slab(ASH_BRICK_SLAB, false)
+                .stairs(ASH_BRICK_STAIRS)
+                .build();
 
         models.family(ASPEN_PLANKS)
-                .log(ASPEN_LOG)
-                .wood(ASPEN_WOOD)
-                .strippedLog(STRIPPED_ASPEN_LOG)
-                .strippedWood(STRIPPED_ASPEN_WOOD)
-                .slab(ASPEN_SLAB)
+                .slab(ASPEN_SLAB, false)
                 .stairs(ASPEN_STAIRS)
-                .fence(ASPEN_FENCE)
-                .fenceGate(ASPEN_FENCE_GATE)
+                .fence(ASPEN_FENCE, false)
+                .fenceGate(ASPEN_FENCE_GATE, false)
                 .pressurePlate(ASPEN_PRESSURE_PLATE)
                 .button(ASPEN_BUTTON)
                 .door(ASPEN_DOOR)
-                .trapdoor(ASPEN_TRAPDOOR)
-                .shelf(ASPEN_SHELF)
+                .trapdoor(ASPEN_TRAPDOOR, true)
+                .shelf(ASPEN_SHELF, STRIPPED_ASPEN_LOG)
                 .sign(ASPEN_SIGN, ASPEN_WALL_SIGN)
-                .hangingSign(ASPEN_HANGING_SIGN, ASPEN_WALL_HANGING_SIGN);
+                .hangingSign(ASPEN_HANGING_SIGN, ASPEN_WALL_HANGING_SIGN, STRIPPED_ASPEN_LOG)
+                .build();
 
         models.family(BEECH_PLANKS)
-                .log(BEECH_LOG)
-                .wood(BEECH_WOOD)
-                .strippedLog(STRIPPED_BEECH_LOG)
-                .strippedWood(STRIPPED_BEECH_WOOD)
-                .slab(BEECH_SLAB)
+                .slab(BEECH_SLAB, false)
                 .stairs(BEECH_STAIRS)
-                .fence(BEECH_FENCE)
-                .fenceGate(BEECH_FENCE_GATE)
+                .fence(BEECH_FENCE, false)
+                .fenceGate(BEECH_FENCE_GATE, false)
                 .pressurePlate(BEECH_PRESSURE_PLATE)
                 .button(BEECH_BUTTON)
                 .door(BEECH_DOOR)
-                .trapdoor(BEECH_TRAPDOOR)
-                .shelf(BEECH_SHELF)
+                .trapdoor(BEECH_TRAPDOOR, true)
+                .shelf(BEECH_SHELF, STRIPPED_BEECH_LOG)
                 .sign(BEECH_SIGN, BEECH_WALL_SIGN)
-                .hangingSign(BEECH_HANGING_SIGN, BEECH_WALL_HANGING_SIGN);
+                .hangingSign(BEECH_HANGING_SIGN, BEECH_WALL_HANGING_SIGN, STRIPPED_BEECH_LOG)
+                .build();
 
         models.family(MAPLE_PLANKS)
-                .log(MAPLE_LOG)
-                .wood(MAPLE_WOOD)
-                .strippedLog(STRIPPED_MAPLE_LOG)
-                .strippedWood(STRIPPED_MAPLE_WOOD)
-                .slab(MAPLE_SLAB)
+                .slab(MAPLE_SLAB, false)
                 .stairs(MAPLE_STAIRS)
-                .fence(MAPLE_FENCE)
-                .fenceGate(MAPLE_FENCE_GATE)
+                .fence(MAPLE_FENCE, false)
+                .fenceGate(MAPLE_FENCE_GATE, false)
                 .pressurePlate(MAPLE_PRESSURE_PLATE)
                 .button(MAPLE_BUTTON)
                 .door(MAPLE_DOOR)
-                .trapdoor(MAPLE_TRAPDOOR)
-                .shelf(MAPLE_SHELF)
+                .trapdoor(MAPLE_TRAPDOOR, true)
+                .shelf(MAPLE_SHELF, STRIPPED_MAPLE_LOG)
                 .sign(MAPLE_SIGN, MAPLE_WALL_SIGN)
-                .hangingSign(MAPLE_HANGING_SIGN, MAPLE_WALL_HANGING_SIGN);
+                .hangingSign(MAPLE_HANGING_SIGN, MAPLE_WALL_HANGING_SIGN, STRIPPED_MAPLE_LOG)
+                .build();
 
         models.family(REDWOOD_PLANKS)
-                .log(REDWOOD_LOG)
-                .wood(REDWOOD_WOOD)
-                .strippedLog(STRIPPED_REDWOOD_LOG)
-                .strippedWood(STRIPPED_REDWOOD_WOOD)
-                .slab(REDWOOD_SLAB)
+                .slab(REDWOOD_SLAB, false)
                 .stairs(REDWOOD_STAIRS)
-                .fence(REDWOOD_FENCE)
-                .fenceGate(REDWOOD_FENCE_GATE)
+                .fence(REDWOOD_FENCE, false)
+                .fenceGate(REDWOOD_FENCE_GATE, false)
                 .pressurePlate(REDWOOD_PRESSURE_PLATE)
                 .button(REDWOOD_BUTTON)
                 .door(REDWOOD_DOOR)
-                .trapdoor(REDWOOD_TRAPDOOR)
-                .shelf(REDWOOD_SHELF)
+                .trapdoor(REDWOOD_TRAPDOOR, true)
+                .shelf(REDWOOD_SHELF, STRIPPED_REDWOOD_LOG)
                 .sign(REDWOOD_SIGN, REDWOOD_WALL_SIGN)
-                .hangingSign(REDWOOD_HANGING_SIGN, REDWOOD_WALL_HANGING_SIGN);
+                .hangingSign(REDWOOD_HANGING_SIGN, REDWOOD_WALL_HANGING_SIGN, STRIPPED_REDWOOD_LOG)
+                .build();
 
         models.family(DEAD_WOOD_PLANKS)
-                .log(DEAD_LOG)
-                .wood(DEAD_WOOD)
-                .strippedLog(STRIPPED_DEAD_LOG)
-                .strippedWood(STRIPPED_DEAD_WOOD)
-                .slab(DEAD_WOOD_SLAB)
+                .slab(DEAD_WOOD_SLAB, false)
                 .stairs(DEAD_WOOD_STAIRS)
-                .fence(DEAD_WOOD_FENCE)
-                .fenceGate(DEAD_WOOD_FENCE_GATE)
+                .fence(DEAD_WOOD_FENCE, false)
+                .fenceGate(DEAD_WOOD_FENCE_GATE, false)
                 .pressurePlate(DEAD_WOOD_PRESSURE_PLATE)
                 .button(DEAD_WOOD_BUTTON)
                 .door(DEAD_WOOD_DOOR)
-                .trapdoor(DEAD_WOOD_TRAPDOOR)
-                .shelf(DEAD_WOOD_SHELF)
+                .trapdoor(DEAD_WOOD_TRAPDOOR, true)
+                .shelf(DEAD_WOOD_SHELF, STRIPPED_DEAD_LOG)
                 .sign(DEAD_WOOD_SIGN, DEAD_WOOD_WALL_SIGN)
-                .hangingSign(DEAD_WOOD_HANGING_SIGN, DEAD_WOOD_WALL_HANGING_SIGN);
+                .hangingSign(DEAD_WOOD_HANGING_SIGN, DEAD_WOOD_WALL_HANGING_SIGN, STRIPPED_DEAD_LOG)
+                .build();
 
-        models.tintedLeaves(ASPEN_LEAVES, FoliageColorMap.GOLDGREEN_DEFAULT);
-        models.tintedLeaves(BEECH_LEAVES, FoliageColor.FOLIAGE_DEFAULT);
+        models.leaves(ASPEN_LEAVES, FoliageColorMap.GOLDGREEN_DEFAULT);
+        models.leaves(BEECH_LEAVES, FoliageColor.FOLIAGE_DEFAULT);
         models.mapleLeaves(RED_MAPLE_LEAVES, FoliageColorMap.RED_DEFAULT);
         models.mapleLeaves(ORANGE_MAPLE_LEAVES, FoliageColorMap.GOLDEN_DEFAULT);
         models.mapleLeaves(YELLOW_MAPLE_LEAVES, FoliageColorMap.YELLOW_DEFAULT);
-        models.tintedLeaves(REDWOOD_LEAVES, 0x215931);
-        models.tintedLeaves(DEAD_LEAVES, DryFoliageColor.FOLIAGE_DRY_DEFAULT);
+        models.leaves(REDWOOD_LEAVES, 0x215931);
+        models.leaves(DEAD_LEAVES, DryFoliageColor.FOLIAGE_DRY_DEFAULT);
     }
 
 

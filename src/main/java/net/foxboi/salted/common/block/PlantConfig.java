@@ -25,6 +25,7 @@ public final class PlantConfig {
     private double height = 16;
     private boolean offsetShape = false;
     private BonemealableBlock bonemealBehavior = BonemealBehaviors.nothing();
+    private boolean burning = false;
 
     public CanGrowOn canGrowOn() {
         return canGrowOn;
@@ -81,6 +82,20 @@ public final class PlantConfig {
 
     public PlantConfig offsetShape(boolean offsetShape) {
         this.offsetShape = offsetShape;
+        return this;
+    }
+
+    public boolean isBurning() {
+        return burning;
+    }
+
+    public PlantConfig burning() {
+        this.burning = true;
+        return this;
+    }
+
+    public PlantConfig burning(boolean burning) {
+        this.burning = burning;
         return this;
     }
 

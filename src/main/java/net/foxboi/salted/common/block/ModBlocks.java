@@ -3,6 +3,8 @@ package net.foxboi.salted.common.block;
 import java.util.List;
 import java.util.function.Supplier;
 
+import net.fabricmc.fabric.api.registry.FuelValueEvents;
+import net.fabricmc.fabric.api.registry.LandPathTypeRegistry;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.foxboi.salted.common.Smptg;
 import net.foxboi.salted.common.misc.ColorRegistry;
@@ -24,6 +26,7 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.component.Tool;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.FuelValues;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
@@ -31,6 +34,7 @@ import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.pathfinder.PathType;
 
 /**
  * SMPTG's collection of {@link Block}s. Each {@link Block} instance is provided here in a static field.
@@ -265,9 +269,23 @@ public record ModBlocks() {
         StrippableBlockRegistry.register(DEAD_LOG, STRIPPED_DEAD_LOG);
         StrippableBlockRegistry.register(DEAD_WOOD, STRIPPED_DEAD_WOOD);
 
+        LandPathTypeRegistry.register(EMBERWEED, PathType.FIRE, PathType.FIRE_IN_NEIGHBOR);
+        LandPathTypeRegistry.register(EMBERGRASS, PathType.FIRE, PathType.FIRE_IN_NEIGHBOR);
+        LandPathTypeRegistry.register(EMBERS, PathType.FIRE, PathType.FIRE_IN_NEIGHBOR);
+
         // TODO Composting, Fuel, Burning, etc.
+        FuelValueEvents.BUILD.register((builder, context) -> setupFuel(builder, context.baseSmeltTime()));
     }
 
+    public static void setupFuel(FuelValues.Builder builder, int baseUnit) {
+        builder
+                .add(EMBERS, baseUnit / 4)
+                .add(EMBERWEED, baseUnit / 2)
+                .add(EMBERGRASS, baseUnit / 2)
+                .add(BURNED_STEM, baseUnit * 3 / 2)
+                .add(BURNED_HYPHAE, baseUnit * 3 / 2)
+        ;
+    }
 
 
     // =====================================================================================================
@@ -433,20 +451,20 @@ public record ModBlocks() {
     // =============================================
 
     public static void colors(ColorRegistry colors) {
-        colors.goldgreenFoliage(ASPEN_LEAVES, true);
-        colors.redFoliage(RED_MAPLE_LEAVES, true);
-        colors.goldenFoliage(ORANGE_MAPLE_LEAVES, true);
-        colors.yellowFoliage(YELLOW_MAPLE_LEAVES, true);
-        colors.solid(REDWOOD_LEAVES, 0x215931, true);
-        colors.foliage(BEECH_LEAVES, true);
-        colors.dryFoliage(DEAD_LEAVES, true);
+        colors.goldgreenFoliage(ASPEN_LEAVES, true, 1);
+        colors.redFoliage(RED_MAPLE_LEAVES, true, 1);
+        colors.goldenFoliage(ORANGE_MAPLE_LEAVES, true, 1);
+        colors.yellowFoliage(YELLOW_MAPLE_LEAVES, true, 1);
+        colors.solid(REDWOOD_LEAVES, 0x215931, true, 1);
+        colors.foliage(BEECH_LEAVES, true, 1);
+        colors.dryFoliage(DEAD_LEAVES, true, 1);
 
-        colors.grass(CLOVERS, true);
-        colors.grass(GRASS_SPROUTS, true);
-        colors.grass(CATTAIL, true);
-        colors.grass(TALL_CATTAIL, true);
-        colors.grass(LAVENDER, true);
-        colors.grass(TALL_LAVENDER, true);
+        colors.grass(CLOVERS, true, 2);
+        colors.grass(GRASS_SPROUTS, true, 1);
+        colors.grass(CATTAIL, true, 1);
+        colors.grass(TALL_CATTAIL, true, 1);
+        colors.grass(LAVENDER, true, 1);
+        colors.grass(TALL_LAVENDER, true, 1);
     }
 
 

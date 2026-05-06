@@ -7,16 +7,16 @@ public interface ColorRegistry {
     @Deprecated
     void color(Block block, Identifier colorId);
 
-    void foliage(Block block, boolean colorParticles);
-    void dryFoliage(Block block, boolean colorParticles);
-    void water(Block block, boolean colorParticles);
-    void grass(Block block, boolean colorParticles);
+    void foliage(Block block, boolean colorParticles, int indices);
+    void dryFoliage(Block block, boolean colorParticles, int indices);
+    void water(Block block, boolean colorParticles, int indices);
+    void grass(Block block, boolean colorParticles, int indices);
 
-    void darkRedFoliage(Block block, boolean colorParticles);
-    void redFoliage(Block block, boolean colorParticles);
-    void goldenFoliage(Block block, boolean colorParticles);
-    void goldgreenFoliage(Block block, boolean colorParticles);
-    void yellowFoliage(Block block, boolean colorParticles);
+    void darkRedFoliage(Block block, boolean colorParticles, int indices);
+    void redFoliage(Block block, boolean colorParticles, int indices);
+    void goldenFoliage(Block block, boolean colorParticles, int indices);
+    void goldgreenFoliage(Block block, boolean colorParticles, int indices);
+    void yellowFoliage(Block block, boolean colorParticles, int indices);
 
-    void solid(Block block, int rgb, boolean colorParticles);
+    void solid(Block block, int rgb, boolean colorParticles, int indices);
 }

@@ -1,7 +1,6 @@
 package net.foxboi.salted.data;
 
 import net.foxboi.salted.data.model.ItemModels;
-import net.minecraft.world.item.Items;
 
 import static net.foxboi.salted.common.item.ModItems.*;
 

@@ -1,83 +1,114 @@
 package net.foxboi.salted.data.model;
 
-import java.util.Optional;
-
 import net.foxboi.salted.common.Smptg;
-import net.minecraft.client.data.models.model.ModelTemplate;
-import net.minecraft.client.data.models.model.TextureSlot;
+import net.foxboi.salted.data.core.model.ModelTemplate;
+import net.foxboi.salted.data.core.model.TextureKey;
 
 public class ModModelTemplates {
-    public static final ModelTemplate TINTED_FLOWERBED_1 = create("tinted_flowerbed_1", "_1", TextureSlot.FLOWERBED, TextureSlot.STEM);
-    public static final ModelTemplate TINTED_FLOWERBED_2 = create("tinted_flowerbed_2", "_2", TextureSlot.FLOWERBED, TextureSlot.STEM);
-    public static final ModelTemplate TINTED_FLOWERBED_3 = create("tinted_flowerbed_3", "_3", TextureSlot.FLOWERBED, TextureSlot.STEM);
-    public static final ModelTemplate TINTED_FLOWERBED_4 = create("tinted_flowerbed_4", "_4", TextureSlot.FLOWERBED, TextureSlot.STEM);
+    public static final ModelTemplate FLOWERBED_1 = ModelTemplates.FLOWERBED_1;
+    public static final ModelTemplate FLOWERBED_2 = ModelTemplates.FLOWERBED_2;
+    public static final ModelTemplate FLOWERBED_3 = ModelTemplates.FLOWERBED_3;
+    public static final ModelTemplate FLOWERBED_4 = ModelTemplates.FLOWERBED_4;
 
-    public static final ModelTemplate LAYERED_CROSS = create("layered_cross", ModTextureSlots.UNTINTED, ModTextureSlots.TINTED);
-    public static final ModelTemplate GLOWING_CROSS = create("glowing_cross", TextureSlot.CROSS);
-    public static final ModelTemplate TINTED_GLOWING_CROSS = create("tinted_glowing_cross", TextureSlot.CROSS);
+    public static final ModelTemplate TINTED_FLOWERBED_1 = block("tinted_flowerbed_1", "_1", TextureKeys.FLOWERBED, TextureKeys.STEM);
+    public static final ModelTemplate TINTED_FLOWERBED_2 = block("tinted_flowerbed_2", "_2", TextureKeys.FLOWERBED, TextureKeys.STEM);
+    public static final ModelTemplate TINTED_FLOWERBED_3 = block("tinted_flowerbed_3", "_3", TextureKeys.FLOWERBED, TextureKeys.STEM);
+    public static final ModelTemplate TINTED_FLOWERBED_4 = block("tinted_flowerbed_4", "_4", TextureKeys.FLOWERBED, TextureKeys.STEM);
 
-    public static final ModelTemplate LAYER_HEIGHT2 = create("layer_height2", "_height2", TextureSlot.TEXTURE);
-    public static final ModelTemplate LAYER_HEIGHT4 = create("layer_height4", "_height4", TextureSlot.TEXTURE);
-    public static final ModelTemplate LAYER_HEIGHT6 = create("layer_height6", "_height6", TextureSlot.TEXTURE);
-    public static final ModelTemplate LAYER_HEIGHT8 = create("layer_height8", "_height8", TextureSlot.TEXTURE);
-    public static final ModelTemplate LAYER_HEIGHT10 = create("layer_height10", "_height10", TextureSlot.TEXTURE);
-    public static final ModelTemplate LAYER_HEIGHT12 = create("layer_height12", "_height12", TextureSlot.TEXTURE);
-    public static final ModelTemplate LAYER_HEIGHT14 = create("layer_height14", "_height14", TextureSlot.TEXTURE);
-    public static final ModelTemplate LAYER_HEIGHT16 = create("layer_height16", "_height16", TextureSlot.TEXTURE);
+    public static final ModelTemplate LAYERED_FLOWERBED_1 = block("layered_flowerbed_1", "_1", TextureKeys.FLOWERBED, ModTextureKeys.OVERLAY, TextureKeys.STEM);
+    public static final ModelTemplate LAYERED_FLOWERBED_2 = block("layered_flowerbed_2", "_2", TextureKeys.FLOWERBED, ModTextureKeys.OVERLAY, TextureKeys.STEM);
+    public static final ModelTemplate LAYERED_FLOWERBED_3 = block("layered_flowerbed_3", "_3", TextureKeys.FLOWERBED, ModTextureKeys.OVERLAY, TextureKeys.STEM);
+    public static final ModelTemplate LAYERED_FLOWERBED_4 = block("layered_flowerbed_4", "_4", TextureKeys.FLOWERBED, ModTextureKeys.OVERLAY, TextureKeys.STEM);
 
-    public static final ModelTemplate SHELF_FUNGUS = create("shelf_fungus", TextureSlot.TOP, TextureSlot.BOTTOM);
-    public static final ModelTemplate SHELF_FUNGUS_DIAGONAL = create("shelf_fungus_diagonal", TextureSlot.TOP, TextureSlot.BOTTOM);
+    public static final ModelTemplate EMISSIVE_FLOWERBED_1 = block("emissive_flowerbed_1", "_1", TextureKeys.FLOWERBED, ModTextureKeys.EMISSIVE, TextureKeys.STEM);
+    public static final ModelTemplate EMISSIVE_FLOWERBED_2 = block("emissive_flowerbed_2", "_2", TextureKeys.FLOWERBED, ModTextureKeys.EMISSIVE, TextureKeys.STEM);
+    public static final ModelTemplate EMISSIVE_FLOWERBED_3 = block("emissive_flowerbed_3", "_3", TextureKeys.FLOWERBED, ModTextureKeys.EMISSIVE, TextureKeys.STEM);
+    public static final ModelTemplate EMISSIVE_FLOWERBED_4 = block("emissive_flowerbed_4", "_4", TextureKeys.FLOWERBED, ModTextureKeys.EMISSIVE, TextureKeys.STEM);
 
-    public static final ModelTemplate FLAT = create("flat", TextureSlot.TEXTURE);
-    public static final ModelTemplate FLAT_TINTED = create("flat_tinted", TextureSlot.TEXTURE);
+    public static final ModelTemplate GLOWING_FLOWERBED_1 = block("glowing_flowerbed_1", "_1", TextureKeys.FLOWERBED, TextureKeys.STEM);
+    public static final ModelTemplate GLOWING_FLOWERBED_2 = block("glowing_flowerbed_2", "_2", TextureKeys.FLOWERBED, TextureKeys.STEM);
+    public static final ModelTemplate GLOWING_FLOWERBED_3 = block("glowing_flowerbed_3", "_3", TextureKeys.FLOWERBED, TextureKeys.STEM);
+    public static final ModelTemplate GLOWING_FLOWERBED_4 = block("glowing_flowerbed_4", "_4", TextureKeys.FLOWERBED, TextureKeys.STEM);
 
-    public static final ModelTemplate FLAT_SEGMENT_1 = create("flat_segment_1", "_1", TextureSlot.TEXTURE);
-    public static final ModelTemplate FLAT_SEGMENT_2 = create("flat_segment_2", "_2", TextureSlot.TEXTURE);
-    public static final ModelTemplate FLAT_SEGMENT_3 = create("flat_segment_3", "_3", TextureSlot.TEXTURE);
-    public static final ModelTemplate FLAT_SEGMENT_4 = create("flat_segment_4", "_4", TextureSlot.TEXTURE);
+    public static final ModelTemplate TINTED_GLOWING_FLOWERBED_1 = block("tinted_glowing_flowerbed_1", "_1", TextureKeys.FLOWERBED, TextureKeys.STEM);
+    public static final ModelTemplate TINTED_GLOWING_FLOWERBED_2 = block("tinted_glowing_flowerbed_2", "_2", TextureKeys.FLOWERBED, TextureKeys.STEM);
+    public static final ModelTemplate TINTED_GLOWING_FLOWERBED_3 = block("tinted_glowing_flowerbed_3", "_3", TextureKeys.FLOWERBED, TextureKeys.STEM);
+    public static final ModelTemplate TINTED_GLOWING_FLOWERBED_4 = block("tinted_glowing_flowerbed_4", "_4", TextureKeys.FLOWERBED, TextureKeys.STEM);
 
-    public static final ModelTemplate TINTED_FLAT_SEGMENT_1 = create("tinted_flat_segment_1", "_1", TextureSlot.TEXTURE);
-    public static final ModelTemplate TINTED_FLAT_SEGMENT_2 = create("tinted_flat_segment_2", "_2", TextureSlot.TEXTURE);
-    public static final ModelTemplate TINTED_FLAT_SEGMENT_3 = create("tinted_flat_segment_3", "_3", TextureSlot.TEXTURE);
-    public static final ModelTemplate TINTED_FLAT_SEGMENT_4 = create("tinted_flat_segment_4", "_4", TextureSlot.TEXTURE);
+    public static final ModelTemplate CROSS = ModelTemplates.CROSS;
+    public static final ModelTemplate TINTED_CROSS = ModelTemplates.TINTED_CROSS;
+    public static final ModelTemplate EMISSIVE_CROSS = ModelTemplates.CROSS_EMISSIVE;
+    public static final ModelTemplate LAYERED_CROSS = block("layered_cross", TextureKeys.CROSS, ModTextureKeys.OVERLAY);
+    public static final ModelTemplate GLOWING_CROSS = block("glowing_cross", TextureKeys.CROSS);
+    public static final ModelTemplate TINTED_GLOWING_CROSS = block("tinted_glowing_cross", TextureKeys.CROSS);
 
-    public static final ModelTemplate LAYERED_FLAT_SEGMENT_1 = create("layered_flat_segment_1", "_1", ModTextureSlots.UNTINTED, ModTextureSlots.TINTED);
-    public static final ModelTemplate LAYERED_FLAT_SEGMENT_2 = create("layered_flat_segment_2", "_2", ModTextureSlots.UNTINTED, ModTextureSlots.TINTED);
-    public static final ModelTemplate LAYERED_FLAT_SEGMENT_3 = create("layered_flat_segment_3", "_3", ModTextureSlots.UNTINTED, ModTextureSlots.TINTED);
-    public static final ModelTemplate LAYERED_FLAT_SEGMENT_4 = create("layered_flat_segment_4", "_4", ModTextureSlots.UNTINTED, ModTextureSlots.TINTED);
+    public static final ModelTemplate FLAT = block("flat", TextureKeys.TEXTURE);
+    public static final ModelTemplate TINTED_FLAT = block("tinted_flat", TextureKeys.TEXTURE);
+    public static final ModelTemplate LAYERED_FLAT = block("layered_flat", TextureKeys.TEXTURE, ModTextureKeys.OVERLAY);
+    public static final ModelTemplate EMISSIVE_FLAT = block("emissive_flat", TextureKeys.TEXTURE, ModTextureKeys.EMISSIVE);
+    public static final ModelTemplate GLOWING_FLAT = block("glowing_flat", TextureKeys.TEXTURE);
+    public static final ModelTemplate TINTED_GLOWING_FLAT = block("tinted_glowing_flat", TextureKeys.TEXTURE);
 
-    public static final ModelTemplate EMISSIVE_FLAT_SEGMENT_1 = create("emissive_flat_segment_1", "_1", TextureSlot.TEXTURE, ModTextureSlots.EMISSIVE);
-    public static final ModelTemplate EMISSIVE_FLAT_SEGMENT_2 = create("emissive_flat_segment_2", "_2", TextureSlot.TEXTURE, ModTextureSlots.EMISSIVE);
-    public static final ModelTemplate EMISSIVE_FLAT_SEGMENT_3 = create("emissive_flat_segment_3", "_3", TextureSlot.TEXTURE, ModTextureSlots.EMISSIVE);
-    public static final ModelTemplate EMISSIVE_FLAT_SEGMENT_4 = create("emissive_flat_segment_4", "_4", TextureSlot.TEXTURE, ModTextureSlots.EMISSIVE);
+    public static final ModelTemplate FLAT_SEGMENT_1 = block("flat_segment_1", "_1", TextureKeys.TEXTURE);
+    public static final ModelTemplate FLAT_SEGMENT_2 = block("flat_segment_2", "_2", TextureKeys.TEXTURE);
+    public static final ModelTemplate FLAT_SEGMENT_3 = block("flat_segment_3", "_3", TextureKeys.TEXTURE);
+    public static final ModelTemplate FLAT_SEGMENT_4 = block("flat_segment_4", "_4", TextureKeys.TEXTURE);
 
-    public static final ModelTemplate GLOWING_FLAT_SEGMENT_1 = create("glowing_flat_segment_1", "_1", TextureSlot.TEXTURE);
-    public static final ModelTemplate GLOWING_FLAT_SEGMENT_2 = create("glowing_flat_segment_2", "_2", TextureSlot.TEXTURE);
-    public static final ModelTemplate GLOWING_FLAT_SEGMENT_3 = create("glowing_flat_segment_3", "_3", TextureSlot.TEXTURE);
-    public static final ModelTemplate GLOWING_FLAT_SEGMENT_4 = create("glowing_flat_segment_4", "_4", TextureSlot.TEXTURE);
+    public static final ModelTemplate TINTED_FLAT_SEGMENT_1 = block("tinted_flat_segment_1", "_1", TextureKeys.TEXTURE);
+    public static final ModelTemplate TINTED_FLAT_SEGMENT_2 = block("tinted_flat_segment_2", "_2", TextureKeys.TEXTURE);
+    public static final ModelTemplate TINTED_FLAT_SEGMENT_3 = block("tinted_flat_segment_3", "_3", TextureKeys.TEXTURE);
+    public static final ModelTemplate TINTED_FLAT_SEGMENT_4 = block("tinted_flat_segment_4", "_4", TextureKeys.TEXTURE);
 
-    public static final ModelTemplate TINTED_GLOWING_FLAT_SEGMENT_1 = create("tinted_glowing_flat_segment_1", "_1", TextureSlot.TEXTURE);
-    public static final ModelTemplate TINTED_GLOWING_FLAT_SEGMENT_2 = create("tinted_glowing_flat_segment_2", "_2", TextureSlot.TEXTURE);
-    public static final ModelTemplate TINTED_GLOWING_FLAT_SEGMENT_3 = create("tinted_glowing_flat_segment_3", "_3", TextureSlot.TEXTURE);
-    public static final ModelTemplate TINTED_GLOWING_FLAT_SEGMENT_4 = create("tinted_glowing_flat_segment_4", "_4", TextureSlot.TEXTURE);
+    public static final ModelTemplate LAYERED_FLAT_SEGMENT_1 = block("layered_flat_segment_1", "_1", TextureKeys.TEXTURE, ModTextureKeys.OVERLAY);
+    public static final ModelTemplate LAYERED_FLAT_SEGMENT_2 = block("layered_flat_segment_2", "_2", TextureKeys.TEXTURE, ModTextureKeys.OVERLAY);
+    public static final ModelTemplate LAYERED_FLAT_SEGMENT_3 = block("layered_flat_segment_3", "_3", TextureKeys.TEXTURE, ModTextureKeys.OVERLAY);
+    public static final ModelTemplate LAYERED_FLAT_SEGMENT_4 = block("layered_flat_segment_4", "_4", TextureKeys.TEXTURE, ModTextureKeys.OVERLAY);
 
-    private static ModelTemplate create(TextureSlot... slots) {
-        return new ModelTemplate(Optional.empty(), Optional.empty(), slots);
+    public static final ModelTemplate EMISSIVE_FLAT_SEGMENT_1 = block("emissive_flat_segment_1", "_1", TextureKeys.TEXTURE, ModTextureKeys.EMISSIVE);
+    public static final ModelTemplate EMISSIVE_FLAT_SEGMENT_2 = block("emissive_flat_segment_2", "_2", TextureKeys.TEXTURE, ModTextureKeys.EMISSIVE);
+    public static final ModelTemplate EMISSIVE_FLAT_SEGMENT_3 = block("emissive_flat_segment_3", "_3", TextureKeys.TEXTURE, ModTextureKeys.EMISSIVE);
+    public static final ModelTemplate EMISSIVE_FLAT_SEGMENT_4 = block("emissive_flat_segment_4", "_4", TextureKeys.TEXTURE, ModTextureKeys.EMISSIVE);
+
+    public static final ModelTemplate GLOWING_FLAT_SEGMENT_1 = block("glowing_flat_segment_1", "_1", TextureKeys.TEXTURE);
+    public static final ModelTemplate GLOWING_FLAT_SEGMENT_2 = block("glowing_flat_segment_2", "_2", TextureKeys.TEXTURE);
+    public static final ModelTemplate GLOWING_FLAT_SEGMENT_3 = block("glowing_flat_segment_3", "_3", TextureKeys.TEXTURE);
+    public static final ModelTemplate GLOWING_FLAT_SEGMENT_4 = block("glowing_flat_segment_4", "_4", TextureKeys.TEXTURE);
+
+    public static final ModelTemplate TINTED_GLOWING_FLAT_SEGMENT_1 = block("tinted_glowing_flat_segment_1", "_1", TextureKeys.TEXTURE);
+    public static final ModelTemplate TINTED_GLOWING_FLAT_SEGMENT_2 = block("tinted_glowing_flat_segment_2", "_2", TextureKeys.TEXTURE);
+    public static final ModelTemplate TINTED_GLOWING_FLAT_SEGMENT_3 = block("tinted_glowing_flat_segment_3", "_3", TextureKeys.TEXTURE);
+    public static final ModelTemplate TINTED_GLOWING_FLAT_SEGMENT_4 = block("tinted_glowing_flat_segment_4", "_4", TextureKeys.TEXTURE);
+
+    public static final ModelTemplate EMISSIVE_LEAVES = block("emissive_leaves", TextureKeys.ALL, ModTextureKeys.EMISSIVE);
+    public static final ModelTemplate LAYERED_LEAVES = block("layered_leaves", TextureKeys.ALL, ModTextureKeys.OVERLAY);
+    public static final ModelTemplate GLOWING_LEAVES = block("glowing_leaves", TextureKeys.ALL);
+
+    public static final ModelTemplate LAYER_HEIGHT2 = block("layer_height2", "_height2", TextureKeys.TEXTURE);
+    public static final ModelTemplate LAYER_HEIGHT4 = block("layer_height4", "_height4", TextureKeys.TEXTURE);
+    public static final ModelTemplate LAYER_HEIGHT6 = block("layer_height6", "_height6", TextureKeys.TEXTURE);
+    public static final ModelTemplate LAYER_HEIGHT8 = block("layer_height8", "_height8", TextureKeys.TEXTURE);
+    public static final ModelTemplate LAYER_HEIGHT10 = block("layer_height10", "_height10", TextureKeys.TEXTURE);
+    public static final ModelTemplate LAYER_HEIGHT12 = block("layer_height12", "_height12", TextureKeys.TEXTURE);
+    public static final ModelTemplate LAYER_HEIGHT14 = block("layer_height14", "_height14", TextureKeys.TEXTURE);
+    public static final ModelTemplate LAYER_HEIGHT16 = block("layer_height16", "_height16", TextureKeys.TEXTURE);
+
+    public static final ModelTemplate SHELF_FUNGUS = block("shelf_fungus", TextureKeys.TOP, TextureKeys.BOTTOM);
+    public static final ModelTemplate SHELF_FUNGUS_DIAGONAL = block("shelf_fungus_diagonal", TextureKeys.TOP, TextureKeys.BOTTOM);
+
+
+    private static ModelTemplate block(String id, TextureKey... keys) {
+        return ModelTemplate.of(Smptg.id("block/" + id), keys);
     }
 
-    private static ModelTemplate create(String model, TextureSlot... slots) {
-        return new ModelTemplate(Optional.of(Smptg.id("block/" + model)), Optional.empty(), slots);
+    private static ModelTemplate block(String id, String suffix, TextureKey... keys) {
+        return ModelTemplate.of(Smptg.id("block/" + id), suffix, keys);
     }
 
-    private static ModelTemplate create(String model, String suffix, TextureSlot... slots) {
-        return new ModelTemplate(Optional.of(Smptg.id("block/" + model)), Optional.of(suffix), slots);
+    private static ModelTemplate item(String id, TextureKey... keys) {
+        return ModelTemplate.of(Smptg.id("item/" + id), keys);
     }
 
-    private static ModelTemplate createItem(String model, TextureSlot... slots) {
-        return new ModelTemplate(Optional.of(Smptg.id("item/" + model)), Optional.empty(), slots);
-    }
-
-    private static ModelTemplate createItem(String model, String suffix, TextureSlot... slots) {
-        return new ModelTemplate(Optional.of(Smptg.id("item/" + model)), Optional.of(suffix), slots);
+    private static ModelTemplate item(String id, String suffix, TextureKey... keys) {
+        return ModelTemplate.of(Smptg.id("item/" + id), suffix, keys);
     }
 }
