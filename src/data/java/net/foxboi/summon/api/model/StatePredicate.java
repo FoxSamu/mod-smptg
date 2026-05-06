@@ -1,8 +1,6 @@
 package net.foxboi.summon.api.model;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -15,10 +13,10 @@ import com.google.gson.JsonObject;
 public final class StatePredicate implements BaseSelector {
     public static final StatePredicate EMPTY = new StatePredicate(Map.of());
 
-    private final Map<Property<?>, Property.Value<?>> properties;
+    private final Map<String, Property.Value<?>> properties;
 
-    private StatePredicate(Map<Property<?>, Property.Value<?>> properties) {
-        this.properties = Map.copyOf(properties);
+    private StatePredicate(Map<String, Property.Value<?>> properties) {
+        this.properties = Collections.unmodifiableMap(new TreeMap<>(properties));
     }
 
     public <T extends Comparable<T>> StatePredicate with(Property<T> property, T value) {
@@ -27,7 +25,7 @@ public final class StatePredicate implements BaseSelector {
         }
 
         var props = new HashMap<>(properties);
-        props.put(property, new Property.Value<>(property, value));
+        props.put(property.getName(), new Property.Value<>(property, value));
         return new StatePredicate(props);
     }
 
@@ -41,7 +39,7 @@ public final class StatePredicate implements BaseSelector {
         return new StatePredicate(props);
     }
 
-    public Map<Property<?>, Property.Value<?>> properties() {
+    public Map<String, Property.Value<?>> properties() {
         return properties;
     }
 
@@ -81,8 +79,8 @@ public final class StatePredicate implements BaseSelector {
             throw new IllegalArgumentException("Value " + value + " not supported by property " + property.getName());
         }
 
-        var props = new HashMap<Property<?>, Property.Value<?>>();
-        props.put(property, new Property.Value<>(property, value));
+        var props = new HashMap<String, Property.Value<?>>();
+        props.put(property.getName(), new Property.Value<>(property, value));
         return new StatePredicate(props);
     }
 
@@ -107,7 +105,7 @@ public final class StatePredicate implements BaseSelector {
     }
 
     private static StatePredicate collect(Stream<Property.Value<?>> values) {
-        return new StatePredicate(values.collect(Collectors.toMap(Property.Value::property, Function.identity())));
+        return new StatePredicate(values.collect(Collectors.toMap(v -> v.property().getName(), Function.identity())));
     }
 
     @Override

@@ -48,7 +48,7 @@ public class Smptg {
     public static final Logger LOGGER = LogManager.getLogger(ID);
     public static final Registrar REGISTRAR = new Registrar(ID);
 
-    protected Smptg() {
+    public Smptg() {
         if (instance != null) {
             throw new RuntimeException("SMPTG: There can only be one instance of the mod class");
         }

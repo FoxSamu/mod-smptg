@@ -3,7 +3,12 @@ package net.foxboi.summon.impl;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Enumeration;
+import java.util.List;
 import java.util.Objects;
+import java.util.Queue;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import net.minecraft.data.CachedOutput;
@@ -17,6 +22,7 @@ class CacheUpdater implements CachedOutput {
     private final Cache.Builder newCache;
 
     private final AtomicInteger writes = new AtomicInteger();
+    private final Queue<Path> writtenFiles = new LinkedBlockingQueue<>();
 
     private final Path rootDir;
     private final FileCopyHandler copyHandler;
@@ -41,7 +47,7 @@ class CacheUpdater implements CachedOutput {
             return false; // Hashes equal, file is probably equal too
         }
 
-        return !Objects.equals(oldCache.get(path), hash) || !Files.exists(path);
+        return true;
     }
 
     @Override
@@ -52,6 +58,7 @@ class CacheUpdater implements CachedOutput {
 
         if (shouldWrite(path, hash)) {
             writes.incrementAndGet();
+            writtenFiles.add(path);
 
             Files.createDirectories(path.getParent());
             Files.write(path, input);
@@ -63,6 +70,6 @@ class CacheUpdater implements CachedOutput {
 
     public CacheHandler.UpdateResult close() {
         closed = true;
-        return new CacheHandler.UpdateResult(provider, newCache.build(), writes.get());
+        return new CacheHandler.UpdateResult(provider, newCache.build(), writes.get(), List.copyOf(writtenFiles));
     }
 }

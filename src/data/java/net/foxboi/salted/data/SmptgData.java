@@ -8,10 +8,10 @@ import net.foxboi.summon.api.SummonModInitializer;
 
 import net.minecraft.core.RegistrySetBuilder;
 
-public class SmptgData extends Smptg implements SummonModInitializer {
+public class SmptgData implements SummonModInitializer {
     @Override
     public void onInitializeStandaloneDatagen() {
-        init();
+        new Smptg().init();
     }
 
     @Override

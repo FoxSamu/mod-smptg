@@ -12,10 +12,10 @@ import com.google.gson.JsonObject;
 public final class StateSelector implements BaseSelector {
     public static final StateSelector EMPTY = new StateSelector(Map.of());
 
-    private final Map<Property<?>, List<? extends Property.Value<?>>> properties;
+    private final Map<String, List<? extends Property.Value<?>>> properties;
 
-    private StateSelector(Map<Property<?>, List<? extends Property.Value<?>>> properties) {
-        this.properties = Map.copyOf(properties);
+    private StateSelector(Map<String, List<? extends Property.Value<?>>> properties) {
+        this.properties = Collections.unmodifiableMap(new TreeMap<>(properties));
     }
 
     public <T extends Comparable<T>> StateSelector with(Property<T> property, Collection<T> values) {
@@ -24,7 +24,7 @@ public final class StateSelector implements BaseSelector {
         }
 
         var props = new HashMap<>(properties);
-        props.put(property, values.stream().map(it -> new Property.Value<T>(property, it)).toList());
+        props.put(property.getName(), List.copyOf(values.stream().map(it -> new Property.Value<>(property, it)).toList()));
         return new StateSelector(props);
     }
 
@@ -47,7 +47,7 @@ public final class StateSelector implements BaseSelector {
         return and(of(other));
     }
 
-    public Map<Property<?>, List<? extends Property.Value<?>>> properties() {
+    public Map<String, List<? extends Property.Value<?>>> properties() {
         return properties;
     }
 
@@ -123,7 +123,7 @@ public final class StateSelector implements BaseSelector {
     }
 
     private static StateSelector collect(Stream<Property.Value<?>> values) {
-        return new StateSelector(values.collect(Collectors.toMap(Property.Value::property, List::of)));
+        return new StateSelector(values.collect(Collectors.toMap(v -> v.property().getName(), List::of)));
     }
 
     @Override
@@ -137,7 +137,7 @@ public final class StateSelector implements BaseSelector {
                     .map(Property.Value::valueName)
                     .collect(Collectors.joining("|"));
 
-            object.addProperty(property.getName(), selectorString);
+            object.addProperty(property, selectorString);
         }
         return object;
     }

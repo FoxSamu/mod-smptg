@@ -28,6 +28,7 @@ class CacheHandler {
 
 	private final int initialCount;
 	private int writtenCount;
+	private final List<Path> writtenFiles = new ArrayList<>();
 
 	public CacheHandler(Path rootDir, Collection<String> providerIds, String versionId, FileCopyHandler copyHandler) throws IOException {
         var cacheDir = rootDir.resolve(".cache");
@@ -73,6 +74,10 @@ class CacheHandler {
 		cachesToWrite.add(result.providerId());
 
 		writtenCount = writtenCount + result.writes();
+
+		if (Summon.LOGGER.isDebugEnabled()) {
+			writtenFiles.addAll(result.writtenFiles());
+		}
 	}
 
 	public void finish() throws IOException {
@@ -96,12 +101,20 @@ class CacheHandler {
         var visitor = new RemovalVisitor(keep);
 		Files.walkFileTree(rootDir, visitor);
 
+		// Log results
 		Summon.LOGGER.info("Caching:");
 		Summon.LOGGER.info("- Total:   {} files", visitor.total);
 		Summon.LOGGER.info("- Old:     {} files", initialCount);
 		Summon.LOGGER.info("- New:     {} files", keep.size());
 		Summon.LOGGER.info("- Removed: {} files", visitor.removed);
 		Summon.LOGGER.info("- Written: {} files", writtenCount);
+
+		if (Summon.LOGGER.isDebugEnabled() && writtenCount > 0) {
+			Summon.LOGGER.debug("Written files:");
+			for (var written : writtenFiles) {
+				Summon.LOGGER.debug("- {}", written);
+			}
+		}
 	}
 
 	private class RemovalVisitor extends SimpleFileVisitor<Path> {
@@ -139,6 +152,6 @@ class CacheHandler {
 		CompletableFuture<?> update(CachedOutput output);
 	}
 
-	public record UpdateResult(String providerId, Cache cache, int writes) {
+	public record UpdateResult(String providerId, Cache cache, int writes, List<Path> writtenFiles) {
 	}
 }

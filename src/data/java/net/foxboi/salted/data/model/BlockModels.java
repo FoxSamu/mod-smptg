@@ -1,7 +1,9 @@
 package net.foxboi.salted.data.model;
 
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -266,15 +268,6 @@ public class BlockModels {
 
     private static final Function<WeightedVariants, WeightedVariants> UV_LOCK = variants -> variants.uvlock(true);
 
-    private static final Map<Direction, VariantTransform> MULTIFACE_TRANSFORMS = Map.of(
-            Direction.NORTH, VariantTransform.ofX(270),
-            Direction.EAST, VariantTransform.ofX(270).y(90),
-            Direction.SOUTH, VariantTransform.ofX(270).y(180),
-            Direction.WEST, VariantTransform.ofX(270).y(270),
-            Direction.UP, VariantTransform.ofX(180),
-            Direction.DOWN, VariantTransform.of()
-    );
-
     private static final Map<Block, Identifier> SNOWY_SIDE_TEXTURES = Map.of(
             Blocks.DIRT, Identifier.withDefaultNamespace("block/grass_block_snow")
     );
@@ -310,6 +303,15 @@ public class BlockModels {
             VariantTransform.of(),
             VariantTransform.ofY(90)
     };
+
+    private static void forEachMultifaceSide(BiConsumer<Direction, VariantTransform> consumer) {
+        consumer.accept(Direction.NORTH, VariantTransform.ofX(270));
+        consumer.accept(Direction.EAST, VariantTransform.ofX(270).y(90));
+        consumer.accept(Direction.SOUTH, VariantTransform.ofX(270).y(180));
+        consumer.accept(Direction.WEST, VariantTransform.ofX(270).y(270));
+        consumer.accept(Direction.UP, VariantTransform.ofX(180));
+        consumer.accept(Direction.DOWN, VariantTransform.of());
+    }
 
     private static StateDispatch<Function<WeightedVariants, WeightedVariants>> horizontalFacing(Direction zeroRotation) {
         return StateDispatch.variantsMapper(BlockStateProperties.HORIZONTAL_FACING)
@@ -1310,7 +1312,7 @@ public class BlockModels {
         var item = builder.createPlantItemModel("");
 
         saveMultipart(builder.block, multipart -> {
-            MULTIFACE_TRANSFORMS.forEach((dir, xform) -> {
+            forEachMultifaceSide((dir, xform) -> {
                 var selector = StatePredicate.of(MultifaceBlock.getFaceProperty(dir), true);
                 multipart.part(selector, plant.copy().transform(xform));
             });
