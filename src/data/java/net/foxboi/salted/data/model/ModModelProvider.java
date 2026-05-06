@@ -3,17 +3,16 @@ package net.foxboi.salted.data.model;
 import java.util.concurrent.CompletableFuture;
 
 import net.minecraft.core.HolderLookup;
-
-import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.minecraft.data.PackOutput;
 
 import net.foxboi.salted.data.ModBlockData;
 import net.foxboi.salted.data.ModItemData;
-import net.foxboi.salted.data.core.model.BlockDispatchSink;
-import net.foxboi.salted.data.core.model.ItemDispatchSink;
-import net.foxboi.salted.data.core.model.ModelProvider;
+import net.foxboi.summon.api.model.BlockDispatchSink;
+import net.foxboi.summon.api.model.ItemDispatchSink;
+import net.foxboi.summon.api.model.ModelProvider;
 
 public class ModModelProvider extends ModelProvider {
-    public ModModelProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> lookups) {
+    public ModModelProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookups) {
         super(output, lookups);
     }
 

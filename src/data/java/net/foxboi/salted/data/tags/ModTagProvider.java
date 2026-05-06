@@ -7,15 +7,13 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.TagKey;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
-
 import net.foxboi.salted.common.Smptg;
-import net.foxboi.salted.data.core.tags.TagBuilder;
-import net.foxboi.salted.data.core.tags.TagProvider;
-import net.foxboi.salted.data.core.tags.TagSet;
+import net.foxboi.summon.api.tags.TagBuilder;
+import net.foxboi.summon.api.tags.TagProvider;
+import net.foxboi.summon.api.tags.TagSet;
 
 public class ModTagProvider extends TagProvider {
-    public ModTagProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> lookups) {
+    public ModTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookups) {
         super(output, lookups);
     }
 

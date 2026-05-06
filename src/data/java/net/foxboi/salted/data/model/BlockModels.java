@@ -16,7 +16,7 @@ import net.foxboi.salted.common.block.ColumnPlantShape;
 import net.foxboi.salted.common.block.DiagonallyAttachableBlock;
 import net.foxboi.salted.common.block.MultilayerBlock;
 import net.foxboi.salted.common.misc.DiagonalDirection;
-import net.foxboi.salted.data.core.model.*;
+import net.foxboi.summon.api.model.*;
 
 public class BlockModels {
     private final BlockDispatchSink blocks;

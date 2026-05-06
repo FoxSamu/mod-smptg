@@ -2,23 +2,18 @@ package net.foxboi.salted.data.tags;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
-import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
 
 import net.foxboi.salted.common.block.ModBlockTags;
 import net.foxboi.salted.common.block.ModBlocks;
-import net.foxboi.salted.common.levelgen.biome.ModBiomeTags;
 import net.foxboi.salted.data.ModBlockData;
-import net.foxboi.salted.data.core.tags.DataTagSet;
-import net.foxboi.salted.data.core.tags.LookupTagSet;
-import net.foxboi.salted.data.core.tags.TagProvider;
+import net.foxboi.summon.api.tags.LookupTagSet;
+import net.foxboi.summon.api.tags.TagProvider;
 
 public class BlockTagSet extends LookupTagSet<Block> {
     public BlockTagSet(TagProvider provider) {

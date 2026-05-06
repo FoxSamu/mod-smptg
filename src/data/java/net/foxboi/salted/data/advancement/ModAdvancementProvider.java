@@ -6,6 +6,8 @@ import net.foxboi.salted.common.Smptg;
 import net.foxboi.salted.common.item.ModItemTags;
 import net.foxboi.salted.common.item.ModItems;
 import net.foxboi.salted.common.misc.Translator;
+import net.foxboi.summon.api.advancement.AdvancementProvider;
+
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementType;
@@ -13,14 +15,15 @@ import net.minecraft.advancements.criterion.ConsumeItemTrigger;
 import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
-public class ModAdvancementProvider extends FabricAdvancementProvider {
-    public ModAdvancementProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> regs) {
+public class ModAdvancementProvider extends AdvancementProvider {
+    public ModAdvancementProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> regs) {
         super(output, regs);
     }
 
@@ -33,8 +36,7 @@ public class ModAdvancementProvider extends FabricAdvancementProvider {
     }
 
     @Override
-    @SuppressWarnings("removal")
-    public void generateAdvancement(HolderLookup.Provider regs, Consumer<AdvancementHolder> output) {
+    public void setup(HolderLookup.Provider regs, Consumer<AdvancementHolder> output) {
         var items = regs.lookupOrThrow(Registries.ITEM);
 
 
@@ -62,5 +64,10 @@ public class ModAdvancementProvider extends FabricAdvancementProvider {
     public static void translate(Translator<String> translator) {
 //        translator.name(title("adventure", "eat_salted_food"), "Take it with a Grain of Salt");
 //        translator.name(description("adventure", "eat_salted_food"), "Add salt to your food, and then eat it");
+    }
+
+    @Override
+    public String getName() {
+        return "Advancements";
     }
 }

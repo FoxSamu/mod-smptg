@@ -4,9 +4,9 @@ import java.util.stream.IntStream;
 
 import net.minecraft.resources.Identifier;
 
-import net.foxboi.salted.data.core.model.Model;
-import net.foxboi.salted.data.core.model.ModelTemplate;
-import net.foxboi.salted.data.core.model.TextureKey;
+import net.foxboi.summon.api.model.Model;
+import net.foxboi.summon.api.model.ModelTemplate;
+import net.foxboi.summon.api.model.TextureKey;
 
 public class ModelTemplates {
     // Blocks

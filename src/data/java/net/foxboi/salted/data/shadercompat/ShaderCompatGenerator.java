@@ -7,6 +7,7 @@ import java.util.concurrent.CompletableFuture;
 
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.util.Util;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
@@ -17,10 +18,10 @@ import net.foxboi.salted.data.ModBlockData;
 public class ShaderCompatGenerator implements DataProvider {
     private static final String INPUT_DIR = System.getProperty("smptg.shadercompat.input");
 
-    private final FabricPackOutput output;
+    private final PackOutput output;
     private final Path outPath;
 
-    public ShaderCompatGenerator(FabricPackOutput output) {
+    public ShaderCompatGenerator(PackOutput output) {
         this.output = output;
         this.outPath = output.getOutputFolder().resolve("shadercompat");
     }

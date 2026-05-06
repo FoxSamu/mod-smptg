@@ -2,7 +2,7 @@ package net.foxboi.salted.data.model;
 
 import net.minecraft.world.level.block.Block;
 
-import net.foxboi.salted.data.core.model.TextureMap;
+import net.foxboi.summon.api.model.TextureMap;
 
 public class BlockTextures {
     public static TextureMap texture(Block block) {

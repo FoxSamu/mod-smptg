@@ -5,10 +5,10 @@ import java.util.concurrent.CompletableFuture;
 import net.foxboi.salted.common.Smptg;
 import net.foxboi.salted.common.item.ModItemTags;
 import net.foxboi.salted.common.item.ModItems;
-import net.foxboi.salted.data.core.recipe.RecipeProvider;
-import net.foxboi.salted.data.core.recipe.RecipeSink;
-import net.foxboi.salted.data.core.recipe.ShapedRecipeBuilder;
-import net.foxboi.salted.data.core.recipe.ShapelessRecipeBuilder;
+import net.foxboi.summon.api.recipe.RecipeProvider;
+import net.foxboi.summon.api.recipe.RecipeSink;
+import net.foxboi.summon.api.recipe.ShapedRecipeBuilder;
+import net.foxboi.summon.api.recipe.ShapelessRecipeBuilder;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;

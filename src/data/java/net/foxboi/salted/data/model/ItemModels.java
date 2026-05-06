@@ -2,7 +2,7 @@ package net.foxboi.salted.data.model;
 
 import net.minecraft.world.item.Item;
 
-import net.foxboi.salted.data.core.model.*;
+import net.foxboi.summon.api.model.*;
 
 public class ItemModels {
     private final ItemDispatchSink items;

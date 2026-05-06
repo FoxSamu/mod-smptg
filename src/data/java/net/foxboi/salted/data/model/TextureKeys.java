@@ -1,6 +1,6 @@
 package net.foxboi.salted.data.model;
 
-import net.foxboi.salted.data.core.model.TextureKey;
+import net.foxboi.summon.api.model.TextureKey;
 
 public class TextureKeys {
     public static final TextureKey ALL = TextureKey.of("all");

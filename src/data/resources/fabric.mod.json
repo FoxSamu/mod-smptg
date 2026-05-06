@@ -12,12 +12,13 @@
   "license": "ARR",
 
   "entrypoints": {
-    "fabric-datagen": [ "net.foxboi.salted.data.SmptgData" ]
+    "summon": [ "net.foxboi.salted.data.SmptgData" ],
+    "preLaunch": [ "net.foxboi.summon.impl.PreLaunch" ]
   },
 
   "mixins": [
     {
-      "config": "smptg.mixins.data.json",
+      "config": "summon.mixins.json",
       "environment": "*"
     }
   ],

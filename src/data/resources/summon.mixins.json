@@ -1,0 +1,14 @@
+{
+  "required": false,
+  "package": "net.foxboi.summon.mixin",
+  "compatibilityLevel": "JAVA_21",
+
+  "mixins": [ "MinecraftMixin", "MinecraftServerMixin", "ServerMainMixin", "WorldLoaderPackConfigMixin" ],
+
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

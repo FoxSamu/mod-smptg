@@ -118,11 +118,14 @@ loom {
         // immediately and terminate.
         fun RunConfigSettings.configDatagen(ingame: Boolean = true) {
             afterEvaluate {
-                property("smptg.datagen", if (ingame) "run_on_reload" else "run_and_stop")
-                property("smptg.datagen.output", "$generatedResourcesDir")
+                property("summon.output", "$generatedResourcesDir")
+                property("summon.namespace", "$mod_id-data")
 
                 if (ingame) {
-                    property("smptg.datagen.copy_to", "${sourceSets.main.get().output.resourcesDir}")
+                    property("summon.mode", "live")
+                    property("summon.copy_to", "${sourceSets.main.get().output.resourcesDir}")
+                } else {
+                    property("summon.mode", "standalone")
                 }
 
                 property("smptg.shadercompat.input", "$projectDir/shadercompat")
@@ -154,8 +157,9 @@ loom {
         // This creates a runData task and a dedicated run config for data generation, so
         // that we can run the data generator standalone.
         create("data") {
-            client()
             name("Data Generation")
+
+            client()
             configDatagen(ingame = false)
 
             runDir("run/datagen")
@@ -271,11 +275,13 @@ tasks.withType<JavaCompile> {
 // Setup all resource processing tasks
 tasks.withType<ProcessResources> {
     inputs.property("version", mod_version)
+    inputs.property("id", mod_id)
 
     // Fill in ${version} in fabric.mod.json
     filesMatching("fabric.mod.json") {
         expand(
             "version" to "${inputs.properties["version"]}",
+            "id" to "${inputs.properties["id"]}",
         )
     }
 

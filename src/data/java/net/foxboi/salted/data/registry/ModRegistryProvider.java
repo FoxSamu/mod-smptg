@@ -5,16 +5,14 @@ import java.util.concurrent.CompletableFuture;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
-
-import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
+import net.minecraft.data.PackOutput;
 
 import net.foxboi.salted.common.Smptg;
 import net.foxboi.salted.common.levelgen.surface.ModifiedNoiseGeneratorSettings;
-import net.foxboi.salted.data.core.registry.RegistryProvider;
+import net.foxboi.summon.api.registry.RegistryProvider;
 
 public class ModRegistryProvider extends RegistryProvider {
-    public ModRegistryProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+    public ModRegistryProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture);
     }
 

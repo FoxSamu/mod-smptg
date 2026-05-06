@@ -1,7 +1,7 @@
 package net.foxboi.salted.data;
 
 import net.foxboi.salted.common.misc.biome.color.FoliageColorMap;
-import net.foxboi.salted.data.core.model.ItemTint;
+import net.foxboi.summon.api.model.ItemTint;
 import net.foxboi.salted.data.loot.BlockDrops;
 import net.foxboi.salted.data.model.BlockModels;
 import net.foxboi.salted.data.shadercompat.ShaderCompat;

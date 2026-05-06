@@ -1,8 +1,8 @@
 package net.foxboi.salted.data.model;
 
 import net.foxboi.salted.common.Smptg;
-import net.foxboi.salted.data.core.model.ModelTemplate;
-import net.foxboi.salted.data.core.model.TextureKey;
+import net.foxboi.summon.api.model.ModelTemplate;
+import net.foxboi.summon.api.model.TextureKey;
 
 public class ModModelTemplates {
     public static final ModelTemplate FLOWERBED_1 = ModelTemplates.FLOWERBED_1;

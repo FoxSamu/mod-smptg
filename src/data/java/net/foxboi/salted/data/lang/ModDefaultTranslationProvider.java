@@ -11,6 +11,7 @@ import net.foxboi.salted.common.item.ModItems;
 import net.foxboi.salted.common.misc.Translator;
 import net.foxboi.salted.data.advancement.ModAdvancementProvider;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
