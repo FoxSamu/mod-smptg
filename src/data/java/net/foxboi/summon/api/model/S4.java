@@ -1,10 +1,23 @@
 package net.foxboi.summon.api.model;
 
+/**
+ * Permutational symmetry group S4. S4 is the group of all permutations of a sequence of four distinct elements. It
+ * contains <i>4! = 24</i> elements. S4 is also the group of all rotational symmetries of a cube. It is therefore useful
+ * in computing composed model rotations.
+ */
 public enum S4 {
     // Permutational symmetry (S) group of four (4) elements, i.e. S4.
     // It maps all the 24 distinct ways in which 4 distinct elements can be
     // arranged in a row. It just so happens to be that all the ways in which
     // a cube can be rotated to stay axis-aligned is the same exact group.
+
+    // The reason we use a group here is that we can, with some fairly simple
+    // computation, find the composite of two rotations, in whatever order we
+    // like. In fact, since the group is finite, we can just set up a lookup
+    // table (called a Cayley table in group theory). Nevertheless, we simply
+    // just compute each composition by permuting a 4-element list and
+    // finding the corresponding enum entry. It can be done in constant time
+    // given how we sorted the enum entries, see below.
 
     P0123(0, 1, 2, 3),
     P0132(0, 1, 3, 2),
@@ -37,11 +50,26 @@ public enum S4 {
 
     private static final S4[] VALUES = values();
 
+    // Identity represents the unpermuted sequence: 0, 1, 2, 3. It is equivalent
+    // to not rotating the cube and is inherently part of the group.
+
     public static final S4 IDENTITY = P0123;
 
-    // There are 6 elements that when repeatedly composed create cycles of 4;
-    // these all correspond to 90-degree rotations of a cube around some
-    // respective axis, clockwise and counterclockwise.
+    // Any of the elements of the group now represents some rotation, and they form
+    // certain cycles. For example, there is an element that represents the reverse
+    // permutation, 3, 2, 1, 0. Each element, when repeatedly composed with itself,
+    // will eventually lead to itself, that is, it creates a cycle.
+
+    // The identity element creates a cycle of 1, it composes with itself into itself
+    // immediately, and is the only one of that kind. Some elements create cycles of
+    // two, and some create cycles of three. None of these are particularly
+    // interesting in and on itself.
+
+    // Then there are 6 elements that create cycles of 4; these are the ones we are
+    // interested in, sicne these all correspond to 90-degree rotations of a cube
+    // around some respective axis, including both clockwise and counterclockwise.
+    // Put differently, each belongs to one of the faces of the cube, such that that
+    // the cube appears to rotate 90 degrees clockwise when observed from that side.
 
     // We can derive how these permutations map by taking one of the faces of the
     // cube that faces in a positive axis direction (e.g. east, up or south, we
@@ -99,6 +127,9 @@ public enum S4 {
     };
 
     static {
+        // Compute the euler angles. We simply do this by going over all the 64 rotations, computing
+        // which group element belongs to each, and assigning the angles we found to the group elements.
+
         for (int x = 0; x < 360; x += 90) {
             for (int y = 0; y < 360; y += 90) {
                 for (int z = 0; z < 360; z += 90) {
@@ -129,47 +160,68 @@ public enum S4 {
         eulerAngles = new int[] { 0, 0, 360 }; // We'll compute these in a bit
     }
 
+    /**
+     * Given all rotations apply in XYZ order, returns the clockwise X rotation in degrees.
+     */
     public int x() {
         return eulerAngles[0];
     }
 
+    /**
+     * Given all rotations apply in XYZ order, returns the clockwise Y rotation in degrees.
+     */
     public int y() {
         return eulerAngles[1];
     }
 
+    /**
+     * Given all rotations apply in XYZ order, returns the clockwise Z rotation in degrees.
+     */
     public int z() {
         return eulerAngles[2];
     }
 
+    /**
+     * Apply a clockwise rotation around the X axis. If the angle is not in increments of 90 degrees, it will be rounded
+     * down towards zero. Returns the new group element.
+     */
     public S4 x(int angle) {
         return X_ROTATIONS[(angle / 90) & 3].compose(this);
     }
 
+    /**
+     * Apply a clockwise rotation around the Y axis. If the angle is not in increments of 90 degrees, it will be rounded
+     * down towards zero. Returns the new group element.
+     */
     public S4 y(int angle) {
         return Y_ROTATIONS[(angle / 90) & 3].compose(this);
     }
 
+    /**
+     * Apply a clockwise rotation around the Z axis. If the angle is not in increments of 90 degrees, it will be rounded
+     * down towards zero. Returns the new group element.
+     */
     public S4 z(int angle) {
         return Z_ROTATIONS[(angle / 90) & 3].compose(this);
     }
 
+    /**
+     * Composes this group element with another. In rotational terms, this is equivalent to applying this element
+     * <strong>after</strong> the given group element.
+     */
     public S4 compose(S4 rhs) {
-        if (this == IDENTITY) {
-            return rhs;
-        }
-
-        if (rhs == IDENTITY) {
-            return this;
-        }
-
         var p = permutation;
         var q = rhs.permutation;
 
-        // Compute the composed permutation; we only need the first 3 elements,
-        // since the fourth can be implied from the first 3.
+        // Compute the composed permutation, we do this by taking the first 3
+        // permutation values of p and using those as indices for q. This gives
+        // us the first 3 permutation values of the composed element. We only
+        // need the first 3 elements, since the fourth can be implied from the
+        // first 3.
 
         // Do note that we still need the permutation arrays to have 4 elements,
         // since the indices go up to 3.
+
         return ofPermutation(q[p[0]], q[p[1]], q[p[2]]);
     }
 
