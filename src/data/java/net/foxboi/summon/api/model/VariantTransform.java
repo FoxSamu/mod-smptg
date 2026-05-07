@@ -1,18 +1,15 @@
 package net.foxboi.summon.api.model;
 
-import java.util.EnumMap;
-import java.util.Map;
 import java.util.function.Consumer;
 
 import net.minecraft.core.Direction;
 
 import com.google.gson.JsonObject;
-import com.mojang.math.OctahedralGroup;
 
 public final class VariantTransform implements Transformable<VariantTransform> {
-    // There are only 24 possible rotations, OctahedralGroup covers all of these
-    // so we can use that to easily compute composite transforms
-    private OctahedralGroup group = OctahedralGroup.IDENTITY;
+    // Using group theory to rotate a minecraft
+    // block. Truly phenomenal.
+    private S4 permutation = S4.IDENTITY;
 
     private VariantTransform() {
     }
@@ -54,19 +51,19 @@ public final class VariantTransform implements Transformable<VariantTransform> {
     }
 
     public int xRot() {
-        return ROTATIONS.get(group)[0];
+        return permutation.x();
     }
 
     public int yRot() {
-        return ROTATIONS.get(group)[1];
+        return permutation.y();
     }
 
     public int zRot() {
-        return ROTATIONS.get(group)[2];
+        return permutation.z();
     }
 
     public VariantTransform reset() {
-        group = OctahedralGroup.IDENTITY;
+        permutation = S4.IDENTITY;
         return this;
     }
 
@@ -84,28 +81,28 @@ public final class VariantTransform implements Transformable<VariantTransform> {
 
     @Override
     public VariantTransform transform(VariantTransform other) {
-        group = other.group.compose(group);
+        permutation = other.permutation.compose(permutation);
         return this;
     }
 
     @Override
     public VariantTransform x(int x) {
         validateRot(x);
-        group = X_ROTS[index(x)].compose(group);
+        permutation = permutation.x(x);
         return this;
     }
 
     @Override
     public VariantTransform y(int y) {
         validateRot(y);
-        group = Y_ROTS[index(y)].compose(group);
+        permutation = permutation.y(y);
         return this;
     }
 
     @Override
     public VariantTransform z(int z) {
         validateRot(z);
-        group = Z_ROTS[index(z)].compose(group);
+        permutation = permutation.z(z);
         return this;
     }
 
@@ -122,56 +119,6 @@ public final class VariantTransform implements Transformable<VariantTransform> {
         }
         if (zRot != 0) {
             json.addProperty("z", zRot);
-        }
-    }
-
-
-
-    private static final OctahedralGroup[] X_ROTS = {
-            OctahedralGroup.IDENTITY,
-            OctahedralGroup.BLOCK_ROT_X_90,
-            OctahedralGroup.BLOCK_ROT_X_180,
-            OctahedralGroup.BLOCK_ROT_X_270,
-    };
-    private static final OctahedralGroup[] Y_ROTS = {
-            OctahedralGroup.IDENTITY,
-            OctahedralGroup.BLOCK_ROT_Y_90,
-            OctahedralGroup.BLOCK_ROT_Y_180,
-            OctahedralGroup.BLOCK_ROT_Y_270,
-    };
-    private static final OctahedralGroup[] Z_ROTS = {
-            OctahedralGroup.IDENTITY,
-            OctahedralGroup.BLOCK_ROT_Z_90,
-            OctahedralGroup.BLOCK_ROT_Z_180,
-            OctahedralGroup.BLOCK_ROT_Z_270,
-    };
-
-    private static final Map<OctahedralGroup, int[]> ROTATIONS = new EnumMap<>(OctahedralGroup.class);
-
-    private static int index(int angle) {
-        return (angle / 90) & 3;
-    }
-
-    static {
-        for (int x = 0; x < 4; x++) {
-            var gx = X_ROTS[x];
-
-            for (int y = 0; y < 4; y++) {
-                var gy = Y_ROTS[y];
-
-                for (int z = 0; z < 4; z++) {
-                    var gz = Z_ROTS[z];
-
-                    var g = gz.compose(gy).compose(gx);
-                    var current = ROTATIONS.get(g);
-
-                    // Use the one with the lowest Z so that we have only XY rotations
-                    // where possible
-                    if (current == null || current[2] > z * 90) {
-                        ROTATIONS.put(g, new int[] { x * 90, y * 90, z * 90 });
-                    }
-                }
-            }
         }
     }
 }
