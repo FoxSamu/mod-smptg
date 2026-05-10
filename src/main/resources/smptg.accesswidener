@@ -48,3 +48,7 @@ accessible class net/minecraft/core/RegistrySetBuilder$RegistryStub
 accessible field net/minecraft/core/RegistrySetBuilder entries Ljava/util/List;
 accessible method net/minecraft/data/registries/VanillaRegistries validateThatAllBiomeFeaturesHaveBiomeFilter (Lnet/minecraft/core/HolderLookup$Provider;)V
 accessible field net/minecraft/data/loot/BlockLootSubProvider map Ljava/util/Map;
+
+# Cauldron block
+accessible method net/minecraft/world/level/block/AbstractCauldronBlock canReceiveStalactiteDrip (Lnet/minecraft/world/level/material/Fluid;)Z
+accessible method net/minecraft/world/level/block/AbstractCauldronBlock receiveStalactiteDrip (Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/material/Fluid;)V

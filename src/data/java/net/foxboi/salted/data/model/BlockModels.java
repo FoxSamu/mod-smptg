@@ -1,6 +1,5 @@
 package net.foxboi.salted.data.model;
 
-import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -13,10 +12,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.*;
 
 import net.foxboi.salted.common.Smptg;
-import net.foxboi.salted.common.block.AbstractColumnPlantBlock;
-import net.foxboi.salted.common.block.ColumnPlantShape;
-import net.foxboi.salted.common.block.DiagonallyAttachableBlock;
-import net.foxboi.salted.common.block.MultilayerBlock;
+import net.foxboi.salted.common.block.*;
 import net.foxboi.salted.common.misc.DiagonalDirection;
 import net.foxboi.summon.api.model.*;
 
@@ -250,6 +246,14 @@ public class BlockModels {
         saveFlatItem(block);
     }
 
+    public void speleothem(Block block) {
+        createSpeleothem(
+                block,
+                it -> WeightedVariants.of(createCrossWithTexture(block, "_down_" + it.getSerializedName())),
+                it -> WeightedVariants.of(createCrossWithTexture(block, "_up_" + it.getSerializedName()))
+        );
+    }
+
 
 
 
@@ -390,6 +394,22 @@ public class BlockModels {
 
     private Model createDiagonalShelfFungus(Block block, String suffix) {
         return ModModelTemplates.SHELF_FUNGUS_DIAGONAL.create(block, "_diagonal" + suffix, createShelfFungusMapping(block, "_diagonal" + suffix));
+    }
+
+    private Model createCrossWithTexture(Block block, String suffix) {
+        return ModelTemplates.CROSS.create(block, suffix, BlockTextures.cross(block, suffix));
+    }
+
+    private void createSpeleothem(Block block, Function<DripstoneThickness, WeightedVariants> down, Function<DripstoneThickness, WeightedVariants> up) {
+        var dispatch = StateDispatch.valuesOf(AbstractSpeleothemBlock.DIRECTION)
+                .map(dir -> dir == Direction.UP ? up : down)
+                .flatMap(it -> StateDispatch.variants(AbstractSpeleothemBlock.THICKNESS).apply(it));
+
+        saveDispatched(
+                block,
+                dispatch,
+                Model.generated(block.asItem(), Texture.of(block, "_down_tip"))
+        );
     }
 
 
@@ -578,7 +598,7 @@ public class BlockModels {
         var bottom = ModelTemplates.SLAB_BOTTOM.create(block, baseMap);
         var top = ModelTemplates.SLAB_TOP.create(block, baseMap);
         var both = custom
-                ? ModelTemplates.CUBE_BOTTOM_TOP.create(block, createCustomSlabMap(baseMap, block))
+                ? ModelTemplates.CUBE_BOTTOM_TOP.create(block, "_double", createCustomSlabMap(baseMap, block))
                 : Model.reference(full);
 
         saveDispatchedModels(block, StateDispatch.dispatch(

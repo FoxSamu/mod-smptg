@@ -105,6 +105,22 @@ public final class ModifiedOverworldBiomeBuilder {
             {FROZEN_OCEAN, COLD_OCEAN, OCEAN, LUKEWARM_OCEAN, WARM_OCEAN}
     };
 
+    private final ResourceKey<Biome>[][] low = new ResourceKey[][]{
+            {SNOWY_PLAINS, SNOWY_PLAINS, SNOWY_PLAINS, SNOWY_TAIGA, TAIGA, TAIGA},
+            {PLAINS, PLAINS, FOREST, TAIGA, OLD_GROWTH_SPRUCE_TAIGA, REDWOOD_TAIGA},
+            {FLOWER_FOREST, PLAINS, ASPEN_FOREST, BIRCH_FOREST, DARK_FOREST, DARK_FOREST},
+            {SAVANNA, SAVANNA, FOREST, FOREST, JUNGLE, JUNGLE},
+            {DESERT, DESERT, DESERT, DESERT, DESERT, DESERT}
+    };
+
+    private final ResourceKey<Biome>[][] lowVariant = new ResourceKey[][]{
+            {ICE_SPIKES, null, SNOWY_TAIGA, null, null, null},
+            {null, null, LAVENDER_FIELD, WOODED_PLAINS, REDWOOD_TAIGA, null},
+            {LAVENDER_FIELD, WOODED_PLAINS, ASPEN_FOREST, OLD_GROWTH_BIRCH_FOREST, null, null},
+            {null, BARLEY_FIELD, PLAINS, SPARSE_JUNGLE, BAMBOO_JUNGLE, null},
+            {null, null, null, null, null, null}
+    };
+
     private final ResourceKey<Biome>[][] middle = new ResourceKey[][]{
             {SNOWY_PLAINS, SNOWY_PLAINS, SNOWY_PLAINS, SNOWY_TAIGA, TAIGA, TAIGA},
             {PLAINS, PLAINS, FOREST, TAIGA, OLD_GROWTH_SPRUCE_TAIGA, REDWOOD_TAIGA},
@@ -272,6 +288,7 @@ public final class ModifiedOverworldBiomeBuilder {
             for (int humI = 0; humI < humidities.length; humI++) {
                 var hum = humidities[humI];
 
+                var low = pickLowBiome(tmpI, humI, weirdness);
                 var middle = pickMiddleBiome(tmpI, humI, weirdness);
                 var middleOrBadlands = pickMiddleBiomeOrBadlandsIfHot(tmpI, humI, weirdness);
                 var middleOrBadlandsOrSlope = pickMiddleBiomeOrBadlandsIfHotOrSlopeIfCold(tmpI, humI, weirdness);
@@ -287,18 +304,20 @@ public final class ModifiedOverworldBiomeBuilder {
                 addSurfaceBiome(output, tmp, hum, span(nearInlandContinentalness, midInlandContinentalness), erosions[1], weirdness, 0, middleOrBadlandsOrSlope);
                 addSurfaceBiome(output, tmp, hum, farInlandContinentalness, erosions[1], weirdness, 0, tmpI == 0 ? slope : plateau);
 
-                addSurfaceBiome(output, tmp, hum, nearInlandContinentalness, erosions[2], weirdness, 0, middle);
+                addSurfaceBiome(output, tmp, hum, nearInlandContinentalness, erosions[2], weirdness, 0, low);
                 addSurfaceBiome(output, tmp, hum, midInlandContinentalness, erosions[2], weirdness, 0, middleOrBadlands);
                 addSurfaceBiome(output, tmp, hum, farInlandContinentalness, erosions[2], weirdness, 0, plateau);
 
-                addSurfaceBiome(output, tmp, hum, span(coastContinentalness, nearInlandContinentalness), erosions[3], weirdness, 0, middle);
+                addSurfaceBiome(output, tmp, hum, span(coastContinentalness, nearInlandContinentalness), erosions[3], weirdness, 0, low);
                 addSurfaceBiome(output, tmp, hum, span(midInlandContinentalness, farInlandContinentalness), erosions[3], weirdness, 0, middleOrBadlands);
 
                 if (weirdness.max() < 0L) {
                     addSurfaceBiome(output, tmp, hum, coastContinentalness, erosions[4], weirdness, 0, beach);
-                    addSurfaceBiome(output, tmp, hum, span(nearInlandContinentalness, farInlandContinentalness), erosions[4], weirdness, 0, middle);
+                    addSurfaceBiome(output, tmp, hum, nearInlandContinentalness, erosions[4], weirdness, 0, low);
+                    addSurfaceBiome(output, tmp, hum, span(midInlandContinentalness, farInlandContinentalness), erosions[4], weirdness, 0, middle);
                 } else {
-                    addSurfaceBiome(output, tmp, hum, span(coastContinentalness, farInlandContinentalness), erosions[4], weirdness, 0, middle);
+                    addSurfaceBiome(output, tmp, hum, span(coastContinentalness, nearInlandContinentalness), erosions[4], weirdness, 0, low);
+                    addSurfaceBiome(output, tmp, hum, span(midInlandContinentalness, farInlandContinentalness), erosions[4], weirdness, 0, middle);
                 }
 
                 addSurfaceBiome(output, tmp, hum, coastContinentalness, erosions[5], weirdness, 0, shatteredCoast);
@@ -330,29 +349,29 @@ public final class ModifiedOverworldBiomeBuilder {
             for (int humI = 0; humI < humidities.length; humI++) {
                 var hum = humidities[humI];
 
-                var middle = pickMiddleBiome(tmpI, humI, weirdness);
-                var middleOrBadlands = pickMiddleBiomeOrBadlandsIfHot(tmpI, humI, weirdness);
+                var low = pickLowBiome(tmpI, humI, weirdness);
+                var lowOrBadlands = pickLowBiomeOrBadlandsIfHot(tmpI, humI, weirdness);
                 var middleOrBadlandsOrSlope = pickMiddleBiomeOrBadlandsIfHotOrSlopeIfCold(tmpI, humI, weirdness);
                 var beach = pickBeachBiome(tmpI, humI);
-                var windsweptSavanna = maybePickWindsweptSavannaBiome(tmpI, humI, weirdness, middle);
+                var windsweptSavanna = maybePickWindsweptSavannaBiome(tmpI, humI, weirdness, low);
                 var shatteredCoast = pickShatteredCoastBiome(tmpI, humI, weirdness);
 
-                addSurfaceBiome(output, tmp, hum, nearInlandContinentalness, span(erosions[0], erosions[1]), weirdness, 0, middleOrBadlands);
+                addSurfaceBiome(output, tmp, hum, nearInlandContinentalness, span(erosions[0], erosions[1]), weirdness, 0, lowOrBadlands);
                 addSurfaceBiome(output, tmp, hum, span(midInlandContinentalness, farInlandContinentalness), span(erosions[0], erosions[1]), weirdness, 0, middleOrBadlandsOrSlope);
 
-                addSurfaceBiome(output, tmp, hum, nearInlandContinentalness, span(erosions[2], erosions[3]), weirdness, 0, middle);
-                addSurfaceBiome(output, tmp, hum, span(midInlandContinentalness, farInlandContinentalness), span(erosions[2], erosions[3]), weirdness, 0, middleOrBadlands);
+                addSurfaceBiome(output, tmp, hum, nearInlandContinentalness, span(erosions[2], erosions[3]), weirdness, 0, low);
+                addSurfaceBiome(output, tmp, hum, span(midInlandContinentalness, farInlandContinentalness), span(erosions[2], erosions[3]), weirdness, 0, lowOrBadlands);
 
                 addSurfaceBiome(output, tmp, hum, coastContinentalness, span(erosions[3], erosions[4]), weirdness, 0, beach);
-                addSurfaceBiome(output, tmp, hum, span(nearInlandContinentalness, farInlandContinentalness), erosions[4], weirdness, 0, middle);
+                addSurfaceBiome(output, tmp, hum, span(nearInlandContinentalness, farInlandContinentalness), erosions[4], weirdness, 0, low);
 
                 addSurfaceBiome(output, tmp, hum, coastContinentalness, erosions[5], weirdness, 0, shatteredCoast);
                 addSurfaceBiome(output, tmp, hum, nearInlandContinentalness, erosions[5], weirdness, 0, windsweptSavanna);
-                addSurfaceBiome(output, tmp, hum, span(midInlandContinentalness, farInlandContinentalness), erosions[5], weirdness, 0, middle);
+                addSurfaceBiome(output, tmp, hum, span(midInlandContinentalness, farInlandContinentalness), erosions[5], weirdness, 0, low);
 
                 addSurfaceBiome(output, tmp, hum, coastContinentalness, erosions[6], weirdness, 0, beach);
                 if (tmpI == 0) {
-                    addSurfaceBiome(output, tmp, hum, span(nearInlandContinentalness, farInlandContinentalness), erosions[6], weirdness, 0, middle);
+                    addSurfaceBiome(output, tmp, hum, span(nearInlandContinentalness, farInlandContinentalness), erosions[6], weirdness, 0, low);
                 }
             }
         }
@@ -390,9 +409,21 @@ public final class ModifiedOverworldBiomeBuilder {
     }
 
     private void addUndergroundBiomes(Consumer<Pair<Climate.ParameterPoint, ResourceKey<Biome>>> output) {
-        addUndergroundBiome(output, fullRange, fullRange, span(0.8F, 1.0F), fullRange, fullRange, 0, DRIPSTONE_CAVES);
-        addUndergroundBiome(output, fullRange, span(0.7F, 1.0F), fullRange, fullRange, fullRange, 0, LUSH_CAVES);
+        addUndergroundBiome(output, fullRange, fullRange, span(.8f, 1f), fullRange, fullRange, 0, DRIPSTONE_CAVES);
+        addUndergroundBiome(output, fullRange, fullRange, span(.4f, .8f), span(.5f, .74f), fullRange, 0, LIMESTONE_CAVES);
+        addUndergroundBiome(output, fullRange, span(.7f, 1f), fullRange, fullRange, fullRange, 0, LUSH_CAVES);
         addBottomBiome(output, fullRange, fullRange, fullRange, span(erosions[0], erosions[1]), fullRange, 0, DEEP_DARK);
+    }
+
+    private ResourceKey<Biome> pickLowBiome(int tmpI, int humI, Climate.Parameter parameter) {
+        var base = low[tmpI][humI];
+
+        if (parameter.max() < 0L) {
+            return base;
+        }
+
+        var variant = lowVariant[tmpI][humI];
+        return variant == null ? base : variant;
     }
 
     private ResourceKey<Biome> pickMiddleBiome(int tmpI, int humI, Climate.Parameter parameter) {
@@ -410,6 +441,12 @@ public final class ModifiedOverworldBiomeBuilder {
         return tmpI == 4
                 ? pickBadlandsBiome(humI, weirdness)
                 : pickMiddleBiome(tmpI, humI, weirdness);
+    }
+
+    private ResourceKey<Biome> pickLowBiomeOrBadlandsIfHot(int tmpI, int humI, Climate.Parameter weirdness) {
+        return tmpI == 4
+                ? pickBadlandsBiome(humI, weirdness)
+                : pickLowBiome(tmpI, humI, weirdness);
     }
 
     private ResourceKey<Biome> pickMiddleBiomeOrBadlandsIfHotOrSlopeIfCold(int tmpI, int humI, Climate.Parameter weirdness) {

@@ -9,6 +9,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
+import net.minecraft.world.level.material.Fluids;
 
 import static net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate.*;
 
@@ -27,7 +28,33 @@ public class FeatureConditions {
             ModBlocks.MOSSY_DIRT
     );
 
-    public static final List<Block> SANDY_GROW_BLOCKS = Stream.concat(
+    public static final List<Block> DRY_GROW_BLOCKS = Stream.concat(
+            DEFAULT_GROW_BLOCKS.stream(),
+            Stream.of(
+                    Blocks.SAND,
+                    Blocks.RED_SAND,
+                    ModBlocks.LIMESTONE,
+                    Blocks.TERRACOTTA,
+                    Blocks.BLACK_TERRACOTTA,
+                    Blocks.GRAY_TERRACOTTA,
+                    Blocks.LIGHT_GRAY_TERRACOTTA,
+                    Blocks.WHITE_TERRACOTTA,
+                    Blocks.BROWN_TERRACOTTA,
+                    Blocks.RED_TERRACOTTA,
+                    Blocks.ORANGE_TERRACOTTA,
+                    Blocks.YELLOW_TERRACOTTA,
+                    Blocks.LIME_TERRACOTTA,
+                    Blocks.GREEN_TERRACOTTA,
+                    Blocks.CYAN_TERRACOTTA,
+                    Blocks.BLUE_TERRACOTTA,
+                    Blocks.LIGHT_BLUE_TERRACOTTA,
+                    Blocks.MAGENTA_TERRACOTTA,
+                    Blocks.PURPLE_TERRACOTTA,
+                    Blocks.PINK_TERRACOTTA
+            )
+    ).toList();
+
+    public static final List<Block> WET_GROW_BLOCKS = Stream.concat(
             DEFAULT_GROW_BLOCKS.stream(),
             Stream.of(
                     Blocks.SAND,
@@ -37,7 +64,7 @@ public class FeatureConditions {
     ).toList();
 
     public static final List<Block> CAVE_GROW_BLOCKS = Stream.concat(
-            SANDY_GROW_BLOCKS.stream(),
+            DRY_GROW_BLOCKS.stream(),
             Stream.of(
                     Blocks.STONE,
                     Blocks.DEEPSLATE,
@@ -46,7 +73,8 @@ public class FeatureConditions {
                     Blocks.DIORITE,
                     Blocks.TUFF,
                     Blocks.SANDSTONE,
-                    Blocks.RED_SANDSTONE
+                    Blocks.RED_SANDSTONE,
+                    ModBlocks.LIMESTONE
             )
     ).toList();
 
@@ -56,14 +84,21 @@ public class FeatureConditions {
             ModBlocks.PACKED_ASH
     );
 
-    public static final BlockPredicate LOWEST_AIR = BlockPredicate.allOf(
+    public static final BlockPredicate LOWEST_AIR = allOf(
             BlockPredicate.ONLY_IN_AIR_PREDICATE,
             not(matchesTag(Direction.DOWN.getUnitVec3i(), BlockTags.AIR))
     );
 
-    public static final BlockPredicate HIGHEST_AIR = BlockPredicate.allOf(
+    public static final BlockPredicate HIGHEST_AIR = allOf(
             BlockPredicate.ONLY_IN_AIR_PREDICATE,
             not(matchesTag(Direction.UP.getUnitVec3i(), BlockTags.AIR))
+    );
+
+    public static final BlockPredicate AIR = ONLY_IN_AIR_OR_WATER_PREDICATE;
+    public static final BlockPredicate AIR_OR_WATER = ONLY_IN_AIR_OR_WATER_PREDICATE;
+    public static final BlockPredicate AIR_WATER_OR_LAVA = anyOf(
+            ONLY_IN_AIR_OR_WATER_PREDICATE,
+            matchesFluids(Fluids.LAVA)
     );
 
 

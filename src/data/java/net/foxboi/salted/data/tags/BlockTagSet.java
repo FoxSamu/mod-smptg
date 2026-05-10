@@ -34,7 +34,12 @@ public class BlockTagSet extends LookupTagSet<Block> {
                 .element(ModBlocks.CATTAIL);
 
         builder(BlockTags.SLABS)
-                .element(ModBlocks.ASH_BRICK_SLAB);
+                .element(ModBlocks.ASH_BRICK_SLAB)
+                .element(ModBlocks.LIMESTONE_SLAB)
+                .element(ModBlocks.LIMESTONE_BRICK_SLAB)
+                .element(ModBlocks.LIMESTONE_TILE_SLAB)
+                .element(ModBlocks.CRACKED_LIMESTONE_BRICK_SLAB)
+                .element(ModBlocks.POLISHED_LIMESTONE_SLAB);
 
         builder(BlockTags.WOODEN_SLABS)
                 .element(ModBlocks.ASPEN_SLAB)
@@ -44,7 +49,12 @@ public class BlockTagSet extends LookupTagSet<Block> {
                 .element(ModBlocks.DEAD_WOOD_SLAB);
 
         builder(BlockTags.STAIRS)
-                .element(ModBlocks.ASH_BRICK_STAIRS);
+                .element(ModBlocks.ASH_BRICK_STAIRS)
+                .element(ModBlocks.LIMESTONE_STAIRS)
+                .element(ModBlocks.LIMESTONE_BRICK_STAIRS)
+                .element(ModBlocks.LIMESTONE_TILE_STAIRS)
+                .element(ModBlocks.CRACKED_LIMESTONE_BRICK_STAIRS)
+                .element(ModBlocks.POLISHED_LIMESTONE_STAIRS);
 
         builder(BlockTags.WOODEN_STAIRS)
                 .element(ModBlocks.ASPEN_STAIRS)
@@ -53,7 +63,12 @@ public class BlockTagSet extends LookupTagSet<Block> {
                 .element(ModBlocks.REDWOOD_STAIRS)
                 .element(ModBlocks.DEAD_WOOD_STAIRS);
 
-        builder(BlockTags.WALLS);
+        builder(BlockTags.WALLS)
+                .element(ModBlocks.LIMESTONE_WALL)
+                .element(ModBlocks.LIMESTONE_BRICK_WALL)
+                .element(ModBlocks.LIMESTONE_TILE_WALL)
+                .element(ModBlocks.CRACKED_LIMESTONE_BRICK_WALL)
+                .element(ModBlocks.POLISHED_LIMESTONE_WALL);
 
         builder(BlockTags.WOODEN_FENCES)
                 .element(ModBlocks.ASPEN_FENCE)
@@ -157,6 +172,9 @@ public class BlockTagSet extends LookupTagSet<Block> {
         builder(BlockTags.GRASS_BLOCKS)
                 .element(ModBlocks.MOSSY_DIRT);
 
+        builder(BlockTags.OVERWORLD_CARVER_REPLACEABLES)
+                .element(ModBlocks.LIMESTONE);
+
         builder(BlockTags.NETHER_CARVER_REPLACEABLES)
                 .element(ModBlocks.ASH_BLOCK)
                 .element(ModBlocks.PACKED_ASH);
@@ -200,25 +218,35 @@ public class BlockTagSet extends LookupTagSet<Block> {
 
         builder(ModBlockTags.DAMAGES_SLIMES);
 
-        builder(ModBlockTags.OVERWORLD_STONE)
-                .element(Blocks.STONE)
-                .element(Blocks.DEEPSLATE)
-                .element(Blocks.GRANITE)
-                .element(Blocks.ANDESITE)
-                .element(Blocks.DIORITE)
-                .element(Blocks.TUFF);
+        builder(BlockTags.BASE_STONE_OVERWORLD);
+
+        builder(ModBlockTags.LIMESTONE_REPLACEABLE)
+                .tag(BlockTags.BASE_STONE_OVERWORLD);
+
+        builder(BlockTags.SUPPORTS_DRY_VEGETATION)
+                .element(ModBlocks.LIMESTONE);
 
         builder(ModBlockTags.SUPPORTS_CAVE_VEGETATION)
-                .tag(BlockTags.DIRT)
+                .tag(BlockTags.SUPPORTS_DRY_VEGETATION)
                 .tag(BlockTags.SAND)
-                .tag(ModBlockTags.OVERWORLD_STONE)
+                .tag(BlockTags.BASE_STONE_OVERWORLD)
                 .element(Blocks.GRAVEL)
-                .element(Blocks.FARMLAND);
+                .element(Blocks.FARMLAND)
+                .element(Blocks.DRIPSTONE_BLOCK)
+                .element(ModBlocks.LIMESTONE);
 
         builder(ModBlockTags.SUPPORTS_ASH_VEGETATION)
+                .tag(BlockTags.SUPPORTS_DRY_VEGETATION)
                 .element(Blocks.NETHERRACK)
                 .element(ModBlocks.ASH_BLOCK)
                 .element(ModBlocks.PACKED_ASH);
+
+        builder(ModBlockTags.SUPPORTS_WATER_VEGETATION)
+                .tag(BlockTags.SUPPORTS_VEGETATION)
+                .tag(BlockTags.SAND)
+                .element(Blocks.CLAY)
+                .element(Blocks.MUD)
+                .element(Blocks.GRAVEL);
 
         builder(ModBlockTags.SUPPORTS_EMBER_VEGETATION)
                 .tag(BlockTags.SUPPORTS_DRY_VEGETATION)

@@ -18,6 +18,7 @@ import net.minecraft.resources.RegistryFileCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.levelgen.SurfaceRules;
 
 public record BiomeSurfaceOverrides(
@@ -48,16 +49,21 @@ public record BiomeSurfaceOverrides(
     // ================================================
 
     public static BiomeSurfaceOverrides overworld(DefinitionContext context) {
+        // We modify vanilla biome surfaces here as well
         return new Builder(context.lookupOrThrow(Registries.BIOME))
                 .add(
                         List.of(
-                                ModBiomes.ASPEN_FOREST
+                                ModBiomes.ASPEN_FOREST,
+                                Biomes.BIRCH_FOREST,
+                                Biomes.OLD_GROWTH_BIRCH_FOREST
                         ),
                         SurfaceTypes.sometimesPodzolSurface()
                 )
                 .add(
                         List.of(
-                                ModBiomes.MAPLE_FOREST
+                                ModBiomes.MAPLE_FOREST,
+                                Biomes.FOREST,
+                                Biomes.DARK_FOREST
                         ),
                         SurfaceTypes.sometimesPodzolSometimesMossSurface()
                 )
@@ -67,6 +73,12 @@ public record BiomeSurfaceOverrides(
                         ),
                         SurfaceTypes.redwoodSurface()
                 )
+                .add(
+                        List.of(
+                                ModBiomes.LIMESTONE_CAVES
+                        ),
+                        SurfaceTypes.allLimestone()
+                )
                 .build();
     }
 
@@ -74,7 +86,7 @@ public record BiomeSurfaceOverrides(
         return new Builder(context.lookupOrThrow(Registries.BIOME))
                 .add(
                         List.of(
-                                ModBiomes.BURNED_FOREST
+                                ModBiomes.BURNING_FOREST
                         ),
                         SurfaceTypes.ash()
                 )

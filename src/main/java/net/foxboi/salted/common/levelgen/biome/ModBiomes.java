@@ -19,8 +19,11 @@ public record ModBiomes() {
     public static final ResourceKey<Biome> REDWOOD_TAIGA = REGISTRY.register("redwood_taiga", new RedwoodTaiga(false));
     public static final ResourceKey<Biome> SPARSE_REDWOOD_TAIGA = REGISTRY.register("sparse_redwood_taiga", new RedwoodTaiga(true));
     public static final ResourceKey<Biome> FIREFLY_MEADOW = REGISTRY.register("firefly_meadow", new FireflyMeadow());
+    public static final ResourceKey<Biome> LAVENDER_FIELD = REGISTRY.register("lavender_field", new LavenderField());
 
-    public static final ResourceKey<Biome> BURNED_FOREST = REGISTRY.register("burned_forest", new BurnedForest());
+    public static final ResourceKey<Biome> LIMESTONE_CAVES = REGISTRY.register("limestone_caves", new LimestoneCaves());
+
+    public static final ResourceKey<Biome> BURNING_FOREST = REGISTRY.register("burning_forest", new BurningForest());
 
     public static void init() {
         // N/A, just initialises the class
@@ -34,6 +37,10 @@ public record ModBiomes() {
         translator.name(REDWOOD_TAIGA, "Redwood Taiga");
         translator.name(SPARSE_REDWOOD_TAIGA, "Sparse Redwood Taiga");
         translator.name(FIREFLY_MEADOW, "Firefly Meadow");
-        translator.name(BURNED_FOREST, "Burned Forest");
+        translator.name(LAVENDER_FIELD, "Lavender Field");
+
+        translator.name(LIMESTONE_CAVES, "Limestone Caves");
+
+        translator.name(BURNING_FOREST, "Burning Forest");
     }
 }

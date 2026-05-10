@@ -46,6 +46,8 @@ public record ModBlockData() {
 
         models.shelfFungus(SHELF_FUNGUS);
 
+        models.speleothem(POINTED_LIMESTONE);
+
         models.logWithHorizontal(BURNED_STEM);
         models.wood(BURNED_HYPHAE, BURNED_STEM);
 
@@ -78,6 +80,38 @@ public record ModBlockData() {
                 .slab(ASH_BRICK_SLAB, false)
                 .stairs(ASH_BRICK_STAIRS)
                 .build();
+
+        models.family(LIMESTONE)
+                .slab(LIMESTONE_SLAB, false)
+                .stairs(LIMESTONE_STAIRS)
+                .wall(LIMESTONE_WALL)
+                .build();
+
+        models.family(POLISHED_LIMESTONE)
+                .slab(POLISHED_LIMESTONE_SLAB, true)
+                .stairs(POLISHED_LIMESTONE_STAIRS)
+                .wall(POLISHED_LIMESTONE_WALL)
+                .build();
+
+        models.family(LIMESTONE_BRICKS)
+                .slab(LIMESTONE_BRICK_SLAB, false)
+                .stairs(LIMESTONE_BRICK_STAIRS)
+                .wall(LIMESTONE_BRICK_WALL)
+                .build();
+
+        models.family(LIMESTONE_TILES)
+                .slab(LIMESTONE_TILE_SLAB, false)
+                .stairs(LIMESTONE_TILE_STAIRS)
+                .wall(LIMESTONE_TILE_WALL)
+                .build();
+
+        models.family(CRACKED_LIMESTONE_BRICKS)
+                .slab(CRACKED_LIMESTONE_BRICK_SLAB, false)
+                .stairs(CRACKED_LIMESTONE_BRICK_STAIRS)
+                .wall(CRACKED_LIMESTONE_BRICK_WALL)
+                .build();
+
+        models.cube(CHISELED_LIMESTONE);
 
         models.family(ASPEN_PLANKS)
                 .slab(ASPEN_SLAB, false)
@@ -274,6 +308,29 @@ public record ModBlockData() {
         tools.pickaxe(ASH_BRICK_SLAB);
         tools.pickaxe(ASH_BRICK_STAIRS);
 
+        tools.pickaxe(LIMESTONE);
+        tools.pickaxe(LIMESTONE_SLAB);
+        tools.pickaxe(LIMESTONE_STAIRS);
+        tools.pickaxe(LIMESTONE_WALL);
+        tools.pickaxe(POLISHED_LIMESTONE);
+        tools.pickaxe(POLISHED_LIMESTONE_SLAB);
+        tools.pickaxe(POLISHED_LIMESTONE_STAIRS);
+        tools.pickaxe(POLISHED_LIMESTONE_WALL);
+        tools.pickaxe(LIMESTONE_BRICKS);
+        tools.pickaxe(LIMESTONE_BRICK_SLAB);
+        tools.pickaxe(LIMESTONE_BRICK_STAIRS);
+        tools.pickaxe(LIMESTONE_BRICK_WALL);
+        tools.pickaxe(LIMESTONE_TILES);
+        tools.pickaxe(LIMESTONE_TILE_SLAB);
+        tools.pickaxe(LIMESTONE_TILE_STAIRS);
+        tools.pickaxe(LIMESTONE_TILE_WALL);
+        tools.pickaxe(CRACKED_LIMESTONE_BRICKS);
+        tools.pickaxe(CRACKED_LIMESTONE_BRICK_SLAB);
+        tools.pickaxe(CRACKED_LIMESTONE_BRICK_STAIRS);
+        tools.pickaxe(CRACKED_LIMESTONE_BRICK_WALL);
+        tools.pickaxe(CHISELED_LIMESTONE);
+        tools.pickaxe(POINTED_LIMESTONE);
+
         tools.shovel(MOSSY_DIRT);
     }
 
@@ -382,6 +439,30 @@ public record ModBlockData() {
         drops.selfIfShears(EMBERGRASS);
         drops.selfIfShears(EMBERWEED);
         drops.segmented(EMBERS);
+
+
+        drops.self(LIMESTONE);
+        drops.slab(LIMESTONE_SLAB);
+        drops.self(LIMESTONE_STAIRS);
+        drops.self(LIMESTONE_WALL);
+        drops.self(POLISHED_LIMESTONE);
+        drops.slab(POLISHED_LIMESTONE_SLAB);
+        drops.self(POLISHED_LIMESTONE_STAIRS);
+        drops.self(POLISHED_LIMESTONE_WALL);
+        drops.self(LIMESTONE_BRICKS);
+        drops.slab(LIMESTONE_BRICK_SLAB);
+        drops.self(LIMESTONE_BRICK_STAIRS);
+        drops.self(LIMESTONE_BRICK_WALL);
+        drops.self(LIMESTONE_TILES);
+        drops.slab(LIMESTONE_TILE_SLAB);
+        drops.self(LIMESTONE_TILE_STAIRS);
+        drops.self(LIMESTONE_TILE_WALL);
+        drops.self(CRACKED_LIMESTONE_BRICKS);
+        drops.slab(CRACKED_LIMESTONE_BRICK_SLAB);
+        drops.self(CRACKED_LIMESTONE_BRICK_STAIRS);
+        drops.self(CRACKED_LIMESTONE_BRICK_WALL);
+        drops.self(CHISELED_LIMESTONE);
+        drops.self(POINTED_LIMESTONE);
 
 
         drops.selfIfSilkTouch(MOSSY_DIRT, Blocks.DIRT);

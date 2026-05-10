@@ -372,9 +372,9 @@ public class ModifiedSurfaceRuleData {
             builder.add(ifTrue(verticalGradient("bedrock_floor", VerticalAnchor.bottom(), VerticalAnchor.aboveBottom(5)), BEDROCK));
         }
 
-        builder.add(biomeOverrides(overrides));
-
         var surfaceOnTopOnly = ifTrue(abovePreliminarySurface(), surfaceAnywhere);
+
+        builder.add(biomeOverrides(overrides));
 
         builder.add(noUndergroundSurface ? surfaceOnTopOnly : surfaceAnywhere);
         builder.add(ifTrue(verticalGradient("deepslate", VerticalAnchor.absolute(0), VerticalAnchor.absolute(8)), DEEPSLATE));

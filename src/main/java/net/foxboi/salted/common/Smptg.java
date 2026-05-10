@@ -101,6 +101,8 @@ public class Smptg {
         ModTreePlacements.init();
         ModVegetationFeatures.init();
         ModVegetationPlacements.init();
+        ModCaveFeatures.init();
+        ModCavePlacements.init();
 
         // Finalize registration
         REGISTRAR.registerGameEntries();
@@ -117,7 +119,7 @@ public class Smptg {
         DataModificationHandler.init();
 
         // TODO move this somewhere else
-        NetherBiomes.addNetherBiome(ModBiomes.BURNED_FOREST, Climate.parameters(
+        NetherBiomes.addNetherBiome(ModBiomes.BURNING_FOREST, Climate.parameters(
                 .3f, -.45f, 0f, 0f, 0f, 0f, 0f
         ));
 

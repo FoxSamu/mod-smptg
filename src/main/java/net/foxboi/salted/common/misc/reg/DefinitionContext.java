@@ -3,6 +3,8 @@ package net.foxboi.salted.common.misc.reg;
 import java.util.Optional;
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
+
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Registry;
@@ -12,6 +14,14 @@ import net.minecraft.resources.ResourceKey;
 public interface DefinitionContext {
     <A> HolderGetter<A> lookupOrThrow(ResourceKey<Registry<A>> registry);
     <A> Optional<? extends HolderGetter<A>> lookup(ResourceKey<Registry<A>> registry);
+
+    default <A>Holder<A> getOrThrow(ResourceKey<A> key) {
+        return lookupOrThrow(key.registryKey()).getOrThrow(key);
+    }
+
+    default <A> Optional<Holder<A>> get(ResourceKey<A> key) {
+        return lookup(key.registryKey()).flatMap(it -> it.get(key));
+    }
 
     static DefinitionContext fromHolderLookupProvider(HolderLookup.Provider provider) {
         return new DefinitionContext() {

@@ -161,6 +161,31 @@ public record ModItems() {
 
     public static final Item MOSSY_DIRT = registerBlock(ModBlocks.MOSSY_DIRT);
 
+    // Stones
+
+    public static final Item LIMESTONE = registerBlock(ModBlocks.LIMESTONE);
+    public static final Item LIMESTONE_STAIRS = registerBlock(ModBlocks.LIMESTONE_STAIRS);
+    public static final Item LIMESTONE_SLAB = registerBlock(ModBlocks.LIMESTONE_SLAB);
+    public static final Item LIMESTONE_WALL = registerBlock(ModBlocks.LIMESTONE_WALL);
+    public static final Item POLISHED_LIMESTONE = registerBlock(ModBlocks.POLISHED_LIMESTONE);
+    public static final Item POLISHED_LIMESTONE_STAIRS = registerBlock(ModBlocks.POLISHED_LIMESTONE_STAIRS);
+    public static final Item POLISHED_LIMESTONE_SLAB = registerBlock(ModBlocks.POLISHED_LIMESTONE_SLAB);
+    public static final Item POLISHED_LIMESTONE_WALL = registerBlock(ModBlocks.POLISHED_LIMESTONE_WALL);
+    public static final Item LIMESTONE_BRICKS = registerBlock(ModBlocks.LIMESTONE_BRICKS);
+    public static final Item LIMESTONE_BRICK_STAIRS = registerBlock(ModBlocks.LIMESTONE_BRICK_STAIRS);
+    public static final Item LIMESTONE_BRICK_SLAB = registerBlock(ModBlocks.LIMESTONE_BRICK_SLAB);
+    public static final Item LIMESTONE_BRICK_WALL = registerBlock(ModBlocks.LIMESTONE_BRICK_WALL);
+    public static final Item LIMESTONE_TILES = registerBlock(ModBlocks.LIMESTONE_TILES);
+    public static final Item LIMESTONE_TILE_STAIRS = registerBlock(ModBlocks.LIMESTONE_TILE_STAIRS);
+    public static final Item LIMESTONE_TILE_SLAB = registerBlock(ModBlocks.LIMESTONE_TILE_SLAB);
+    public static final Item LIMESTONE_TILE_WALL = registerBlock(ModBlocks.LIMESTONE_TILE_WALL);
+    public static final Item CRACKED_LIMESTONE_BRICKS = registerBlock(ModBlocks.CRACKED_LIMESTONE_BRICKS);
+    public static final Item CRACKED_LIMESTONE_BRICK_STAIRS = registerBlock(ModBlocks.CRACKED_LIMESTONE_BRICK_STAIRS);
+    public static final Item CRACKED_LIMESTONE_BRICK_SLAB = registerBlock(ModBlocks.CRACKED_LIMESTONE_BRICK_SLAB);
+    public static final Item CRACKED_LIMESTONE_BRICK_WALL = registerBlock(ModBlocks.CRACKED_LIMESTONE_BRICK_WALL);
+    public static final Item CHISELED_LIMESTONE = registerBlock(ModBlocks.CHISELED_LIMESTONE);
+    public static final Item POINTED_LIMESTONE = registerBlock(ModBlocks.POINTED_LIMESTONE);
+
     // Plants
 
     public static final Item CLOVERS = registerBlock(ModBlocks.CLOVERS);
@@ -290,6 +315,35 @@ public record ModItems() {
         );
 
         out.insertBefore(
+                Items.DEEPSLATE,
+                LIMESTONE,
+                LIMESTONE_STAIRS,
+                LIMESTONE_SLAB,
+                LIMESTONE_WALL,
+
+                CHISELED_LIMESTONE,
+                POLISHED_LIMESTONE,
+                POLISHED_LIMESTONE_STAIRS,
+                POLISHED_LIMESTONE_SLAB,
+                POLISHED_LIMESTONE_WALL,
+
+                LIMESTONE_BRICKS,
+                LIMESTONE_BRICK_STAIRS,
+                LIMESTONE_BRICK_SLAB,
+                LIMESTONE_BRICK_WALL,
+
+                CRACKED_LIMESTONE_BRICKS,
+                CRACKED_LIMESTONE_BRICK_STAIRS,
+                CRACKED_LIMESTONE_BRICK_SLAB,
+                CRACKED_LIMESTONE_BRICK_WALL,
+
+                LIMESTONE_TILES,
+                LIMESTONE_TILE_STAIRS,
+                LIMESTONE_TILE_SLAB,
+                LIMESTONE_TILE_WALL
+        );
+
+        out.insertBefore(
                 Items.SEA_LANTERN,
                 PACKED_ASH,
                 ASH_BRICKS,
@@ -302,6 +356,14 @@ public record ModItems() {
         out.insertAfter(
                 Items.PODZOL,
                 MOSSY_DIRT
+        );
+        out.insertBefore(
+                Items.DEEPSLATE,
+                LIMESTONE
+        );
+        out.insertAfter(
+                Items.POINTED_DRIPSTONE,
+                POINTED_LIMESTONE
         );
         out.insertAfter(
                 Items.PALE_OAK_LOG,

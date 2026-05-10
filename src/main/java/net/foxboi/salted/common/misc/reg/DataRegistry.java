@@ -39,4 +39,32 @@ public class DataRegistry<T> extends ModRegistry<T, Definition<T>> {
     public ResourceKey<T> register(String name, T object) {
         return register(name, Definition.of(object));
     }
+
+    private record CopyDefinition<T>(ResourceKey<T> key) implements Definition<T> {
+
+        @Override
+        public T create(ResourceKey<T> key, DefinitionContext context) {
+            return context.getOrThrow(key()).value();
+        }
+    }
+
+    private Definition<T> copy(ResourceKey<T> copy) {
+        var elem = lookupOrNull(copy);
+        if (elem == null) {
+            return new CopyDefinition<>(copy);
+        }
+        return elem;
+    }
+
+    public ResourceKey<T> copyFrom(ResourceKey<T> key, ResourceKey<T> copyFrom) {
+        return register(key, copy(copyFrom));
+    }
+
+    public ResourceKey<T> copyFrom(Identifier key, ResourceKey<T> copyFrom) {
+        return register(key, copy(copyFrom));
+    }
+
+    public ResourceKey<T> copyFrom(String key, ResourceKey<T> copyFrom) {
+        return register(key, copy(copyFrom));
+    }
 }

@@ -58,6 +58,18 @@ public abstract class ModRegistry<T, E> {
         reverseMap.put(entry, key);
     }
 
+    protected final E lookupOrThrow(ResourceKey<T> key) {
+        var elem = map.get(key);
+        if (elem == null) {
+            throw new IllegalArgumentException("Cannot copy " + key + " as it is not registered");
+        }
+        return elem;
+    }
+
+    protected final E lookupOrNull(ResourceKey<T> key) {
+        return map.get(key);
+    }
+
     protected final ResourceKey<T> reverseLookup(E entry) {
         return reverseMap.get(entry);
     }

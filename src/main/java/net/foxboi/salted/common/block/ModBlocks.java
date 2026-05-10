@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 import net.fabricmc.fabric.api.registry.FuelValueEvents;
 import net.fabricmc.fabric.api.registry.LandPathTypeRegistry;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
+
 import net.foxboi.salted.common.Smptg;
 import net.foxboi.salted.common.misc.ColorRegistry;
 import net.foxboi.salted.common.misc.Translator;
@@ -22,7 +23,6 @@ import net.minecraft.util.ColorRGBA;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.component.Tool;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -165,6 +165,38 @@ public record ModBlocks() {
     public static final Block MOSSY_DIRT = register("mossy_dirt", grassBlock(), props(Blocks.GRASS_BLOCK).sound(SoundType.MOSS));
 
 
+    // Stones
+
+    public static final Block LIMESTONE = register("limestone", block(), props(Blocks.TUFF).mapColor(MapColor.QUARTZ));
+    public static final Block LIMESTONE_STAIRS = register("limestone_stairs", stairs(), props(LIMESTONE));
+    public static final Block LIMESTONE_SLAB = register("limestone_slab", slab(), props(LIMESTONE));
+    public static final Block LIMESTONE_WALL = register("limestone_wall", wall(), props(LIMESTONE));
+
+    public static final Block POLISHED_LIMESTONE = register("polished_limestone", block(), props(Blocks.POLISHED_TUFF).mapColor(MapColor.QUARTZ));
+    public static final Block POLISHED_LIMESTONE_STAIRS = register("polished_limestone_stairs", stairs(), props(POLISHED_LIMESTONE));
+    public static final Block POLISHED_LIMESTONE_SLAB = register("polished_limestone_slab", slab(), props(POLISHED_LIMESTONE));
+    public static final Block POLISHED_LIMESTONE_WALL = register("polished_limestone_wall", wall(), props(POLISHED_LIMESTONE));
+
+    public static final Block LIMESTONE_BRICKS = register("limestone_bricks", block(), props(Blocks.TUFF_BRICKS).mapColor(MapColor.QUARTZ));
+    public static final Block LIMESTONE_BRICK_STAIRS = register("limestone_brick_stairs", stairs(), props(LIMESTONE_BRICKS));
+    public static final Block LIMESTONE_BRICK_SLAB = register("limestone_brick_slab", slab(), props(LIMESTONE_BRICKS));
+    public static final Block LIMESTONE_BRICK_WALL = register("limestone_brick_wall", wall(), props(LIMESTONE_BRICKS));
+
+    public static final Block LIMESTONE_TILES = register("limestone_tiles", block(), props(LIMESTONE_BRICKS));
+    public static final Block LIMESTONE_TILE_STAIRS = register("limestone_tile_stairs", stairs(), props(LIMESTONE_TILES));
+    public static final Block LIMESTONE_TILE_SLAB = register("limestone_tile_slab", slab(), props(LIMESTONE_TILES));
+    public static final Block LIMESTONE_TILE_WALL = register("limestone_tile_wall", wall(), props(LIMESTONE_TILES));
+
+    public static final Block CRACKED_LIMESTONE_BRICKS = register("cracked_limestone_bricks", block(), props(LIMESTONE_BRICKS));
+    public static final Block CRACKED_LIMESTONE_BRICK_STAIRS = register("cracked_limestone_brick_stairs", stairs(), props(CRACKED_LIMESTONE_BRICKS));
+    public static final Block CRACKED_LIMESTONE_BRICK_SLAB = register("cracked_limestone_brick_slab", slab(), props(CRACKED_LIMESTONE_BRICKS));
+    public static final Block CRACKED_LIMESTONE_BRICK_WALL = register("cracked_limestone_brick_wall", wall(), props(CRACKED_LIMESTONE_BRICKS));
+
+    public static final Block CHISELED_LIMESTONE = register("chiseled_limestone", block(), props(POLISHED_LIMESTONE));
+
+    public static final Block POINTED_LIMESTONE = register("pointed_limestone", drippingSpeleothem(LIMESTONE), props(Blocks.POINTED_DRIPSTONE));
+
+
     // Ash
 
     public static final Block BURNED_STEM = register("burned_stem", rotatedPillar(), logProps(MapColor.COLOR_BLACK, MapColor.COLOR_BLACK, SoundType.STEM).strength(1f));
@@ -227,6 +259,9 @@ public record ModBlocks() {
         Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("segmented_clovers"), SegmentedCloversBlock.CODEC);
         Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("multiface_plant"), MultifacePlantBlock.CODEC);
         Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("ember_plant"), EmberPlantBlock.CODEC);
+        Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("speleothem"), SpeleothemBlock.CODEC);
+        Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("growing_speleothem"), GrowingSpeleothemBlock.CODEC);
+        Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("dripping_speleothem"), DrippingSpeleothemBlock.CODEC);
 
         // Setup supported blocks
         BlockEntityType.SHELF.addValidBlock(ASPEN_SHELF);
@@ -409,6 +444,35 @@ public record ModBlocks() {
 
         // Soils
         translator.name(MOSSY_DIRT, "Mossy Dirt");
+
+        // Stones
+        translator.name(LIMESTONE, "Limestone");
+        translator.name(LIMESTONE_STAIRS, "Limestone Stairs");
+        translator.name(LIMESTONE_SLAB, "Limestone Slab");
+        translator.name(LIMESTONE_WALL, "Limestone Wall");
+
+        translator.name(POLISHED_LIMESTONE, "Polished Limestone");
+        translator.name(POLISHED_LIMESTONE_STAIRS, "Polished Limestone Stairs");
+        translator.name(POLISHED_LIMESTONE_SLAB, "Polished Limestone Slab");
+        translator.name(POLISHED_LIMESTONE_WALL, "Polished Limestone Wall");
+
+        translator.name(LIMESTONE_BRICKS, "Limestone Bricks");
+        translator.name(LIMESTONE_BRICK_STAIRS, "Limestone Brick Stairs");
+        translator.name(LIMESTONE_BRICK_SLAB, "Limestone Brick Slab");
+        translator.name(LIMESTONE_BRICK_WALL, "Limestone Brick Wall");
+
+        translator.name(LIMESTONE_TILES, "Limestone Tiles");
+        translator.name(LIMESTONE_TILE_STAIRS, "Limestone Tile Stairs");
+        translator.name(LIMESTONE_TILE_SLAB, "Limestone Tile Slab");
+        translator.name(LIMESTONE_TILE_WALL, "Limestone Tile Wall");
+
+        translator.name(CRACKED_LIMESTONE_BRICKS, "Cracked Limestone Bricks");
+        translator.name(CRACKED_LIMESTONE_BRICK_STAIRS, "Cracked Limestone Brick Stairs");
+        translator.name(CRACKED_LIMESTONE_BRICK_SLAB, "Cracked Limestone Brick Slab");
+        translator.name(CRACKED_LIMESTONE_BRICK_WALL, "Cracked Limestone Brick Wall");
+
+        translator.name(CHISELED_LIMESTONE, "Chiseled Limestone");
+        translator.name(POINTED_LIMESTONE, "Pointed Limestone");
 
         // Ash
         translator.name(BURNED_STEM, "Burned Stem");
@@ -638,6 +702,18 @@ public record ModBlocks() {
 
     private static BlockFactory leaves(float particleChance) {
         return props -> new TintedParticleLeavesBlock(particleChance, props);
+    }
+
+    private static BlockFactory speleothem() {
+        return SpeleothemBlock::new;
+    }
+
+    private static BlockFactory growingSpeleothem(Block growBlock) {
+        return properties -> new GrowingSpeleothemBlock(growBlock, properties);
+    }
+
+    private static BlockFactory drippingSpeleothem(Block growBlock) {
+        return properties -> new DrippingSpeleothemBlock(growBlock, properties);
     }
 
     private static BlockFactory slab() {

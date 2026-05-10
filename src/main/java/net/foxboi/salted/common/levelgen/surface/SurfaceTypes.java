@@ -2,6 +2,7 @@ package net.foxboi.salted.common.levelgen.surface;
 
 import net.foxboi.salted.common.block.ModBlocks;
 import net.foxboi.salted.common.levelgen.noise.ModNoises;
+
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.placement.CaveSurface;
@@ -17,15 +18,19 @@ public class SurfaceTypes {
     public static final RuleSource ASH = makeStateRule(ModBlocks.ASH_BLOCK);
     public static final RuleSource PACKED_ASH = makeStateRule(ModBlocks.PACKED_ASH);
     public static final RuleSource NETHERRACK = makeStateRule(Blocks.NETHERRACK);
+    public static final RuleSource LIMESTONE = makeStateRule(ModBlocks.LIMESTONE);
 
     private static RuleSource makeStateRule(Block block) {
         return state(block.defaultBlockState());
     }
 
     private static RuleSource defaultDirt(RuleSource top, RuleSource dirt) {
-        return sequence(
-                ifTrue(ON_FLOOR, top),
-                ifTrue(UNDER_FLOOR, dirt)
+        return ifTrue(
+                abovePreliminarySurface(),
+                sequence(
+                        ifTrue(ON_FLOOR, top),
+                        ifTrue(UNDER_FLOOR, dirt)
+                )
         );
     }
 
@@ -77,5 +82,9 @@ public class SurfaceTypes {
                 ifTrue(stoneDepthCheck(4, true, CaveSurface.FLOOR), PACKED_ASH),
                 ifTrue(stoneDepthCheck(0, true, CaveSurface.CEILING), PACKED_ASH)
         );
+    }
+
+    public static RuleSource allLimestone() {
+        return LIMESTONE;
     }
 }

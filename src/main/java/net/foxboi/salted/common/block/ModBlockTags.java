@@ -16,11 +16,12 @@ public record ModBlockTags() {
     public static final TagKey<Block> REDWOOD_LOGS = tag("redwood_logs");
     public static final TagKey<Block> DEAD_LOGS = tag("dead_logs");
 
-    public static final TagKey<Block> OVERWORLD_STONE = tag("stone");
     public static final TagKey<Block> SUPPORTS_CAVE_VEGETATION = tag("supports_cave_vegetation");
     public static final TagKey<Block> SUPPORTS_WATER_VEGETATION = tag("supports_water_vegetation");
     public static final TagKey<Block> SUPPORTS_ASH_VEGETATION = tag("supports_ash_vegetation");
     public static final TagKey<Block> SUPPORTS_EMBER_VEGETATION = tag("supports_ember_vegetation");
+
+    public static final TagKey<Block> LIMESTONE_REPLACEABLE = tag("limestone_replaceable");
 
     public static final TagKey<Block> DAMAGES_SLIMES = tag("damages_slimes");
 
@@ -43,11 +44,12 @@ public record ModBlockTags() {
         translator.name(REDWOOD_LOGS, "Redwood Logs");
         translator.name(DEAD_LOGS, "Dead Logs");
 
-        translator.name(OVERWORLD_STONE, "Overworld Stone");
         translator.name(SUPPORTS_CAVE_VEGETATION, "Supports Cave Vegetation");
         translator.name(SUPPORTS_WATER_VEGETATION, "Supports Water Vegetation");
         translator.name(SUPPORTS_ASH_VEGETATION, "Supports Ash Vegetation");
         translator.name(SUPPORTS_EMBER_VEGETATION, "Supports Ember Vegetation");
+
+        translator.name(LIMESTONE_REPLACEABLE, "Limestone Replaceable");
 
         translator.name(DAMAGES_SLIMES, "Damages Slimes");
     }

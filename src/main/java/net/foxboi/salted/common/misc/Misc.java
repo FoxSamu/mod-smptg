@@ -1,6 +1,8 @@
 package net.foxboi.salted.common.misc;
 
 import java.util.*;
+import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 import com.mojang.datafixers.util.Either;
 import com.mojang.serialization.Codec;
@@ -9,6 +11,8 @@ import net.foxboi.salted.common.block.ModBlockTags;
 import net.foxboi.salted.common.levelgen.ModVegetationPlacements;
 import net.foxboi.salted.common.levelgen.biome.ModBiomeTags;
 import net.foxboi.salted.common.misc.cache.CacheKey;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -16,8 +20,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
@@ -37,6 +41,35 @@ public class Misc {
     public static final List<Direction> X_DIRECTIONS = Direction.Plane.HORIZONTAL.stream().filter(Direction.Axis.X).toList();
     public static final List<Direction> Z_DIRECTIONS = Direction.Plane.HORIZONTAL.stream().filter(Direction.Axis.Z).toList();
     public static final List<Direction> VERTICAL_DIRECTIONS = Direction.Plane.VERTICAL.stream().toList();
+
+    public static float randomTickOnceEveryNDays(float averageDaysPerTick) {
+        // Let the average days per tick be N
+        // - There are 24000 ticks in a minecraft day (20 minutes)
+        // - Each chunk section receives 3 random ticks per game tick, distributed randomly over 4096 blocks
+        // - Each block thus receives 3 / 4096 random ticks per game tick
+        // - Over a period of N days, that is (3 / 4096) * 24000 N random ticks (= roughly 17 ticks)
+        // - Hence each time we receive a random tick, we should have a 1 / ((3 / 4096) * 24000 N) chance to tick
+        return 1 / ((3 / 4096f) * 24000 * averageDaysPerTick);
+    }
+
+    @Nullable
+    public static BlockPos searchInDirection(BlockPos pos, BlockGetter level, Direction dir, int maxSteps, BiPredicate<BlockPos, BlockState> pathPredicate, Predicate<BlockState> predicate) {
+        var mpos = pos.mutable();
+
+        for (var i = 1; i < maxSteps; i++) {
+            mpos.move(dir);
+            var state = level.getBlockState(mpos);
+            if (predicate.test(state)) {
+                return mpos.immutable();
+            }
+
+            if (level.isOutsideBuildHeight(mpos.getY()) || !pathPredicate.test(mpos, state)) {
+                return null;
+            }
+        }
+
+        return null;
+    }
 
     public static BlockPos getDoubleBlockPos(BlockPos pos, BlockState state) {
         return switch (state.getValueOrElse(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER)) {

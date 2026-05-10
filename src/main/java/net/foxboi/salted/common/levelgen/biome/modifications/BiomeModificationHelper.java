@@ -32,14 +32,28 @@ public class BiomeModificationHelper {
                 Set.of(
                         Biomes.FOREST,
                         Biomes.FLOWER_FOREST,
-                        Biomes.BIRCH_FOREST,
                         Biomes.DARK_FOREST,
-                        Biomes.OLD_GROWTH_BIRCH_FOREST,
                         Biomes.TAIGA,
                         Biomes.OLD_GROWTH_PINE_TAIGA,
                         Biomes.OLD_GROWTH_SPRUCE_TAIGA
                 ),
                 new ForestBaseModification()
+        );
+
+        add(
+                "birch_forest",
+                Set.of(
+                        Biomes.BIRCH_FOREST
+                ),
+                new BirchForestModifications(false)
+        );
+
+        add(
+                "old_growth_birch_forest",
+                Set.of(
+                        Biomes.OLD_GROWTH_BIRCH_FOREST
+                ),
+                new BirchForestModifications(true)
         );
 
         add(

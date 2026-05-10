@@ -4,11 +4,10 @@
   "compatibilityLevel": "JAVA_21",
 
   "mixins": [
-    "BiomeMixin", "BiomeModificationContextImplEffectsContextImplMixin", "BiomeSpecialEffectsMixin", "BlockMixin", "BonemealItemMixin",
-    "BucketItemMixin", "CacheHolderMixin", "GrassBlockMixin", "IceBlockMixin", "IdentifierMixin", "LevelMixin",
-    "MultifaceBlockMixin", "NoiseGeneratorSettingsMixin", "OverworldBiomeBuilderMixin", "PlayerListMixin",
-    "RegistryLoadTaskPendingRegistrationMixin", "ServerLevelMixin", "ShearsItemMixin",
-    "SimpleBlockFeatureMixin", "SlimeMixin", "SnowLayerBlockMixin", "NodeEvaluatorMixin"
+    "AbstractCauldronBlockMixin", "BiomeMixin", "BiomeModificationContextImplEffectsContextImplMixin", "BiomeSpecialEffectsMixin", "BlockMixin",
+    "BonemealItemMixin", "BucketItemMixin", "CacheHolderMixin", "GrassBlockMixin", "IceBlockMixin", "IdentifierMixin", "LevelMixin",
+    "MultifaceBlockMixin", "NodeEvaluatorMixin", "NoiseGeneratorSettingsMixin", "OverworldBiomeBuilderMixin", "PlayerListMixin",
+    "RegistryLoadTaskPendingRegistrationMixin", "ServerLevelMixin", "ShearsItemMixin", "SimpleBlockFeatureMixin", "SlimeMixin", "SnowLayerBlockMixin"
   ],
 
   "injectors": {

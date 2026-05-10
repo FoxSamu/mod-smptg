@@ -31,6 +31,7 @@ public class FeatureBlocks {
     public static final BlockStateProvider DEAD_LEAVES = BlockStateProvider.simple(ModBlocks.DEAD_LEAVES);
 
     public static final BlockStateProvider GRASS_SPROUTS = BlockStateProvider.simple(ModBlocks.GRASS_SPROUTS);
+    public static final BlockStateProvider CAVE_GRASS = BlockStateProvider.simple(ModBlocks.CAVE_GRASS);
     public static final BlockStateProvider CATTAIL = BlockStateProvider.simple(ModBlocks.CATTAIL);
     public static final BlockStateProvider TALL_CATTAIL = BlockStateProvider.simple(ModBlocks.TALL_CATTAIL);
     public static final BlockStateProvider RANDOM_CATTAIL = either(CATTAIL, TALL_CATTAIL, 0.75);
@@ -42,6 +43,7 @@ public class FeatureBlocks {
     public static final BlockStateProvider RANDOM_BARLEY = either(FeatureBlocks.BARLEY, FeatureBlocks.TALL_BARLEY, 0.25);
     public static final BlockStateProvider GLOBE_THISTLE = BlockStateProvider.simple(ModBlocks.GLOBE_THISTLE);
     public static final BlockStateProvider SHELF_FUNGUS = BlockStateProvider.simple(ModBlocks.SHELF_FUNGUS);
+    public static final BlockStateProvider DRIPMOSS = BlockStateProvider.simple(ModBlocks.DRIPMOSS);
     public static final BlockStateProvider CLOVERS_1_3 = segmented(ModBlocks.CLOVERS, 1, 3);
     public static final BlockStateProvider CLOVERS_1_4 = segmented(ModBlocks.CLOVERS, 1, 4);
     public static final BlockStateProvider PATCHMOSS = BlockStateProvider.simple(ModBlocks.PATCHMOSS);

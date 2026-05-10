@@ -106,6 +106,68 @@ public record ModTreeFeatures() {
                 .build();
     }
 
+    public static final ResourceKey<ConfiguredFeature<?, ?>> BIRCH = REGISTRY.register("birch", DefinedFeature.of(
+            Feature.TREE,
+            () -> createBirch(false, true, false, 0f)
+    ));
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SUPER_BIRCH = REGISTRY.register("super_birch", DefinedFeature.of(
+            Feature.TREE,
+            () -> createBirch(false, true, true, 0f)
+    ));
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> BIRCH_LEAF_LITTER = REGISTRY.register("birch_leaf_litter", DefinedFeature.of(
+            Feature.TREE,
+            () -> createBirch(true, true, false, 0f)
+    ));
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> BIRCH_BEES_0002_LEAF_LITTER = REGISTRY.register("birch_bees_0002_leaf_litter", DefinedFeature.of(
+            Feature.TREE,
+            () -> createBirch(true, true, false, 0.002f)
+    ));
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SUPER_BIRCH_LEAF_LITTER = REGISTRY.register("super_birch_leaf_litter", DefinedFeature.of(
+            Feature.TREE,
+            () -> createBirch(true, true, true, 0f)
+    ));
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SUPER_BIRCH_BEES_0002_LEAF_LITTER = REGISTRY.register("super_birch_bees_0002_leaf_litter", DefinedFeature.of(
+            Feature.TREE,
+            () -> createBirch(true, true, true, 0.002f)
+    ));
+
+    private static TreeConfiguration createBirch(boolean leafLitter, boolean shelfFungi, boolean tall, float beesProbability) {
+        var builder = new TreeConfiguration.TreeConfigurationBuilder(
+                FeatureBlocks.BIRCH_LOG,
+                new StraightTrunkPlacer(5, 2, tall ? 6 : 0),
+
+                FeatureBlocks.BIRCH_LEAVES,
+                new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3),
+
+                new TwoLayersFeatureSize(1, 0, 1)
+        );
+
+        var decorators = new ArrayList<TreeDecorator>();
+
+        if (shelfFungi) {
+            decorators.add(shelfFungi());
+        }
+
+        if (leafLitter) {
+            decorators.add(leafLitter());
+            decorators.add(closebyLeafLitter());
+        }
+
+        if (beesProbability > 0f) {
+            decorators.add(bees(beesProbability));
+        }
+
+        return builder
+                .decorators(List.copyOf(decorators))
+                .ignoreVines()
+                .build();
+    }
+
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> RED_MAPLE = REGISTRY.register("red_maple", DefinedFeature.of(
             Feature.TREE,

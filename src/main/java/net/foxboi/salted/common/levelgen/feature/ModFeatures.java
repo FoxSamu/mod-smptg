@@ -25,6 +25,26 @@ public class ModFeatures {
             new ColumnPlantFeature()
     );
 
+    public static final Feature<SpeleothemConfiguration> SPELEOTHEM = REGISTRY.register(
+            "speleothem",
+            new SpeleothemFeature()
+    );
+
+    public static final Feature<SpeleothemClusterConfiguration> SPELEOTHEM_CLUSTER = REGISTRY.register(
+            "speleothem_cluster",
+            new SpeleothemClusterFeature()
+    );
+
+    public static final Feature<LargeSpeleothemConfiguration> LARGE_SPELEOTHEM = REGISTRY.register(
+            "large_speleothem",
+            new LargeSpeleothemFeature()
+    );
+
+    public static final Feature<PuddleConfiguration> PUDDLE = REGISTRY.register(
+            "puddle",
+            new PuddleFeature()
+    );
+
 
     // INITIALISATION
     // =============================================

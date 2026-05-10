@@ -25,6 +25,13 @@ public record ModTreePlacements() {
     public static final ResourceKey<PlacedFeature> ASPEN_SHAPED_BIRCH_BEES_0002_LEAF_LITTER = place(ModTreeFeatures.ASPEN_SHAPED_BIRCH_BEES_0002_LEAF_LITTER, Blocks.BIRCH_SAPLING);
     public static final ResourceKey<PlacedFeature> FALLEN_ASPEN_TREE = place(ModTreeFeatures.FALLEN_ASPEN_TREE, Blocks.BIRCH_SAPLING);
 
+    public static final ResourceKey<PlacedFeature> BIRCH = place(ModTreeFeatures.BIRCH, Blocks.BIRCH_SAPLING);
+    public static final ResourceKey<PlacedFeature> SUPER_BIRCH = place(ModTreeFeatures.SUPER_BIRCH, Blocks.BIRCH_SAPLING);
+    public static final ResourceKey<PlacedFeature> BIRCH_LEAF_LITTER = place(ModTreeFeatures.BIRCH_LEAF_LITTER, Blocks.BIRCH_SAPLING);
+    public static final ResourceKey<PlacedFeature> BIRCH_BEES_0002_LEAF_LITTER = place(ModTreeFeatures.BIRCH_BEES_0002_LEAF_LITTER, Blocks.BIRCH_SAPLING);
+    public static final ResourceKey<PlacedFeature> SUPER_BIRCH_LEAF_LITTER = place(ModTreeFeatures.SUPER_BIRCH_LEAF_LITTER, Blocks.BIRCH_SAPLING);
+    public static final ResourceKey<PlacedFeature> SUPER_BIRCH_BEES_0002_LEAF_LITTER = place(ModTreeFeatures.SUPER_BIRCH_BEES_0002_LEAF_LITTER, Blocks.BIRCH_SAPLING);
+
     public static final ResourceKey<PlacedFeature> RED_MAPLE = place(ModTreeFeatures.RED_MAPLE, Blocks.OAK_SAPLING);
     public static final ResourceKey<PlacedFeature> ORANGE_MAPLE = place(ModTreeFeatures.ORANGE_MAPLE, Blocks.OAK_SAPLING);
     public static final ResourceKey<PlacedFeature> YELLOW_MAPLE = place(ModTreeFeatures.YELLOW_MAPLE, Blocks.OAK_SAPLING);

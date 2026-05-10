@@ -10,6 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.features.NetherFeatures;
+import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -34,6 +35,20 @@ public record ModVegetationPlacements() {
             "trees_aspen_forest",
             DefinedPlacement
                     .place(ModVegetationFeatures.ASPEN_FOREST_TREE)
+                    .modified(treePlacement(it -> it.countExtra(10, 0.1f, 1)))
+    );
+
+    public static final ResourceKey<PlacedFeature> TREES_BIRCH_FOREST = REGISTRY.register(
+            "trees_birch_forest",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.BIRCH_FOREST_TREE)
+                    .modified(treePlacement(it -> it.countExtra(10, 0.1f, 1)))
+    );
+
+    public static final ResourceKey<PlacedFeature> TREES_OLD_GROWTH_BIRCH_FOREST = REGISTRY.register(
+            "trees_old_growth_birch_forest",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.OLD_GROWTH_BIRCH_FOREST_TREE)
                     .modified(treePlacement(it -> it.countExtra(10, 0.1f, 1)))
     );
 
@@ -73,7 +88,7 @@ public record ModVegetationPlacements() {
     );
 
 
-    // Grass sprouts
+    // Grass
     // ===============================================================
 
     public static final ResourceKey<PlacedFeature> PATCH_GRASS_SPROUTS = REGISTRY.register(
@@ -94,6 +109,56 @@ public record ModVegetationPlacements() {
                     .randomPatch(inAir(DEFAULT_GROW_BLOCKS), 96)
     );
 
+    public static final ResourceKey<PlacedFeature> PATCH_CAVE_GRASS = REGISTRY.register(
+            "patch_cave_grass",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.CAVE_GRASS)
+                    .count(UniformInt.of(32, 48))
+                    .spreadInChunk()
+                    .atHeight(-64, 120)
+                    .scan(Direction.DOWN, LOWEST_AIR, 12)
+                    .inBiome()
+                    .randomPatch(inAir(CAVE_GROW_BLOCKS), 96)
+    );
+
+
+    // Caves
+    // ===============================================================
+
+    public static final ResourceKey<PlacedFeature> PATCH_DRIPMOSS = REGISTRY.register(
+            "patch_dripmoss",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.DRIPMOSS)
+                    .count(UniformInt.of(6, 18))
+                    .spreadInChunk()
+                    .atHeight(-64, 120)
+                    .scan(Direction.UP, HIGHEST_AIR, 16)
+                    .inBiome()
+                    .randomPatch(inAir(CAVE_GROW_BLOCKS, Direction.UP), 96, 5)
+    );
+
+    public static final ResourceKey<PlacedFeature> PATCH_MORE_DRIPMOSS = REGISTRY.register(
+            "patch_more_dripmoss",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.DRIPMOSS)
+                    .count(UniformInt.of(9, 24))
+                    .spreadInChunk()
+                    .atHeight(-64, 120)
+                    .scan(Direction.UP, HIGHEST_AIR, 24)
+                    .inBiome()
+                    .randomPatch(inAir(CAVE_GROW_BLOCKS, Direction.UP), 120, 6)
+    );
+
+    public static final ResourceKey<PlacedFeature> GLOW_LICHEN = REGISTRY.register(
+            "glow_lichen",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.GLOW_LICHEN)
+                    .count(UniformInt.of(104, 157))
+                    .modified(PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT)
+                    .spreadInChunk()
+                    .inBiome()
+    );
+
 
     // Barley
     // ===============================================================
@@ -104,7 +169,7 @@ public record ModVegetationPlacements() {
                     .place(ModVegetationFeatures.RANDOM_BARLEY)
                     .onAverageOnceEvery(14)
                     .modified(patchPlacement())
-                    .randomPatch(inAir(SANDY_GROW_BLOCKS), 96)
+                    .randomPatch(inAir(DRY_GROW_BLOCKS), 96)
     );
 
     public static final ResourceKey<PlacedFeature> PATCH_BARLEY_COMMON = REGISTRY.register(
@@ -113,7 +178,7 @@ public record ModVegetationPlacements() {
                     .place(ModVegetationFeatures.RANDOM_BARLEY)
                     .onAverageOnceEvery(2)
                     .modified(patchPlacement())
-                    .randomPatch(inAir(SANDY_GROW_BLOCKS), 96)
+                    .randomPatch(inAir(DRY_GROW_BLOCKS), 96)
     );
 
 
@@ -130,7 +195,7 @@ public record ModVegetationPlacements() {
                     .place(ModVegetationFeatures.RANDOM_CATTAIL)
                     .count(UniformInt.of(1, 2))
                     .modified(patchPlacement(matchesFluids(Direction.DOWN.getUnitVec3i(), Fluids.WATER)))
-                    .randomPatch(inAir(SANDY_GROW_BLOCKS), 96)
+                    .randomPatch(inAir(WET_GROW_BLOCKS), 96)
     );
 
     public static final ResourceKey<PlacedFeature> PATCH_CATTAIL_IN_WATER = REGISTRY.register(
@@ -139,7 +204,7 @@ public record ModVegetationPlacements() {
                     .place(ModVegetationFeatures.TALL_CATTAIL)
                     .count(UniformInt.of(1, 2))
                     .modified(patchPlacement())
-                    .randomPatch(inShallowWater(SANDY_GROW_BLOCKS), 96)
+                    .randomPatch(inShallowWater(WET_GROW_BLOCKS), 96)
     );
 
     public static final ResourceKey<PlacedFeature> PATCH_CATTAIL_SWAMP = REGISTRY.register(
@@ -148,7 +213,7 @@ public record ModVegetationPlacements() {
                     .place(ModVegetationFeatures.RANDOM_CATTAIL)
                     .count(UniformInt.of(4, 7))
                     .modified(patchPlacement())
-                    .randomPatch(inAir(SANDY_GROW_BLOCKS), 96)
+                    .randomPatch(inAir(WET_GROW_BLOCKS), 96)
     );
 
     public static final ResourceKey<PlacedFeature> PATCH_CATTAIL_IN_WATER_SWAMP = REGISTRY.register(
@@ -157,7 +222,7 @@ public record ModVegetationPlacements() {
                     .place(ModVegetationFeatures.TALL_CATTAIL)
                     .count(UniformInt.of(4, 7))
                     .modified(patchPlacement())
-                    .randomPatch(inShallowWater(SANDY_GROW_BLOCKS), 96)
+                    .randomPatch(inShallowWater(WET_GROW_BLOCKS), 96)
     );
 
 
@@ -311,6 +376,12 @@ public record ModVegetationPlacements() {
                     .randomPatch(inAir(DEFAULT_GROW_BLOCKS), 96, 5)
     );
 
+    // Copy of the former to not cause a feature dependency cycle in vanilla biome modifications
+    public static final ResourceKey<PlacedFeature> PATCH_MOSS_CARPET_AROUND_MOSS_IN_VANILLA_BIOME = REGISTRY.copyFrom(
+            "patch_moss_carpet_around_moss_in_vanilla_biome",
+            PATCH_MOSS_CARPET_AROUND_MOSS
+    );
+
 
     // Vegetation mixes
     // ===============================================================
@@ -321,7 +392,17 @@ public record ModVegetationPlacements() {
                     .place(ModVegetationFeatures.BARLEY_FIELD_PLANT)
                     .fillChunk(0.75f)
                     .onOceanFloorWg()
-                    .onlyIf(allOf(ONLY_IN_AIR_PREDICATE, matchesBlocks(Direction.DOWN.getUnitVec3i(), FeatureConditions.SANDY_GROW_BLOCKS)))
+                    .onlyIf(allOf(ONLY_IN_AIR_PREDICATE, matchesBlocks(Direction.DOWN.getUnitVec3i(), DRY_GROW_BLOCKS)))
+                    .inBiome()
+    );
+
+    public static final ResourceKey<PlacedFeature> VEGETATION_LAVENDER_FIELD = REGISTRY.register(
+            "vegetation_lavender_field",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.LAVENDER_FIELD_PLANT)
+                    .fillChunk(0.67f)
+                    .onOceanFloorWg()
+                    .onlyIf(allOf(ONLY_IN_AIR_PREDICATE, matchesBlocks(Direction.DOWN.getUnitVec3i(), DEFAULT_GROW_BLOCKS)))
                     .inBiome()
     );
 

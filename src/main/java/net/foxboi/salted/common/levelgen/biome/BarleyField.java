@@ -20,6 +20,11 @@ public class BarleyField extends OverworldBiome {
     }
 
     @Override
+    protected void attributes(BiomeEditor builder) {
+        super.attributes(builder);
+    }
+
+    @Override
     protected void effects(BiomeEditor builder) {
         super.effects(builder);
     }

@@ -3,6 +3,8 @@ package net.foxboi.salted.common.levelgen.biome;
 import java.util.List;
 import java.util.Optional;
 
+import net.foxboi.salted.common.levelgen.ModCaveFeatures;
+import net.foxboi.salted.common.levelgen.ModCavePlacements;
 import net.foxboi.salted.common.levelgen.ModVegetationPlacements;
 import net.foxboi.salted.common.misc.biome.BiomeEditor;
 
@@ -242,6 +244,14 @@ public record ModBiomeFeatures() {
         builder.addFeature(VEGETAL_DECORATION, VegetationPlacements.PATCH_GRASS_PLAIN);
     }
 
+    public static void addLavenderFieldVegetation(BiomeEditor builder) {
+        builder.addFeature(VEGETAL_DECORATION, ModVegetationPlacements.VEGETATION_LAVENDER_FIELD);
+    }
+
+    public static void addAlwaysBeesBirch(BiomeEditor builder) {
+        builder.addFeature(VEGETAL_DECORATION, VegetationPlacements.TREES_MEADOW);
+    }
+
     public static void addExtraForestGrass(BiomeEditor builder) {
         builder.addFeature(VEGETAL_DECORATION, ModVegetationPlacements.PATCH_GRASS_SPROUTS);
     }
@@ -280,6 +290,10 @@ public record ModBiomeFeatures() {
         builder.addFeature(VEGETAL_DECORATION, ModVegetationPlacements.PATCH_MOSS_CARPET_AROUND_MOSS);
     }
 
+    public static void addMossCarpetsAroundMossInVanillaBiome(BiomeEditor builder) {
+        builder.addFeature(VEGETAL_DECORATION, ModVegetationPlacements.PATCH_MOSS_CARPET_AROUND_MOSS_IN_VANILLA_BIOME);
+    }
+
     public static void addNetherGlobalGeneration(BiomeEditor builder) {
         builder.addCarver(Carvers.NETHER_CAVE);
         builder.addFeature(VEGETAL_DECORATION, MiscOverworldPlacements.SPRING_LAVA);
@@ -311,5 +325,23 @@ public record ModBiomeFeatures() {
     public static void addNetherFire(BiomeEditor builder) {
         builder.addFeature(UNDERGROUND_DECORATION, NetherPlacements.PATCH_FIRE);
         builder.addFeature(UNDERGROUND_DECORATION, NetherPlacements.PATCH_SOUL_FIRE);
+    }
+
+    public static void addCaveGrass(BiomeEditor builder) {
+        builder.addFeature(VEGETAL_DECORATION, ModVegetationPlacements.PATCH_CAVE_GRASS);
+    }
+
+    public static void addDripmoss(BiomeEditor builder) {
+        builder.addFeature(VEGETAL_DECORATION, ModVegetationPlacements.PATCH_DRIPMOSS);
+    }
+
+    public static void addMoreDripmoss(BiomeEditor builder) {
+        builder.addFeature(VEGETAL_DECORATION, ModVegetationPlacements.PATCH_MORE_DRIPMOSS);
+    }
+
+    public static void addLimestoneSpeleothems(BiomeEditor builder) {
+        builder.addFeature(UNDERGROUND_DECORATION, ModCavePlacements.LARGE_LIMESTONE_SPELEOTHEM);
+        builder.addFeature(UNDERGROUND_DECORATION, ModCavePlacements.POINTED_LIMESTONE_CLUSTER);
+        builder.addFeature(LAKES, ModCavePlacements.PUDDLE_IN_LIMESTONE);
     }
 }
