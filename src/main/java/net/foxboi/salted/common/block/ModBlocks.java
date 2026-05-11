@@ -3,6 +3,8 @@ package net.foxboi.salted.common.block;
 import java.util.List;
 import java.util.function.Supplier;
 
+import org.jspecify.annotations.Nullable;
+
 import net.fabricmc.fabric.api.registry.FuelValueEvents;
 import net.fabricmc.fabric.api.registry.LandPathTypeRegistry;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
@@ -30,6 +32,7 @@ import net.minecraft.world.level.block.entity.FuelValues;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.MapColor;
@@ -160,14 +163,9 @@ public record ModBlocks() {
     public static final Block DEAD_WOOD_WALL_HANGING_SIGN = register("dead_wood_wall_hanging_sign", wallHangingSign(ModWoodTypes.DEAD_WOOD), wallSignProps(DEAD_WOOD_PLANKS).strength(0.5f));
 
 
-    // Soils
-
-    public static final Block MOSSY_DIRT = register("mossy_dirt", grassBlock(), props(Blocks.GRASS_BLOCK).sound(SoundType.MOSS));
-
-
     // Stones
 
-    public static final Block LIMESTONE = register("limestone", block(), props(Blocks.TUFF).mapColor(MapColor.QUARTZ));
+    public static final Block LIMESTONE = register("limestone", limestone(), props(Blocks.TUFF).mapColor(MapColor.QUARTZ));
     public static final Block LIMESTONE_STAIRS = register("limestone_stairs", stairs(), props(LIMESTONE));
     public static final Block LIMESTONE_SLAB = register("limestone_slab", slab(), props(LIMESTONE));
     public static final Block LIMESTONE_WALL = register("limestone_wall", wall(), props(LIMESTONE));
@@ -195,6 +193,29 @@ public record ModBlocks() {
     public static final Block CHISELED_LIMESTONE = register("chiseled_limestone", block(), props(POLISHED_LIMESTONE));
 
     public static final Block POINTED_LIMESTONE = register("pointed_limestone", drippingSpeleothem(LIMESTONE), props(Blocks.POINTED_DRIPSTONE));
+
+    public static final Block LIMESTONE_COAL_ORE = register("limestone_coal_ore", xpDropping(0, 2), props(Blocks.COAL_ORE).sound(SoundType.TUFF).mapColor(MapColor.QUARTZ));
+    public static final Block LIMESTONE_COPPER_ORE = register("limestone_copper_ore", xpDropping(0), props(Blocks.COPPER_ORE).sound(SoundType.TUFF).mapColor(MapColor.QUARTZ));
+    public static final Block LIMESTONE_IRON_ORE = register("limestone_iron_ore", xpDropping(0), props(Blocks.IRON_ORE).sound(SoundType.TUFF).mapColor(MapColor.QUARTZ));
+    public static final Block LIMESTONE_GOLD_ORE = register("limestone_gold_ore", xpDropping(0), props(Blocks.GOLD_ORE).sound(SoundType.TUFF).mapColor(MapColor.QUARTZ));
+    public static final Block LIMESTONE_DIAMOND_ORE = register("limestone_diamond_ore", xpDropping(3, 7), props(Blocks.DIAMOND_ORE).sound(SoundType.TUFF).mapColor(MapColor.QUARTZ));
+    public static final Block LIMESTONE_LAPIS_ORE = register("limestone_lapis_ore", xpDropping(2, 5), props(Blocks.LAPIS_ORE).sound(SoundType.TUFF).mapColor(MapColor.QUARTZ));
+    public static final Block LIMESTONE_EMERALD_ORE = register("limestone_emerald_ore", xpDropping(3, 7), props(Blocks.EMERALD_ORE).sound(SoundType.TUFF).mapColor(MapColor.QUARTZ));
+    public static final Block LIMESTONE_REDSTONE_ORE = register("limestone_redstone_ore", redstoneOre(), props(Blocks.REDSTONE_ORE).sound(SoundType.TUFF).mapColor(MapColor.QUARTZ));
+
+    public static final Block LIMESTONE_BRAZIER = register("limestone_brazier", brazier(1), props(LIMESTONE).noOcclusion().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 14 : 0));
+    public static final Block SOUL_LIMESTONE_BRAZIER = register("soul_limestone_brazier", brazier(2), props(LIMESTONE).noOcclusion().lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 7 : 0));
+
+    // Soils
+
+    public static final Block PEAT = register("peat", peat(), props(Blocks.DIRT).randomTicks().sound(SoundType.ROOTED_DIRT));
+    public static final Block COARSE_PEAT = register("coarse_peat", peat(), props(Blocks.COARSE_DIRT).randomTicks().sound(SoundType.ROOTED_DIRT));
+    public static final Block GRASSY_PEAT = register("grassy_peat", grassyPeat(), props(Blocks.GRASS_BLOCK).randomTicks().sound(ModSoundTypes.GRASSY_PEAT));
+    public static final Block MOSSY_PEAT = register("mossy_peat", mossyPeat(), props(Blocks.GRASS_BLOCK).randomTicks().sound(ModSoundTypes.MOSSY_PEAT));
+    public static final Block DRIED_PEAT = register("dried_peat", driedPeat(), props(Blocks.DIRT).randomTicks().sound(SoundType.SPONGE));
+
+    public static final Block MOSSY_DIRT = register("mossy_dirt", mossyDirt(), props(Blocks.GRASS_BLOCK).sound(SoundType.MOSS));
+    public static final Block GRASSY_LIMESTONE = register("grassy_limestone", grassyLimestone(), props(LIMESTONE).randomTicks().sound(ModSoundTypes.GRASSY_LIMESTONE));
 
 
     // Ash
@@ -262,6 +283,12 @@ public record ModBlocks() {
         Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("speleothem"), SpeleothemBlock.CODEC);
         Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("growing_speleothem"), GrowingSpeleothemBlock.CODEC);
         Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("dripping_speleothem"), DrippingSpeleothemBlock.CODEC);
+        Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("mossy_dirt"), MossyDirtBlock.CODEC);
+        Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("mossy_peat"), MossyPeatBlock.CODEC);
+        Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("grassy_peat"), GrassyPeatBlock.CODEC);
+        Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("peat"), PeatBlock.CODEC);
+        Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("dried_peat"), DriedPeatBlock.CODEC);
+        Registry.register(BuiltInRegistries.BLOCK_TYPE, Smptg.id("brazier"), BrazierBlock.CODEC);
 
         // Setup supported blocks
         BlockEntityType.SHELF.addValidBlock(ASPEN_SHELF);
@@ -307,8 +334,11 @@ public record ModBlocks() {
         LandPathTypeRegistry.register(EMBERWEED, PathType.FIRE, PathType.FIRE_IN_NEIGHBOR);
         LandPathTypeRegistry.register(EMBERGRASS, PathType.FIRE, PathType.FIRE_IN_NEIGHBOR);
         LandPathTypeRegistry.register(EMBERS, PathType.FIRE, PathType.FIRE_IN_NEIGHBOR);
+        LandPathTypeRegistry.register(LIMESTONE_BRAZIER, ModBlocks::brazierPathType);
+        LandPathTypeRegistry.register(SOUL_LIMESTONE_BRAZIER, ModBlocks::brazierPathType);
 
-        // TODO Composting, Fuel, Burning, etc.
+        // TODO Composting, Burning, etc.
+
         FuelValueEvents.BUILD.register((builder, context) -> setupFuel(builder, context.baseSmeltTime()));
     }
 
@@ -319,7 +349,29 @@ public record ModBlocks() {
                 .add(EMBERGRASS, baseUnit / 2)
                 .add(BURNED_STEM, baseUnit * 3 / 2)
                 .add(BURNED_HYPHAE, baseUnit * 3 / 2)
+                .add(DRIED_PEAT, baseUnit * 10)
+                .add(PEAT, baseUnit * 2)
+                .add(GRASSY_PEAT, baseUnit * 2)
+                .add(MOSSY_PEAT, baseUnit * 2)
+                .add(COARSE_PEAT, baseUnit * 2)
         ;
+    }
+
+    private static PathType brazierPathType(BlockState state, boolean neighbor) {
+        if (state.getValue(BrazierBlock.FRAMED)) {
+            // Framed braziers are safe-ish since the hitbox prevents most
+            // mobs from getting in. Just consider them blocked so that
+            // mobs don't try to walk through them
+            return neighbor ? null : PathType.BLOCKED;
+        }
+
+        if (state.getValue(BrazierBlock.LIT)) {
+            // Unframed braziers are a potential fire hazard when lit
+            return neighbor ? PathType.FIRE_IN_NEIGHBOR : PathType.FIRE;
+        }
+
+        // Unlit braziers are safe
+        return null;
     }
 
 
@@ -444,6 +496,12 @@ public record ModBlocks() {
 
         // Soils
         translator.name(MOSSY_DIRT, "Mossy Dirt");
+        translator.name(GRASSY_LIMESTONE, "Grassy Limestone");
+        translator.name(PEAT, "Peat");
+        translator.name(GRASSY_PEAT, "Grassy Peat");
+        translator.name(MOSSY_PEAT, "Mossy Peat");
+        translator.name(COARSE_PEAT, "Coarse Peat");
+        translator.name(DRIED_PEAT, "Dried Peat");
 
         // Stones
         translator.name(LIMESTONE, "Limestone");
@@ -473,6 +531,9 @@ public record ModBlocks() {
 
         translator.name(CHISELED_LIMESTONE, "Chiseled Limestone");
         translator.name(POINTED_LIMESTONE, "Pointed Limestone");
+
+        translator.name(LIMESTONE_BRAZIER, "Limestone Brazier");
+        translator.name(SOUL_LIMESTONE_BRAZIER, "Soul Limestone Brazier");
 
         // Ash
         translator.name(BURNED_STEM, "Burned Stem");
@@ -522,6 +583,9 @@ public record ModBlocks() {
         colors.solid(REDWOOD_LEAVES, 0x215931, true, 1);
         colors.foliage(BEECH_LEAVES, true, 1);
         colors.dryFoliage(DEAD_LEAVES, true, 1);
+
+        colors.grass(GRASSY_LIMESTONE, false, 1);
+        colors.grass(GRASSY_PEAT, false, 1);
 
         colors.grass(CLOVERS, true, 2);
         colors.grass(GRASS_SPROUTS, true, 1);
@@ -575,8 +639,32 @@ public record ModBlocks() {
         return RotatedPillarBlock::new;
     }
 
-    private static BlockFactory grassBlock() {
+    private static BlockFactory mossyDirt() {
         return MossyDirtBlock::new;
+    }
+
+    private static BlockFactory peat() {
+        return PeatBlock::new;
+    }
+
+    private static BlockFactory grassyPeat() {
+        return GrassyPeatBlock::new;
+    }
+
+    private static BlockFactory mossyPeat() {
+        return MossyPeatBlock::new;
+    }
+
+    private static BlockFactory driedPeat() {
+        return DriedPeatBlock::new;
+    }
+
+    private static BlockFactory grassyLimestone() {
+        return GrassyLimestoneBlock::new;
+    }
+
+    private static BlockFactory limestone() {
+        return LimestoneBlock::new;
     }
 
     private static BlockFactory grassyPlant(TagKey<Block> support) {
@@ -716,6 +804,10 @@ public record ModBlocks() {
         return properties -> new DrippingSpeleothemBlock(growBlock, properties);
     }
 
+    private static BlockFactory brazier(int fireDamage) {
+        return properties -> new BrazierBlock(fireDamage, properties);
+    }
+
     private static BlockFactory slab() {
         return SlabBlock::new;
     }
@@ -790,6 +882,10 @@ public record ModBlocks() {
 
     private static BlockFactory xpDropping(int minXp, int maxXp) {
         return props -> new DropExperienceBlock(UniformInt.of(minXp, maxXp), props);
+    }
+
+    private static BlockFactory redstoneOre() {
+        return RedStoneOreBlock::new;
     }
 
 

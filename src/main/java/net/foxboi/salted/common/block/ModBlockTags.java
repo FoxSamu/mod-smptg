@@ -22,8 +22,16 @@ public record ModBlockTags() {
     public static final TagKey<Block> SUPPORTS_EMBER_VEGETATION = tag("supports_ember_vegetation");
 
     public static final TagKey<Block> LIMESTONE_REPLACEABLE = tag("limestone_replaceable");
+    public static final TagKey<Block> LIMESTONE_ORE_REPLACEABLES = tag("limestone_ore_replaceables");
+    public static final TagKey<Block> GRASS_SPREAD_SOURCE = tag("grass_spread_source");
+
+    public static final TagKey<Block> PEAT = tag("peat");
+    public static final TagKey<Block> ANY_PEAT = tag("any_peat");
+    public static final TagKey<Block> TRANSFERS_FLUID_TO_PEAT = tag("transfers_fluid_to_peat");
 
     public static final TagKey<Block> DAMAGES_SLIMES = tag("damages_slimes");
+
+    public static final TagKey<Block> BRAZIERS = tag("braziers");
 
 
     // INITIALISATION
@@ -50,8 +58,15 @@ public record ModBlockTags() {
         translator.name(SUPPORTS_EMBER_VEGETATION, "Supports Ember Vegetation");
 
         translator.name(LIMESTONE_REPLACEABLE, "Limestone Replaceable");
+        translator.name(LIMESTONE_ORE_REPLACEABLES, "Limestone Ore Replaceables");
+        translator.name(GRASS_SPREAD_SOURCE, "Grass Spread Source");
+        translator.name(TRANSFERS_FLUID_TO_PEAT, "Transfers Fluids To Peat");
+        translator.name(PEAT, "Peat");
+        translator.name(ANY_PEAT, "Any Peat");
 
         translator.name(DAMAGES_SLIMES, "Damages Slimes");
+
+        translator.name(BRAZIERS, "Braziers");
     }
 
 

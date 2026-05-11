@@ -45,4 +45,44 @@ public class ComplementaryUnboundShaderCompat extends AbstractShaderCompat {
     public void hangingPlant(Block block) {
         addBlock(10013, blockName(block));
     }
+
+    @Override
+    public void coalOre(Block block) {
+        addBlock(10024, blockName(block));
+    }
+
+    @Override
+    public void copperOre(Block block) {
+        addBlock(10024, blockName(block));
+    }
+
+    @Override
+    public void ironOre(Block block) {
+        addBlock(10024, blockName(block));
+    }
+
+    @Override
+    public void goldOre(Block block) {
+        addBlock(10024, blockName(block));
+    }
+
+    @Override
+    public void diamondOre(Block block) {
+        addBlock(10024, blockName(block));
+    }
+
+    @Override
+    public void emeraldOre(Block block) {
+        addBlock(10024, blockName(block));
+    }
+
+    @Override
+    public void redstoneOre(Block block) {
+        addBlock(10024, blockName(block));
+    }
+
+    @Override
+    public void lapisOre(Block block) {
+        addBlock(10024, blockName(block));
+    }
 }

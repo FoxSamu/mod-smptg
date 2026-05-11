@@ -1,28 +1,28 @@
 package net.foxboi.salted.common.block;
 
-import com.mojang.serialization.MapCodec;
-import net.foxboi.salted.common.Smptg;
-import net.foxboi.salted.common.misc.BonemealSpreadingLogic;
 import net.minecraft.core.BlockPos;
-import net.minecraft.references.BlockIds;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.SpreadingSnowyBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class MossyDirtBlock extends AbstractSpreadingBlock implements BonemealableBlock {
-	public static final MapCodec<MossyDirtBlock> CODEC = simpleCodec(MossyDirtBlock::new);
+import com.mojang.serialization.MapCodec;
+import net.foxboi.salted.common.Smptg;
+import net.foxboi.salted.common.misc.BonemealSpreadingLogic;
 
-	public MossyDirtBlock(BlockBehaviour.Properties properties) {
-		super(properties, BlockIds.DIRT);
+public class MossyPeatBlock extends AbstractSpreadingBlock implements BonemealableBlock {
+	public static final MapCodec<MossyPeatBlock> CODEC = simpleCodec(MossyPeatBlock::new);
+
+	public MossyPeatBlock(Properties properties) {
+		super(properties, Smptg.key(Registries.BLOCK, "peat"));
 	}
 
 	@Override
-	public MapCodec<MossyDirtBlock> codec() {
+	public MapCodec<MossyPeatBlock> codec() {
 		return CODEC;
 	}
 
@@ -47,7 +47,17 @@ public class MossyDirtBlock extends AbstractSpreadingBlock implements Bonemealab
 	}
 
 	@Override
-	public BonemealableBlock.Type getType() {
-		return BonemealableBlock.Type.NEIGHBOR_SPREADER;
+	protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+		if (PeatUtil.isBurning(level, pos) || PeatUtil.isNearLava(level, pos)) {
+			level.setBlockAndUpdate(pos, ModBlocks.DRIED_PEAT.defaultBlockState());
+			return;
+		}
+
+		super.randomTick(state, level, pos, random);
+	}
+
+	@Override
+	public Type getType() {
+		return Type.NEIGHBOR_SPREADER;
 	}
 }

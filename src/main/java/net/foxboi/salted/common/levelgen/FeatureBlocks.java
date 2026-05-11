@@ -2,15 +2,18 @@ package net.foxboi.salted.common.levelgen;
 
 import net.foxboi.salted.common.block.ModBlocks;
 import net.foxboi.salted.common.levelgen.stateprovider.EitherStateProvider;
-import net.minecraft.util.random.WeightedList;
+
+import net.minecraft.core.Direction;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SegmentableBlock;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.RandomizedIntStateProvider;
-import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
+import net.minecraft.world.level.levelgen.feature.stateproviders.RuleBasedStateProvider;
 
 public class FeatureBlocks {
 
@@ -56,6 +59,24 @@ public class FeatureBlocks {
     public static final BlockStateProvider EMBERWEED = BlockStateProvider.simple(ModBlocks.EMBERWEED);
     public static final BlockStateProvider EMBERS = segmented(ModBlocks.EMBERS, 1, 4);
     public static final BlockStateProvider BURNED_STEM = BlockStateProvider.simple(ModBlocks.BURNED_STEM);
+
+    public static final BlockStateProvider REPLACE_WITH_LIMESTONE = RuleBasedStateProvider.builder()
+            .ifTrueThenProvide(BlockPredicate.allOf(
+                    BlockPredicate.matchesTag(BlockTags.GRASS_BLOCKS),
+                    BlockPredicate.matchesBlocks(Direction.UP.getUnitVec3i(), Blocks.SNOW)
+            ), ModBlocks.GRASSY_LIMESTONE.defaultBlockState().setValue(BlockStateProperties.SNOWY, true))
+            .ifTrueThenProvide(BlockPredicate.matchesTag(BlockTags.GRASS_BLOCKS), ModBlocks.GRASSY_LIMESTONE)
+            .ifTrueThenProvide(BlockPredicate.matchesTag(BlockTags.SUBSTRATE_OVERWORLD), ModBlocks.LIMESTONE)
+            .ifTrueThenProvide(BlockPredicate.matchesTag(BlockTags.BASE_STONE_OVERWORLD), ModBlocks.LIMESTONE)
+            .ifTrueThenProvide(BlockPredicate.matchesTag(BlockTags.COAL_ORES), ModBlocks.LIMESTONE_COAL_ORE)
+            .ifTrueThenProvide(BlockPredicate.matchesTag(BlockTags.COPPER_ORES), ModBlocks.LIMESTONE_COPPER_ORE)
+            .ifTrueThenProvide(BlockPredicate.matchesTag(BlockTags.IRON_ORES), ModBlocks.LIMESTONE_IRON_ORE)
+            .ifTrueThenProvide(BlockPredicate.matchesTag(BlockTags.GOLD_ORES), ModBlocks.LIMESTONE_GOLD_ORE)
+            .ifTrueThenProvide(BlockPredicate.matchesTag(BlockTags.DIAMOND_ORES), ModBlocks.LIMESTONE_DIAMOND_ORE)
+            .ifTrueThenProvide(BlockPredicate.matchesTag(BlockTags.EMERALD_ORES), ModBlocks.LIMESTONE_EMERALD_ORE)
+            .ifTrueThenProvide(BlockPredicate.matchesTag(BlockTags.LAPIS_ORES), ModBlocks.LIMESTONE_LAPIS_ORE)
+            .ifTrueThenProvide(BlockPredicate.matchesTag(BlockTags.REDSTONE_ORES), ModBlocks.LIMESTONE_REDSTONE_ORE)
+            .build();
 
     public static BlockStateProvider either(BlockStateProvider a, BlockStateProvider b, double bChance) {
         return new EitherStateProvider(a, b, bChance);

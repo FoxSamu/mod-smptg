@@ -1,6 +1,5 @@
 package net.foxboi.salted.data.loot;
 
-import net.foxboi.salted.common.item.ModItems;
 import net.minecraft.advancements.criterion.StatePropertiesPredicate;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -134,6 +133,38 @@ public class BlockDrops {
      */
     public void multifaceIfShears(Block block) {
         generator.add(block, it -> generator.createMultifaceBlockDrops(it, generator.hasShears()));
+    }
+
+    public void coalOre(Block block) {
+        generator.add(block, it -> generator.createOreDrop(it, Items.COAL));
+    }
+
+    public void emeraldOre(Block block) {
+        generator.add(block, it -> generator.createOreDrop(it, Items.EMERALD));
+    }
+
+    public void diamondOre(Block block) {
+        generator.add(block, it -> generator.createOreDrop(it, Items.DIAMOND));
+    }
+
+    public void ironOre(Block block) {
+        generator.add(block, it -> generator.createOreDrop(it, Items.RAW_IRON));
+    }
+
+    public void goldOre(Block block) {
+        generator.add(block, it -> generator.createOreDrop(it, Items.RAW_GOLD));
+    }
+
+    public void copperOre(Block block) {
+        generator.add(block, it -> generator.createCopperOreDrops(it));
+    }
+
+    public void redstoneOre(Block block) {
+        generator.add(block, it -> generator.createRedstoneOreDrops(it));
+    }
+
+    public void lapisOre(Block block) {
+        generator.add(block, it -> generator.createLapisOreDrops(it));
     }
 
 

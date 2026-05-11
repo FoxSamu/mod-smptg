@@ -160,6 +160,12 @@ public record ModItems() {
     // Soils
 
     public static final Item MOSSY_DIRT = registerBlock(ModBlocks.MOSSY_DIRT);
+    public static final Item PEAT = registerBlock(ModBlocks.PEAT);
+    public static final Item GRASSY_PEAT = registerBlock(ModBlocks.GRASSY_PEAT);
+    public static final Item MOSSY_PEAT = registerBlock(ModBlocks.MOSSY_PEAT);
+    public static final Item COARSE_PEAT = registerBlock(ModBlocks.COARSE_PEAT);
+    public static final Item DRIED_PEAT = registerBlock(ModBlocks.DRIED_PEAT);
+    public static final Item GRASSY_LIMESTONE = registerBlock(ModBlocks.GRASSY_LIMESTONE);
 
     // Stones
 
@@ -185,6 +191,17 @@ public record ModItems() {
     public static final Item CRACKED_LIMESTONE_BRICK_WALL = registerBlock(ModBlocks.CRACKED_LIMESTONE_BRICK_WALL);
     public static final Item CHISELED_LIMESTONE = registerBlock(ModBlocks.CHISELED_LIMESTONE);
     public static final Item POINTED_LIMESTONE = registerBlock(ModBlocks.POINTED_LIMESTONE);
+    public static final Item LIMESTONE_BRAZIER = registerBlock(ModBlocks.LIMESTONE_BRAZIER);
+    public static final Item SOUL_LIMESTONE_BRAZIER = registerBlock(ModBlocks.SOUL_LIMESTONE_BRAZIER);
+
+    public static final Item LIMESTONE_COAL_ORE = registerBlock(ModBlocks.LIMESTONE_COAL_ORE);
+    public static final Item LIMESTONE_COPPER_ORE = registerBlock(ModBlocks.LIMESTONE_COPPER_ORE);
+    public static final Item LIMESTONE_IRON_ORE = registerBlock(ModBlocks.LIMESTONE_IRON_ORE);
+    public static final Item LIMESTONE_GOLD_ORE = registerBlock(ModBlocks.LIMESTONE_GOLD_ORE);
+    public static final Item LIMESTONE_DIAMOND_ORE = registerBlock(ModBlocks.LIMESTONE_DIAMOND_ORE);
+    public static final Item LIMESTONE_LAPIS_ORE = registerBlock(ModBlocks.LIMESTONE_LAPIS_ORE);
+    public static final Item LIMESTONE_EMERALD_ORE = registerBlock(ModBlocks.LIMESTONE_EMERALD_ORE);
+    public static final Item LIMESTONE_REDSTONE_ORE = registerBlock(ModBlocks.LIMESTONE_REDSTONE_ORE);
 
     // Plants
 
@@ -350,16 +367,61 @@ public record ModItems() {
                 ASH_BRICK_SLAB,
                 ASH_BRICK_STAIRS
         );
+
+        out.insertBefore(
+                Items.PACKED_MUD,
+                DRIED_PEAT
+        );
     }
 
     public static void naturalBlocksTab(FabricCreativeModeTabOutput out) {
         out.insertAfter(
-                Items.PODZOL,
+                Items.GRASS_BLOCK,
                 MOSSY_DIRT
+        );
+        out.insertAfter(
+                Items.MUD,
+                GRASSY_PEAT,
+                MOSSY_PEAT,
+                PEAT,
+                COARSE_PEAT
         );
         out.insertBefore(
                 Items.DEEPSLATE,
-                LIMESTONE
+                LIMESTONE,
+                GRASSY_LIMESTONE
+        );
+        out.insertBefore(
+                Items.DEEPSLATE_COAL_ORE,
+                LIMESTONE_COAL_ORE
+        );
+        out.insertBefore(
+                Items.DEEPSLATE_COPPER_ORE,
+                LIMESTONE_COPPER_ORE
+        );
+        out.insertBefore(
+                Items.DEEPSLATE_IRON_ORE,
+                LIMESTONE_IRON_ORE
+        );
+        out.insertBefore(
+                Items.DEEPSLATE_GOLD_ORE,
+                LIMESTONE_GOLD_ORE
+        );
+        out.insertBefore(
+                Items.DEEPSLATE_DIAMOND_ORE,
+                LIMESTONE_DIAMOND_ORE
+        );
+        out.insertBefore(
+                Items.DEEPSLATE_LAPIS_ORE,
+                LIMESTONE_LAPIS_ORE
+        );
+        out.insertBefore(
+                Items.DEEPSLATE_REDSTONE_ORE,
+                LIMESTONE_REDSTONE_ORE
+        );
+        out.insertBefore(
+                Items.DEEPSLATE_EMERALD_ORE,
+                LIMESTONE_EMERALD_ORE
         );
         out.insertAfter(
                 Items.POINTED_DRIPSTONE,
@@ -461,6 +523,11 @@ public record ModItems() {
                 REDWOOD_HANGING_SIGN,
                 DEAD_WOOD_SIGN,
                 DEAD_WOOD_HANGING_SIGN
+        );
+        out.insertAfter(
+                Items.SOUL_CAMPFIRE,
+                LIMESTONE_BRAZIER,
+                SOUL_LIMESTONE_BRAZIER
         );
     }
 

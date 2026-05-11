@@ -46,6 +46,9 @@ public class ItemTagSet extends LookupTagSet<Item> {
         builder(ItemTags.WALLS)
                 .copyFrom(BlockTags.WALLS);
 
+        builder(ItemTags.GRASS_BLOCKS)
+                .copyFrom(BlockTags.GRASS_BLOCKS);
+
         builder(ItemTags.WOODEN_SLABS)
                 .copyFrom(BlockTags.WOODEN_SLABS);
 
@@ -82,6 +85,15 @@ public class ItemTagSet extends LookupTagSet<Item> {
         builder(ItemTags.DIRT)
                 .copyFrom(BlockTags.DIRT);
 
+        builder(ModItemTags.PEAT)
+                .copyFrom(ModBlockTags.PEAT);
+
+        builder(ModItemTags.BRAZIERS)
+                .copyFrom(ModBlockTags.BRAZIERS);
+
+        builder(ModItemTags.ANY_PEAT)
+                .copyFrom(ModBlockTags.ANY_PEAT);
+
         builder(ItemTags.SMALL_FLOWERS)
                 .copyFrom(BlockTags.SMALL_FLOWERS);
 
@@ -114,6 +126,23 @@ public class ItemTagSet extends LookupTagSet<Item> {
 
         builder(ConventionalItemTags.ORES_IN_GROUND_NETHERRACK)
                 .copyFrom(ConventionalBlockTags.ORES_IN_GROUND_NETHERRACK);
+
+        builder(ItemTags.COAL_ORES)
+                .copyFrom(BlockTags.COAL_ORES);
+        builder(ItemTags.COPPER_ORES)
+                .copyFrom(BlockTags.COPPER_ORES);
+        builder(ItemTags.IRON_ORES)
+                .copyFrom(BlockTags.IRON_ORES);
+        builder(ItemTags.GOLD_ORES)
+                .copyFrom(BlockTags.GOLD_ORES);
+        builder(ItemTags.DIAMOND_ORES)
+                .copyFrom(BlockTags.DIAMOND_ORES);
+        builder(ItemTags.EMERALD_ORES)
+                .copyFrom(BlockTags.EMERALD_ORES);
+        builder(ItemTags.LAPIS_ORES)
+                .copyFrom(BlockTags.LAPIS_ORES);
+        builder(ItemTags.REDSTONE_ORES)
+                .copyFrom(BlockTags.REDSTONE_ORES);
     }
 
 }

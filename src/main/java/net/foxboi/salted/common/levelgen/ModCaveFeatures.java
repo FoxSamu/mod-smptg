@@ -3,22 +3,16 @@ package net.foxboi.salted.common.levelgen;
 import java.util.List;
 
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.util.valueproviders.*;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.MultifaceSpreadeableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.configurations.BlockColumnConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.MultifaceGrowthConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.*;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.material.Fluids;
 
@@ -27,9 +21,18 @@ import net.foxboi.salted.common.block.ModBlocks;
 import net.foxboi.salted.common.levelgen.feature.*;
 import net.foxboi.salted.common.misc.reg.DataRegistry;
 
-@SuppressWarnings("deprecation")
 public record ModCaveFeatures() {
     private static final DataRegistry<ConfiguredFeature<?, ?>> REGISTRY = Smptg.REGISTRAR.data(Registries.CONFIGURED_FEATURE);
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_TO_LIMESTONE = REGISTRY.register("patch_to_limestone", DefinedFeature.of(
+            Feature.DISK,
+            () -> new DiskConfiguration(
+                    FeatureBlocks.REPLACE_WITH_LIMESTONE,
+                    BlockPredicate.alwaysTrue(), // Block checks are carried out by the block provider
+                    UniformInt.of(4, 8),
+                    4
+            )
+    ));
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> POINTED_LIMESTONE_CLUSTER = REGISTRY.register("pointed_limestone_cluster", DefinedFeature.of(
             ModFeatures.SPELEOTHEM_CLUSTER,

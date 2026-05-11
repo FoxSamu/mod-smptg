@@ -26,6 +26,8 @@ public class BlockTagSet extends LookupTagSet<Block> {
         ModBlockData.tools(toolTags);
 
         builder(BlockTags.ENDERMAN_HOLDABLE)
+                .tag(ModBlockTags.ANY_PEAT)
+                .element(ModBlocks.GRASSY_LIMESTONE)
                 .element(ModBlocks.ASH_BLOCK)
                 .element(ModBlocks.EMBERGRASS)
                 .element(ModBlocks.EMBERWEED)
@@ -169,8 +171,43 @@ public class BlockTagSet extends LookupTagSet<Block> {
                 .element(ModBlocks.TALL_LAVENDER)
                 .element(ModBlocks.GLOBE_THISTLE);
 
+        builder(ModBlockTags.BRAZIERS)
+                .element(ModBlocks.LIMESTONE_BRAZIER)
+                .element(ModBlocks.SOUL_LIMESTONE_BRAZIER);
+
         builder(BlockTags.GRASS_BLOCKS)
-                .element(ModBlocks.MOSSY_DIRT);
+                .element(ModBlocks.MOSSY_DIRT)
+                .element(ModBlocks.GRASSY_PEAT)
+                .element(ModBlocks.MOSSY_PEAT)
+                .element(ModBlocks.GRASSY_LIMESTONE);
+
+        builder(ModBlockTags.PEAT)
+                .element(ModBlocks.PEAT)
+                .element(ModBlocks.COARSE_PEAT);
+
+        builder(ModBlockTags.ANY_PEAT)
+                .tag(ModBlockTags.PEAT)
+                .element(ModBlocks.GRASSY_PEAT)
+                .element(ModBlocks.MOSSY_PEAT)
+                .element(ModBlocks.DRIED_PEAT);
+
+        builder(BlockTags.SUBSTRATE_OVERWORLD)
+                .tag(ModBlockTags.PEAT);
+
+        builder(BlockTags.OVERRIDES_MUSHROOM_LIGHT_REQUIREMENT)
+                .tag(ModBlockTags.PEAT)
+                .element(ModBlocks.DRIED_PEAT)
+                .element(ModBlocks.GRASSY_PEAT)
+                .element(ModBlocks.MOSSY_PEAT);
+
+        builder(ModBlockTags.GRASS_SPREAD_SOURCE)
+                .element(Blocks.GRASS_BLOCK)
+                .element(ModBlocks.GRASSY_PEAT)
+                .element(ModBlocks.GRASSY_LIMESTONE);
+
+        builder(ModBlockTags.TRANSFERS_FLUID_TO_PEAT)
+                .tag(BlockTags.SUBSTRATE_OVERWORLD)
+                .tag(ModBlockTags.ANY_PEAT);
 
         builder(BlockTags.OVERWORLD_CARVER_REPLACEABLES)
                 .element(ModBlocks.LIMESTONE);
@@ -178,6 +215,33 @@ public class BlockTagSet extends LookupTagSet<Block> {
         builder(BlockTags.NETHER_CARVER_REPLACEABLES)
                 .element(ModBlocks.ASH_BLOCK)
                 .element(ModBlocks.PACKED_ASH);
+
+        builder(ModBlockTags.LIMESTONE_ORE_REPLACEABLES)
+                .element(ModBlocks.LIMESTONE);
+
+        builder(BlockTags.COAL_ORES)
+                .element(ModBlocks.LIMESTONE_COAL_ORE);
+
+        builder(BlockTags.COPPER_ORES)
+                .element(ModBlocks.LIMESTONE_COPPER_ORE);
+
+        builder(BlockTags.IRON_ORES)
+                .element(ModBlocks.LIMESTONE_IRON_ORE);
+
+        builder(BlockTags.GOLD_ORES)
+                .element(ModBlocks.LIMESTONE_GOLD_ORE);
+
+        builder(BlockTags.DIAMOND_ORES)
+                .element(ModBlocks.LIMESTONE_DIAMOND_ORE);
+
+        builder(BlockTags.EMERALD_ORES)
+                .element(ModBlocks.LIMESTONE_EMERALD_ORE);
+
+        builder(BlockTags.REDSTONE_ORES)
+                .element(ModBlocks.LIMESTONE_REDSTONE_ORE);
+
+        builder(BlockTags.LAPIS_ORES)
+                .element(ModBlocks.LIMESTONE_LAPIS_ORE);
 
         createTreeMushroomReplacable(BlockTags.REPLACEABLE_BY_TREES, false);
         createTreeMushroomReplacable(BlockTags.REPLACEABLE_BY_MUSHROOMS, true);
@@ -269,6 +333,7 @@ public class BlockTagSet extends LookupTagSet<Block> {
 
     private void createInfiniburn(TagKey<Block> tag) {
         builder(tag)
+                .tag(ModBlockTags.ANY_PEAT)
                 .element(ModBlocks.BURNED_STEM)
                 .element(ModBlocks.BURNED_HYPHAE)
                 .element(ModBlocks.ASH_BLOCK)

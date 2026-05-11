@@ -1,5 +1,6 @@
 package net.foxboi.salted.data;
 
+import net.foxboi.salted.common.block.ModBlocks;
 import net.foxboi.salted.common.misc.biome.color.FoliageColorMap;
 import net.foxboi.summon.api.model.ItemTint;
 import net.foxboi.salted.data.loot.BlockDrops;
@@ -24,6 +25,13 @@ public record ModBlockData() {
         models.cube(PACKED_ASH);
 
         models.overgrownDirt(MOSSY_DIRT);
+        models.overgrownLimestone(GRASSY_LIMESTONE, ItemTint.grass());
+
+        models.randomlyRotatedCube(PEAT);
+        models.randomlyRotatedCube(DRIED_PEAT);
+        models.randomlyRotatedCube(COARSE_PEAT);
+        models.overgrownPeat(MOSSY_PEAT);
+        models.overgrownPeat(GRASSY_PEAT, ItemTint.grass());
 
         models.flowerbedPlant(CLOVERS).tinted(ItemTint.grass()).withGeneratedItem().build();
         models.crossPlant(GRASS_SPROUTS).tinted(ItemTint.grass()).build();
@@ -81,7 +89,8 @@ public record ModBlockData() {
                 .stairs(ASH_BRICK_STAIRS)
                 .build();
 
-        models.family(LIMESTONE)
+        models.randomlyMirroredCube(LIMESTONE);
+        models.noBlockFamily(LIMESTONE)
                 .slab(LIMESTONE_SLAB, false)
                 .stairs(LIMESTONE_STAIRS)
                 .wall(LIMESTONE_WALL)
@@ -91,6 +100,7 @@ public record ModBlockData() {
                 .slab(POLISHED_LIMESTONE_SLAB, true)
                 .stairs(POLISHED_LIMESTONE_STAIRS)
                 .wall(POLISHED_LIMESTONE_WALL)
+                .brazier(LIMESTONE_BRAZIER, SOUL_LIMESTONE_BRAZIER)
                 .build();
 
         models.family(LIMESTONE_BRICKS)
@@ -112,6 +122,15 @@ public record ModBlockData() {
                 .build();
 
         models.cube(CHISELED_LIMESTONE);
+
+        models.cube(LIMESTONE_COAL_ORE);
+        models.cube(LIMESTONE_COPPER_ORE);
+        models.cube(LIMESTONE_IRON_ORE);
+        models.cube(LIMESTONE_GOLD_ORE);
+        models.cube(LIMESTONE_DIAMOND_ORE);
+        models.cube(LIMESTONE_LAPIS_ORE);
+        models.cube(LIMESTONE_EMERALD_ORE);
+        models.cube(LIMESTONE_REDSTONE_ORE);
 
         models.family(ASPEN_PLANKS)
                 .slab(ASPEN_SLAB, false)
@@ -330,8 +349,25 @@ public record ModBlockData() {
         tools.pickaxe(CRACKED_LIMESTONE_BRICK_WALL);
         tools.pickaxe(CHISELED_LIMESTONE);
         tools.pickaxe(POINTED_LIMESTONE);
+        tools.pickaxe(GRASSY_LIMESTONE);
+        tools.pickaxe(LIMESTONE_BRAZIER);
+        tools.pickaxe(SOUL_LIMESTONE_BRAZIER);
+
+        tools.pickaxe(LIMESTONE_COAL_ORE);
+        tools.pickaxe(LIMESTONE_COPPER_ORE);
+        tools.stonePickaxe(LIMESTONE_IRON_ORE);
+        tools.stonePickaxe(LIMESTONE_LAPIS_ORE);
+        tools.ironPickaxe(LIMESTONE_GOLD_ORE);
+        tools.ironPickaxe(LIMESTONE_DIAMOND_ORE);
+        tools.ironPickaxe(LIMESTONE_REDSTONE_ORE);
+        tools.ironPickaxe(LIMESTONE_EMERALD_ORE);
 
         tools.shovel(MOSSY_DIRT);
+        tools.shovel(PEAT);
+        tools.shovel(GRASSY_PEAT);
+        tools.shovel(MOSSY_PEAT);
+        tools.shovel(DRIED_PEAT);
+        tools.shovel(COARSE_PEAT);
     }
 
 
@@ -440,6 +476,15 @@ public record ModBlockData() {
         drops.selfIfShears(EMBERWEED);
         drops.segmented(EMBERS);
 
+        drops.coalOre(LIMESTONE_COAL_ORE);
+        drops.copperOre(LIMESTONE_COPPER_ORE);
+        drops.ironOre(LIMESTONE_IRON_ORE);
+        drops.goldOre(LIMESTONE_GOLD_ORE);
+        drops.diamondOre(LIMESTONE_DIAMOND_ORE);
+        drops.emeraldOre(LIMESTONE_EMERALD_ORE);
+        drops.lapisOre(LIMESTONE_LAPIS_ORE);
+        drops.redstoneOre(LIMESTONE_REDSTONE_ORE);
+
 
         drops.self(LIMESTONE);
         drops.slab(LIMESTONE_SLAB);
@@ -463,9 +508,17 @@ public record ModBlockData() {
         drops.self(CRACKED_LIMESTONE_BRICK_WALL);
         drops.self(CHISELED_LIMESTONE);
         drops.self(POINTED_LIMESTONE);
+        drops.self(LIMESTONE_BRAZIER);
+        drops.self(SOUL_LIMESTONE_BRAZIER);
 
 
         drops.selfIfSilkTouch(MOSSY_DIRT, Blocks.DIRT);
+        drops.selfIfSilkTouch(GRASSY_LIMESTONE, LIMESTONE);
+        drops.selfIfSilkTouch(GRASSY_PEAT, PEAT);
+        drops.selfIfSilkTouch(MOSSY_PEAT, PEAT);
+        drops.self(PEAT);
+        drops.self(COARSE_PEAT);
+        drops.self(DRIED_PEAT);
 
         drops.segmented(CLOVERS);
         drops.selfIfShears(GRASS_SPROUTS);
@@ -512,5 +565,14 @@ public record ModBlockData() {
 
         compat.hangingPlant(ASHVINE);
         compat.hangingPlant(DRIPMOSS);
+
+        compat.coalOre(LIMESTONE_COAL_ORE);
+        compat.copperOre(LIMESTONE_COPPER_ORE);
+        compat.ironOre(LIMESTONE_IRON_ORE);
+        compat.goldOre(LIMESTONE_GOLD_ORE);
+        compat.diamondOre(LIMESTONE_DIAMOND_ORE);
+        compat.emeraldOre(LIMESTONE_EMERALD_ORE);
+        compat.lapisOre(LIMESTONE_LAPIS_ORE);
+        compat.redstoneOre(LIMESTONE_REDSTONE_ORE);
     }
 }

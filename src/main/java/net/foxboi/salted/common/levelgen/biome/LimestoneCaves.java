@@ -46,6 +46,8 @@ public class LimestoneCaves extends CaveBiome {
         super.generation(builder);
 
         builder.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModVegetationPlacements.GLOW_LICHEN);
+        builder.addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, ModCavePlacements.PATCH_DIRT_TO_LIMESTONE);
+        builder.addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION, ModCavePlacements.PATCH_UNDERGROUND_TO_LIMESTONE);
 
         addLimestoneSpeleothems(builder);
         addPlainGrass(builder);

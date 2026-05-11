@@ -25,7 +25,8 @@ public class FeatureConditions {
             Blocks.PODZOL,
             Blocks.COARSE_DIRT,
             Blocks.MUD,
-            ModBlocks.MOSSY_DIRT
+            ModBlocks.MOSSY_DIRT,
+            ModBlocks.GRASSY_LIMESTONE
     );
 
     public static final List<Block> DRY_GROW_BLOCKS = Stream.concat(

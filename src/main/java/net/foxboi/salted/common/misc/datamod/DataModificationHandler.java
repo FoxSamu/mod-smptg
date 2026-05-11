@@ -4,11 +4,14 @@ import java.util.*;
 
 import net.minecraft.core.*;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.features.CaveFeatures;
+import net.minecraft.data.worldgen.features.OreFeatures;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 
 import net.foxboi.salted.common.levelgen.modifications.NetherNoiseModifier;
+import net.foxboi.salted.common.levelgen.modifications.OreModifier;
 
 public class DataModificationHandler {
     private static final Map<ResourceKey<?>, List<DataModifier<?>>> MODIFIERS = new HashMap<>();
@@ -16,6 +19,23 @@ public class DataModificationHandler {
 
     public static void init() {
         addModifier(NoiseGeneratorSettings.NETHER, new NetherNoiseModifier());
+        addModifier(OreFeatures.ORE_COAL, new OreModifier());
+        addModifier(OreFeatures.ORE_COAL_BURIED, new OreModifier());
+        addModifier(OreFeatures.ORE_IRON, new OreModifier());
+        addModifier(OreFeatures.ORE_IRON_SMALL, new OreModifier());
+        addModifier(OreFeatures.ORE_GOLD, new OreModifier());
+        addModifier(OreFeatures.ORE_GOLD_BURIED, new OreModifier());
+        addModifier(OreFeatures.ORE_REDSTONE, new OreModifier());
+        addModifier(OreFeatures.ORE_DIAMOND_SMALL, new OreModifier());
+        addModifier(OreFeatures.ORE_DIAMOND_MEDIUM, new OreModifier());
+        addModifier(OreFeatures.ORE_DIAMOND_LARGE, new OreModifier());
+        addModifier(OreFeatures.ORE_DIAMOND_BURIED, new OreModifier());
+        addModifier(OreFeatures.ORE_DIAMOND_BURIED, new OreModifier());
+        addModifier(OreFeatures.ORE_LAPIS, new OreModifier());
+        addModifier(OreFeatures.ORE_LAPIS_BURIED, new OreModifier());
+        addModifier(OreFeatures.ORE_EMERALD, new OreModifier());
+        addModifier(OreFeatures.ORE_COPPPER_SMALL, new OreModifier());
+        addModifier(OreFeatures.ORE_COPPER_LARGE, new OreModifier());
     }
 
     public static <T> void addModifier(ResourceKey<T> key, DataModifier<T> modifier) {

@@ -4,6 +4,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.valueproviders.BiasedToBottomInt;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 import net.foxboi.salted.common.Smptg;
@@ -13,6 +14,33 @@ import net.foxboi.salted.common.misc.reg.DataRegistry;
 public record ModCavePlacements() {
     private static final DataRegistry<PlacedFeature> REGISTRY = Smptg.REGISTRAR.data(Registries.PLACED_FEATURE);
 
+
+    public static final ResourceKey<PlacedFeature> PATCH_DIRT_TO_LIMESTONE = REGISTRY.register(
+            "patch_dirt_to_limestone",
+            DefinedPlacement
+                    .place(ModCaveFeatures.PATCH_TO_LIMESTONE)
+                    .onAverageOnceEvery(7)
+                    .count(UniformInt.of(2, 5))
+                    .spreadInChunk()
+                    .atHeight(8, 70) // Put somewhere in cave, in the range where the cave should be for it to reach the surface
+                    .inBiome() // Then check biome, eliminating the ones outside the height range
+                    .onOceanFloorWg() // Then after biome check, move it to surface
+                    .randomPatch(BlockPredicate.alwaysTrue(), 4, 4, 6) // Place a bunch locally
+    );
+
+
+    public static final ResourceKey<PlacedFeature> PATCH_UNDERGROUND_TO_LIMESTONE = REGISTRY.register(
+            "patch_underground_to_limestone",
+            DefinedPlacement
+                    .place(ModCaveFeatures.PATCH_TO_LIMESTONE)
+                    .onAverageOnceEvery(3)
+                    .count(UniformInt.of(6, 12))
+                    .spreadInChunk()
+                    .atHeight(8, 70) // Put somewhere in cave, in the range where the cave should be for it to reach the surface
+                    .inBiome() // Then check biome, eliminating the ones outside the height range
+                    .atHeight(20, 120)
+                    .randomPatch(BlockPredicate.alwaysTrue(), 4, 4, 6) // Place a bunch locally
+    );
 
     public static final ResourceKey<PlacedFeature> POINTED_LIMESTONE_CLUSTER = REGISTRY.register(
             "pointed_limestone_cluster",

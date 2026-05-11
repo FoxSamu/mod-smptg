@@ -95,6 +95,21 @@ public class ModModelTemplates {
     public static final ModelTemplate SHELF_FUNGUS = block("shelf_fungus", TextureKeys.TOP, TextureKeys.BOTTOM);
     public static final ModelTemplate SHELF_FUNGUS_DIAGONAL = block("shelf_fungus_diagonal", TextureKeys.TOP, TextureKeys.BOTTOM);
 
+    public static final ModelTemplate GRASSY_SOIL = block("grassy_soil", TextureKeys.TOP, TextureKeys.BOTTOM, TextureKeys.SIDE, ModTextureKeys.OVERLAY);
+    public static final ModelTemplate GRASSY_SOIL_R90 = block("grassy_soil_r90", "_r90", TextureKeys.TOP, TextureKeys.BOTTOM, TextureKeys.SIDE, ModTextureKeys.OVERLAY);
+    public static final ModelTemplate GRASSY_SOIL_R180 = block("grassy_soil_r180", "_r180", TextureKeys.TOP, TextureKeys.BOTTOM, TextureKeys.SIDE, ModTextureKeys.OVERLAY);
+    public static final ModelTemplate GRASSY_SOIL_R270 = block("grassy_soil_r270", "_r270", TextureKeys.TOP, TextureKeys.BOTTOM, TextureKeys.SIDE, ModTextureKeys.OVERLAY);
+
+    public static final ModelTemplate OVERGROWN_SOIL = block("overgrown_soil", TextureKeys.TOP, TextureKeys.BOTTOM, TextureKeys.SIDE);
+    public static final ModelTemplate OVERGROWN_SOIL_R90 = block("overgrown_soil_r90", "_r90", TextureKeys.TOP, TextureKeys.BOTTOM, TextureKeys.SIDE);
+    public static final ModelTemplate OVERGROWN_SOIL_R180 = block("overgrown_soil_r180", "_r180", TextureKeys.TOP, TextureKeys.BOTTOM, TextureKeys.SIDE);
+    public static final ModelTemplate OVERGROWN_SOIL_R270 = block("overgrown_soil_r270", "_r270", TextureKeys.TOP, TextureKeys.BOTTOM, TextureKeys.SIDE);
+
+    public static final ModelTemplate BRAZIER_UNLIT = block("brazier_unlit", "_unlit", TextureKeys.TOP, TextureKeys.BOTTOM, TextureKeys.SIDE);
+    public static final ModelTemplate BRAZIER_LIT = block("brazier_lit", "_lit", TextureKeys.TOP, TextureKeys.BOTTOM, TextureKeys.SIDE, TextureKeys.FIRE);
+    public static final ModelTemplate BRAZIER_FRAMED_UNLIT = block("brazier_framed_unlit", "_framed_unlit", TextureKeys.TOP, TextureKeys.BOTTOM, TextureKeys.SIDE, ModTextureKeys.FRAME);
+    public static final ModelTemplate BRAZIER_FRAMED_LIT = block("brazier_framed_lit", "_framed_lit", TextureKeys.TOP, TextureKeys.BOTTOM, TextureKeys.SIDE, ModTextureKeys.FRAME, TextureKeys.FIRE);
+
 
     private static ModelTemplate block(String id, TextureKey... keys) {
         return ModelTemplate.of(Smptg.id("block/" + id), keys);

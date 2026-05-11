@@ -120,7 +120,45 @@ public class BlockModels {
     }
 
     public void overgrownDirt(Block block) {
-        overgrownBlock(block, Blocks.DIRT, true);
+        overgrownBlock(block, Blocks.DIRT, null, DirtRotateMode.FULL_ROTATION);
+    }
+
+    public void overgrownDirt(Block block, ItemTint tint) {
+        overgrownBlock(block, Blocks.DIRT, tint, DirtRotateMode.FULL_ROTATION);
+    }
+
+    public void overgrownDirt(Block block, int tint) {
+        overgrownBlock(block, Blocks.DIRT, ItemTint.constant(tint), DirtRotateMode.FULL_ROTATION);
+    }
+
+    public void overgrownPeat(Block block) {
+        overgrownBlock(block, ModBlocks.PEAT, null, DirtRotateMode.FULL_ROTATION);
+    }
+
+    public void overgrownPeat(Block block, ItemTint tint) {
+        overgrownBlock(block, ModBlocks.PEAT, tint, DirtRotateMode.FULL_ROTATION);
+    }
+
+    public void overgrownPeat(Block block, int tint) {
+        overgrownBlock(block, ModBlocks.PEAT, ItemTint.constant(tint), DirtRotateMode.FULL_ROTATION);
+    }
+
+    public void overgrownLimestone(Block block) {
+        overgrownBlock(block, ModBlocks.LIMESTONE, null, DirtRotateMode.TOP_ROTATION);
+    }
+
+    public void overgrownLimestone(Block block, ItemTint tint) {
+        overgrownBlock(block, ModBlocks.LIMESTONE, tint, DirtRotateMode.TOP_ROTATION);
+    }
+
+    public void overgrownLimestone(Block block, int tint) {
+        overgrownBlock(block, ModBlocks.LIMESTONE, ItemTint.constant(tint), DirtRotateMode.TOP_ROTATION);
+    }
+
+    public FamilyBuilder noBlockFamily(Block block) {
+        var map = BlockTextures.all(block);
+
+        return new InternalFamilyBuilder(block, map);
     }
 
     public FamilyBuilder family(Block block) {
@@ -273,7 +311,9 @@ public class BlockModels {
     private static final Function<WeightedVariants, WeightedVariants> UV_LOCK = variants -> variants.uvlock(true);
 
     private static final Map<Block, Identifier> SNOWY_SIDE_TEXTURES = Map.of(
-            Blocks.DIRT, Identifier.withDefaultNamespace("block/grass_block_snow")
+            Blocks.DIRT, Identifier.withDefaultNamespace("block/grass_block_snow"),
+            ModBlocks.LIMESTONE, Smptg.id("block/grassy_limestone_snow"),
+            ModBlocks.PEAT, Smptg.id("block/grassy_peat_snow")
     );
 
     private static final List<ModelTemplate> MULTILAYER_MODELS = List.of(
@@ -349,39 +389,74 @@ public class BlockModels {
 
     // HELPERS
 
-    private void overgrownBlock(Block block, Block base, boolean randomRotations) {
+    private enum DirtRotateMode {
+        NO_ROTATION,
+        TOP_ROTATION,
+        FULL_ROTATION
+    }
+
+    private Model createRotatedDirt(Block block, TextureMap map, boolean tinted, int rotation) {
+        var n = rotation + (tinted ? 1 : 0);
+        return switch (n) {
+            case 0 -> ModModelTemplates.OVERGROWN_SOIL.create(block, map);
+            case 1 -> ModModelTemplates.GRASSY_SOIL.create(block, map);
+            case 90 -> ModModelTemplates.OVERGROWN_SOIL_R90.create(block, map);
+            case 91 -> ModModelTemplates.GRASSY_SOIL_R90.create(block, map);
+            case 180 -> ModModelTemplates.OVERGROWN_SOIL_R180.create(block, map);
+            case 181 -> ModModelTemplates.GRASSY_SOIL_R180.create(block, map);
+            case 270 -> ModModelTemplates.OVERGROWN_SOIL_R270.create(block, map);
+            case 271 -> ModModelTemplates.GRASSY_SOIL_R270.create(block, map);
+            default -> throw new AssertionError();
+        };
+    }
+
+    private void overgrownBlock(Block block, Block base, ItemTint tint, DirtRotateMode randomRotations) {
+        var tinted = tint != null;
+
         var mapping = TextureMap.map()
                 .put("top", block, "_top")
                 .put("side", block, "_side")
                 .put("bottom", base);
 
-        var model = ModelTemplates.CUBE_BOTTOM_TOP.create(block, mapping);
+        if (tinted) {
+            mapping.put("overlay", block, "_side_overlay");
+        }
 
-        var dispatch = StateDispatch.model(model);
+        var model = createRotatedDirt(block, mapping, tinted, 0);
+        var variants = switch (randomRotations) {
+            case NO_ROTATION -> WeightedVariants.of(model);
+
+            case TOP_ROTATION -> WeightedVariants.of(model)
+                    .with(createRotatedDirt(block, mapping, tinted, 90))
+                    .with(createRotatedDirt(block, mapping, tinted, 180))
+                    .with(createRotatedDirt(block, mapping, tinted, 270));
+
+            case FULL_ROTATION -> WeightedVariants.of(model)
+                    .flatTransform(RANDOM_ROTATE);
+        };
+
+        var dispatch = StateDispatch.variants(variants);
 
         if (block.getStateDefinition().getProperties().contains(BlockStateProperties.SNOWY) && SNOWY_SIDE_TEXTURES.containsKey(base)) {
             var snowyMapping = mapping.copy()
                     .put("side", SNOWY_SIDE_TEXTURES.get(base));
+            var snowyModel = ModModelTemplates.OVERGROWN_SOIL.create(block, snowyMapping);
 
-            var snowyModel = ModelTemplates.CUBE_BOTTOM_TOP.create(block, snowyMapping);
+            var snowyVariants = switch (randomRotations) {
+                // Since it is covered in snow, you cannot see that the top rotates so why bother
+                case NO_ROTATION, TOP_ROTATION -> WeightedVariants.of(snowyModel);
 
-            dispatch = dispatch.flatMap(StateDispatch.dispatch(
-                    BlockStateProperties.SNOWY,
-                    disp -> disp
-                            .put(false, it -> it)
-                            .put(true, _ -> snowyModel)
-            ));
+                case FULL_ROTATION -> WeightedVariants.of(snowyModel)
+                        .flatTransform(RANDOM_ROTATE);
+            };
+
+            dispatch = StateDispatch.variants(BlockStateProperties.SNOWY)
+                    .put(false, variants)
+                    .put(true, snowyVariants);
         }
 
-        var variants = BlockDispatch.variants(block, dispatch.map(WeightedVariants::of));
-
-        if (randomRotations) {
-            variants.map(it -> it.flatTransform(RANDOM_ROTATE));
-        }
-
-        variants.save(blocks);
-
-        ItemDispatch.of(block, model).save(items);
+        BlockDispatch.variants(block, dispatch).save(blocks);
+        ItemDispatch.of(block, model, tinted ? List.of(tint) : List.of()).save(items);
     }
 
     private TextureMap createShelfFungusMapping(Block block, String suffix) {
@@ -442,6 +517,8 @@ public class BlockModels {
 
         FamilyBuilder hangingSign(Block block, Block wallBlock, Block particleMaterial);
 
+        FamilyBuilder brazier(Block block, Block soulFireBlock);
+
         void build();
     }
 
@@ -479,6 +556,9 @@ public class BlockModels {
         Block hangingSign;
         Block hangingSignWall;
         Block hangingSignParticleMaterial;
+
+        Block brazier;
+        Block brazierSoulFire;
 
         public InternalFamilyBuilder(Block base, TextureMap map) {
             this.base = base;
@@ -565,6 +645,13 @@ public class BlockModels {
             return this;
         }
 
+        @Override
+        public FamilyBuilder brazier(Block block, Block soulFireBlock) {
+            this.brazier = block;
+            this.brazierSoulFire = soulFireBlock;
+            return this;
+        }
+
         private void ifNotNull(Block block, Consumer<Block> consumer) {
             if (block != null) {
                 consumer.accept(block);
@@ -585,6 +672,8 @@ public class BlockModels {
             ifNotNull(shelf, it -> createShelf(it, shelfParticleMaterial));
             ifNotNull(sign, it -> createSign(it, signWall, base));
             ifNotNull(hangingSign, it -> createSign(it, hangingSignWall, hangingSignParticleMaterial));
+            ifNotNull(brazier, it -> createBrazier(it, it, base, false));
+            ifNotNull(brazierSoulFire, it -> createBrazier(it, brazier, base, true));
         }
     }
 
@@ -595,10 +684,14 @@ public class BlockModels {
     }
 
     private void createSlab(Block block, Block full, boolean custom, TextureMap baseMap) {
-        var bottom = ModelTemplates.SLAB_BOTTOM.create(block, baseMap);
-        var top = ModelTemplates.SLAB_TOP.create(block, baseMap);
+        var textureMap = custom
+                ? createCustomSlabMap(baseMap, block)
+                : baseMap;
+
+        var bottom = ModelTemplates.SLAB_BOTTOM.create(block, textureMap);
+        var top = ModelTemplates.SLAB_TOP.create(block, textureMap);
         var both = custom
-                ? ModelTemplates.CUBE_BOTTOM_TOP.create(block, "_double", createCustomSlabMap(baseMap, block))
+                ? ModelTemplates.CUBE_BOTTOM_TOP.create(block, "_double", textureMap)
                 : Model.reference(full);
 
         saveDispatchedModels(block, StateDispatch.dispatch(
@@ -929,6 +1022,35 @@ public class BlockModels {
         BlockDispatch.of(block, emptyModel).save(blocks);
         BlockDispatch.of(wallBlock, emptyModel).save(blocks);
         saveFlatItem(block);
+    }
+
+    private void createBrazier(Block block, Block nonSoulBlock, Block baseBlock, boolean soul) {
+        var fireTex = soul
+                ? Identifier.withDefaultNamespace("block/soul_campfire_fire")
+                : Identifier.withDefaultNamespace("block/campfire_fire");
+
+        var unlitMap = TextureMap.map()
+                .put("top", block, "_ash")
+                .put("frame", nonSoulBlock, "_frame")
+                .put("side", nonSoulBlock, "_side")
+                .put("bottom", baseBlock);
+
+        var litMap = unlitMap.copy()
+                .put("top", block, "_ash_lit")
+                .put("fire", fireTex);
+
+        var unlit = ModModelTemplates.BRAZIER_UNLIT.create(block, unlitMap);
+        var lit = ModModelTemplates.BRAZIER_LIT.create(block, litMap);
+        var unlitFramed = ModModelTemplates.BRAZIER_FRAMED_UNLIT.create(block, unlitMap);
+        var litFramed = ModModelTemplates.BRAZIER_FRAMED_LIT.create(block, litMap);
+
+        var dispatch = StateDispatch.model(BrazierBlock.LIT, BrazierBlock.FRAMED)
+                .put(false, false, unlit)
+                .put(true, false, lit)
+                .put(false, true, unlitFramed)
+                .put(true, true, litFramed);
+
+        saveDispatched(block, dispatch.map(WeightedVariants::of), unlit);
     }
 
 
