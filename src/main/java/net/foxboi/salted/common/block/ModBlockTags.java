@@ -31,6 +31,7 @@ public record ModBlockTags() {
     public static final TagKey<Block> TRANSFERS_FLUID_TO_PEAT = tag("transfers_fluid_to_peat");
 
     public static final TagKey<Block> DAMAGES_SLIMES = tag("damages_slimes");
+    public static final TagKey<Block> ANIMALS_PREFER_WALKING_ON = tag("animals_prefer_walking_on");
 
     public static final TagKey<Block> BRAZIERS = tag("braziers");
 
@@ -67,6 +68,7 @@ public record ModBlockTags() {
         translator.name(HEATH, "Heath");
 
         translator.name(DAMAGES_SLIMES, "Damages Slimes");
+        translator.name(ANIMALS_PREFER_WALKING_ON, "Animals Prefer Walking On");
 
         translator.name(BRAZIERS, "Braziers");
     }

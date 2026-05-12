@@ -19,3 +19,5 @@ A biome mod in heavy development. Here's some screenshots.
 ![Screenshot 8](screenshots/8.png)
 
 ![Screenshot 9](screenshots/9.png)
+
+![Screenshot 10](screenshots/10.png)

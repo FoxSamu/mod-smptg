@@ -193,6 +193,20 @@ public class BlockTagSet extends LookupTagSet<Block> {
                 .element(ModBlocks.MOSSY_PEAT)
                 .element(ModBlocks.DRIED_PEAT);
 
+        builder(BlockTags.ANIMALS_SPAWNABLE_ON)
+                .element(ModBlocks.MOSSY_DIRT)
+                .element(ModBlocks.GRASSY_PEAT)
+                .element(ModBlocks.MOSSY_PEAT)
+                .element(ModBlocks.GRASSY_LIMESTONE);
+
+        builder(ModBlockTags.ANIMALS_PREFER_WALKING_ON)
+                .element(Blocks.GRASS_BLOCK)
+                .element(Blocks.PODZOL)
+                .element(ModBlocks.MOSSY_DIRT)
+                .element(ModBlocks.GRASSY_PEAT)
+                .element(ModBlocks.MOSSY_PEAT)
+                .element(ModBlocks.GRASSY_LIMESTONE);
+
         builder(BlockTags.SUBSTRATE_OVERWORLD)
                 .tag(ModBlockTags.PEAT);
 

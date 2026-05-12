@@ -4,11 +4,11 @@
   "compatibilityLevel": "JAVA_21",
 
   "mixins": [
-    "AbstractCauldronBlockMixin", "BiomeMixin", "BiomeModificationContextImplEffectsContextImplMixin", "BiomeSpecialEffectsMixin", "BlockMixin",
-    "BonemealItemMixin", "BucketItemMixin", "CacheHolderMixin", "FlintAndSteelItemAndFireChargeItemMixin", "GrassBlockMixin", "IceBlockMixin", "IdentifierMixin",
-    "LevelMixin", "MultifaceBlockMixin", "NodeEvaluatorMixin", "NoiseGeneratorSettingsMixin", "OverworldBiomeBuilderMixin",
-    "PiglinSpecificSensorMixin", "PlayerListMixin", "RegistryLoadTaskPendingRegistrationMixin", "ServerLevelMixin", "ShearsItemMixin",
-    "ShovelItemMixin", "SimpleBlockFeatureMixin", "SlimeMixin", "SnowLayerBlockMixin", "SpreadingSnowyBlockMixin"
+    "AbstractCauldronBlockMixin", "AnimalMixin", "BiomeMixin", "BiomeModificationContextImplEffectsContextImplMixin", "BiomeSpecialEffectsMixin",
+    "BlockMixin", "BonemealItemMixin", "BucketItemMixin", "CacheHolderMixin", "FlintAndSteelItemAndFireChargeItemMixin", "GrassBlockMixin",
+    "IceBlockMixin", "IdentifierMixin", "LevelMixin", "MultifaceBlockMixin", "NodeEvaluatorMixin", "NoiseGeneratorSettingsMixin",
+    "OverworldBiomeBuilderMixin", "PiglinSpecificSensorMixin", "PlayerListMixin", "RegistryLoadTaskPendingRegistrationMixin", "ServerLevelMixin",
+    "ShearsItemMixin", "ShovelItemMixin", "SimpleBlockFeatureMixin", "SlimeMixin", "SnowLayerBlockMixin", "SpreadingSnowyBlockMixin"
   ],
 
   "injectors": {
