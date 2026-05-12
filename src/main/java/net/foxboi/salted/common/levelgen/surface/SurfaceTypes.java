@@ -1,24 +1,33 @@
 package net.foxboi.salted.common.levelgen.surface;
 
+import net.foxboi.salted.common.Smptg;
 import net.foxboi.salted.common.block.ModBlocks;
 import net.foxboi.salted.common.levelgen.noise.ModNoises;
 
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.placement.CaveSurface;
 
+import static net.foxboi.salted.common.levelgen.surface.ModSurfaceRules.*;
 import static net.minecraft.world.level.levelgen.SurfaceRules.*;
 
 public class SurfaceTypes {
+    public static final RuleSource MUD = makeStateRule(Blocks.MUD);
     public static final RuleSource DIRT = makeStateRule(Blocks.DIRT);
     public static final RuleSource GRASS_BLOCK = makeStateRule(Blocks.GRASS_BLOCK);
     public static final RuleSource PODZOL = makeStateRule(Blocks.PODZOL);
     public static final RuleSource MOSSY_DIRT = makeStateRule(ModBlocks.MOSSY_DIRT);
     public static final RuleSource COARSE_DIRT = makeStateRule(Blocks.COARSE_DIRT);
+    public static final RuleSource PEAT = makeStateRule(ModBlocks.PEAT);
+    public static final RuleSource GRASSY_PEAT = makeStateRule(ModBlocks.GRASSY_PEAT);
+    public static final RuleSource MOSSY_PEAT = makeStateRule(ModBlocks.MOSSY_PEAT);
+    public static final RuleSource COARSE_PEAT = makeStateRule(ModBlocks.COARSE_PEAT);
+    public static final RuleSource SAND = makeStateRule(Blocks.SAND);
+    public static final RuleSource LIMESTONE = makeStateRule(ModBlocks.LIMESTONE);
     public static final RuleSource ASH = makeStateRule(ModBlocks.ASH_BLOCK);
     public static final RuleSource PACKED_ASH = makeStateRule(ModBlocks.PACKED_ASH);
     public static final RuleSource NETHERRACK = makeStateRule(Blocks.NETHERRACK);
-    public static final RuleSource LIMESTONE = makeStateRule(ModBlocks.LIMESTONE);
 
     private static RuleSource makeStateRule(Block block) {
         return state(block.defaultBlockState());
@@ -34,8 +43,19 @@ public class SurfaceTypes {
         );
     }
 
+    private static RuleSource simpleDirt(RuleSource dirt) {
+        return ifTrue(
+                abovePreliminarySurface(),
+                ifTrue(UNDER_FLOOR, dirt)
+        );
+    }
+
     private static RuleSource defaultDirt(RuleSource top) {
         return defaultDirt(top, DIRT);
+    }
+
+    private static RuleSource defaultPeat(RuleSource top) {
+        return defaultDirt(top, PEAT);
     }
 
     private static RuleSource aboveWaterOnly(RuleSource rule) {
@@ -69,6 +89,27 @@ public class SurfaceTypes {
                         ifTrue(noiseCondition(ModNoises.PATHWAYS, 0.21), PODZOL),
                         GRASS_BLOCK
                 ))
+        );
+    }
+
+    public static RuleSource peatMixture() {
+        var builder = new WeightedList.Builder<RuleSource>();
+        builder.add(GRASSY_PEAT, 9);
+        builder.add(COARSE_PEAT, 3);
+        builder.add(SAND, 2);
+
+        return defaultPeat(
+                randomSelect(
+                        Smptg.id("peat_mix"),
+                        builder
+                )
+        );
+    }
+
+    public static RuleSource peatMixtureButMudUnderwater() {
+        return sequence(
+                aboveWaterOnly(peatMixture()),
+                simpleDirt(MUD)
         );
     }
 

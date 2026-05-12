@@ -47,6 +47,8 @@ public record ModBlockData() {
         models.crossPlant(ASHCREEP).basic().build();
         models.columnCrossPlant(ASHVINE).basic().build();
         models.multifacePlant(PATCHMOSS).basic().build();
+        models.shrub(HEATH);
+        models.shrub(FLOWERING_HEATH);
 
         models.crossPlant(EMBERGRASS).emissive().build();
         models.crossPlant(EMBERWEED).emissive().build();
@@ -533,6 +535,8 @@ public record ModBlockData() {
         drops.multiface(PATCHMOSS);
         drops.self(SHELF_FUNGUS);
         drops.selfIfLower(GLOBE_THISTLE);
+        drops.segmented(HEATH);
+        drops.segmented(FLOWERING_HEATH);
     }
 
 
@@ -557,6 +561,8 @@ public record ModBlockData() {
         compat.plant(ASHCREEP);
         compat.plant(EMBERWEED);
         compat.plant(EMBERGRASS);
+        compat.plant(HEATH);
+        compat.plant(FLOWERING_HEATH);
 
         compat.tallPlant(TALL_CATTAIL);
         compat.tallPlant(TALL_LAVENDER);

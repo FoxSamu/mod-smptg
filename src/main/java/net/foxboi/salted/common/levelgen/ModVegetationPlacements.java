@@ -154,7 +154,7 @@ public record ModVegetationPlacements() {
             DefinedPlacement
                     .place(ModVegetationFeatures.GLOW_LICHEN)
                     .count(UniformInt.of(104, 157))
-                    .modified(PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT)
+                    .with(PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT)
                     .spreadInChunk()
                     .inBiome()
     );
@@ -403,6 +403,17 @@ public record ModVegetationPlacements() {
                     .fillChunk(0.67f)
                     .onOceanFloorWg()
                     .onlyIf(allOf(ONLY_IN_AIR_PREDICATE, matchesBlocks(Direction.DOWN.getUnitVec3i(), DEFAULT_GROW_BLOCKS)))
+                    .inBiome()
+    );
+
+
+    public static final ResourceKey<PlacedFeature> VEGETATION_HEATHLAND = REGISTRY.register(
+            "vegetation_heathland",
+            DefinedPlacement
+                    .place(ModVegetationFeatures.HEATHLAND_PLANT)
+                    .fillChunk(0.85f)
+                    .onOceanFloorWg()
+                    .onlyIf(allOf(ONLY_IN_AIR_PREDICATE, matchesBlocks(Direction.DOWN.getUnitVec3i(), DRY_GROW_BLOCKS)))
                     .inBiome()
     );
 

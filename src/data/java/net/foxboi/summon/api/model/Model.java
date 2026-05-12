@@ -1,6 +1,7 @@
 package net.foxboi.summon.api.model;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
@@ -11,6 +12,7 @@ import net.foxboi.salted.data.model.TextureKeys;
 
 public interface Model {
     Identifier save(ModelSink sink);
+    Identifier id();
 
     static Reference reference(Identifier id) {
         return new Reference(id);
@@ -168,6 +170,52 @@ public interface Model {
         public Identifier save(ModelSink sink) {
             sink.save(id, () -> ModelJson.createGeneratedModel(type, layers));
             return id;
+        }
+    }
+
+    static Full full(Identifier id, FullModel model) {
+        return new Full(id, model);
+    }
+
+    static Full full(Block block, FullModel model) {
+        return full(blockModelId(block), model);
+    }
+
+    static Full full(Block block, String suffix, FullModel model) {
+        return full(blockModelId(block, suffix), model);
+    }
+
+    static Full full(Item item, FullModel model) {
+        return full(itemModelId(item), model);
+    }
+
+    static Full full(Item item, String suffix, FullModel model) {
+        return full(itemModelId(item, suffix), model);
+    }
+
+    record Full(Identifier id, FullModel model) implements Model {
+        @Override
+        public Identifier save(ModelSink sink) {
+            model.parent().save(sink);
+
+            sink.save(id, model::toJson);
+            return id;
+        }
+    }
+
+    static Supply supply(Supplier<Model> modelSupplier) {
+        return new Supply(modelSupplier);
+    }
+
+    record Supply(Supplier<Model> modelSupplier) implements Model {
+        @Override
+        public Identifier save(ModelSink sink) {
+            return modelSupplier.get().save(sink);
+        }
+
+        @Override
+        public Identifier id() {
+            return modelSupplier.get().id();
         }
     }
 

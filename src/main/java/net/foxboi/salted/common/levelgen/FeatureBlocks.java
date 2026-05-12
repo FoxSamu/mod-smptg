@@ -59,14 +59,9 @@ public class FeatureBlocks {
     public static final BlockStateProvider EMBERWEED = BlockStateProvider.simple(ModBlocks.EMBERWEED);
     public static final BlockStateProvider EMBERS = segmented(ModBlocks.EMBERS, 1, 4);
     public static final BlockStateProvider BURNED_STEM = BlockStateProvider.simple(ModBlocks.BURNED_STEM);
+    public static final BlockStateProvider MUD = BlockStateProvider.simple(Blocks.MUD);
 
-    public static final BlockStateProvider REPLACE_WITH_LIMESTONE = RuleBasedStateProvider.builder()
-            .ifTrueThenProvide(BlockPredicate.allOf(
-                    BlockPredicate.matchesTag(BlockTags.GRASS_BLOCKS),
-                    BlockPredicate.matchesBlocks(Direction.UP.getUnitVec3i(), Blocks.SNOW)
-            ), ModBlocks.GRASSY_LIMESTONE.defaultBlockState().setValue(BlockStateProperties.SNOWY, true))
-            .ifTrueThenProvide(BlockPredicate.matchesTag(BlockTags.GRASS_BLOCKS), ModBlocks.GRASSY_LIMESTONE)
-            .ifTrueThenProvide(BlockPredicate.matchesTag(BlockTags.SUBSTRATE_OVERWORLD), ModBlocks.LIMESTONE)
+    public static final BlockStateProvider REPLACE_UNDERGROUND_WITH_LIMESTONE = RuleBasedStateProvider.builder()
             .ifTrueThenProvide(BlockPredicate.matchesTag(BlockTags.BASE_STONE_OVERWORLD), ModBlocks.LIMESTONE)
             .ifTrueThenProvide(BlockPredicate.matchesTag(BlockTags.COAL_ORES), ModBlocks.LIMESTONE_COAL_ORE)
             .ifTrueThenProvide(BlockPredicate.matchesTag(BlockTags.COPPER_ORES), ModBlocks.LIMESTONE_COPPER_ORE)
@@ -76,6 +71,15 @@ public class FeatureBlocks {
             .ifTrueThenProvide(BlockPredicate.matchesTag(BlockTags.EMERALD_ORES), ModBlocks.LIMESTONE_EMERALD_ORE)
             .ifTrueThenProvide(BlockPredicate.matchesTag(BlockTags.LAPIS_ORES), ModBlocks.LIMESTONE_LAPIS_ORE)
             .ifTrueThenProvide(BlockPredicate.matchesTag(BlockTags.REDSTONE_ORES), ModBlocks.LIMESTONE_REDSTONE_ORE)
+            .build();
+
+    public static final BlockStateProvider REPLACE_WITH_LIMESTONE = RuleBasedStateProvider.builder(REPLACE_UNDERGROUND_WITH_LIMESTONE)
+            .ifTrueThenProvide(BlockPredicate.allOf(
+                    BlockPredicate.matchesTag(BlockTags.GRASS_BLOCKS),
+                    BlockPredicate.matchesBlocks(Direction.UP.getUnitVec3i(), Blocks.SNOW)
+            ), ModBlocks.GRASSY_LIMESTONE.defaultBlockState().setValue(BlockStateProperties.SNOWY, true))
+            .ifTrueThenProvide(BlockPredicate.matchesTag(BlockTags.GRASS_BLOCKS), ModBlocks.GRASSY_LIMESTONE)
+            .ifTrueThenProvide(BlockPredicate.matchesTag(BlockTags.SUBSTRATE_OVERWORLD), ModBlocks.LIMESTONE)
             .build();
 
     public static BlockStateProvider either(BlockStateProvider a, BlockStateProvider b, double bChance) {

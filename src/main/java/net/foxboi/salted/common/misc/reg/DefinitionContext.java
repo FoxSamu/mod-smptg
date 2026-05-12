@@ -4,23 +4,31 @@ import java.util.Optional;
 
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
 
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderGetter;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.Registry;
+import net.minecraft.core.*;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.TagKey;
 
+@SuppressWarnings("unchecked")
 public interface DefinitionContext {
     <A> HolderGetter<A> lookupOrThrow(ResourceKey<Registry<A>> registry);
+
     <A> Optional<? extends HolderGetter<A>> lookup(ResourceKey<Registry<A>> registry);
 
-    default <A>Holder<A> getOrThrow(ResourceKey<A> key) {
+    default <A> Holder<A> getOrThrow(ResourceKey<A> key) {
         return lookupOrThrow(key.registryKey()).getOrThrow(key);
     }
 
     default <A> Optional<Holder<A>> get(ResourceKey<A> key) {
         return lookup(key.registryKey()).flatMap(it -> it.get(key));
+    }
+
+    default <A> HolderSet<A> getOrThrow(TagKey<A> key) {
+        return lookupOrThrow((ResourceKey<Registry<A>>) key.registry()).getOrThrow(key);
+    }
+
+    default <A> Optional<HolderSet<A>> get(TagKey<A> key) {
+        return lookup((ResourceKey<Registry<A>>) key.registry()).flatMap(it -> it.get(key));
     }
 
     static DefinitionContext fromHolderLookupProvider(HolderLookup.Provider provider) {

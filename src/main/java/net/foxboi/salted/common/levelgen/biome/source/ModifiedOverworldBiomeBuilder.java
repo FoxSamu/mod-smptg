@@ -350,6 +350,7 @@ public final class ModifiedOverworldBiomeBuilder {
                 var hum = humidities[humI];
 
                 var low = pickLowBiome(tmpI, humI, weirdness);
+                var maybeHeath = maybePickHeathland(tmpI, humI, weirdness, low);
                 var lowOrBadlands = pickLowBiomeOrBadlandsIfHot(tmpI, humI, weirdness);
                 var middleOrBadlandsOrSlope = pickMiddleBiomeOrBadlandsIfHotOrSlopeIfCold(tmpI, humI, weirdness);
                 var beach = pickBeachBiome(tmpI, humI);
@@ -367,7 +368,7 @@ public final class ModifiedOverworldBiomeBuilder {
 
                 addSurfaceBiome(output, tmp, hum, coastContinentalness, erosions[5], weirdness, 0, shatteredCoast);
                 addSurfaceBiome(output, tmp, hum, nearInlandContinentalness, erosions[5], weirdness, 0, windsweptSavanna);
-                addSurfaceBiome(output, tmp, hum, span(midInlandContinentalness, farInlandContinentalness), erosions[5], weirdness, 0, low);
+                addSurfaceBiome(output, tmp, hum, span(midInlandContinentalness, farInlandContinentalness), erosions[5], weirdness, 0, maybeHeath);
 
                 addSurfaceBiome(output, tmp, hum, coastContinentalness, erosions[6], weirdness, 0, beach);
                 if (tmpI == 0) {
@@ -458,6 +459,12 @@ public final class ModifiedOverworldBiomeBuilder {
     private ResourceKey<Biome> maybePickWindsweptSavannaBiome(int tmpI, int humI, Climate.Parameter weirdness, ResourceKey<Biome> fallback) {
         return tmpI > 1 && humI < 5 && weirdness.max() >= 0L
                 ? WINDSWEPT_SAVANNA
+                : fallback;
+    }
+
+    private ResourceKey<Biome> maybePickHeathland(int tmpI, int humI, Climate.Parameter weirdness, ResourceKey<Biome> fallback) {
+        return tmpI > 2 && humI < 4 && weirdness.max() < 0L
+                ? HEATHLAND
                 : fallback;
     }
 

@@ -79,6 +79,11 @@ public class ModModelTemplates {
     public static final ModelTemplate TINTED_GLOWING_FLAT_SEGMENT_3 = block("tinted_glowing_flat_segment_3", "_3", TextureKeys.TEXTURE);
     public static final ModelTemplate TINTED_GLOWING_FLAT_SEGMENT_4 = block("tinted_glowing_flat_segment_4", "_4", TextureKeys.TEXTURE);
 
+    public static final ModelTemplate SHRUB_1 = block("shrub_1", "_1", ModTextureKeys.BASE, ModTextureKeys.SIDE, ModTextureKeys.MIDDLE);
+    public static final ModelTemplate SHRUB_2 = block("shrub_2", "_2", ModTextureKeys.BASE, ModTextureKeys.SIDE, ModTextureKeys.MIDDLE);
+    public static final ModelTemplate SHRUB_3 = block("shrub_3", "_3", ModTextureKeys.BASE, ModTextureKeys.SIDE, ModTextureKeys.MIDDLE);
+    public static final ModelTemplate SHRUB_4 = block("shrub_4", "_4", ModTextureKeys.BASE, ModTextureKeys.SIDE, ModTextureKeys.MIDDLE);
+
     public static final ModelTemplate EMISSIVE_LEAVES = block("emissive_leaves", TextureKeys.ALL, ModTextureKeys.EMISSIVE);
     public static final ModelTemplate LAYERED_LEAVES = block("layered_leaves", TextureKeys.ALL, ModTextureKeys.OVERLAY);
     public static final ModelTemplate GLOWING_LEAVES = block("glowing_leaves", TextureKeys.ALL);

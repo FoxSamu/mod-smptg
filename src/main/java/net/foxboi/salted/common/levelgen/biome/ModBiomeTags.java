@@ -10,7 +10,7 @@ public record ModBiomeTags() {
     // TAGS
     // =============================================
 
-    public static final TagKey<Biome> HAS_SALT_CRUST = tag("has_salt_crust");
+    public static final TagKey<Biome> CAN_HAVE_SURFACE_LIMESTONE_PATCHES = tag("can_have_limestone_patches");
 
     public static final TagKey<Biome> GRASS_BLOCK_BONEMEAL_GROWS_BARLEY = tag("grass_block_bonemeal/grows_barley");
     public static final TagKey<Biome> GRASS_BLOCK_BONEMEAL_GROWS_CLOVERS = tag("grass_block_bonemeal/grows_clovers");
@@ -29,7 +29,7 @@ public record ModBiomeTags() {
     // =============================================
 
     public static void translate(Translator<TagKey<Biome>> translator) {
-        translator.name(HAS_SALT_CRUST, "Has Salt Crust");
+        translator.name(CAN_HAVE_SURFACE_LIMESTONE_PATCHES, "Can Have Surface Limestone Patches");
         translator.name(GRASS_BLOCK_BONEMEAL_GROWS_BARLEY, "Bonemealing Grass Blocks Grows Barley");
         translator.name(GRASS_BLOCK_BONEMEAL_GROWS_CLOVERS, "Bonemealing Grass Blocks Grows Clovers");
         translator.name(UNDERWATER_BONEMEAL_GROWS_CATTAIL, "Bonemealing Grass Blocks Grows Cattail");

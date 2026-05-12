@@ -25,6 +25,7 @@ public record ModBlockTags() {
     public static final TagKey<Block> LIMESTONE_ORE_REPLACEABLES = tag("limestone_ore_replaceables");
     public static final TagKey<Block> GRASS_SPREAD_SOURCE = tag("grass_spread_source");
 
+    public static final TagKey<Block> HEATH = tag("heath");
     public static final TagKey<Block> PEAT = tag("peat");
     public static final TagKey<Block> ANY_PEAT = tag("any_peat");
     public static final TagKey<Block> TRANSFERS_FLUID_TO_PEAT = tag("transfers_fluid_to_peat");
@@ -63,6 +64,7 @@ public record ModBlockTags() {
         translator.name(TRANSFERS_FLUID_TO_PEAT, "Transfers Fluids To Peat");
         translator.name(PEAT, "Peat");
         translator.name(ANY_PEAT, "Any Peat");
+        translator.name(HEATH, "Heath");
 
         translator.name(DAMAGES_SLIMES, "Damages Slimes");
 

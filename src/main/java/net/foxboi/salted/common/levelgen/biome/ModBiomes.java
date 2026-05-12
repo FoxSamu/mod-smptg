@@ -20,6 +20,7 @@ public record ModBiomes() {
     public static final ResourceKey<Biome> SPARSE_REDWOOD_TAIGA = REGISTRY.register("sparse_redwood_taiga", new RedwoodTaiga(true));
     public static final ResourceKey<Biome> FIREFLY_MEADOW = REGISTRY.register("firefly_meadow", new FireflyMeadow());
     public static final ResourceKey<Biome> LAVENDER_FIELD = REGISTRY.register("lavender_field", new LavenderField());
+    public static final ResourceKey<Biome> HEATHLAND = REGISTRY.register("heathland", new Heathland());
 
     public static final ResourceKey<Biome> LIMESTONE_CAVES = REGISTRY.register("limestone_caves", new LimestoneCaves());
 
@@ -38,6 +39,7 @@ public record ModBiomes() {
         translator.name(SPARSE_REDWOOD_TAIGA, "Sparse Redwood Taiga");
         translator.name(FIREFLY_MEADOW, "Firefly Meadow");
         translator.name(LAVENDER_FIELD, "Lavender Field");
+        translator.name(HEATHLAND, "Heathland");
 
         translator.name(LIMESTONE_CAVES, "Limestone Caves");
 

@@ -18,9 +18,9 @@ public record ModPlacementTypes() {
     // FEATURES
     // =============================================
 
-    public static final PlacementModifierType<?> SALT_CHUNK = register("salt_chunk", SaltChunkFilter.CODEC);
     public static final PlacementModifierType<?> AT_SEA_LEVEL = register("at_sea_level", SeaLevelHeightPlacement.CODEC);
     public static final PlacementModifierType<?> REPEAT_IN_SQUARE = register("repeat_in_square", RepeatInSquarePlacement.CODEC);
+    public static final PlacementModifierType<?> BIOME_LIST = register("biome_list", BiomeListFilter.CODEC);
 
 
     // INITIALISATION

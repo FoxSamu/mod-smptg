@@ -10,15 +10,15 @@ import net.foxboi.salted.common.misc.biome.BiomeEditor;
 import static net.foxboi.salted.common.levelgen.biome.ModBiomeFeatures.*;
 import static net.foxboi.salted.common.levelgen.biome.VanillaBiomeFeatures.*;
 
-public class LavenderField extends OverworldBiome {
+public class Heathland extends OverworldBiome {
     @Override
     protected float temperature() {
-        return 0.78f;
+        return 0.8f;
     }
 
     @Override
     protected float downfall() {
-        return 0.57f;
+        return 0.2f;
     }
 
     @Override
@@ -26,14 +26,17 @@ public class LavenderField extends OverworldBiome {
         super.attributes(builder);
 
         meadowMusic(builder);
-        builder.putAttribute(EnvironmentAttributes.WATER_FOG_COLOR, 0xFF172F87);
+        builder.putAttribute(EnvironmentAttributes.WATER_FOG_COLOR, 0xFF0B2040);
     }
 
     @Override
     protected void effects(BiomeEditor builder) {
         super.effects(builder);
 
-        builder.waterColor(0xFF2B51D9);
+        builder.waterColor(0xFF24455C);
+        builder.grassColor(0xFFA69C67);
+        builder.foliageColor(0xFF337D3E);
+        builder.dryFoliageColor(0xFF736646);
     }
 
     @Override
@@ -41,28 +44,22 @@ public class LavenderField extends OverworldBiome {
         super.generation(builder);
         addDefaultOres(builder);
         addDefaultSoftDisks(builder);
-
-        addPlainGrass(builder);
+        addPuddles(builder);
 
         addAlwaysBeesTrees(builder);
 
-        addLavenderFieldVegetation(builder);
+        addHeathlandVegetation(builder);
         addCattail(builder);
-
-        // TODO
-        //   Mud surface underwater
-        //   Avoid limestone generation
     }
 
     @Override
     protected void spawning(BiomeEditor builder) {
-        super.spawning(builder);
+        swampSpawns(builder, 100);
 
         farmAnimals(builder);
 
-        builder.addSpawn(MobCategory.CREATURE, 6, new MobSpawnSettings.SpawnerData(EntityType.SHEEP, 4, 4));
-        builder.addSpawn(MobCategory.CREATURE, 5, new MobSpawnSettings.SpawnerData(EntityType.HORSE, 2, 6));
-        builder.addSpawn(MobCategory.CREATURE, 1, new MobSpawnSettings.SpawnerData(EntityType.DONKEY, 1, 3));
+        builder.addSpawn(MobCategory.CREATURE, 24, new MobSpawnSettings.SpawnerData(EntityType.SHEEP, 6, 8));
+        builder.addSpawn(MobCategory.CREATURE, 5, new MobSpawnSettings.SpawnerData(EntityType.RABBIT, 2, 3));
     }
 
 }

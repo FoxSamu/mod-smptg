@@ -21,6 +21,7 @@ accessible class net/minecraft/world/level/levelgen/SurfaceRules$Context
 accessible field net/minecraft/world/level/levelgen/SurfaceRules$Context lastUpdateY J
 accessible field net/minecraft/world/level/levelgen/SurfaceRules$Context lastUpdateXZ J
 accessible field net/minecraft/world/level/levelgen/SurfaceRules$Context biome Ljava/util/function/Supplier;
+accessible field net/minecraft/world/level/levelgen/SurfaceRules$Context randomState Lnet/minecraft/world/level/levelgen/RandomState;
 
 accessible field net/minecraft/world/level/levelgen/NoiseSettings END_NOISE_SETTINGS Lnet/minecraft/world/level/levelgen/NoiseSettings;
 accessible field net/minecraft/world/level/levelgen/NoiseSettings NETHER_NOISE_SETTINGS Lnet/minecraft/world/level/levelgen/NoiseSettings;
@@ -38,9 +39,6 @@ accessible method net/minecraft/world/level/levelgen/NoiseRouterData floatingIsl
 # it so we must be able to override this method
 extendable method net/minecraft/world/level/block/MultifaceBlock makeShapes ()Ljava/util/function/Function;
 
-# Used in biome modification mixin to allow setting dry foliage color (missing in fabric api)
-mutable field net/minecraft/world/level/biome/BiomeSpecialEffects dryFoliageColorOverride Ljava/util/Optional;
-accessible field net/minecraft/world/level/biome/BiomeSpecialEffects dryFoliageColorOverride Ljava/util/Optional;
 
 # Used for datagen
 accessible field net/minecraft/data/registries/VanillaRegistries BUILDER Lnet/minecraft/core/RegistrySetBuilder;

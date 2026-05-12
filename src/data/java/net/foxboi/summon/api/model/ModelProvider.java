@@ -26,7 +26,7 @@ public abstract class ModelProvider implements DataProvider {
         this.lookups = lookups;
     }
 
-    protected abstract void setup(BlockDispatchSink blocks, ItemDispatchSink items, HolderLookup.Provider lookups);
+    protected abstract void setup(BlockDispatchSink blocks, ItemDispatchSink items, ModelSink models, HolderLookup.Provider lookups);
 
     protected boolean shouldCheckClashingModelDefinitions() {
         return false;
@@ -39,7 +39,7 @@ public abstract class ModelProvider implements DataProvider {
                     return new SinkImpl(lookups, shouldCheckClashingModelDefinitions());
                 })
                 .thenApplyAsync(sink -> {
-                    setup(sink, sink, sink.lookups);
+                    setup(sink, sink, sink, sink.lookups);
                     return sink;
                 })
                 .thenCompose(sink -> {

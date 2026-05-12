@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.foxboi.salted.common.Smptg;
 import net.foxboi.salted.common.block.ModBlocks;
+import net.foxboi.salted.common.block.SegmentedPlantBlock;
 import net.foxboi.salted.common.levelgen.feature.ColumnPlantConfiguration;
 import net.foxboi.salted.common.levelgen.feature.DefinedFeature;
 import net.foxboi.salted.common.levelgen.feature.ModFeatures;
@@ -199,6 +200,53 @@ public record ModVegetationFeatures() {
                             .build()
             )
     ));
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> HEATHLAND_PLANT = REGISTRY.register("heathland_plant", block(
+            new WeightedStateProvider(
+                    weightedBlockState()
+                            .add(heath(ModBlocks.FLOWERING_HEATH, Direction.NORTH, 4), 1340 / 4)
+                            .add(heath(ModBlocks.FLOWERING_HEATH, Direction.EAST, 4), 1340 / 4)
+                            .add(heath(ModBlocks.FLOWERING_HEATH, Direction.SOUTH, 4), 1340 / 4)
+                            .add(heath(ModBlocks.FLOWERING_HEATH, Direction.WEST, 4), 1340 / 4)
+                            .add(heath(ModBlocks.HEATH, Direction.NORTH, 4), 139 / 4)
+                            .add(heath(ModBlocks.HEATH, Direction.EAST, 4), 139 / 4)
+                            .add(heath(ModBlocks.HEATH, Direction.SOUTH, 4), 139 / 4)
+                            .add(heath(ModBlocks.HEATH, Direction.WEST, 4), 139 / 4)
+
+                            .add(heath(ModBlocks.FLOWERING_HEATH, Direction.NORTH, 3), 1340 / 8)
+                            .add(heath(ModBlocks.FLOWERING_HEATH, Direction.EAST, 3), 1340 / 8)
+                            .add(heath(ModBlocks.FLOWERING_HEATH, Direction.SOUTH, 3), 1340 / 8)
+                            .add(heath(ModBlocks.FLOWERING_HEATH, Direction.WEST, 3), 1340 / 8)
+                            .add(heath(ModBlocks.HEATH, Direction.NORTH, 3), 139 / 8)
+                            .add(heath(ModBlocks.HEATH, Direction.EAST, 3), 139 / 8)
+                            .add(heath(ModBlocks.HEATH, Direction.SOUTH, 3), 139 / 8)
+                            .add(heath(ModBlocks.HEATH, Direction.WEST, 3), 139 / 8)
+
+                            .add(heath(ModBlocks.FLOWERING_HEATH, Direction.NORTH, 2), 1340 / 16)
+                            .add(heath(ModBlocks.FLOWERING_HEATH, Direction.EAST, 2), 1340 / 16)
+                            .add(heath(ModBlocks.FLOWERING_HEATH, Direction.SOUTH, 2), 1340 / 16)
+                            .add(heath(ModBlocks.FLOWERING_HEATH, Direction.WEST, 2), 1340 / 16)
+                            .add(heath(ModBlocks.HEATH, Direction.NORTH, 2), 139 / 16)
+                            .add(heath(ModBlocks.HEATH, Direction.EAST, 2), 139 / 16)
+                            .add(heath(ModBlocks.HEATH, Direction.SOUTH, 2), 139 / 16)
+                            .add(heath(ModBlocks.HEATH, Direction.WEST, 2), 139 / 16)
+
+                            .add(ModBlocks.LAVENDER.defaultBlockState(), 30)
+                            .add(ModBlocks.TALL_LAVENDER.defaultBlockState(), 10)
+                            .add(ModBlocks.GLOBE_THISTLE.defaultBlockState(), 10)
+                            .add(Blocks.SHORT_GRASS.defaultBlockState(), 120)
+                            .add(Blocks.TALL_GRASS.defaultBlockState(), 60)
+                            .add(Blocks.SHORT_DRY_GRASS.defaultBlockState(), 240)
+                            .add(Blocks.TALL_DRY_GRASS.defaultBlockState(), 180)
+                            .add(Blocks.FIREFLY_BUSH.defaultBlockState(), 2)
+
+                            .build()
+            )
+    ));
+
+    private static BlockState heath(Block base, Direction dir, int segments) {
+        return base.defaultBlockState().setValue(SegmentedPlantBlock.FACING, dir).setValue(SegmentedPlantBlock.AMOUNT, segments);
+    }
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> GLOW_LICHEN = REGISTRY.register("glow_lichen", DefinedFeature.of(
             Feature.MULTIFACE_GROWTH,

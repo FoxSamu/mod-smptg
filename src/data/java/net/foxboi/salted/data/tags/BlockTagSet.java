@@ -159,6 +159,7 @@ public class BlockTagSet extends LookupTagSet<Block> {
                 .element(ModBlocks.DEAD_LEAVES);
 
         builder(BlockTags.SMALL_FLOWERS)
+                .element(ModBlocks.FLOWERING_HEATH)
                 .element(ModBlocks.LAVENDER);
 
         builder(BlockTags.FLOWERS)
@@ -167,6 +168,7 @@ public class BlockTagSet extends LookupTagSet<Block> {
                 .element(ModBlocks.GLOBE_THISTLE);
 
         builder(BlockTags.BEE_ATTRACTIVE)
+                .element(ModBlocks.FLOWERING_HEATH)
                 .element(ModBlocks.LAVENDER)
                 .element(ModBlocks.TALL_LAVENDER)
                 .element(ModBlocks.GLOBE_THISTLE);
@@ -321,6 +323,10 @@ public class BlockTagSet extends LookupTagSet<Block> {
                 .element(Blocks.SOUL_SOIL)
                 .element(ModBlocks.ASH_BLOCK)
                 .element(ModBlocks.PACKED_ASH);
+
+        builder(ModBlockTags.HEATH)
+                .element(ModBlocks.HEATH)
+                .element(ModBlocks.FLOWERING_HEATH);
 
         builder(ConventionalBlockTags.ORES_IN_GROUND_STONE);
 

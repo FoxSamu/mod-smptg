@@ -118,6 +118,9 @@ public class ItemTagSet extends LookupTagSet<Item> {
         builder(ModItemTags.DEAD_LOGS)
                 .copyFrom(ModBlockTags.DEAD_LOGS);
 
+        builder(ModItemTags.HEATH)
+                .copyFrom(ModBlockTags.HEATH);
+
         builder(ConventionalItemTags.ORES_IN_GROUND_STONE)
                 .copyFrom(ConventionalBlockTags.ORES_IN_GROUND_STONE);
 

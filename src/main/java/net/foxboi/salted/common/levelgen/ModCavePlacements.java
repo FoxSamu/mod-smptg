@@ -8,6 +8,7 @@ import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 import net.foxboi.salted.common.Smptg;
+import net.foxboi.salted.common.levelgen.biome.ModBiomeTags;
 import net.foxboi.salted.common.levelgen.placement.DefinedPlacement;
 import net.foxboi.salted.common.misc.reg.DataRegistry;
 
@@ -25,6 +26,7 @@ public record ModCavePlacements() {
                     .atHeight(8, 70) // Put somewhere in cave, in the range where the cave should be for it to reach the surface
                     .inBiome() // Then check biome, eliminating the ones outside the height range
                     .onOceanFloorWg() // Then after biome check, move it to surface
+                    .onlyInBiomes(ModBiomeTags.CAN_HAVE_SURFACE_LIMESTONE_PATCHES)
                     .randomPatch(BlockPredicate.alwaysTrue(), 4, 4, 6) // Place a bunch locally
     );
 
@@ -32,13 +34,13 @@ public record ModCavePlacements() {
     public static final ResourceKey<PlacedFeature> PATCH_UNDERGROUND_TO_LIMESTONE = REGISTRY.register(
             "patch_underground_to_limestone",
             DefinedPlacement
-                    .place(ModCaveFeatures.PATCH_TO_LIMESTONE)
+                    .place(ModCaveFeatures.PATCH_UNDERGROUND_TO_LIMESTONE)
                     .onAverageOnceEvery(3)
                     .count(UniformInt.of(6, 12))
                     .spreadInChunk()
                     .atHeight(8, 70) // Put somewhere in cave, in the range where the cave should be for it to reach the surface
                     .inBiome() // Then check biome, eliminating the ones outside the height range
-                    .atHeight(20, 120)
+                    .atHeight(20, 120) // Then after biome check, move it to where we want it
                     .randomPatch(BlockPredicate.alwaysTrue(), 4, 4, 6) // Place a bunch locally
     );
 

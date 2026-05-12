@@ -3,8 +3,8 @@ package net.foxboi.salted.common.levelgen.biome;
 import java.util.List;
 import java.util.Optional;
 
-import net.foxboi.salted.common.levelgen.ModCaveFeatures;
 import net.foxboi.salted.common.levelgen.ModCavePlacements;
+import net.foxboi.salted.common.levelgen.ModMiscPlacements;
 import net.foxboi.salted.common.levelgen.ModVegetationPlacements;
 import net.foxboi.salted.common.misc.biome.BiomeEditor;
 
@@ -248,7 +248,15 @@ public record ModBiomeFeatures() {
         builder.addFeature(VEGETAL_DECORATION, ModVegetationPlacements.VEGETATION_LAVENDER_FIELD);
     }
 
-    public static void addAlwaysBeesBirch(BiomeEditor builder) {
+    public static void addHeathlandVegetation(BiomeEditor builder) {
+        builder.addFeature(VEGETAL_DECORATION, ModVegetationPlacements.VEGETATION_HEATHLAND);
+    }
+
+    public static void addPuddles(BiomeEditor builder) {
+        builder.addFeature(LAKES, ModMiscPlacements.PUDDLE);
+    }
+
+    public static void addAlwaysBeesTrees(BiomeEditor builder) {
         builder.addFeature(VEGETAL_DECORATION, VegetationPlacements.TREES_MEADOW);
     }
 

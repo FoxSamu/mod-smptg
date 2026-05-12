@@ -13,6 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 public record BonemealBehaviors() {
     /**
@@ -153,6 +154,50 @@ public record BonemealBehaviors() {
             }
 
             Block.popResource(level, pos, new ItemStack(block));
+        }
+    }
+
+
+    /**
+     * Bonemeal behavior that turns a segmentable block into another.
+     */
+    public static BonemealableBlock replaceSegmentedPlant(Supplier<BlockState> into) {
+        return new ReplaceSegmentedBlock(into);
+    }
+
+    private record ReplaceSegmentedBlock(Supplier<BlockState> into) implements BonemealableBlock {
+        @Override
+        public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+            return true;
+        }
+
+        @Override
+        public boolean isBonemealSuccess(Level level, RandomSource rng, BlockPos pos, BlockState state) {
+            return true;
+        }
+
+        @Override
+        public void performBonemeal(ServerLevel level, RandomSource rng, BlockPos pos, BlockState state) {
+            var block = state.getBlock();
+
+            var result = into.get();
+
+            var segments = 4;
+            var facing = Direction.NORTH;
+
+            if (block instanceof SegmentableBlock segmentableBlock) {
+                var amountProperty = segmentableBlock.getSegmentAmountProperty();
+                segments = state.getValue(amountProperty);
+                facing = state.getValueOrElse(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH);
+            }
+
+            if (result.getBlock() instanceof SegmentableBlock segmentableBlock) {
+                var amountProperty = segmentableBlock.getSegmentAmountProperty();
+                result = result.setValue(amountProperty, segments)
+                        .trySetValue(BlockStateProperties.HORIZONTAL_FACING, facing);
+            }
+
+            level.setBlock(pos, result, 2);
         }
     }
 

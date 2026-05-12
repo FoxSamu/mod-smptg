@@ -34,6 +34,16 @@ public record ModCaveFeatures() {
             )
     ));
 
+    public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_UNDERGROUND_TO_LIMESTONE = REGISTRY.register("patch_underground_to_limestone", DefinedFeature.of(
+            Feature.DISK,
+            () -> new DiskConfiguration(
+                    FeatureBlocks.REPLACE_UNDERGROUND_WITH_LIMESTONE,
+                    BlockPredicate.alwaysTrue(), // Block checks are carried out by the block provider
+                    UniformInt.of(4, 8),
+                    4
+            )
+    ));
+
     public static final ResourceKey<ConfiguredFeature<?, ?>> POINTED_LIMESTONE_CLUSTER = REGISTRY.register("pointed_limestone_cluster", DefinedFeature.of(
             ModFeatures.SPELEOTHEM_CLUSTER,
             () -> new SpeleothemClusterConfiguration(

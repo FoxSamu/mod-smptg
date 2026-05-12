@@ -3,8 +3,6 @@ package net.foxboi.salted.common.block;
 import java.util.List;
 import java.util.function.Supplier;
 
-import org.jspecify.annotations.Nullable;
-
 import net.fabricmc.fabric.api.registry.FuelValueEvents;
 import net.fabricmc.fabric.api.registry.LandPathTypeRegistry;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
@@ -25,6 +23,7 @@ import net.minecraft.util.ColorRGBA;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.component.Tool;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -236,11 +235,11 @@ public record ModBlocks() {
 
     public static final Block CLOVERS = register("clovers", clovers(), props(Blocks.PINK_PETALS).replaceable());
     public static final Block GRASS_SPROUTS = register("grass_sprouts", grassSprouts(), props(Blocks.SHORT_GRASS).sound(SoundType.MOSS_CARPET));
-    public static final Block BARLEY = register("barley", grassyPlant(BlockTags.SUPPORTS_DRY_VEGETATION, ModBlocks::tallBarley), props(Blocks.POPPY));
+    public static final Block BARLEY = register("barley", grassyPlant(BlockTags.SUPPORTS_DRY_VEGETATION, ModBlocks::getTallBarley), props(Blocks.POPPY));
     public static final Block TALL_BARLEY = register("tall_barley", tallGrassyPlant(BlockTags.SUPPORTS_DRY_VEGETATION), props(Blocks.ROSE_BUSH));
-    public static final Block CATTAIL = register("cattail", grassyPlant(ModBlockTags.SUPPORTS_WATER_VEGETATION, ModBlocks::tallCattail), props(Blocks.POPPY));
+    public static final Block CATTAIL = register("cattail", grassyPlant(ModBlockTags.SUPPORTS_WATER_VEGETATION, ModBlocks::getTallCattail), props(Blocks.POPPY));
     public static final Block TALL_CATTAIL = register("tall_cattail", partiallyWaterloggableTallGrassyPlant(ModBlockTags.SUPPORTS_WATER_VEGETATION), props(Blocks.ROSE_BUSH));
-    public static final Block LAVENDER = register("lavender", grassyPlant(BlockTags.SUPPORTS_VEGETATION, ModBlocks::tallLavender), props(Blocks.POPPY));
+    public static final Block LAVENDER = register("lavender", grassyPlant(BlockTags.SUPPORTS_VEGETATION, ModBlocks::getTallLavender), props(Blocks.POPPY));
     public static final Block TALL_LAVENDER = register("tall_lavender", tallGrassyPlant(BlockTags.SUPPORTS_VEGETATION), props(Blocks.ROSE_BUSH));
     public static final Block CAVE_GRASS = register("cave_grass", caveGrass(), props(Blocks.SHORT_GRASS).sound(SoundType.MOSS_CARPET).mapColor(MapColor.SAND));
     public static final Block DRIPMOSS = register("dripmoss", dripmoss(), props(Blocks.POPPY).sound(SoundType.MOSS_CARPET).mapColor(MapColor.SAND));
@@ -249,6 +248,8 @@ public record ModBlocks() {
 
     public static final Block SHELF_FUNGUS = register("shelf_fungus", shelfFungus(), props(Blocks.POPPY).mapColor(MapColor.SAND).offsetType(BlockBehaviour.OffsetType.XYZ));
 
+    public static final Block HEATH = register("heath", heath(), props(Blocks.POPPY).offsetType(BlockBehaviour.OffsetType.NONE).sound(SoundType.SWEET_BERRY_BUSH));
+    public static final Block FLOWERING_HEATH = register("flowering_heath", floweringHeath(), props(Blocks.POPPY).offsetType(BlockBehaviour.OffsetType.NONE).sound(SoundType.SWEET_BERRY_BUSH).mapColor(DyeColor.MAGENTA));
 
     // Nether Plants
 
@@ -354,7 +355,8 @@ public record ModBlocks() {
                 .add(GRASSY_PEAT, baseUnit * 2)
                 .add(MOSSY_PEAT, baseUnit * 2)
                 .add(COARSE_PEAT, baseUnit * 2)
-        ;
+                .add(HEATH, baseUnit * 2)
+                .add(FLOWERING_HEATH, baseUnit * 2);
     }
 
     private static PathType brazierPathType(BlockState state, boolean neighbor) {
@@ -559,8 +561,9 @@ public record ModBlocks() {
         translator.name(DRIPMOSS, "Dripmoss");
         translator.name(PATCHMOSS, "Patchmoss");
         translator.name(GLOBE_THISTLE, "Globe Thistle");
-
         translator.name(SHELF_FUNGUS, "Shelf Fungus");
+        translator.name(HEATH, "Heath");
+        translator.name(FLOWERING_HEATH, "Flowering Heath");
 
         // Nether Plants
         translator.name(ASHVINE, "Ashvine");
@@ -615,16 +618,20 @@ public record ModBlocks() {
     // GETTERS
     // =============================================
 
-    private static BlockState tallCattail() {
+    private static BlockState getTallCattail() {
         return TALL_CATTAIL.defaultBlockState();
     }
 
-    private static BlockState tallBarley() {
+    private static BlockState getTallBarley() {
         return TALL_BARLEY.defaultBlockState();
     }
 
-    private static BlockState tallLavender() {
+    private static BlockState getTallLavender() {
         return TALL_LAVENDER.defaultBlockState();
+    }
+
+    private static BlockState getFloweringHeath() {
+        return FLOWERING_HEATH.defaultBlockState();
     }
 
 
@@ -784,6 +791,26 @@ public record ModBlocks() {
                 PlantConfig.of()
                         .canGrowOn(PlantConfig.GROW_ON_STURDY_FACE)
                         .size(16, 1),
+                props
+        );
+    }
+
+    private static BlockFactory heath() {
+        return props -> new SegmentedPlantBlock(
+                PlantConfig.of()
+                        .canGrowOn(BlockTags.SUPPORTS_DRY_VEGETATION)
+                        .bonemealBehavior(BonemealBehaviors.replaceSegmentedPlant(ModBlocks::getFloweringHeath))
+                        .size(16, 8),
+                props
+        );
+    }
+
+    private static BlockFactory floweringHeath() {
+        return props -> new SegmentedPlantBlock(
+                PlantConfig.of()
+                        .canGrowOn(BlockTags.SUPPORTS_DRY_VEGETATION)
+                        .bonemealBehavior(BonemealBehaviors.growSegmentedPlant())
+                        .size(16, 8),
                 props
         );
     }

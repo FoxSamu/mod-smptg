@@ -292,6 +292,18 @@ public class BlockModels {
         );
     }
 
+    public void shrub(Block block) {
+        createShrub(block);
+    }
+
+    public void shrub(Block block, ItemTint tint) {
+        createShrub(block, tint);
+    }
+
+    public void shrub(Block block, int tint) {
+        createShrub(block, ItemTint.constant(tint));
+    }
+
 
 
 
@@ -484,6 +496,28 @@ public class BlockModels {
                 block,
                 dispatch,
                 Model.generated(block.asItem(), Texture.of(block, "_down_tip"))
+        );
+    }
+
+    private void createShrub(Block block, ItemTint... tints) {
+        var map = TextureMap.map()
+                .put("middle", block, "_middle")
+                .put("side", block, "_side")
+                .put("base", block, "_base");
+
+        var model1 = ModModelTemplates.SHRUB_1.create(block, map);
+        var model2 = ModModelTemplates.SHRUB_2.create(block, map);
+        var model3 = ModModelTemplates.SHRUB_3.create(block, map);
+        var model4 = ModModelTemplates.SHRUB_4.create(block, map);
+
+        segmentedBlock(
+                block,
+                StatePredicate.of(SegmentedPlantBlock.AMOUNT, 1), WeightedVariants.of(model1),
+                StatePredicate.of(SegmentedPlantBlock.AMOUNT, 2), WeightedVariants.of(model2),
+                StatePredicate.of(SegmentedPlantBlock.AMOUNT, 3), WeightedVariants.of(model3),
+                StatePredicate.of(SegmentedPlantBlock.AMOUNT, 4), WeightedVariants.of(model4),
+                Model.generated(block.asItem(), Texture.of(block, "_middle")),
+                tints
         );
     }
 

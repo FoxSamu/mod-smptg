@@ -218,6 +218,8 @@ public record ModItems() {
     public static final Item PATCHMOSS = registerBlock(ModBlocks.PATCHMOSS);
     public static final Item GLOBE_THISTLE = register(ModBlocks.GLOBE_THISTLE, doubleBlockItem(ModBlocks.GLOBE_THISTLE));
     public static final Item SHELF_FUNGUS = register(ModBlocks.SHELF_FUNGUS, diagonallyAttachableBlockItem(ModBlocks.SHELF_FUNGUS));
+    public static final Item HEATH = registerBlock(ModBlocks.HEATH);
+    public static final Item FLOWERING_HEATH = registerBlock(ModBlocks.FLOWERING_HEATH);
 
 
     // INITIALISATION
@@ -467,7 +469,9 @@ public record ModItems() {
                 CATTAIL,
                 LAVENDER,
                 CAVE_GRASS,
-                DRIPMOSS
+                DRIPMOSS,
+                HEATH,
+                FLOWERING_HEATH
         );
 
         out.insertAfter(

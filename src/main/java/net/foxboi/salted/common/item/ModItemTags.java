@@ -18,6 +18,7 @@ public record ModItemTags() {
     public static final TagKey<Item> PEAT = tag("peat");
     public static final TagKey<Item> ANY_PEAT = tag("any_peat");
     public static final TagKey<Item> BRAZIERS = tag("braziers");
+    public static final TagKey<Item> HEATH = tag("heath");
 
 
     // INITIALISATION
@@ -40,6 +41,7 @@ public record ModItemTags() {
         translator.name(PEAT, "Peat");
         translator.name(ANY_PEAT, "Any Peat");
         translator.name(BRAZIERS, "Braziers");
+        translator.name(HEATH, "Heath");
     }
 
 

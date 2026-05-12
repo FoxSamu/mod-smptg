@@ -97,6 +97,8 @@ public class Smptg {
         ModBiomes.init();
         ModNoises.init();
 
+        ModMiscFeatures.init();
+        ModMiscPlacements.init();
         ModTreeFeatures.init();
         ModTreePlacements.init();
         ModVegetationFeatures.init();

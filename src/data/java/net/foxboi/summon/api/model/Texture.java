@@ -8,8 +8,13 @@ import net.minecraft.world.level.block.Block;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import com.mojang.datafixers.util.Either;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.JsonOps;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-public record Texture(Identifier name, boolean alwaysTranslucent) {
+public record Texture(Identifier name, boolean alwaysTranslucent) implements TextureReference {
     public static Texture of(Identifier name, boolean alwaysTranslucent) {
         return new Texture(name, alwaysTranslucent);
     }
@@ -102,4 +107,29 @@ public record Texture(Identifier name, boolean alwaysTranslucent) {
     public static Identifier itemSprite(Item item) {
         return BuiltInRegistries.ITEM.getKey(item).withPrefix("item/");
     }
+
+    static DataResult<Texture> parse(JsonElement json) {
+        return CODEC.parse(JsonOps.INSTANCE, json);
+    }
+
+    static Texture parseOrThrow(JsonElement json) {
+        return parse(json).getOrThrow();
+    }
+
+    private static Codec<Texture> createCodec() {
+        Codec<Identifier> simpleCodec = Identifier.CODEC;
+        Codec<Texture> fullCodec = RecordCodecBuilder.create(i -> i.group(
+                simpleCodec.fieldOf("sprite").forGetter(Texture::name),
+                Codec.BOOL.fieldOf("force_translucent").forGetter(Texture::alwaysTranslucent)
+        ).apply(i, Texture::new));
+
+        return Codec.either(simpleCodec, fullCodec).xmap(
+                either -> Either.unwrap(either.mapLeft(Texture::of)),
+                texture -> texture.alwaysTranslucent
+                        ? Either.right(texture)
+                        : Either.left(texture.name)
+        );
+    }
+
+    public static final Codec<Texture> CODEC = createCodec();
 }

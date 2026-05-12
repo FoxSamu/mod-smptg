@@ -79,6 +79,12 @@ public record BiomeSurfaceOverrides(
                         ),
                         SurfaceTypes.allLimestone()
                 )
+                .add(
+                        List.of(
+                                ModBiomes.HEATHLAND
+                        ),
+                        SurfaceTypes.peatMixtureButMudUnderwater()
+                )
                 .build();
     }
 
