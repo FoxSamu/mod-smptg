@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+import net.minecraft.world.level.levelgen.feature.stateproviders.RuleBasedStateProvider;
 import net.minecraft.world.level.material.Fluid;
 
 import com.mojang.serialization.Codec;
@@ -48,12 +49,24 @@ public record PuddleConfiguration(
         return new PuddleConfiguration(fluid, canPlaceAt, size, edge, edgeRadius, Optional.of(floor));
     }
 
+    public PuddleConfiguration withFloor(BlockStateProvider floor, BlockPredicate canReplace) {
+        return withFloor(RuleBasedStateProvider.ifTrueThenProvide(canReplace, floor));
+    }
+
     public PuddleConfiguration withEdge(BlockStateProvider edge) {
         return new PuddleConfiguration(fluid, canPlaceAt, size, Optional.of(edge), edgeRadius, floor);
     }
 
+    public PuddleConfiguration withEdge(BlockStateProvider edge, BlockPredicate canReplace) {
+        return withEdge(RuleBasedStateProvider.ifTrueThenProvide(canReplace, edge));
+    }
+
     public PuddleConfiguration withEdge(BlockStateProvider edge, FloatProvider radius) {
         return new PuddleConfiguration(fluid, canPlaceAt, size, Optional.of(edge), radius, floor);
+    }
+
+    public PuddleConfiguration withEdge(BlockStateProvider edge, BlockPredicate canReplace, FloatProvider radius) {
+        return withEdge(RuleBasedStateProvider.ifTrueThenProvide(canReplace, edge), radius);
     }
 
     private static BlockPredicate support(Function<Vec3i, BlockPredicate> support, Fluid fluid, Vec3i vec) {

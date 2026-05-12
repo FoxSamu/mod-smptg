@@ -32,7 +32,9 @@ public record ModMiscFeatures() {
                     Fluids.WATER,
                     vec -> BlockPredicate.solid(vec),
                     UniformFloat.of(16, 64f)
-            ).withFloor(FeatureBlocks.MUD).withEdge(FeatureBlocks.MUD)
+            )
+                    .withFloor(FeatureBlocks.MUD, BlockPredicate.solid())
+                    .withEdge(FeatureBlocks.MUD, BlockPredicate.solid())
     ));
 
 
